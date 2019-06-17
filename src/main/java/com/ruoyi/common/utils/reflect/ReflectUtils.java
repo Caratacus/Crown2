@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
@@ -120,7 +121,7 @@ public class ReflectUtils {
         try {
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + Arrays.toString(args) + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -167,7 +168,7 @@ public class ReflectUtils {
             }
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + Arrays.toString(args) + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -187,8 +188,7 @@ public class ReflectUtils {
                 Field field = superClass.getDeclaredField(fieldName);
                 makeAccessible(field);
                 return field;
-            } catch (NoSuchFieldException e) {
-                continue;
+            } catch (NoSuchFieldException ignored) {
             }
         }
         return null;
@@ -212,8 +212,7 @@ public class ReflectUtils {
                 Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
                 makeAccessible(method);
                 return method;
-            } catch (NoSuchMethodException e) {
-                continue;
+            } catch (NoSuchMethodException ignored) {
             }
         }
         return null;

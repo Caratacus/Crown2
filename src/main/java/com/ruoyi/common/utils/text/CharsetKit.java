@@ -2,6 +2,7 @@ package com.ruoyi.common.utils.text;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import com.ruoyi.common.utils.StringUtils;
 
@@ -80,7 +81,7 @@ public class CharsetKit {
         if (StringUtils.isEmpty(source) || srcCharset.equals(destCharset)) {
             return source;
         }
-        return new String(source.getBytes(srcCharset), destCharset);
+        return new String(source.getBytes(srcCharset), Objects.requireNonNull(destCharset));
     }
 
     /**

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class FileUtils {
 
-    public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";
+    public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-|.\\u4e00-\\u9fa5]+";
 
     /**
      * 输出指定文件的byte数组
@@ -39,8 +39,6 @@ public class FileUtils {
             while ((length = fis.read(b)) > 0) {
                 os.write(b, 0, length);
             }
-        } catch (IOException e) {
-            throw e;
         } finally {
             if (os != null) {
                 try {
@@ -66,14 +64,12 @@ public class FileUtils {
      * @return
      */
     public static boolean deleteFile(String filePath) {
-        boolean flag = false;
         File file = new File(filePath);
         // 路径为文件且不为空则进行删除
         if (file.isFile() && file.exists()) {
-            file.delete();
-            flag = true;
+            return file.delete();
         }
-        return flag;
+        return false;
     }
 
     /**

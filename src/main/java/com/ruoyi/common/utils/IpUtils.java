@@ -2,6 +2,7 @@ package com.ruoyi.common.utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,7 +40,7 @@ public class IpUtils {
 
     public static boolean internalIp(String ip) {
         byte[] addr = textToNumericFormatV4(ip);
-        return internalIp(addr) || "127.0.0.1".equals(ip);
+        return internalIp(Objects.requireNonNull(addr)) || "127.0.0.1".equals(ip);
     }
 
     private static boolean internalIp(byte[] addr) {
@@ -142,7 +143,7 @@ public class IpUtils {
     public static String getHostIp() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
+        } catch (UnknownHostException ignored) {
         }
         return "127.0.0.1";
     }
@@ -150,7 +151,7 @@ public class IpUtils {
     public static String getHostName() {
         try {
             return InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
+        } catch (UnknownHostException ignored) {
         }
         return "未知";
     }

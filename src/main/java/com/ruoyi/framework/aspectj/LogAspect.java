@@ -114,9 +114,8 @@ public class LogAspect {
      *
      * @param log     日志
      * @param operLog 操作日志
-     * @throws Exception
      */
-    public void getControllerMethodDescription(Log log, OperLog operLog) throws Exception {
+    public void getControllerMethodDescription(Log log, OperLog operLog) {
         // 设置action动作
         operLog.setBusinessType(log.businessType().ordinal());
         // 设置标题
@@ -134,7 +133,6 @@ public class LogAspect {
      * 获取请求的参数，放到log中
      *
      * @param operLog
-     * @param request
      */
     private void setRequestValue(OperLog operLog) {
         Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
@@ -145,7 +143,7 @@ public class LogAspect {
     /**
      * 是否存在注解，如果存在就获取
      */
-    private Log getAnnotationLog(JoinPoint joinPoint) throws Exception {
+    private Log getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();

@@ -16,10 +16,10 @@ public class MapDataUtil {
 
     public static Map<String, Object> convertDataMap(HttpServletRequest request) {
         Map<String, String[]> properties = request.getParameterMap();
-        Map<String, Object> returnMap = new HashMap<String, Object>();
+        Map<String, Object> returnMap = new HashMap<>();
         Iterator<?> entries = properties.entrySet().iterator();
         Map.Entry<?, ?> entry;
-        String name = "";
+        String name;
         String value = "";
         while (entries.hasNext()) {
             entry = (Entry<?, ?>) entries.next();
@@ -29,8 +29,8 @@ public class MapDataUtil {
                 value = "";
             } else if (valueObj instanceof String[]) {
                 String[] values = (String[]) valueObj;
-                for (int i = 0; i < values.length; i++) {
-                    value = values[i] + ",";
+                for (String value1 : values) {
+                    value = value1 + ",";
                 }
                 value = value.substring(0, value.length() - 1);
             } else {
