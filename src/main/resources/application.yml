@@ -9,14 +9,14 @@ ruoyi:
   # 实例演示开关
   demoEnabled: true
   # 文件路径
-  profile: D:/profile/
+  profile: /develop/logs/ruoyifile
   # 获取ip地址开关
   addressEnabled: true
 
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 80
+  port: 8088
   servlet:
     # 应用的访问路径
     context-path: /
