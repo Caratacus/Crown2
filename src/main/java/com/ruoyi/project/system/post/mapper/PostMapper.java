@@ -1,6 +1,9 @@
 package com.ruoyi.project.system.post.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ruoyi.project.system.post.domain.Post;
 
 /**
@@ -8,6 +11,7 @@ import com.ruoyi.project.system.post.domain.Post;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface PostMapper
 {
     /**

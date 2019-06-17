@@ -1,6 +1,9 @@
 package com.ruoyi.project.monitor.operlog.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ruoyi.project.monitor.operlog.domain.OperLog;
 
 /**
@@ -8,6 +11,7 @@ import com.ruoyi.project.monitor.operlog.domain.OperLog;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface OperLogMapper
 {
     /**

@@ -1,6 +1,9 @@
 package com.ruoyi.project.monitor.logininfor.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
 
 /**
@@ -8,6 +11,7 @@ import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface LogininforMapper
 {
     /**

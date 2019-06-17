@@ -1,6 +1,9 @@
 package com.ruoyi.project.monitor.online.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ruoyi.project.monitor.online.domain.UserOnline;
 
 /**
@@ -8,6 +11,7 @@ import com.ruoyi.project.monitor.online.domain.UserOnline;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface UserOnlineMapper
 {
     /**

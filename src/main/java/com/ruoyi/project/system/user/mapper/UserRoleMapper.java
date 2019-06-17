@@ -1,6 +1,8 @@
 package com.ruoyi.project.system.user.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.project.system.user.domain.UserRole;
 
@@ -9,6 +11,7 @@ import com.ruoyi.project.system.user.domain.UserRole;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface UserRoleMapper
 {
     /**

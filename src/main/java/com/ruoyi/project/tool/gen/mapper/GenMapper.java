@@ -1,6 +1,9 @@
 package com.ruoyi.project.tool.gen.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ruoyi.project.tool.gen.domain.ColumnInfo;
 import com.ruoyi.project.tool.gen.domain.TableInfo;
 
@@ -9,6 +12,7 @@ import com.ruoyi.project.tool.gen.domain.TableInfo;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface GenMapper
 {
     /**

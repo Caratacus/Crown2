@@ -1,13 +1,17 @@
 package com.ruoyi.project.system.user.mapper;
 
-import com.ruoyi.project.system.user.domain.User;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.ruoyi.project.system.user.domain.User;
 
 /**
  * 用户表 数据层
  * 
  * @author ruoyi
  */
+@Mapper
 public interface UserMapper
 {
     /**

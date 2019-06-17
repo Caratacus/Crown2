@@ -1,6 +1,9 @@
 package com.ruoyi.project.system.role.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ruoyi.project.system.role.domain.RoleDept;
 
 /**
@@ -8,6 +11,7 @@ import com.ruoyi.project.system.role.domain.RoleDept;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface RoleDeptMapper
 {
     /**
