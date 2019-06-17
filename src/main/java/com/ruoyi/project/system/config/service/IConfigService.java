@@ -1,18 +1,19 @@
 package com.ruoyi.project.system.config.service;
 
-import com.ruoyi.project.system.config.domain.Config;
 import java.util.List;
+
+import com.ruoyi.project.system.config.domain.Config;
 
 /**
  * 参数配置 服务层
- * 
+ *
  * @author ruoyi
  */
-public interface IConfigService
-{
+public interface IConfigService {
+
     /**
      * 查询参数配置信息
-     * 
+     *
      * @param configId 参数配置ID
      * @return 参数配置信息
      */
@@ -20,7 +21,7 @@ public interface IConfigService
 
     /**
      * 根据键名查询参数配置信息
-     * 
+     *
      * @param configKey 参数键名
      * @return 参数键值
      */
@@ -28,7 +29,7 @@ public interface IConfigService
 
     /**
      * 查询参数配置列表
-     * 
+     *
      * @param config 参数配置信息
      * @return 参数配置集合
      */
@@ -36,7 +37,7 @@ public interface IConfigService
 
     /**
      * 新增参数配置
-     * 
+     *
      * @param config 参数配置信息
      * @return 结果
      */
@@ -44,7 +45,7 @@ public interface IConfigService
 
     /**
      * 修改参数配置
-     * 
+     *
      * @param config 参数配置信息
      * @return 结果
      */
@@ -52,7 +53,7 @@ public interface IConfigService
 
     /**
      * 批量删除参数配置信息
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
@@ -60,7 +61,7 @@ public interface IConfigService
 
     /**
      * 校验参数键名是否唯一
-     * 
+     *
      * @param config 参数信息
      * @return 结果
      */

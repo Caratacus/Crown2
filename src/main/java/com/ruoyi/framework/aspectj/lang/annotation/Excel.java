@@ -7,13 +7,13 @@ import java.lang.annotation.Target;
 
 /**
  * 自定义导出Excel数据注解
- * 
+ *
  * @author ruoyi
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Excel
-{
+public @interface Excel {
+
     /**
      * 导出到Excel中的名字.
      */
@@ -74,18 +74,15 @@ public @interface Excel
      */
     Type type() default Type.ALL;
 
-    public enum Type
-    {
+    public enum Type {
         ALL(0), EXPORT(1), IMPORT(2);
         private final int value;
 
-        Type(int value)
-        {
+        Type(int value) {
             this.value = value;
         }
 
-        public int value()
-        {
+        public int value() {
             return this.value;
         }
     }

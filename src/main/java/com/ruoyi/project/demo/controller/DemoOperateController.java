@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -25,16 +27,17 @@ import com.ruoyi.project.demo.domain.UserOperateModel;
 
 /**
  * 操作控制
- * 
+ *
  * @author ruoyi
  */
 @Controller
 @RequestMapping("/demo/operate")
-public class DemoOperateController extends BaseController
-{
+public class DemoOperateController extends BaseController {
+
     private String prefix = "demo/operate";
 
     private final static Map<Integer, UserOperateModel> users = new LinkedHashMap<Integer, UserOperateModel>();
+
     {
         users.put(1, new UserOperateModel(1, "1000001", "测试1", "0", "15888888888", "ry@qq.com", 150.0, "0"));
         users.put(2, new UserOperateModel(2, "1000002", "测试2", "1", "15666666666", "ry@qq.com", 180.0, "1"));
@@ -68,8 +71,7 @@ public class DemoOperateController extends BaseController
      * 表格
      */
     @GetMapping("/table")
-    public String table()
-    {
+    public String table() {
         return prefix + "/table";
     }
 
@@ -77,8 +79,7 @@ public class DemoOperateController extends BaseController
      * 其他
      */
     @GetMapping("/other")
-    public String other()
-    {
+    public String other() {
         return prefix + "/other";
     }
 
@@ -87,33 +88,27 @@ public class DemoOperateController extends BaseController
      */
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(UserOperateModel userModel)
-    {
+    public TableDataInfo list(UserOperateModel userModel) {
         TableDataInfo rspData = new TableDataInfo();
         List<UserOperateModel> userList = new ArrayList<UserOperateModel>(users.values());
         // 查询条件过滤
-        if (StringUtils.isNotEmpty(userModel.getSearchValue()))
-        {
+        if (StringUtils.isNotEmpty(userModel.getSearchValue())) {
             userList.clear();
-            for (Map.Entry<Integer, UserOperateModel> entry : users.entrySet())
-            {
-                if (entry.getValue().getUserName().equals(userModel.getSearchValue()))
-                {
+            for (Map.Entry<Integer, UserOperateModel> entry : users.entrySet()) {
+                if (entry.getValue().getUserName().equals(userModel.getSearchValue())) {
                     userList.add(entry.getValue());
                 }
             }
         }
         PageDomain pageDomain = TableSupport.buildPageRequest();
-        if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize())
-        {
+        if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());
             return rspData;
         }
         Integer pageNum = (pageDomain.getPageNum() - 1) * 10;
         Integer pageSize = pageDomain.getPageNum() * 10;
-        if (pageSize > userList.size())
-        {
+        if (pageSize > userList.size()) {
             pageSize = userList.size();
         }
         rspData.setRows(userList.subList(pageNum, pageSize));
@@ -125,8 +120,7 @@ public class DemoOperateController extends BaseController
      * 新增用户
      */
     @GetMapping("/add")
-    public String add(ModelMap mmap)
-    {
+    public String add(ModelMap mmap) {
         return prefix + "/add";
     }
 
@@ -135,8 +129,7 @@ public class DemoOperateController extends BaseController
      */
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(UserOperateModel user)
-    {
+    public AjaxResult addSave(UserOperateModel user) {
         Integer userId = users.size() + 1;
         user.setUserId(userId);
         return AjaxResult.success(users.put(userId, user));
@@ -146,8 +139,7 @@ public class DemoOperateController extends BaseController
      * 修改用户
      */
     @GetMapping("/edit/{userId}")
-    public String edit(@PathVariable("userId") Integer userId, ModelMap mmap)
-    {
+    public String edit(@PathVariable("userId") Integer userId, ModelMap mmap) {
         mmap.put("user", users.get(userId));
         return prefix + "/edit";
     }
@@ -157,8 +149,7 @@ public class DemoOperateController extends BaseController
      */
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(UserOperateModel user)
-    {
+    public AjaxResult editSave(UserOperateModel user) {
         return AjaxResult.success(users.put(user.getUserId(), user));
     }
 
@@ -167,8 +158,7 @@ public class DemoOperateController extends BaseController
      */
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(UserOperateModel user)
-    {
+    public AjaxResult export(UserOperateModel user) {
         List<UserOperateModel> list = new ArrayList<UserOperateModel>(users.values());
         ExcelUtil<UserOperateModel> util = new ExcelUtil<UserOperateModel>(UserOperateModel.class);
         return util.exportExcel(list, "用户数据");
@@ -179,8 +169,7 @@ public class DemoOperateController extends BaseController
      */
     @GetMapping("/importTemplate")
     @ResponseBody
-    public AjaxResult importTemplate()
-    {
+    public AjaxResult importTemplate() {
         ExcelUtil<UserOperateModel> util = new ExcelUtil<UserOperateModel>(UserOperateModel.class);
         return util.importTemplateExcel("用户数据");
     }
@@ -190,8 +179,7 @@ public class DemoOperateController extends BaseController
      */
     @PostMapping("/importData")
     @ResponseBody
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
-    {
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
         ExcelUtil<UserOperateModel> util = new ExcelUtil<UserOperateModel>(UserOperateModel.class);
         List<UserOperateModel> userList = util.importExcel(file.getInputStream());
         String message = importUser(userList, updateSupport);
@@ -203,11 +191,9 @@ public class DemoOperateController extends BaseController
      */
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids)
-    {
+    public AjaxResult remove(String ids) {
         Integer[] userIds = Convert.toIntArray(ids);
-        for (Integer userId : userIds)
-        {
+        for (Integer userId : userIds) {
             users.remove(userId);
         }
         return AjaxResult.success();
@@ -217,85 +203,67 @@ public class DemoOperateController extends BaseController
      * 查看详细
      */
     @GetMapping("/detail/{userId}")
-    public String detail(@PathVariable("userId") Integer userId, ModelMap mmap)
-    {
+    public String detail(@PathVariable("userId") Integer userId, ModelMap mmap) {
         mmap.put("user", users.get(userId));
         return prefix + "/detail";
     }
 
     @PostMapping("/clean")
     @ResponseBody
-    public AjaxResult clean()
-    {
+    public AjaxResult clean() {
         users.clear();
         return success();
     }
 
     /**
      * 导入用户数据
-     * 
-     * @param userList 用户数据列表
+     *
+     * @param userList        用户数据列表
      * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
      * @return 结果
      */
-    public String importUser(List<UserOperateModel> userList, Boolean isUpdateSupport)
-    {
-        if (StringUtils.isNull(userList) || userList.size() == 0)
-        {
+    public String importUser(List<UserOperateModel> userList, Boolean isUpdateSupport) {
+        if (StringUtils.isNull(userList) || userList.size() == 0) {
             throw new BusinessException("导入用户数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;
         StringBuilder successMsg = new StringBuilder();
         StringBuilder failureMsg = new StringBuilder();
-        for (UserOperateModel user : userList)
-        {
-            try
-            {
+        for (UserOperateModel user : userList) {
+            try {
                 // 验证是否存在这个用户
                 boolean userFlag = false;
-                for (Map.Entry<Integer, UserOperateModel> entry : users.entrySet())
-                {
-                    if (entry.getValue().getUserName().equals(user.getUserName()))
-                    {
+                for (Map.Entry<Integer, UserOperateModel> entry : users.entrySet()) {
+                    if (entry.getValue().getUserName().equals(user.getUserName())) {
                         userFlag = true;
                         break;
                     }
                 }
-                if (!userFlag)
-                {
+                if (!userFlag) {
                     Integer userId = users.size() + 1;
                     user.setUserId(userId);
                     users.put(userId, user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、用户 " + user.getUserName() + " 导入成功");
-                }
-                else if (isUpdateSupport)
-                {
+                } else if (isUpdateSupport) {
                     users.put(user.getUserId(), user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、用户 " + user.getUserName() + " 更新成功");
-                }
-                else
-                {
+                } else {
                     failureNum++;
                     failureMsg.append("<br/>" + failureNum + "、用户 " + user.getUserName() + " 已存在");
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、账号 " + user.getUserName() + " 导入失败：";
                 failureMsg.append(msg + e.getMessage());
             }
         }
-        if (failureNum > 0)
-        {
+        if (failureNum > 0) {
             failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
             throw new BusinessException(failureMsg.toString());
-        }
-        else
-        {
+        } else {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();

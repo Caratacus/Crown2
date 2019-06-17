@@ -8,15 +8,15 @@ import com.ruoyi.project.monitor.online.domain.UserOnline;
 
 /**
  * 在线用户 数据层
- * 
+ *
  * @author ruoyi
  */
 @Mapper
-public interface UserOnlineMapper
-{
+public interface UserOnlineMapper {
+
     /**
      * 通过会话序号查询信息
-     * 
+     *
      * @param sessionId 会话ID
      * @return 在线用户信息
      */
@@ -24,7 +24,7 @@ public interface UserOnlineMapper
 
     /**
      * 通过会话序号删除信息
-     * 
+     *
      * @param sessionId 会话ID
      * @return 在线用户信息
      */
@@ -32,7 +32,7 @@ public interface UserOnlineMapper
 
     /**
      * 保存会话信息
-     * 
+     *
      * @param online 会话信息
      * @return 结果
      */
@@ -40,7 +40,7 @@ public interface UserOnlineMapper
 
     /**
      * 查询会话集合
-     * 
+     *
      * @param userOnline 会话参数
      * @return 会话集合
      */
@@ -48,7 +48,7 @@ public interface UserOnlineMapper
 
     /**
      * 查询过期会话集合
-     * 
+     *
      * @param lastAccessTime 过期时间
      * @return 会话集合
      */

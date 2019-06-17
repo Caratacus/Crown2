@@ -2,24 +2,27 @@ package com.ruoyi.project.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.framework.web.domain.AjaxResult;
 
 /**
  * 表单相关
- * 
+ *
  * @author ruoyi
  */
 @Controller
 @RequestMapping("/demo/form")
-public class DemoFormController
-{
+public class DemoFormController {
+
     private String prefix = "demo/form";
 
     private final static List<UserFormModel> users = new ArrayList<UserFormModel>();
+
     {
         users.add(new UserFormModel(1, "1000001", "测试1", "15888888888"));
         users.add(new UserFormModel(2, "1000002", "测试2", "15666666666"));
@@ -32,8 +35,7 @@ public class DemoFormController
      * 按钮页
      */
     @GetMapping("/button")
-    public String button()
-    {
+    public String button() {
         return prefix + "/button";
     }
 
@@ -41,8 +43,7 @@ public class DemoFormController
      * 下拉框
      */
     @GetMapping("/select")
-    public String select()
-    {
+    public String select() {
         return prefix + "/select";
     }
 
@@ -50,8 +51,7 @@ public class DemoFormController
      * 表单校验
      */
     @GetMapping("/validate")
-    public String validate()
-    {
+    public String validate() {
         return prefix + "/validate";
     }
 
@@ -59,8 +59,7 @@ public class DemoFormController
      * 功能扩展（包含文件上传）
      */
     @GetMapping("/jasny")
-    public String jasny()
-    {
+    public String jasny() {
         return prefix + "/jasny";
     }
 
@@ -68,8 +67,7 @@ public class DemoFormController
      * 拖动排序
      */
     @GetMapping("/sortable")
-    public String sortable()
-    {
+    public String sortable() {
         return prefix + "/sortable";
     }
 
@@ -77,8 +75,7 @@ public class DemoFormController
      * 选项卡 & 面板
      */
     @GetMapping("/tabs_panels")
-    public String tabs_panels()
-    {
+    public String tabs_panels() {
         return prefix + "/tabs_panels";
     }
 
@@ -86,8 +83,7 @@ public class DemoFormController
      * 栅格
      */
     @GetMapping("/grid")
-    public String grid()
-    {
+    public String grid() {
         return prefix + "/grid";
     }
 
@@ -95,8 +91,7 @@ public class DemoFormController
      * 表单向导
      */
     @GetMapping("/wizard")
-    public String wizard()
-    {
+    public String wizard() {
         return prefix + "/wizard";
     }
 
@@ -104,8 +99,7 @@ public class DemoFormController
      * 文件上传
      */
     @GetMapping("/upload")
-    public String upload()
-    {
+    public String upload() {
         return prefix + "/upload";
     }
 
@@ -113,8 +107,7 @@ public class DemoFormController
      * 日期和时间页
      */
     @GetMapping("/datetime")
-    public String datetime()
-    {
+    public String datetime() {
         return prefix + "/datetime";
     }
 
@@ -122,8 +115,7 @@ public class DemoFormController
      * 左右互选组件
      */
     @GetMapping("/duallistbox")
-    public String duallistbox()
-    {
+    public String duallistbox() {
         return prefix + "/duallistbox";
     }
 
@@ -131,8 +123,7 @@ public class DemoFormController
      * 基本表单
      */
     @GetMapping("/basic")
-    public String basic()
-    {
+    public String basic() {
         return prefix + "/basic";
     }
 
@@ -140,8 +131,7 @@ public class DemoFormController
      * 搜索自动补全
      */
     @GetMapping("/autocomplete")
-    public String autocomplete()
-    {
+    public String autocomplete() {
         return prefix + "/autocomplete";
     }
 
@@ -150,8 +140,7 @@ public class DemoFormController
      */
     @GetMapping("/userModel")
     @ResponseBody
-    public AjaxResult userModel()
-    {
+    public AjaxResult userModel() {
         AjaxResult ajax = new AjaxResult();
 
         ajax.put("code", 200);
@@ -164,79 +153,76 @@ public class DemoFormController
      */
     @GetMapping("/collection")
     @ResponseBody
-    public AjaxResult collection()
-    {
-        String[] array = { "ruoyi 1", "ruoyi 2", "ruoyi 3", "ruoyi 4", "ruoyi 5" };
+    public AjaxResult collection() {
+        String[] array = {"ruoyi 1", "ruoyi 2", "ruoyi 3", "ruoyi 4", "ruoyi 5"};
         AjaxResult ajax = new AjaxResult();
         ajax.put("value", array);
         return ajax;
     }
 }
 
-class UserFormModel
-{
-    /** 用户ID */
+class UserFormModel {
+
+    /**
+     * 用户ID
+     */
     private int userId;
 
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userCode;
 
-    /** 用户姓名 */
+    /**
+     * 用户姓名
+     */
     private String userName;
 
-    /** 用户手机 */
+    /**
+     * 用户手机
+     */
     private String userPhone;
 
-    public UserFormModel()
-    {
+    public UserFormModel() {
 
     }
 
-    public UserFormModel(int userId, String userCode, String userName, String userPhone)
-    {
+    public UserFormModel(int userId, String userCode, String userName, String userPhone) {
         this.userId = userId;
         this.userCode = userCode;
         this.userName = userName;
         this.userPhone = userPhone;
     }
 
-    public int getUserId()
-    {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId)
-    {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public String getUserCode()
-    {
+    public String getUserCode() {
         return userCode;
     }
 
-    public void setUserCode(String userCode)
-    {
+    public void setUserCode(String userCode) {
         this.userCode = userCode;
     }
 
-    public String getUserName()
-    {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName)
-    {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public String getUserPhone()
-    {
+    public String getUserPhone() {
         return userPhone;
     }
 
-    public void setUserPhone(String userPhone)
-    {
+    public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
 

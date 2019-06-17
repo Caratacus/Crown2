@@ -1,16 +1,17 @@
 package com.ruoyi.common.utils.security;
 
 import org.apache.commons.lang3.StringUtils;
+
 import com.ruoyi.common.constant.PermissionConstants;
 import com.ruoyi.common.utils.MessageUtils;
 
 /**
  * permission 工具类
- * 
+ *
  * @author ruoyi
  */
-public class PermissionUtils
-{
+public class PermissionUtils {
+
     /**
      * 查看数据的权限
      */
@@ -43,33 +44,23 @@ public class PermissionUtils
 
     /**
      * 权限错误消息提醒
-     * 
+     *
      * @param permissionsStr 错误信息
      * @return 提示信息
      */
-    public static String getMsg(String permissionsStr)
-    {
+    public static String getMsg(String permissionsStr) {
         String permission = StringUtils.substringBetween(permissionsStr, "[", "]");
         String msg = MessageUtils.message(PERMISSION, permission);
-        if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.ADD_PERMISSION))
-        {
+        if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.ADD_PERMISSION)) {
             msg = MessageUtils.message(CREATE_PERMISSION, permission);
-        }
-        else if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.EDIT_PERMISSION))
-        {
+        } else if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.EDIT_PERMISSION)) {
             msg = MessageUtils.message(UPDATE_PERMISSION, permission);
-        }
-        else if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.REMOVE_PERMISSION))
-        {
+        } else if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.REMOVE_PERMISSION)) {
             msg = MessageUtils.message(DELETE_PERMISSION, permission);
-        }
-        else if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.EXPORT_PERMISSION))
-        {
+        } else if (StringUtils.endsWithIgnoreCase(permission, PermissionConstants.EXPORT_PERMISSION)) {
             msg = MessageUtils.message(EXPORT_PERMISSION, permission);
-        }
-        else if (StringUtils.endsWithAny(permission,
-                new String[] { PermissionConstants.VIEW_PERMISSION, PermissionConstants.LIST_PERMISSION }))
-        {
+        } else if (StringUtils.endsWithAny(permission,
+                new String[]{PermissionConstants.VIEW_PERMISSION, PermissionConstants.LIST_PERMISSION})) {
             msg = MessageUtils.message(VIEW_PERMISSION, permission);
         }
         return msg;

@@ -8,15 +8,15 @@ import com.ruoyi.project.system.notice.domain.Notice;
 
 /**
  * 公告 数据层
- * 
+ *
  * @author ruoyi
  */
 @Mapper
-public interface NoticeMapper
-{
+public interface NoticeMapper {
+
     /**
      * 查询公告信息
-     * 
+     *
      * @param noticeId 公告ID
      * @return 公告信息
      */
@@ -24,7 +24,7 @@ public interface NoticeMapper
 
     /**
      * 查询公告列表
-     * 
+     *
      * @param notice 公告信息
      * @return 公告集合
      */
@@ -32,7 +32,7 @@ public interface NoticeMapper
 
     /**
      * 新增公告
-     * 
+     *
      * @param notice 公告信息
      * @return 结果
      */
@@ -40,7 +40,7 @@ public interface NoticeMapper
 
     /**
      * 修改公告
-     * 
+     *
      * @param notice 公告信息
      * @return 结果
      */
@@ -48,7 +48,7 @@ public interface NoticeMapper
 
     /**
      * 批量删除公告
-     * 
+     *
      * @param noticeIds 需要删除的数据ID
      * @return 结果
      */
