@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/demo/icon")
 public class DemoIconController {
 
-    private String prefix = "demo/icon";
+    private final String prefix = "demo/icon";
 
     /**
      * FontAwesome图标

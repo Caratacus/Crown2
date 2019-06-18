@@ -61,7 +61,7 @@ public class PermissionService {
             try {
                 BeanInfo bi = Introspector.getBeanInfo(principal.getClass());
                 for (PropertyDescriptor pd : bi.getPropertyDescriptors()) {
-                    if (pd.getName().equals(property) == true) {
+                    if (pd.getName().equals(property)) {
                         return pd.getReadMethod().invoke(principal, (Object[]) null);
                     }
                 }

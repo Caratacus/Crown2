@@ -50,8 +50,7 @@ public class DeptServiceImpl implements IDeptService {
     @DataScope(tableAlias = "d")
     public List<Ztree> selectDeptTree(Dept dept) {
         List<Dept> deptList = deptMapper.selectDeptList(dept);
-        List<Ztree> ztrees = initZtree(deptList);
-        return ztrees;
+        return initZtree(deptList);
     }
 
     /**
@@ -63,7 +62,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     public List<Ztree> roleDeptTreeData(Role role) {
         Long roleId = role.getRoleId();
-        List<Ztree> ztrees = new ArrayList<Ztree>();
+        List<Ztree> ztrees;
         List<Dept> deptList = selectDeptList(new Dept());
         if (StringUtils.isNotNull(roleId)) {
             List<String> roleDeptList = deptMapper.selectRoleDeptTree(roleId);
@@ -92,7 +91,7 @@ public class DeptServiceImpl implements IDeptService {
      * @return 树结构列表
      */
     public List<Ztree> initZtree(List<Dept> deptList, List<String> roleDeptList) {
-        List<Ztree> ztrees = new ArrayList<Ztree>();
+        List<Ztree> ztrees = new ArrayList<>();
         boolean isCheck = StringUtils.isNotNull(roleDeptList);
         for (Dept dept : deptList) {
             if (UserConstants.DEPT_NORMAL.equals(dept.getStatus())) {

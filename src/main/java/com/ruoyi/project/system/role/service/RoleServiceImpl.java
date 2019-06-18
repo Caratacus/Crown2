@@ -136,7 +136,7 @@ public class RoleServiceImpl implements IRoleService {
      * @throws Exception
      */
     @Override
-    public int deleteRoleByIds(String ids) throws BusinessException {
+    public int deleteRoleByIds(String ids) {
         Long[] roleIds = Convert.toLongArray(ids);
         for (Long roleId : roleIds) {
             Role role = selectRoleById(roleId);
@@ -207,7 +207,7 @@ public class RoleServiceImpl implements IRoleService {
     public int insertRoleMenu(Role role) {
         int rows = 1;
         // 新增用户与角色管理
-        List<RoleMenu> list = new ArrayList<RoleMenu>();
+        List<RoleMenu> list = new ArrayList<>();
         for (Long menuId : role.getMenuIds()) {
             RoleMenu rm = new RoleMenu();
             rm.setRoleId(role.getRoleId());
@@ -228,7 +228,7 @@ public class RoleServiceImpl implements IRoleService {
     public int insertRoleDept(Role role) {
         int rows = 1;
         // 新增角色与部门（数据权限）管理
-        List<RoleDept> list = new ArrayList<RoleDept>();
+        List<RoleDept> list = new ArrayList<>();
         for (Long deptId : role.getDeptIds()) {
             RoleDept rd = new RoleDept();
             rd.setRoleId(role.getRoleId());
@@ -327,7 +327,7 @@ public class RoleServiceImpl implements IRoleService {
     public int insertAuthUsers(Long roleId, String userIds) {
         Long[] users = Convert.toLongArray(userIds);
         // 新增用户与角色管理
-        List<UserRole> list = new ArrayList<UserRole>();
+        List<UserRole> list = new ArrayList<>();
         for (Long userId : users) {
             UserRole ur = new UserRole();
             ur.setUserId(userId);

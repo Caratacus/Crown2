@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/demo/report")
 public class DemoReportController {
 
-    private String prefix = "demo/report";
+    private final String prefix = "demo/report";
 
     /**
      * 百度ECharts

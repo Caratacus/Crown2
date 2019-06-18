@@ -44,12 +44,12 @@ public class OnlineSessionFilter extends AccessControlFilter {
             return true;
         }
         Session session = onlineSessionDAO.readSession(subject.getSession().getId());
-        if (session != null && session instanceof OnlineSession) {
+        if (session instanceof OnlineSession) {
             OnlineSession onlineSession = (OnlineSession) session;
             request.setAttribute(ShiroConstants.ONLINE_SESSION, onlineSession);
             // 把user对象设置进去
             boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
-            if (isGuest == true) {
+            if (isGuest) {
                 User user = ShiroUtils.getSysUser();
                 if (user != null) {
                     onlineSession.setUserId(user.getUserId());

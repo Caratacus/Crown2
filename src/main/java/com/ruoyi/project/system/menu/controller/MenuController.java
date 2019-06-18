@@ -30,7 +30,7 @@ import com.ruoyi.project.system.role.domain.Role;
 @RequestMapping("/system/menu")
 public class MenuController extends BaseController {
 
-    private String prefix = "system/menu";
+    private final String prefix = "system/menu";
 
     @Autowired
     private IMenuService menuService;
@@ -45,8 +45,7 @@ public class MenuController extends BaseController {
     @GetMapping("/list")
     @ResponseBody
     public List<Menu> list(Menu menu) {
-        List<Menu> menuList = menuService.selectMenuList(menu);
-        return menuList;
+        return menuService.selectMenuList(menu);
     }
 
     /**
@@ -71,7 +70,7 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/add/{parentId}")
     public String add(@PathVariable("parentId") Long parentId, ModelMap mmap) {
-        Menu menu = null;
+        Menu menu;
         if (0L != parentId) {
             menu = menuService.selectMenuById(parentId);
         } else {
@@ -137,8 +136,7 @@ public class MenuController extends BaseController {
     @GetMapping("/roleMenuTreeData")
     @ResponseBody
     public List<Ztree> roleMenuTreeData(Role role) {
-        List<Ztree> ztrees = menuService.roleMenuTreeData(role);
-        return ztrees;
+        return menuService.roleMenuTreeData(role);
     }
 
     /**
@@ -147,8 +145,7 @@ public class MenuController extends BaseController {
     @GetMapping("/menuTreeData")
     @ResponseBody
     public List<Ztree> menuTreeData(Role role) {
-        List<Ztree> ztrees = menuService.menuTreeData();
-        return ztrees;
+        return menuService.menuTreeData();
     }
 
     /**

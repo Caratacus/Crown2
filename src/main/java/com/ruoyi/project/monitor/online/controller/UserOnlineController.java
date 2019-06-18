@@ -32,7 +32,7 @@ import com.ruoyi.project.monitor.online.service.IUserOnlineService;
 @RequestMapping("/monitor/online")
 public class UserOnlineController extends BaseController {
 
-    private String prefix = "monitor/online";
+    private final String prefix = "monitor/online";
 
     @Autowired
     private IUserOnlineService userOnlineService;

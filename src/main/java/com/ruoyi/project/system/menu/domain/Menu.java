@@ -75,7 +75,7 @@ public class Menu extends BaseEntity {
     /**
      * 子菜单
      */
-    private List<Menu> children = new ArrayList<Menu>();
+    private List<Menu> children = new ArrayList<>();
 
     public Long getMenuId() {
         return menuId;

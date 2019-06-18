@@ -49,7 +49,7 @@ public interface IDictTypeService {
      * @return 结果
      * @throws Exception 异常
      */
-    int deleteDictTypeByIds(String ids) throws Exception;
+    int deleteDictTypeByIds(String ids);
 
     /**
      * 新增保存字典类型信息

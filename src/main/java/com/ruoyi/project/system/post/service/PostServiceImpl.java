@@ -88,7 +88,7 @@ public class PostServiceImpl implements IPostService {
      * @throws Exception
      */
     @Override
-    public int deletePostByIds(String ids) throws BusinessException {
+    public int deletePostByIds(String ids) {
         Long[] postIds = Convert.toLongArray(ids);
         for (Long postId : postIds) {
             Post post = selectPostById(postId);

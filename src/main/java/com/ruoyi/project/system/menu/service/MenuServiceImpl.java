@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -47,7 +46,7 @@ public class MenuServiceImpl implements IMenuService {
      */
     @Override
     public List<Menu> selectMenusByUser(User user) {
-        List<Menu> menus = new LinkedList<Menu>();
+        List<Menu> menus;
         // 管理员显示所有菜单信息
         if (user.isAdmin()) {
             menus = menuMapper.selectMenuNormalAll();
@@ -104,7 +103,7 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public List<Ztree> roleMenuTreeData(Role role) {
         Long roleId = role.getRoleId();
-        List<Ztree> ztrees = new ArrayList<Ztree>();
+        List<Ztree> ztrees;
         List<Menu> menuList = menuMapper.selectMenuAll();
         if (StringUtils.isNotNull(roleId)) {
             List<String> roleMenuList = menuMapper.selectMenuTree(roleId);
@@ -123,8 +122,7 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public List<Ztree> menuTreeData() {
         List<Menu> menuList = menuMapper.selectMenuAll();
-        List<Ztree> ztrees = initZtree(menuList);
-        return ztrees;
+        return initZtree(menuList);
     }
 
     /**
@@ -163,7 +161,7 @@ public class MenuServiceImpl implements IMenuService {
      * @return 树结构列表
      */
     public List<Ztree> initZtree(List<Menu> menuList, List<String> roleMenuList, boolean permsFlag) {
-        List<Ztree> ztrees = new ArrayList<Ztree>();
+        List<Ztree> ztrees = new ArrayList<>();
         boolean isCheck = StringUtils.isNotNull(roleMenuList);
         for (Menu menu : menuList) {
             Ztree ztree = new Ztree();
@@ -180,10 +178,10 @@ public class MenuServiceImpl implements IMenuService {
     }
 
     public String transMenuName(Menu menu, List<String> roleMenuList, boolean permsFlag) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(menu.getMenuName());
         if (permsFlag) {
-            sb.append("<font color=\"#888\">&nbsp;&nbsp;&nbsp;" + menu.getPerms() + "</font>");
+            sb.append("<font color=\"#888\">&nbsp;&nbsp;&nbsp;").append(menu.getPerms()).append("</font>");
         }
         return sb.toString();
     }

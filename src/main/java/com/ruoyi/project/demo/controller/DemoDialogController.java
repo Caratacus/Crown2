@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/demo/modal")
 public class DemoDialogController {
 
-    private String prefix = "demo/modal";
+    private final String prefix = "demo/modal";
 
     /**
      * 模态窗口

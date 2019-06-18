@@ -81,7 +81,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
         UserOnlineServiceImpl userOnlineService = SpringUtils.getBean(UserOnlineServiceImpl.class);
         List<UserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
         // 批量过期删除
-        List<String> needOfflineIdList = new ArrayList<String>();
+        List<String> needOfflineIdList = new ArrayList<>();
         for (UserOnline userOnline : userOnlineList) {
             try {
                 SessionKey key = new DefaultSessionKey(userOnline.getSessionId());

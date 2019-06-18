@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -112,7 +113,7 @@ public class GenServiceImpl implements IGenService {
             tpl.merge(context, sw);
             try {
                 // 添加到zip
-                zip.putNextEntry(new ZipEntry(GenUtils.getFileName(template, table, moduleName)));
+                zip.putNextEntry(new ZipEntry(Objects.requireNonNull(GenUtils.getFileName(template, table, moduleName))));
                 IOUtils.write(sw.toString(), zip, Constants.UTF8);
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();

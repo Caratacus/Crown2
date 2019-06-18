@@ -2,6 +2,7 @@ package com.ruoyi.project.system.user.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -49,7 +50,7 @@ public class CaptchaController extends BaseController {
             response.setContentType("image/jpeg");
 
             String type = request.getParameter("type");
-            String capStr = null;
+            String capStr;
             String code = null;
             BufferedImage bi = null;
             if ("math".equals(type)) {
@@ -63,7 +64,7 @@ public class CaptchaController extends BaseController {
             }
             session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
             out = response.getOutputStream();
-            ImageIO.write(bi, "jpg", out);
+            ImageIO.write(Objects.requireNonNull(bi), "jpg", out);
             out.flush();
 
         } catch (Exception e) {

@@ -28,7 +28,7 @@ public class XssFilter implements Filter {
     /**
      * 排除链接
      */
-    public List<String> excludes = new ArrayList<>();
+    public final List<String> excludes = new ArrayList<>();
 
     /**
      * xss过滤开关

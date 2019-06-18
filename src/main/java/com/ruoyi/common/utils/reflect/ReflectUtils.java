@@ -32,7 +32,7 @@ public class ReflectUtils {
 
     private static final String CGLIB_CLASS_SEPARATOR = "$$";
 
-    private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
 
     /**
      * 调用Getter方法.

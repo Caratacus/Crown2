@@ -19,11 +19,11 @@ import com.ruoyi.framework.web.domain.AjaxResult;
 @RequestMapping("/demo/form")
 public class DemoFormController {
 
-    private String prefix = "demo/form";
+    private final String prefix = "demo/form";
 
-    private final static List<UserFormModel> users = new ArrayList<UserFormModel>();
+    private final static List<UserFormModel> users = new ArrayList<>();
 
-    {
+    static {
         users.add(new UserFormModel(1, "1000001", "测试1", "15888888888"));
         users.add(new UserFormModel(2, "1000002", "测试2", "15666666666"));
         users.add(new UserFormModel(3, "1000003", "测试3", "15666666666"));

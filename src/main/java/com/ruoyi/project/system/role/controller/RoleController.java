@@ -33,7 +33,7 @@ import com.ruoyi.project.system.user.service.IUserService;
 @RequestMapping("/system/role")
 public class RoleController extends BaseController {
 
-    private String prefix = "system/role";
+    private final String prefix = "system/role";
 
     @Autowired
     private IRoleService roleService;
@@ -62,7 +62,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public AjaxResult export(Role role) {
         List<Role> list = roleService.selectRoleList(role);
-        ExcelUtil<Role> util = new ExcelUtil<Role>(Role.class);
+        ExcelUtil<Role> util = new ExcelUtil<>(Role.class);
         return util.exportExcel(list, "角色数据");
     }
 

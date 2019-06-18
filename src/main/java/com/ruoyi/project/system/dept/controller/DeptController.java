@@ -31,7 +31,7 @@ import com.ruoyi.project.system.role.domain.Role;
 @RequestMapping("/system/dept")
 public class DeptController extends BaseController {
 
-    private String prefix = "system/dept";
+    private final String prefix = "system/dept";
 
     @Autowired
     private IDeptService deptService;
@@ -46,8 +46,7 @@ public class DeptController extends BaseController {
     @GetMapping("/list")
     @ResponseBody
     public List<Dept> list(Dept dept) {
-        List<Dept> deptList = deptService.selectDeptList(dept);
-        return deptList;
+        return deptService.selectDeptList(dept);
     }
 
     /**
@@ -135,8 +134,7 @@ public class DeptController extends BaseController {
     @GetMapping("/treeData")
     @ResponseBody
     public List<Ztree> treeData() {
-        List<Ztree> ztrees = deptService.selectDeptTree(new Dept());
-        return ztrees;
+        return deptService.selectDeptTree(new Dept());
     }
 
     /**
@@ -145,7 +143,6 @@ public class DeptController extends BaseController {
     @GetMapping("/roleDeptTreeData")
     @ResponseBody
     public List<Ztree> deptTreeData(Role role) {
-        List<Ztree> ztrees = deptService.roleDeptTreeData(role);
-        return ztrees;
+        return deptService.roleDeptTreeData(role);
     }
 }

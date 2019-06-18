@@ -122,8 +122,7 @@ public class ShiroConfig {
         try {
             inputStream = ResourceUtils.getInputStreamForPath(configFile);
             byte[] b = IOUtils.toByteArray(inputStream);
-            InputStream in = new ByteArrayInputStream(b);
-            return in;
+            return new ByteArrayInputStream(b);
         } catch (IOException e) {
             throw new ConfigurationException(
                     "Unable to obtain input stream for cacheManagerConfigFile [" + configFile + "]", e);
@@ -147,8 +146,7 @@ public class ShiroConfig {
      */
     @Bean
     public OnlineSessionDAO sessionDAO() {
-        OnlineSessionDAO sessionDAO = new OnlineSessionDAO();
-        return sessionDAO;
+        return new OnlineSessionDAO();
     }
 
     /**
@@ -156,8 +154,7 @@ public class ShiroConfig {
      */
     @Bean
     public OnlineSessionFactory sessionFactory() {
-        OnlineSessionFactory sessionFactory = new OnlineSessionFactory();
-        return sessionFactory;
+        return new OnlineSessionFactory();
     }
 
     /**
@@ -245,7 +242,7 @@ public class ShiroConfig {
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
-        Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+        Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("onlineSession", onlineSessionFilter());
         filters.put("syncOnlineSession", syncOnlineSessionFilter());
         filters.put("captchaValidate", captchaValidateFilter());
@@ -276,8 +273,7 @@ public class ShiroConfig {
      */
     @Bean
     public SyncOnlineSessionFilter syncOnlineSessionFilter() {
-        SyncOnlineSessionFilter syncOnlineSessionFilter = new SyncOnlineSessionFilter();
-        return syncOnlineSessionFilter;
+        return new SyncOnlineSessionFilter();
     }
 
     /**

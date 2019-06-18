@@ -34,11 +34,11 @@ import com.ruoyi.project.demo.domain.UserOperateModel;
 @RequestMapping("/demo/operate")
 public class DemoOperateController extends BaseController {
 
-    private String prefix = "demo/operate";
+    private final String prefix = "demo/operate";
 
-    private final static Map<Integer, UserOperateModel> users = new LinkedHashMap<Integer, UserOperateModel>();
+    private final static Map<Integer, UserOperateModel> users = new LinkedHashMap<>();
 
-    {
+    static {
         users.put(1, new UserOperateModel(1, "1000001", "测试1", "0", "15888888888", "ry@qq.com", 150.0, "0"));
         users.put(2, new UserOperateModel(2, "1000002", "测试2", "1", "15666666666", "ry@qq.com", 180.0, "1"));
         users.put(3, new UserOperateModel(3, "1000003", "测试3", "0", "15666666666", "ry@qq.com", 110.0, "1"));
@@ -90,7 +90,7 @@ public class DemoOperateController extends BaseController {
     @ResponseBody
     public TableDataInfo list(UserOperateModel userModel) {
         TableDataInfo rspData = new TableDataInfo();
-        List<UserOperateModel> userList = new ArrayList<UserOperateModel>(users.values());
+        List<UserOperateModel> userList = new ArrayList<>(users.values());
         // 查询条件过滤
         if (StringUtils.isNotEmpty(userModel.getSearchValue())) {
             userList.clear();
@@ -106,8 +106,8 @@ public class DemoOperateController extends BaseController {
             rspData.setTotal(userList.size());
             return rspData;
         }
-        Integer pageNum = (pageDomain.getPageNum() - 1) * 10;
-        Integer pageSize = pageDomain.getPageNum() * 10;
+        int pageNum = (pageDomain.getPageNum() - 1) * 10;
+        int pageSize = pageDomain.getPageNum() * 10;
         if (pageSize > userList.size()) {
             pageSize = userList.size();
         }
@@ -130,7 +130,7 @@ public class DemoOperateController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(UserOperateModel user) {
-        Integer userId = users.size() + 1;
+        int userId = users.size() + 1;
         user.setUserId(userId);
         return AjaxResult.success(users.put(userId, user));
     }
@@ -159,8 +159,8 @@ public class DemoOperateController extends BaseController {
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(UserOperateModel user) {
-        List<UserOperateModel> list = new ArrayList<UserOperateModel>(users.values());
-        ExcelUtil<UserOperateModel> util = new ExcelUtil<UserOperateModel>(UserOperateModel.class);
+        List<UserOperateModel> list = new ArrayList<>(users.values());
+        ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
         return util.exportExcel(list, "用户数据");
     }
 
@@ -170,7 +170,7 @@ public class DemoOperateController extends BaseController {
     @GetMapping("/importTemplate")
     @ResponseBody
     public AjaxResult importTemplate() {
-        ExcelUtil<UserOperateModel> util = new ExcelUtil<UserOperateModel>(UserOperateModel.class);
+        ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
         return util.importTemplateExcel("用户数据");
     }
 
@@ -180,7 +180,7 @@ public class DemoOperateController extends BaseController {
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
-        ExcelUtil<UserOperateModel> util = new ExcelUtil<UserOperateModel>(UserOperateModel.class);
+        ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
         List<UserOperateModel> userList = util.importExcel(file.getInputStream());
         String message = importUser(userList, updateSupport);
         return AjaxResult.success(message);
@@ -241,23 +241,23 @@ public class DemoOperateController extends BaseController {
                     }
                 }
                 if (!userFlag) {
-                    Integer userId = users.size() + 1;
+                    int userId = users.size() + 1;
                     user.setUserId(userId);
                     users.put(userId, user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、用户 " + user.getUserName() + " 导入成功");
+                    successMsg.append("<br/>").append(successNum).append("、用户 ").append(user.getUserName()).append(" 导入成功");
                 } else if (isUpdateSupport) {
                     users.put(user.getUserId(), user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、用户 " + user.getUserName() + " 更新成功");
+                    successMsg.append("<br/>").append(successNum).append("、用户 ").append(user.getUserName()).append(" 更新成功");
                 } else {
                     failureNum++;
-                    failureMsg.append("<br/>" + failureNum + "、用户 " + user.getUserName() + " 已存在");
+                    failureMsg.append("<br/>").append(failureNum).append("、用户 ").append(user.getUserName()).append(" 已存在");
                 }
             } catch (Exception e) {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、账号 " + user.getUserName() + " 导入失败：";
-                failureMsg.append(msg + e.getMessage());
+                failureMsg.append(msg).append(e.getMessage());
             }
         }
         if (failureNum > 0) {

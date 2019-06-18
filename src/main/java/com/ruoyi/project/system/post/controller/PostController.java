@@ -30,7 +30,7 @@ import com.ruoyi.project.system.post.service.IPostService;
 @RequestMapping("/system/post")
 public class PostController extends BaseController {
 
-    private String prefix = "system/post";
+    private final String prefix = "system/post";
 
     @Autowired
     private IPostService postService;
@@ -56,7 +56,7 @@ public class PostController extends BaseController {
     @ResponseBody
     public AjaxResult export(Post post) {
         List<Post> list = postService.selectPostList(post);
-        ExcelUtil<Post> util = new ExcelUtil<Post>(Post.class);
+        ExcelUtil<Post> util = new ExcelUtil<>(Post.class);
         return util.exportExcel(list, "岗位数据");
     }
 

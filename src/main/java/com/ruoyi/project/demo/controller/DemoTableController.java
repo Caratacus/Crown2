@@ -29,11 +29,11 @@ import com.ruoyi.framework.web.page.TableSupport;
 @RequestMapping("/demo/table")
 public class DemoTableController extends BaseController {
 
-    private String prefix = "demo/table";
+    private final String prefix = "demo/table";
 
-    private final static List<UserTableModel> users = new ArrayList<UserTableModel>();
+    private final static List<UserTableModel> users = new ArrayList<>();
 
-    {
+    static {
         users.add(new UserTableModel(1, "1000001", "测试1", "0", "15888888888", "ry@qq.com", 150.0, "0"));
         users.add(new UserTableModel(2, "1000002", "测试2", "1", "15666666666", "ry@qq.com", 180.0, "1"));
         users.add(new UserTableModel(3, "1000003", "测试3", "0", "15666666666", "ry@qq.com", 110.0, "1"));
@@ -181,7 +181,7 @@ public class DemoTableController extends BaseController {
     @ResponseBody
     public TableDataInfo list(UserTableModel userModel) {
         TableDataInfo rspData = new TableDataInfo();
-        List<UserTableModel> userList = new ArrayList<UserTableModel>(Arrays.asList(new UserTableModel[users.size()]));
+        List<UserTableModel> userList = new ArrayList<>(Arrays.asList(new UserTableModel[users.size()]));
         Collections.copy(userList, users);
         // 查询条件过滤
         if (StringUtils.isNotEmpty(userModel.getUserName())) {
@@ -198,8 +198,8 @@ public class DemoTableController extends BaseController {
             rspData.setTotal(userList.size());
             return rspData;
         }
-        Integer pageNum = (pageDomain.getPageNum() - 1) * 10;
-        Integer pageSize = pageDomain.getPageNum() * 10;
+        int pageNum = (pageDomain.getPageNum() - 1) * 10;
+        int pageSize = pageDomain.getPageNum() * 10;
         if (pageSize > userList.size()) {
             pageSize = userList.size();
         }

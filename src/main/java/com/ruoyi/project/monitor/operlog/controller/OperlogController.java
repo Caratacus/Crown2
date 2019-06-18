@@ -30,7 +30,7 @@ import com.ruoyi.project.monitor.operlog.service.IOperLogService;
 @RequestMapping("/monitor/operlog")
 public class OperlogController extends BaseController {
 
-    private String prefix = "monitor/operlog";
+    private final String prefix = "monitor/operlog";
 
     @Autowired
     private IOperLogService operLogService;
@@ -56,7 +56,7 @@ public class OperlogController extends BaseController {
     @ResponseBody
     public AjaxResult export(OperLog operLog) {
         List<OperLog> list = operLogService.selectOperLogList(operLog);
-        ExcelUtil<OperLog> util = new ExcelUtil<OperLog>(OperLog.class);
+        ExcelUtil<OperLog> util = new ExcelUtil<>(OperLog.class);
         return util.exportExcel(list, "操作日志");
     }
 

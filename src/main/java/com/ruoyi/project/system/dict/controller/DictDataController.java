@@ -30,7 +30,7 @@ import com.ruoyi.project.system.dict.service.IDictDataService;
 @RequestMapping("/system/dict/data")
 public class DictDataController extends BaseController {
 
-    private String prefix = "system/dict/data";
+    private final String prefix = "system/dict/data";
 
     @Autowired
     private IDictDataService dictDataService;
@@ -56,7 +56,7 @@ public class DictDataController extends BaseController {
     @ResponseBody
     public AjaxResult export(DictData dictData) {
         List<DictData> list = dictDataService.selectDictDataList(dictData);
-        ExcelUtil<DictData> util = new ExcelUtil<DictData>(DictData.class);
+        ExcelUtil<DictData> util = new ExcelUtil<>(DictData.class);
         return util.exportExcel(list, "字典数据");
     }
 

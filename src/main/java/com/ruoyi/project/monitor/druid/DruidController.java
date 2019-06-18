@@ -16,7 +16,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 @RequestMapping("/monitor/data")
 public class DruidController extends BaseController {
 
-    private String prefix = "/monitor/druid";
+    private final String prefix = "/monitor/druid";
 
     @RequiresPermissions("monitor:data:view")
     @GetMapping()

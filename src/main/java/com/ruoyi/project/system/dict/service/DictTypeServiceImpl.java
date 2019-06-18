@@ -79,7 +79,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
      * @return 结果
      */
     @Override
-    public int deleteDictTypeByIds(String ids) throws BusinessException {
+    public int deleteDictTypeByIds(String ids) {
         Long[] dictIds = Convert.toLongArray(ids);
         for (Long dictId : dictIds) {
             DictType dictType = selectDictTypeById(dictId);

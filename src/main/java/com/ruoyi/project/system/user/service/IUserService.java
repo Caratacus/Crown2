@@ -82,7 +82,7 @@ public interface IUserService {
      * @return 结果
      * @throws Exception 异常
      */
-    int deleteUserByIds(String ids) throws Exception;
+    int deleteUserByIds(String ids);
 
     /**
      * 保存用户信息

@@ -70,7 +70,7 @@ public class TreeUtils {
         return tlist;
     }
 
-    List<Menu> returnList = new ArrayList<>();
+    final List<Menu> returnList = new ArrayList<>();
 
     /**
      * 根据父节点的ID获取所有子节点

@@ -32,7 +32,7 @@ import com.ruoyi.project.tool.gen.service.IGenService;
 @RequestMapping("/tool/gen")
 public class GenController extends BaseController {
 
-    private String prefix = "tool/gen";
+    private final String prefix = "tool/gen";
 
     @Autowired
     private IGenService genService;

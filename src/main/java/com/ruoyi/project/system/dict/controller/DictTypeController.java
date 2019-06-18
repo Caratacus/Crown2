@@ -30,7 +30,7 @@ import com.ruoyi.project.system.dict.service.IDictTypeService;
 @RequestMapping("/system/dict")
 public class DictTypeController extends BaseController {
 
-    private String prefix = "system/dict/type";
+    private final String prefix = "system/dict/type";
 
     @Autowired
     private IDictTypeService dictTypeService;
@@ -57,7 +57,7 @@ public class DictTypeController extends BaseController {
     public AjaxResult export(DictType dictType) {
 
         List<DictType> list = dictTypeService.selectDictTypeList(dictType);
-        ExcelUtil<DictType> util = new ExcelUtil<DictType>(DictType.class);
+        ExcelUtil<DictType> util = new ExcelUtil<>(DictType.class);
         return util.exportExcel(list, "字典类型");
     }
 

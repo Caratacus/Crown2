@@ -160,7 +160,7 @@ public class UserServiceImpl implements IUserService {
      * @return 结果
      */
     @Override
-    public int deleteUserByIds(String ids) throws BusinessException {
+    public int deleteUserByIds(String ids) {
         Long[] userIds = Convert.toLongArray(ids);
         for (Long userId : userIds) {
             if (User.isAdmin(userId)) {
@@ -246,7 +246,7 @@ public class UserServiceImpl implements IUserService {
         Long[] roles = user.getRoleIds();
         if (StringUtils.isNotNull(roles)) {
             // 新增用户与角色管理
-            List<UserRole> list = new ArrayList<UserRole>();
+            List<UserRole> list = new ArrayList<>();
             for (Long roleId : user.getRoleIds()) {
                 UserRole ur = new UserRole();
                 ur.setUserId(user.getUserId());
@@ -268,7 +268,7 @@ public class UserServiceImpl implements IUserService {
         Long[] posts = user.getPostIds();
         if (StringUtils.isNotNull(posts)) {
             // 新增用户与岗位管理
-            List<UserPost> list = new ArrayList<UserPost>();
+            List<UserPost> list = new ArrayList<>();
             for (Long postId : user.getPostIds()) {
                 UserPost up = new UserPost();
                 up.setUserId(user.getUserId());
@@ -337,7 +337,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public String selectUserRoleGroup(Long userId) {
         List<Role> list = roleMapper.selectRolesByUserId(userId);
-        StringBuffer idsStr = new StringBuffer();
+        StringBuilder idsStr = new StringBuilder();
         for (Role role : list) {
             idsStr.append(role.getRoleName()).append(",");
         }
@@ -356,7 +356,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public String selectUserPostGroup(Long userId) {
         List<Post> list = postMapper.selectPostsByUserId(userId);
-        StringBuffer idsStr = new StringBuffer();
+        StringBuilder idsStr = new StringBuilder();
         for (Post post : list) {
             idsStr.append(post.getPostName()).append(",");
         }
@@ -393,20 +393,20 @@ public class UserServiceImpl implements IUserService {
                     user.setCreateBy(operName);
                     this.insertUser(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginName() + " 导入成功");
+                    successMsg.append("<br/>").append(successNum).append("、账号 ").append(user.getLoginName()).append(" 导入成功");
                 } else if (isUpdateSupport) {
                     user.setUpdateBy(operName);
                     this.updateUser(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginName() + " 更新成功");
+                    successMsg.append("<br/>").append(successNum).append("、账号 ").append(user.getLoginName()).append(" 更新成功");
                 } else {
                     failureNum++;
-                    failureMsg.append("<br/>" + failureNum + "、账号 " + user.getLoginName() + " 已存在");
+                    failureMsg.append("<br/>").append(failureNum).append("、账号 ").append(user.getLoginName()).append(" 已存在");
                 }
             } catch (Exception e) {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、账号 " + user.getLoginName() + " 导入失败：";
-                failureMsg.append(msg + e.getMessage());
+                failureMsg.append(msg).append(e.getMessage());
                 log.error(msg, e);
             }
         }

@@ -30,7 +30,7 @@ import com.ruoyi.project.system.config.service.IConfigService;
 @RequestMapping("/system/config")
 public class ConfigController extends BaseController {
 
-    private String prefix = "system/config";
+    private final String prefix = "system/config";
 
     @Autowired
     private IConfigService configService;
@@ -59,7 +59,7 @@ public class ConfigController extends BaseController {
     @ResponseBody
     public AjaxResult export(Config config) {
         List<Config> list = configService.selectConfigList(config);
-        ExcelUtil<Config> util = new ExcelUtil<Config>(Config.class);
+        ExcelUtil<Config> util = new ExcelUtil<>(Config.class);
         return util.exportExcel(list, "参数数据");
     }
 

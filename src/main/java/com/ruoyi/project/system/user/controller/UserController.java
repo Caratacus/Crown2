@@ -35,7 +35,7 @@ import com.ruoyi.project.system.user.service.IUserService;
 @RequestMapping("/system/user")
 public class UserController extends BaseController {
 
-    private String prefix = "system/user";
+    private final String prefix = "system/user";
 
     @Autowired
     private IUserService userService;
@@ -67,7 +67,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public AjaxResult export(User user) {
         List<User> list = userService.selectUserList(user);
-        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        ExcelUtil<User> util = new ExcelUtil<>(User.class);
         return util.exportExcel(list, "用户数据");
     }
 
@@ -76,7 +76,7 @@ public class UserController extends BaseController {
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
-        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        ExcelUtil<User> util = new ExcelUtil<>(User.class);
         List<User> userList = util.importExcel(file.getInputStream());
         String message = userService.importUser(userList, updateSupport);
         return AjaxResult.success(message);
@@ -86,7 +86,7 @@ public class UserController extends BaseController {
     @GetMapping("/importTemplate")
     @ResponseBody
     public AjaxResult importTemplate() {
-        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        ExcelUtil<User> util = new ExcelUtil<>(User.class);
         return util.importTemplateExcel("用户数据");
     }
 

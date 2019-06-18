@@ -49,7 +49,7 @@ public interface IPostService {
      * @return 结果
      * @throws Exception 异常
      */
-    int deletePostByIds(String ids) throws Exception;
+    int deletePostByIds(String ids);
 
     /**
      * 新增保存岗位信息

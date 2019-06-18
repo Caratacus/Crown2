@@ -85,7 +85,7 @@ public class GenUtils {
      * @return 模板列表
      */
     public static List<String> getTemplates() {
-        List<String> templates = new ArrayList<String>();
+        List<String> templates = new ArrayList<>();
         templates.add("templates/vm/java/domain.java.vm");
         templates.add("templates/vm/java/Mapper.java.vm");
         templates.add("templates/vm/java/Service.java.vm");
@@ -175,13 +175,12 @@ public class GenUtils {
     public static String getModuleName(String packageName) {
         int lastIndex = packageName.lastIndexOf(".");
         int nameLength = packageName.length();
-        String moduleName = StringUtils.substring(packageName, lastIndex + 1, nameLength);
-        return moduleName;
+        return StringUtils.substring(packageName, lastIndex + 1, nameLength);
     }
 
     public static String getProjectPath() {
         String packageName = GenConfig.getPackageName();
-        StringBuffer projectPath = new StringBuffer();
+        StringBuilder projectPath = new StringBuilder();
         projectPath.append("main/java/");
         projectPath.append(packageName.replace(".", "/"));
         projectPath.append("/");
@@ -189,7 +188,6 @@ public class GenUtils {
     }
 
     public static String replaceKeyword(String keyword) {
-        String keyName = keyword.replaceAll("(?:表|信息|管理)", "");
-        return keyName;
+        return keyword.replaceAll("(?:表|信息|管理)", "");
     }
 }

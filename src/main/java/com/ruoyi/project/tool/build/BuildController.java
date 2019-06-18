@@ -16,7 +16,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 @RequestMapping("/tool/build")
 public class BuildController extends BaseController {
 
-    private String prefix = "tool/build";
+    private final String prefix = "tool/build";
 
     @RequiresPermissions("tool:build:view")
     @GetMapping()

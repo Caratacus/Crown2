@@ -81,7 +81,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
     /**
      * 查询会话集合
      *
-     * @param pageUtilEntity 分页参数
+     * @param userOnline
      */
     @Override
     public List<UserOnline> selectUserOnlineList(UserOnline userOnline) {
@@ -106,7 +106,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
     /**
      * 查询会话集合
      *
-     * @param online 会话信息
+     * @param expiredDate
      */
     @Override
     public List<UserOnline> selectOnlineByExpired(Date expiredDate) {

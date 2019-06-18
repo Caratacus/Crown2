@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,11 +61,6 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
         return onlineSessionFactory.createSession(userOnline);
     }
 
-    @Override
-    public void update(Session session) throws UnknownSessionException {
-        super.update(session);
-    }
-
     /**
      * 更新会话；如更新会话最后访问时间/停止会话/设置超时时间/设置移除属性等会调用
      */
@@ -83,11 +77,11 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
             boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
 
             // session 数据变更了 同步
-            if (isGuest == false && onlineSession.isAttributeChanged()) {
+            if (!isGuest && onlineSession.isAttributeChanged()) {
                 needSync = true;
             }
 
-            if (needSync == false) {
+            if (!needSync) {
                 return;
             }
         }

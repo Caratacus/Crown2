@@ -34,7 +34,7 @@ public class ProfileController extends BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileController.class);
 
-    private String prefix = "system/user/profile";
+    private final String prefix = "system/user/profile";
 
     @Autowired
     private IUserService userService;

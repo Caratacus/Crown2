@@ -29,7 +29,7 @@ import com.ruoyi.project.system.notice.service.INoticeService;
 @RequestMapping("/system/notice")
 public class NoticeController extends BaseController {
 
-    private String prefix = "system/notice";
+    private final String prefix = "system/notice";
 
     @Autowired
     private INoticeService noticeService;
