@@ -2,6 +2,7 @@ package com.ruoyi.project.system.user.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -167,6 +168,14 @@ public class User extends BaseEntity {
             dept = new Dept();
         }
         return dept;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin(this.userId);
+    }
+
+    public static boolean isAdmin(Long userId) {
+        return Objects.equals(userId, 1L);
     }
 
     @Override
