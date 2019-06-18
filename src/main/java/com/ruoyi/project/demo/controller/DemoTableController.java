@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.page.PageDomain;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.page.TableSupport;
@@ -27,7 +27,7 @@ import com.ruoyi.framework.web.page.TableSupport;
  */
 @Controller
 @RequestMapping("/demo/table")
-public class DemoTableController extends BaseController {
+public class DemoTableController extends WebController {
 
     private final String prefix = "demo/table";
 

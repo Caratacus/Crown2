@@ -15,7 +15,7 @@ import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.shiro.session.OnlineSessionDAO;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.monitor.online.domain.OnlineSession;
@@ -30,7 +30,7 @@ import com.ruoyi.project.monitor.online.service.IUserOnlineService;
  */
 @Controller
 @RequestMapping("/monitor/online")
-public class UserOnlineController extends BaseController {
+public class UserOnlineController extends WebController {
 
     private final String prefix = "monitor/online";
 

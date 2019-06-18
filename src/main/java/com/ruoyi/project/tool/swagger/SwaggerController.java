@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 
 /**
  * swagger 接口
@@ -14,7 +14,7 @@ import com.ruoyi.framework.web.controller.BaseController;
  */
 @Controller
 @RequestMapping("/tool/swagger")
-public class SwaggerController extends BaseController {
+public class SwaggerController extends WebController {
 
     @RequiresPermissions("tool:swagger:view")
     @GetMapping()

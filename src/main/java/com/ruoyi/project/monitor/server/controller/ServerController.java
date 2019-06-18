@@ -6,7 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.project.monitor.server.domain.Server;
 
 /**
@@ -16,7 +16,7 @@ import com.ruoyi.project.monitor.server.domain.Server;
  */
 @Controller
 @RequestMapping("/monitor/server")
-public class ServerController extends BaseController {
+public class ServerController extends WebController {
 
     private final String prefix = "monitor/server";
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.post.domain.Post;
@@ -28,7 +28,7 @@ import com.ruoyi.project.system.post.service.IPostService;
  */
 @Controller
 @RequestMapping("/system/post")
-public class PostController extends BaseController {
+public class PostController extends WebController {
 
     private final String prefix = "system/post";
 

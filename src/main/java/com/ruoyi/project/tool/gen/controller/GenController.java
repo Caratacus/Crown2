@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.tool.gen.domain.TableInfo;
 import com.ruoyi.project.tool.gen.service.IGenService;
@@ -30,7 +30,7 @@ import com.ruoyi.project.tool.gen.service.IGenService;
  */
 @Controller
 @RequestMapping("/tool/gen")
-public class GenController extends BaseController {
+public class GenController extends WebController {
 
     private final String prefix = "tool/gen";
 

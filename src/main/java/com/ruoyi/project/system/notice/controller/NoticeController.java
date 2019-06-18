@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.notice.domain.Notice;
@@ -27,7 +27,7 @@ import com.ruoyi.project.system.notice.service.INoticeService;
  */
 @Controller
 @RequestMapping("/system/notice")
-public class NoticeController extends BaseController {
+public class NoticeController extends WebController {
 
     private final String prefix = "system/notice";
 

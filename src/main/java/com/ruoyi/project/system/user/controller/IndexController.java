@@ -8,7 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.ruoyi.framework.config.RuoYiConfig;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.project.system.menu.domain.Menu;
 import com.ruoyi.project.system.menu.service.IMenuService;
 import com.ruoyi.project.system.user.domain.User;
@@ -19,7 +19,7 @@ import com.ruoyi.project.system.user.domain.User;
  * @author ruoyi
  */
 @Controller
-public class IndexController extends BaseController {
+public class IndexController extends WebController {
 
     @Autowired
     private IMenuService menuService;

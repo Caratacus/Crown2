@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 
 import io.swagger.annotations.Api;
@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
 @Api("用户信息管理")
 @RestController
 @RequestMapping("/test/user")
-public class TestController extends BaseController {
+public class TestController extends WebController {
 
     private final static Map<Integer, UserEntity> users = new LinkedHashMap<>();
 

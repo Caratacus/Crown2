@@ -18,7 +18,7 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.utils.text.Convert;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.PageDomain;
 import com.ruoyi.framework.web.page.TableDataInfo;
@@ -32,7 +32,7 @@ import com.ruoyi.project.demo.domain.UserOperateModel;
  */
 @Controller
 @RequestMapping("/demo/operate")
-public class DemoOperateController extends BaseController {
+public class DemoOperateController extends WebController {
 
     private final String prefix = "demo/operate";
 
@@ -120,7 +120,7 @@ public class DemoOperateController extends BaseController {
      * 新增用户
      */
     @GetMapping("/add")
-    public String add(ModelMap mmap) {
+    public String add() {
         return prefix + "/add";
     }
 

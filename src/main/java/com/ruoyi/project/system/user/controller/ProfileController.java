@@ -18,7 +18,7 @@ import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.framework.shiro.service.PasswordService;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.system.user.domain.User;
 import com.ruoyi.project.system.user.service.IUserService;
@@ -30,7 +30,7 @@ import com.ruoyi.project.system.user.service.IUserService;
  */
 @Controller
 @RequestMapping("/system/user/profile")
-public class ProfileController extends BaseController {
+public class ProfileController extends WebController {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileController.class);
 

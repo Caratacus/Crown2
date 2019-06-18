@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
@@ -26,7 +26,7 @@ import com.ruoyi.project.monitor.logininfor.service.ILogininforService;
  */
 @Controller
 @RequestMapping("/monitor/logininfor")
-public class LogininforController extends BaseController {
+public class LogininforController extends WebController {
 
     private final String prefix = "monitor/logininfor";
 

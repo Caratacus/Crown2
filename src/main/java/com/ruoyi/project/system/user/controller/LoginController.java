@@ -1,8 +1,5 @@
 package com.ruoyi.project.system.user.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -14,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 
 /**
@@ -23,10 +20,10 @@ import com.ruoyi.framework.web.domain.AjaxResult;
  * @author ruoyi
  */
 @Controller
-public class LoginController extends BaseController {
+public class LoginController extends WebController {
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response) {
+    public String login() {
         // 如果是Ajax请求，返回Json字符串。
         if (ServletUtils.isAjaxRequest(request)) {
             return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");

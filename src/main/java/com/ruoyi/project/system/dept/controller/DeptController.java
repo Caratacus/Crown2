@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.system.dept.domain.Dept;
@@ -29,7 +29,7 @@ import com.ruoyi.project.system.role.domain.Role;
  */
 @Controller
 @RequestMapping("/system/dept")
-public class DeptController extends BaseController {
+public class DeptController extends WebController {
 
     private final String prefix = "system/dept";
 

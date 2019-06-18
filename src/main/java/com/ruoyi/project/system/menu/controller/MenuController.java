@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.system.menu.domain.Menu;
@@ -28,7 +28,7 @@ import com.ruoyi.project.system.role.domain.Role;
  */
 @Controller
 @RequestMapping("/system/menu")
-public class MenuController extends BaseController {
+public class MenuController extends WebController {
 
     private final String prefix = "system/menu";
 

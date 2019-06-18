@@ -18,7 +18,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.post.service.IPostService;
@@ -33,7 +33,7 @@ import com.ruoyi.project.system.user.service.IUserService;
  */
 @Controller
 @RequestMapping("/system/user")
-public class UserController extends BaseController {
+public class UserController extends WebController {
 
     private final String prefix = "system/user";
 

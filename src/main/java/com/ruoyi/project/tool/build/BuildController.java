@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 
 /**
  * build 表单构建
@@ -14,7 +14,7 @@ import com.ruoyi.framework.web.controller.BaseController;
  */
 @Controller
 @RequestMapping("/tool/build")
-public class BuildController extends BaseController {
+public class BuildController extends WebController {
 
     private final String prefix = "tool/build";
 

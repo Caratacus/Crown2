@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 
 /**
  * druid 监控
@@ -14,7 +14,7 @@ import com.ruoyi.framework.web.controller.BaseController;
  */
 @Controller
 @RequestMapping("/monitor/data")
-public class DruidController extends BaseController {
+public class DruidController extends WebController {
 
     private final String prefix = "/monitor/druid";
 

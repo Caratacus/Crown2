@@ -6,8 +6,6 @@ import java.util.Objects;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 
 /**
  * 图片验证码（支持算术形式）
@@ -26,7 +24,7 @@ import com.ruoyi.framework.web.controller.BaseController;
  */
 @Controller
 @RequestMapping("/captcha")
-public class CaptchaController extends BaseController {
+public class CaptchaController extends WebController {
 
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
@@ -38,7 +36,7 @@ public class CaptchaController extends BaseController {
      * 验证码生成
      */
     @GetMapping(value = "/captchaImage")
-    public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView getKaptchaImage() {
         try (ServletOutputStream out = response.getOutputStream()) {
             HttpSession session = request.getSession();
             response.setDateHeader("Expires", 0);

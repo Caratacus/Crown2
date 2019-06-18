@@ -14,7 +14,7 @@ import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import ${package}.domain.${className};
 import ${package}.service.I${className}Service;
-import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -27,7 +27,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
  */
 @Controller
 @RequestMapping("/${moduleName}/${classname}")
-public class ${className}Controller extends BaseController
+public class ${className}Controller extends WebController
 {
     private String prefix = "${moduleName}/${classname}";
 	
