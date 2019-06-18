@@ -234,7 +234,7 @@
 <script th:src="@{/ruoyi/index.js}"></script>
 <script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 <script th:inline="javascript"> 
-var ctx = [[;@{/}]];
+var ctx = [[@{/}]];
 /*用户管理-重置密码*/
 function resetPwd() {
     var url = ctx + 'system/user/profile/resetPwd';
