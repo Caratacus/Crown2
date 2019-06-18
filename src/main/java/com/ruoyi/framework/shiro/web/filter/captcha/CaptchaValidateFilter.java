@@ -50,10 +50,10 @@ public class CaptchaValidateFilter extends AccessControlFilter {
         if (!captchaEnabled || !"post".equals(httpServletRequest.getMethod().toLowerCase())) {
             return true;
         }
-        return validateResponse(httpServletRequest, httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE));
+        return validateResponse(httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE));
     }
 
-    public boolean validateResponse(HttpServletRequest request, String validateCode) {
+    public boolean validateResponse(String validateCode) {
         Object obj = ShiroUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
         String code = String.valueOf(obj != null ? obj : "");
         return !StringUtils.isEmpty(validateCode) && validateCode.equalsIgnoreCase(code);

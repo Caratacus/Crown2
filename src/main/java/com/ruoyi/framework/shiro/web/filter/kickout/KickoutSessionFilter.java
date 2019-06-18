@@ -118,15 +118,23 @@ public class KickoutSessionFilter extends AccessControlFilter {
                 // 退出登录
                 subject.logout();
                 saveRequest(request);
-                return isAjaxResponse(request, response);
+                 sendLogOutResponse(request, response);
+                 return false;
             }
             return true;
         } catch (Exception e) {
-            return isAjaxResponse(request, response);
+             sendLogOutResponse(request, response);
+            return false;
         }
     }
 
-    private boolean isAjaxResponse(ServletRequest request, ServletResponse response) throws IOException {
+    /**
+     * 发送重新登陆响应
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    private void sendLogOutResponse(ServletRequest request, ServletResponse response) throws IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         if (ServletUtils.isAjaxRequest(req)) {
@@ -135,7 +143,6 @@ public class KickoutSessionFilter extends AccessControlFilter {
         } else {
             WebUtils.issueRedirect(request, response, kickoutUrl);
         }
-        return false;
     }
 
     public void setMaxSession(int maxSession) {

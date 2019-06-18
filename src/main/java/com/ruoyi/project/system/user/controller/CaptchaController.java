@@ -1,7 +1,6 @@
 package com.ruoyi.project.system.user.controller;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Objects;
 
 import javax.annotation.Resource;
@@ -40,15 +39,13 @@ public class CaptchaController extends BaseController {
      */
     @GetMapping(value = "/captchaImage")
     public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) {
-        ServletOutputStream out = null;
-        try {
+        try (ServletOutputStream out = response.getOutputStream()) {
             HttpSession session = request.getSession();
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
             response.addHeader("Cache-Control", "post-check=0, pre-check=0");
             response.setHeader("Pragma", "no-cache");
             response.setContentType("image/jpeg");
-
             String type = request.getParameter("type");
             String capStr;
             String code = null;
@@ -63,20 +60,10 @@ public class CaptchaController extends BaseController {
                 bi = captchaProducer.createImage(capStr);
             }
             session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
-            out = response.getOutputStream();
             ImageIO.write(Objects.requireNonNull(bi), "jpg", out);
             out.flush();
-
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return null;
     }
