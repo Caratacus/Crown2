@@ -64,7 +64,7 @@ import com.ruoyi.framework.service.BaseService;
  *
  * @author Caratacus
  */
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<T> {
 
     @Autowired

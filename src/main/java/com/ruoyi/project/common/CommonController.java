@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
+import com.ruoyi.common.utils.http.HttpUtils;
 import com.ruoyi.framework.config.RuoYiConfig;
-import com.ruoyi.framework.config.ServerConfig;
+import com.ruoyi.framework.web.controller.WebController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 
 /**
@@ -25,7 +25,7 @@ import com.ruoyi.framework.web.domain.AjaxResult;
  * @author ruoyi
  */
 @Controller
-public class CommonController {
+public class CommonController extends WebController {
 
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
@@ -33,9 +33,6 @@ public class CommonController {
      * 文件上传路径
      */
     public static final String UPLOAD_PATH = "/profile/upload/";
-
-    @Autowired
-    private ServerConfig serverConfig;
 
     /**
      * 通用下载请求
@@ -76,7 +73,7 @@ public class CommonController {
             String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
-            String url = serverConfig.getUrl() + UPLOAD_PATH + fileName;
+            String url = HttpUtils.getDomain(request) + UPLOAD_PATH + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
             ajax.put("url", url);

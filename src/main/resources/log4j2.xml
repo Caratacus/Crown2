@@ -59,6 +59,7 @@
         <!--AsyncLogger-->
         <AsyncLogger name="com.ruoyi" level="info" includeLocation="true"/>
         <AsyncLogger name="com.ruoyi.framework.p6spy" level="debug" includeLocation="true"/>
+        <AsyncLogger name="com.baomidou.mybatisplus.core.toolkit.TableInfoHelper" level="error" includeLocation="true"/>
         <!--AsyncRoot-->
         <AsyncRoot level="warn" includeLocation="true">
             <appender-ref ref="CONSOLE"/>

@@ -3,13 +3,17 @@ package com.ruoyi.project.system.role.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 角色和菜单关联 sys_role_menu
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class RoleMenu {
-
     /**
      * 角色ID
      */
@@ -19,22 +23,6 @@ public class RoleMenu {
      * 菜单ID
      */
     private Long menuId;
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
 
     @Override
     public String toString() {

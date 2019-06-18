@@ -20,24 +20,23 @@ server:
   servlet:
     # 应用的访问路径
     context-path: /
-  tomcat:
-    # tomcat的URI编码
-    uri-encoding: UTF-8
-    # tomcat最大线程数，默认为200
-    max-threads: 800
-    # Tomcat启动初始化的线程数，默认值25
-    min-spare-threads: 30
- 
+  undertow:
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程 不要设置过大，如果过大，启动项目会报错：打开文件数过多
+    io-threads: 16
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞IO操作, undertow会从这个线程池中取得线程 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
+    worker-threads: 256
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理 每块buffer的空间大小,越小的空间被利用越充分，不要设置太大，以免影响其他应用，合适即可
+    buffer-size: 1024
+    # 是否分配的直接内存(NIO直接分配的堆外内存)
+    direct-buffers: true
 # 日志配置
 logging:
   config: classpath:log4j2.xml
-
 # 用户配置
 user:
   password:
     # 密码错误{maxRetryCount}次锁定10分钟
     maxRetryCount: 5
-
 # Spring配置
 spring:
   datasource:
@@ -82,6 +81,16 @@ spring:
     basename: static/i18n/messages
   jackson:
     time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+      FAIL_ON_EMPTY_BEANS: false
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    default-property-inclusion: non_null
+    mapper:
+      PROPAGATE_TRANSIENT_MARKER: true
+    parser:
+      ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER: true
     date-format: yyyy-MM-dd HH:mm:ss
   # 文件上传
   servlet:
