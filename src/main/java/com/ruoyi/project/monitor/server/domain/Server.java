@@ -1,6 +1,5 @@
 package com.ruoyi.project.monitor.server.domain;
 
-import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -92,7 +91,7 @@ public class Server {
         this.sysFiles = sysFiles;
     }
 
-    public void copyTo() throws Exception {
+    public void copyTo() {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
 

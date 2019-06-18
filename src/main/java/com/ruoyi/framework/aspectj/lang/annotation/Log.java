@@ -22,20 +22,20 @@ public @interface Log {
     /**
      * 模块
      */
-     String title() default "";
+    String title() default "";
 
     /**
      * 功能
      */
-     BusinessType businessType() default BusinessType.OTHER;
+    BusinessType businessType() default BusinessType.OTHER;
 
     /**
      * 操作人类别
      */
-     OperatorType operatorType() default OperatorType.MANAGE;
+    OperatorType operatorType() default OperatorType.MANAGE;
 
     /**
      * 是否保存请求的参数
      */
-     boolean isSaveRequestData() default true;
+    boolean isSaveRequestData() default true;
 }

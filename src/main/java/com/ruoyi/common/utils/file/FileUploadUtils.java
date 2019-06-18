@@ -81,8 +81,8 @@ public class FileUploadUtils {
     /**
      * 文件上传
      *
-     * @param baseDir   相对应用的基目录
-     * @param file      上传的文件
+     * @param baseDir          相对应用的基目录
+     * @param file             上传的文件
      * @param allowedExtension 上传文件类型
      * @return 返回上传成功的文件名
      * @throws FileSizeLimitExceededException       如果超出最大大小
