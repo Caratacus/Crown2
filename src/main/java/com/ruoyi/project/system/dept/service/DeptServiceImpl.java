@@ -3,7 +3,6 @@ package com.ruoyi.project.system.dept.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +11,7 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.system.dept.domain.Dept;
 import com.ruoyi.project.system.dept.mapper.DeptMapper;
@@ -23,10 +23,7 @@ import com.ruoyi.project.system.role.domain.Role;
  * @author ruoyi
  */
 @Service
-public class DeptServiceImpl implements IDeptService {
-
-    @Autowired
-    private DeptMapper deptMapper;
+public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implements IDeptService {
 
     /**
      * 查询部门管理数据
@@ -37,7 +34,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     @DataScope(tableAlias = "d")
     public List<Dept> selectDeptList(Dept dept) {
-        return deptMapper.selectDeptList(dept);
+        return baseMapper.selectDeptList(dept);
     }
 
     /**
@@ -49,7 +46,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     @DataScope(tableAlias = "d")
     public List<Ztree> selectDeptTree(Dept dept) {
-        List<Dept> deptList = deptMapper.selectDeptList(dept);
+        List<Dept> deptList = baseMapper.selectDeptList(dept);
         return initZtree(deptList);
     }
 
@@ -65,7 +62,7 @@ public class DeptServiceImpl implements IDeptService {
         List<Ztree> ztrees;
         List<Dept> deptList = selectDeptList(new Dept());
         if (StringUtils.isNotNull(roleId)) {
-            List<String> roleDeptList = deptMapper.selectRoleDeptTree(roleId);
+            List<String> roleDeptList = baseMapper.selectRoleDeptTree(roleId);
             ztrees = initZtree(deptList, roleDeptList);
         } else {
             ztrees = initZtree(deptList);
@@ -119,7 +116,7 @@ public class DeptServiceImpl implements IDeptService {
     public int selectDeptCount(Long parentId) {
         Dept dept = new Dept();
         dept.setParentId(parentId);
-        return deptMapper.selectDeptCount(dept);
+        return baseMapper.selectDeptCount(dept);
     }
 
     /**
@@ -130,7 +127,7 @@ public class DeptServiceImpl implements IDeptService {
      */
     @Override
     public boolean checkDeptExistUser(Long deptId) {
-        int result = deptMapper.checkDeptExistUser(deptId);
+        int result = baseMapper.checkDeptExistUser(deptId);
         return result > 0;
     }
 
@@ -142,7 +139,7 @@ public class DeptServiceImpl implements IDeptService {
      */
     @Override
     public int deleteDeptById(Long deptId) {
-        return deptMapper.deleteDeptById(deptId);
+        return baseMapper.deleteDeptById(deptId);
     }
 
     /**
@@ -153,14 +150,14 @@ public class DeptServiceImpl implements IDeptService {
      */
     @Override
     public int insertDept(Dept dept) {
-        Dept info = deptMapper.selectDeptById(dept.getParentId());
+        Dept info = baseMapper.selectDeptById(dept.getParentId());
         // 如果父节点不为"正常"状态,则不允许新增子节点
         if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
             throw new BusinessException("部门停用，不允许新增");
         }
         dept.setCreateBy(ShiroUtils.getLoginName());
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
-        return deptMapper.insertDept(dept);
+        return baseMapper.insertDept(dept);
     }
 
     /**
@@ -172,7 +169,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     @Transactional
     public int updateDept(Dept dept) {
-        Dept newParentDept = deptMapper.selectDeptById(dept.getParentId());
+        Dept newParentDept = baseMapper.selectDeptById(dept.getParentId());
         Dept oldDept = selectDeptById(dept.getDeptId());
         if (StringUtils.isNotNull(newParentDept) && StringUtils.isNotNull(oldDept)) {
             String newAncestors = newParentDept.getAncestors() + "," + newParentDept.getDeptId();
@@ -181,7 +178,7 @@ public class DeptServiceImpl implements IDeptService {
             updateDeptChildren(dept.getDeptId(), newAncestors, oldAncestors);
         }
         dept.setUpdateBy(ShiroUtils.getLoginName());
-        int result = deptMapper.updateDept(dept);
+        int result = baseMapper.updateDept(dept);
         if (UserConstants.DEPT_NORMAL.equals(dept.getStatus())) {
             // 如果该部门是启用状态，则启用该部门的所有上级部门
             updateParentDeptStatus(dept);
@@ -196,9 +193,9 @@ public class DeptServiceImpl implements IDeptService {
      */
     private void updateParentDeptStatus(Dept dept) {
         String updateBy = dept.getUpdateBy();
-        dept = deptMapper.selectDeptById(dept.getDeptId());
+        dept = baseMapper.selectDeptById(dept.getDeptId());
         dept.setUpdateBy(updateBy);
-        deptMapper.updateDeptStatus(dept);
+        baseMapper.updateDeptStatus(dept);
     }
 
     /**
@@ -209,12 +206,12 @@ public class DeptServiceImpl implements IDeptService {
      * @param oldAncestors 旧的父ID集合
      */
     public void updateDeptChildren(Long deptId, String newAncestors, String oldAncestors) {
-        List<Dept> children = deptMapper.selectChildrenDeptById(deptId);
+        List<Dept> children = baseMapper.selectChildrenDeptById(deptId);
         for (Dept child : children) {
             child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
         }
         if (children.size() > 0) {
-            deptMapper.updateDeptChildren(children);
+            baseMapper.updateDeptChildren(children);
         }
     }
 
@@ -227,12 +224,12 @@ public class DeptServiceImpl implements IDeptService {
     public void updateDeptChildren(Long deptId, String ancestors) {
         Dept dept = new Dept();
         dept.setParentId(deptId);
-        List<Dept> childrens = deptMapper.selectDeptList(dept);
+        List<Dept> childrens = baseMapper.selectDeptList(dept);
         for (Dept children : childrens) {
             children.setAncestors(ancestors + "," + dept.getParentId());
         }
         if (childrens.size() > 0) {
-            deptMapper.updateDeptChildren(childrens);
+            baseMapper.updateDeptChildren(childrens);
         }
     }
 
@@ -244,7 +241,7 @@ public class DeptServiceImpl implements IDeptService {
      */
     @Override
     public Dept selectDeptById(Long deptId) {
-        return deptMapper.selectDeptById(deptId);
+        return baseMapper.selectDeptById(deptId);
     }
 
     /**
@@ -256,7 +253,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     public String checkDeptNameUnique(Dept dept) {
         Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
-        Dept info = deptMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
+        Dept info = baseMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
         if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue()) {
             return UserConstants.DEPT_NAME_NOT_UNIQUE;
         }

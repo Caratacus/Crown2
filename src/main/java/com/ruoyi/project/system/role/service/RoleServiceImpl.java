@@ -17,6 +17,7 @@ import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.role.domain.Role;
 import com.ruoyi.project.system.role.domain.RoleDept;
 import com.ruoyi.project.system.role.domain.RoleMenu;
@@ -32,10 +33,7 @@ import com.ruoyi.project.system.user.mapper.UserRoleMapper;
  * @author ruoyi
  */
 @Service
-public class RoleServiceImpl implements IRoleService {
-
-    @Autowired
-    private RoleMapper roleMapper;
+public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implements IRoleService {
 
     @Autowired
     private RoleMenuMapper roleMenuMapper;
@@ -55,7 +53,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @DataScope(tableAlias = "u")
     public List<Role> selectRoleList(Role role) {
-        return roleMapper.selectRoleList(role);
+        return baseMapper.selectRoleList(role);
     }
 
     /**
@@ -66,7 +64,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public Set<String> selectRoleKeys(Long userId) {
-        List<Role> perms = roleMapper.selectRolesByUserId(userId);
+        List<Role> perms = baseMapper.selectRolesByUserId(userId);
         Set<String> permsSet = new HashSet<>();
         for (Role perm : perms) {
             if (StringUtils.isNotNull(perm)) {
@@ -84,7 +82,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public List<Role> selectRolesByUserId(Long userId) {
-        List<Role> userRoles = roleMapper.selectRolesByUserId(userId);
+        List<Role> userRoles = baseMapper.selectRolesByUserId(userId);
         List<Role> roles = selectRoleAll();
         for (Role role : roles) {
             for (Role userRole : userRoles) {
@@ -115,7 +113,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public Role selectRoleById(Long roleId) {
-        return roleMapper.selectRoleById(roleId);
+        return baseMapper.selectRoleById(roleId);
     }
 
     /**
@@ -126,7 +124,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public boolean deleteRoleById(Long roleId) {
-        return roleMapper.deleteRoleById(roleId) > 0;
+        return baseMapper.deleteRoleById(roleId) > 0;
     }
 
     /**
@@ -144,7 +142,7 @@ public class RoleServiceImpl implements IRoleService {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
             }
         }
-        return roleMapper.deleteRoleByIds(roleIds);
+        return baseMapper.deleteRoleByIds(roleIds);
     }
 
     /**
@@ -158,7 +156,7 @@ public class RoleServiceImpl implements IRoleService {
     public int insertRole(Role role) {
         role.setCreateBy(ShiroUtils.getLoginName());
         // 新增角色信息
-        roleMapper.insertRole(role);
+        baseMapper.insertRole(role);
         ShiroUtils.clearCachedAuthorizationInfo();
         return insertRoleMenu(role);
     }
@@ -174,7 +172,7 @@ public class RoleServiceImpl implements IRoleService {
     public int updateRole(Role role) {
         role.setUpdateBy(ShiroUtils.getLoginName());
         // 修改角色信息
-        roleMapper.updateRole(role);
+        baseMapper.updateRole(role);
         ShiroUtils.clearCachedAuthorizationInfo();
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
@@ -192,7 +190,7 @@ public class RoleServiceImpl implements IRoleService {
     public int authDataScope(Role role) {
         role.setUpdateBy(ShiroUtils.getLoginName());
         // 修改角色信息
-        roleMapper.updateRole(role);
+        baseMapper.updateRole(role);
         // 删除角色与部门关联
         roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
         // 新增角色和部门信息（数据权限）
@@ -250,7 +248,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public String checkRoleNameUnique(Role role) {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        Role info = roleMapper.checkRoleNameUnique(role.getRoleName());
+        Role info = baseMapper.checkRoleNameUnique(role.getRoleName());
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
             return UserConstants.ROLE_NAME_NOT_UNIQUE;
         }
@@ -266,7 +264,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public String checkRoleKeyUnique(Role role) {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        Role info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
+        Role info = baseMapper.checkRoleKeyUnique(role.getRoleKey());
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
             return UserConstants.ROLE_KEY_NOT_UNIQUE;
         }
@@ -292,7 +290,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public int changeStatus(Role role) {
-        return roleMapper.updateRole(role);
+        return baseMapper.updateRole(role);
     }
 
     /**

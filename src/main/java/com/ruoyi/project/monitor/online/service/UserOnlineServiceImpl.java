@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.shiro.session.OnlineSessionDAO;
 import com.ruoyi.project.monitor.online.domain.UserOnline;
 import com.ruoyi.project.monitor.online.mapper.UserOnlineMapper;
@@ -19,10 +20,7 @@ import com.ruoyi.project.monitor.online.mapper.UserOnlineMapper;
  * @author ruoyi
  */
 @Service
-public class UserOnlineServiceImpl implements IUserOnlineService {
-
-    @Autowired
-    private UserOnlineMapper userOnlineDao;
+public class UserOnlineServiceImpl extends BaseServiceImpl<UserOnlineMapper, UserOnline> implements IUserOnlineService {
 
     @Autowired
     private OnlineSessionDAO onlineSessionDAO;
@@ -35,7 +33,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
      */
     @Override
     public UserOnline selectOnlineById(String sessionId) {
-        return userOnlineDao.selectOnlineById(sessionId);
+        return baseMapper.selectOnlineById(sessionId);
     }
 
     /**
@@ -48,7 +46,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
     public void deleteOnlineById(String sessionId) {
         UserOnline userOnline = selectOnlineById(sessionId);
         if (StringUtils.isNotNull(userOnline)) {
-            userOnlineDao.deleteOnlineById(sessionId);
+            baseMapper.deleteOnlineById(sessionId);
         }
     }
 
@@ -63,7 +61,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
         for (String sessionId : sessions) {
             UserOnline userOnline = selectOnlineById(sessionId);
             if (StringUtils.isNotNull(userOnline)) {
-                userOnlineDao.deleteOnlineById(sessionId);
+                baseMapper.deleteOnlineById(sessionId);
             }
         }
     }
@@ -75,7 +73,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
      */
     @Override
     public void saveOnline(UserOnline online) {
-        userOnlineDao.saveOnline(online);
+        baseMapper.saveOnline(online);
     }
 
     /**
@@ -85,7 +83,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
      */
     @Override
     public List<UserOnline> selectUserOnlineList(UserOnline userOnline) {
-        return userOnlineDao.selectUserOnlineList(userOnline);
+        return baseMapper.selectUserOnlineList(userOnline);
     }
 
     /**
@@ -100,7 +98,7 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
             return;
         }
         session.setTimeout(1000);
-        userOnlineDao.deleteOnlineById(sessionId);
+        baseMapper.deleteOnlineById(sessionId);
     }
 
     /**
@@ -111,6 +109,6 @@ public class UserOnlineServiceImpl implements IUserOnlineService {
     @Override
     public List<UserOnline> selectOnlineByExpired(Date expiredDate) {
         String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
-        return userOnlineDao.selectOnlineByExpired(lastAccessTime);
+        return baseMapper.selectOnlineByExpired(lastAccessTime);
     }
 }

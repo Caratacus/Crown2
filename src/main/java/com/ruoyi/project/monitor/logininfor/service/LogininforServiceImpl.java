@@ -2,10 +2,10 @@ package com.ruoyi.project.monitor.logininfor.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
 import com.ruoyi.project.monitor.logininfor.mapper.LogininforMapper;
 
@@ -15,10 +15,7 @@ import com.ruoyi.project.monitor.logininfor.mapper.LogininforMapper;
  * @author ruoyi
  */
 @Service
-public class LogininforServiceImpl implements ILogininforService {
-
-    @Autowired
-    private LogininforMapper logininforMapper;
+public class LogininforServiceImpl extends BaseServiceImpl<LogininforMapper, Logininfor> implements ILogininforService {
 
     /**
      * 新增系统登录日志
@@ -27,7 +24,7 @@ public class LogininforServiceImpl implements ILogininforService {
      */
     @Override
     public void insertLogininfor(Logininfor logininfor) {
-        logininforMapper.insertLogininfor(logininfor);
+        baseMapper.insertLogininfor(logininfor);
     }
 
     /**
@@ -38,7 +35,7 @@ public class LogininforServiceImpl implements ILogininforService {
      */
     @Override
     public List<Logininfor> selectLogininforList(Logininfor logininfor) {
-        return logininforMapper.selectLogininforList(logininfor);
+        return baseMapper.selectLogininforList(logininfor);
     }
 
     /**
@@ -49,7 +46,7 @@ public class LogininforServiceImpl implements ILogininforService {
      */
     @Override
     public int deleteLogininforByIds(String ids) {
-        return logininforMapper.deleteLogininforByIds(Convert.toStrArray(ids));
+        return baseMapper.deleteLogininforByIds(Convert.toStrArray(ids));
     }
 
     /**
@@ -57,6 +54,6 @@ public class LogininforServiceImpl implements ILogininforService {
      */
     @Override
     public void cleanLogininfor() {
-        logininforMapper.cleanLogininfor();
+        baseMapper.cleanLogininfor();
     }
 }

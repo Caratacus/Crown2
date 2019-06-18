@@ -2,6 +2,7 @@ package com.ruoyi.project.monitor.logininfor.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
 
 /**
@@ -9,7 +10,7 @@ import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
  *
  * @author ruoyi
  */
-public interface ILogininforService {
+public interface ILogininforService extends BaseService<Logininfor> {
 
     /**
      * 新增系统登录日志

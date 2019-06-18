@@ -3,6 +3,7 @@ package com.ruoyi.project.system.role.service;
 import java.util.List;
 import java.util.Set;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.system.role.domain.Role;
 import com.ruoyi.project.system.user.domain.UserRole;
 
@@ -11,7 +12,7 @@ import com.ruoyi.project.system.user.domain.UserRole;
  *
  * @author ruoyi
  */
-public interface IRoleService {
+public interface IRoleService extends BaseService<Role> {
 
     /**
      * 根据条件分页查询角色数据

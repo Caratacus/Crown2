@@ -9,6 +9,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.config.domain.Config;
 import com.ruoyi.project.system.config.mapper.ConfigMapper;
 
@@ -18,7 +19,7 @@ import com.ruoyi.project.system.config.mapper.ConfigMapper;
  * @author ruoyi
  */
 @Service
-public class ConfigServiceImpl implements IConfigService {
+public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper, Config> implements IConfigService {
 
     @Autowired
     private ConfigMapper configMapper;

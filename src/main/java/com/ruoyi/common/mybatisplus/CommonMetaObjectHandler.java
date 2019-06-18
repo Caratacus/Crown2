@@ -54,18 +54,18 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         setInsertFieldValByName(createTime, LocalDateTime.now(), metaObject);
-      //  setInsertFieldValByName(createUid, currentUid(), metaObject);
+        //  setInsertFieldValByName(createUid, currentUid(), metaObject);
         setInsertFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-      //  setInsertFieldValByName(updateUid, currentUid(), metaObject);
+        //  setInsertFieldValByName(updateUid, currentUid(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         setUpdateFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-       // setUpdateFieldValByName(updateUid, currentUid(), metaObject);
+        // setUpdateFieldValByName(updateUid, currentUid(), metaObject);
     }
 
-  /*  *//**
+    /*  *//**
      * 获取当前用户ID
      *//*
     private Integer currentUid() {

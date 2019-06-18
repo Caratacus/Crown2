@@ -2,6 +2,7 @@ package com.ruoyi.project.system.dept.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.system.dept.domain.Dept;
 import com.ruoyi.project.system.role.domain.Role;
@@ -11,7 +12,7 @@ import com.ruoyi.project.system.role.domain.Role;
  *
  * @author ruoyi
  */
-public interface IDeptService {
+public interface IDeptService extends BaseService<Dept> {
 
     /**
      * 查询部门管理数据

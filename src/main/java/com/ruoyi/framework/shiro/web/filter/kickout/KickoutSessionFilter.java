@@ -118,18 +118,19 @@ public class KickoutSessionFilter extends AccessControlFilter {
                 // 退出登录
                 subject.logout();
                 saveRequest(request);
-                 sendLogOutResponse(request, response);
-                 return false;
+                sendLogOutResponse(request, response);
+                return false;
             }
             return true;
         } catch (Exception e) {
-             sendLogOutResponse(request, response);
+            sendLogOutResponse(request, response);
             return false;
         }
     }
 
     /**
      * 发送重新登陆响应
+     *
      * @param request
      * @param response
      * @throws IOException

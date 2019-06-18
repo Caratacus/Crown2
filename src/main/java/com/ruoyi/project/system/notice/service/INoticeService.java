@@ -2,6 +2,7 @@ package com.ruoyi.project.system.notice.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.system.notice.domain.Notice;
 
 /**
@@ -9,7 +10,7 @@ import com.ruoyi.project.system.notice.domain.Notice;
  *
  * @author ruoyi
  */
-public interface INoticeService {
+public interface INoticeService extends BaseService<Notice> {
 
     /**
      * 查询公告信息

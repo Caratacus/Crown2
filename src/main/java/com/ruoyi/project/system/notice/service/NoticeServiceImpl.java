@@ -2,11 +2,11 @@ package com.ruoyi.project.system.notice.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.notice.domain.Notice;
 import com.ruoyi.project.system.notice.mapper.NoticeMapper;
 
@@ -17,10 +17,7 @@ import com.ruoyi.project.system.notice.mapper.NoticeMapper;
  * @date 2018-06-25
  */
 @Service
-public class NoticeServiceImpl implements INoticeService {
-
-    @Autowired
-    private NoticeMapper noticeMapper;
+public class NoticeServiceImpl extends BaseServiceImpl<NoticeMapper, Notice> implements INoticeService {
 
     /**
      * 查询公告信息
@@ -30,7 +27,7 @@ public class NoticeServiceImpl implements INoticeService {
      */
     @Override
     public Notice selectNoticeById(Long noticeId) {
-        return noticeMapper.selectNoticeById(noticeId);
+        return baseMapper.selectNoticeById(noticeId);
     }
 
     /**
@@ -41,7 +38,7 @@ public class NoticeServiceImpl implements INoticeService {
      */
     @Override
     public List<Notice> selectNoticeList(Notice notice) {
-        return noticeMapper.selectNoticeList(notice);
+        return baseMapper.selectNoticeList(notice);
     }
 
     /**
@@ -53,7 +50,7 @@ public class NoticeServiceImpl implements INoticeService {
     @Override
     public int insertNotice(Notice notice) {
         notice.setCreateBy(ShiroUtils.getLoginName());
-        return noticeMapper.insertNotice(notice);
+        return baseMapper.insertNotice(notice);
     }
 
     /**
@@ -65,7 +62,7 @@ public class NoticeServiceImpl implements INoticeService {
     @Override
     public int updateNotice(Notice notice) {
         notice.setUpdateBy(ShiroUtils.getLoginName());
-        return noticeMapper.updateNotice(notice);
+        return baseMapper.updateNotice(notice);
     }
 
     /**
@@ -76,6 +73,6 @@ public class NoticeServiceImpl implements INoticeService {
      */
     @Override
     public int deleteNoticeByIds(String ids) {
-        return noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
+        return baseMapper.deleteNoticeByIds(Convert.toStrArray(ids));
     }
 }

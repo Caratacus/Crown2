@@ -19,7 +19,7 @@ import com.ruoyi.project.system.user.domain.User;
  *
  * @author ruoyi
  */
-public class WebController extends SuperController{
+public class WebController extends SuperController {
 
     /**
      * 设置请求分页数据

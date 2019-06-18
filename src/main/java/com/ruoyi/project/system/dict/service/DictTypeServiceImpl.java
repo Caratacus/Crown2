@@ -11,6 +11,7 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.dict.domain.DictType;
 import com.ruoyi.project.system.dict.mapper.DictDataMapper;
 import com.ruoyi.project.system.dict.mapper.DictTypeMapper;
@@ -21,10 +22,8 @@ import com.ruoyi.project.system.dict.mapper.DictTypeMapper;
  * @author ruoyi
  */
 @Service
-public class DictTypeServiceImpl implements IDictTypeService {
+public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictType> implements IDictTypeService {
 
-    @Autowired
-    private DictTypeMapper dictTypeMapper;
 
     @Autowired
     private DictDataMapper dictDataMapper;
@@ -37,7 +36,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
      */
     @Override
     public List<DictType> selectDictTypeList(DictType dictType) {
-        return dictTypeMapper.selectDictTypeList(dictType);
+        return baseMapper.selectDictTypeList(dictType);
     }
 
     /**
@@ -47,7 +46,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
      */
     @Override
     public List<DictType> selectDictTypeAll() {
-        return dictTypeMapper.selectDictTypeAll();
+        return baseMapper.selectDictTypeAll();
     }
 
     /**
@@ -58,7 +57,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
      */
     @Override
     public DictType selectDictTypeById(Long dictId) {
-        return dictTypeMapper.selectDictTypeById(dictId);
+        return baseMapper.selectDictTypeById(dictId);
     }
 
     /**
@@ -69,7 +68,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
      */
     @Override
     public int deleteDictTypeById(Long dictId) {
-        return dictTypeMapper.deleteDictTypeById(dictId);
+        return baseMapper.deleteDictTypeById(dictId);
     }
 
     /**
@@ -88,7 +87,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
             }
         }
 
-        return dictTypeMapper.deleteDictTypeByIds(dictIds);
+        return baseMapper.deleteDictTypeByIds(dictIds);
     }
 
     /**
@@ -100,7 +99,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
     @Override
     public int insertDictType(DictType dictType) {
         dictType.setCreateBy(ShiroUtils.getLoginName());
-        return dictTypeMapper.insertDictType(dictType);
+        return baseMapper.insertDictType(dictType);
     }
 
     /**
@@ -113,9 +112,9 @@ public class DictTypeServiceImpl implements IDictTypeService {
     @Transactional
     public int updateDictType(DictType dictType) {
         dictType.setUpdateBy(ShiroUtils.getLoginName());
-        DictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getDictId());
+        DictType oldDict = baseMapper.selectDictTypeById(dictType.getDictId());
         dictDataMapper.updateDictDataType(oldDict.getDictType(), dictType.getDictType());
-        return dictTypeMapper.updateDictType(dictType);
+        return baseMapper.updateDictType(dictType);
     }
 
     /**
@@ -127,7 +126,7 @@ public class DictTypeServiceImpl implements IDictTypeService {
     @Override
     public String checkDictTypeUnique(DictType dict) {
         Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();
-        DictType dictType = dictTypeMapper.checkDictTypeUnique(dict.getDictType());
+        DictType dictType = baseMapper.checkDictTypeUnique(dict.getDictType());
         if (StringUtils.isNotNull(dictType) && dictType.getDictId().longValue() != dictId.longValue()) {
             return UserConstants.DICT_TYPE_NOT_UNIQUE;
         }

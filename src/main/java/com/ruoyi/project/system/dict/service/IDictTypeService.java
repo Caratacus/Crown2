@@ -2,6 +2,7 @@ package com.ruoyi.project.system.dict.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.system.dict.domain.DictType;
 
 /**
@@ -9,7 +10,7 @@ import com.ruoyi.project.system.dict.domain.DictType;
  *
  * @author ruoyi
  */
-public interface IDictTypeService {
+public interface IDictTypeService extends BaseService<DictType> {
 
     /**
      * 根据条件分页查询字典类型

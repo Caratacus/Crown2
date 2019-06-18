@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.system.menu.domain.Menu;
 import com.ruoyi.project.system.role.domain.Role;
@@ -14,7 +15,7 @@ import com.ruoyi.project.system.user.domain.User;
  *
  * @author ruoyi
  */
-public interface IMenuService {
+public interface IMenuService extends BaseService<Menu> {
 
     /**
      * 根据用户ID查询菜单

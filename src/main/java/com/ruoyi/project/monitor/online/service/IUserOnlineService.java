@@ -3,6 +3,7 @@ package com.ruoyi.project.monitor.online.service;
 import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.monitor.online.domain.UserOnline;
 
 /**
@@ -10,7 +11,7 @@ import com.ruoyi.project.monitor.online.domain.UserOnline;
  *
  * @author ruoyi
  */
-public interface IUserOnlineService {
+public interface IUserOnlineService extends BaseService<UserOnline> {
 
     /**
      * 通过会话序号查询信息

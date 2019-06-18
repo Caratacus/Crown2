@@ -2,6 +2,7 @@ package com.ruoyi.project.system.user.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.system.user.domain.User;
 
 /**
@@ -9,7 +10,7 @@ import com.ruoyi.project.system.user.domain.User;
  *
  * @author ruoyi
  */
-public interface IUserService {
+public interface IUserService extends BaseService<User> {
 
     /**
      * 根据条件分页查询用户列表

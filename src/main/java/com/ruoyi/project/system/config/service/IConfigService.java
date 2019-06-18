@@ -2,6 +2,7 @@ package com.ruoyi.project.system.config.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.system.config.domain.Config;
 
 /**
@@ -9,7 +10,7 @@ import com.ruoyi.project.system.config.domain.Config;
  *
  * @author ruoyi
  */
-public interface IConfigService {
+public interface IConfigService extends BaseService<Config> {
 
     /**
      * 查询参数配置信息

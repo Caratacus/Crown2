@@ -15,6 +15,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TreeUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.system.menu.domain.Menu;
 import com.ruoyi.project.system.menu.mapper.MenuMapper;
@@ -28,12 +29,9 @@ import com.ruoyi.project.system.user.domain.User;
  * @author ruoyi
  */
 @Service
-public class MenuServiceImpl implements IMenuService {
+public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implements IMenuService {
 
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
-
-    @Autowired
-    private MenuMapper menuMapper;
 
     @Autowired
     private RoleMenuMapper roleMenuMapper;
@@ -49,9 +47,9 @@ public class MenuServiceImpl implements IMenuService {
         List<Menu> menus;
         // 管理员显示所有菜单信息
         if (user.isAdmin()) {
-            menus = menuMapper.selectMenuNormalAll();
+            menus = baseMapper.selectMenuNormalAll();
         } else {
-            menus = menuMapper.selectMenusByUserId(user.getUserId());
+            menus = baseMapper.selectMenusByUserId(user.getUserId());
         }
         return TreeUtils.getChildPerms(menus, 0);
     }
@@ -63,7 +61,7 @@ public class MenuServiceImpl implements IMenuService {
      */
     @Override
     public List<Menu> selectMenuList(Menu menu) {
-        return menuMapper.selectMenuList(menu);
+        return baseMapper.selectMenuList(menu);
     }
 
     /**
@@ -73,7 +71,7 @@ public class MenuServiceImpl implements IMenuService {
      */
     @Override
     public List<Menu> selectMenuAll() {
-        return menuMapper.selectMenuAll();
+        return baseMapper.selectMenuAll();
     }
 
     /**
@@ -84,7 +82,7 @@ public class MenuServiceImpl implements IMenuService {
      */
     @Override
     public Set<String> selectPermsByUserId(Long userId) {
-        List<String> perms = menuMapper.selectPermsByUserId(userId);
+        List<String> perms = baseMapper.selectPermsByUserId(userId);
         Set<String> permsSet = new HashSet<>();
         for (String perm : perms) {
             if (StringUtils.isNotEmpty(perm)) {
@@ -104,9 +102,9 @@ public class MenuServiceImpl implements IMenuService {
     public List<Ztree> roleMenuTreeData(Role role) {
         Long roleId = role.getRoleId();
         List<Ztree> ztrees;
-        List<Menu> menuList = menuMapper.selectMenuAll();
+        List<Menu> menuList = baseMapper.selectMenuAll();
         if (StringUtils.isNotNull(roleId)) {
-            List<String> roleMenuList = menuMapper.selectMenuTree(roleId);
+            List<String> roleMenuList = baseMapper.selectMenuTree(roleId);
             ztrees = initZtree(menuList, roleMenuList, true);
         } else {
             ztrees = initZtree(menuList, null, true);
@@ -121,7 +119,7 @@ public class MenuServiceImpl implements IMenuService {
      */
     @Override
     public List<Ztree> menuTreeData() {
-        List<Menu> menuList = menuMapper.selectMenuAll();
+        List<Menu> menuList = baseMapper.selectMenuAll();
         return initZtree(menuList);
     }
 
@@ -133,7 +131,7 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public LinkedHashMap<String, String> selectPermsAll() {
         LinkedHashMap<String, String> section = new LinkedHashMap<>();
-        List<Menu> permissions = menuMapper.selectMenuAll();
+        List<Menu> permissions = baseMapper.selectMenuAll();
         if (StringUtils.isNotEmpty(permissions)) {
             for (Menu menu : permissions) {
                 section.put(menu.getUrl(), MessageFormat.format(PREMISSION_STRING, menu.getPerms()));
@@ -195,7 +193,7 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public int deleteMenuById(Long menuId) {
         ShiroUtils.clearCachedAuthorizationInfo();
-        return menuMapper.deleteMenuById(menuId);
+        return baseMapper.deleteMenuById(menuId);
     }
 
     /**
@@ -206,7 +204,7 @@ public class MenuServiceImpl implements IMenuService {
      */
     @Override
     public Menu selectMenuById(Long menuId) {
-        return menuMapper.selectMenuById(menuId);
+        return baseMapper.selectMenuById(menuId);
     }
 
     /**
@@ -217,7 +215,7 @@ public class MenuServiceImpl implements IMenuService {
      */
     @Override
     public int selectCountMenuByParentId(Long parentId) {
-        return menuMapper.selectCountMenuByParentId(parentId);
+        return baseMapper.selectCountMenuByParentId(parentId);
     }
 
     /**
@@ -241,7 +239,7 @@ public class MenuServiceImpl implements IMenuService {
     public int insertMenu(Menu menu) {
         menu.setCreateBy(ShiroUtils.getLoginName());
         ShiroUtils.clearCachedAuthorizationInfo();
-        return menuMapper.insertMenu(menu);
+        return baseMapper.insertMenu(menu);
     }
 
     /**
@@ -254,7 +252,7 @@ public class MenuServiceImpl implements IMenuService {
     public int updateMenu(Menu menu) {
         menu.setUpdateBy(ShiroUtils.getLoginName());
         ShiroUtils.clearCachedAuthorizationInfo();
-        return menuMapper.updateMenu(menu);
+        return baseMapper.updateMenu(menu);
     }
 
     /**
@@ -266,7 +264,7 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public String checkMenuNameUnique(Menu menu) {
         Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
-        Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
+        Menu info = baseMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
         if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
             return UserConstants.MENU_NAME_NOT_UNIQUE;
         }

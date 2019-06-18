@@ -10,6 +10,7 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.post.domain.Post;
 import com.ruoyi.project.system.post.mapper.PostMapper;
 import com.ruoyi.project.system.user.mapper.UserPostMapper;
@@ -20,10 +21,7 @@ import com.ruoyi.project.system.user.mapper.UserPostMapper;
  * @author ruoyi
  */
 @Service
-public class PostServiceImpl implements IPostService {
-
-    @Autowired
-    private PostMapper postMapper;
+public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implements IPostService {
 
     @Autowired
     private UserPostMapper userPostMapper;
@@ -36,7 +34,7 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public List<Post> selectPostList(Post post) {
-        return postMapper.selectPostList(post);
+        return baseMapper.selectPostList(post);
     }
 
     /**
@@ -46,7 +44,7 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public List<Post> selectPostAll() {
-        return postMapper.selectPostAll();
+        return baseMapper.selectPostAll();
     }
 
     /**
@@ -57,8 +55,8 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public List<Post> selectPostsByUserId(Long userId) {
-        List<Post> userPosts = postMapper.selectPostsByUserId(userId);
-        List<Post> posts = postMapper.selectPostAll();
+        List<Post> userPosts = baseMapper.selectPostsByUserId(userId);
+        List<Post> posts = baseMapper.selectPostAll();
         for (Post post : posts) {
             for (Post userRole : userPosts) {
                 if (post.getPostId().longValue() == userRole.getPostId().longValue()) {
@@ -78,7 +76,7 @@ public class PostServiceImpl implements IPostService {
      */
     @Override
     public Post selectPostById(Long postId) {
-        return postMapper.selectPostById(postId);
+        return baseMapper.selectPostById(postId);
     }
 
     /**
@@ -96,7 +94,7 @@ public class PostServiceImpl implements IPostService {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", post.getPostName()));
             }
         }
-        return postMapper.deletePostByIds(postIds);
+        return baseMapper.deletePostByIds(postIds);
     }
 
     /**
@@ -108,7 +106,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     public int insertPost(Post post) {
         post.setCreateBy(ShiroUtils.getLoginName());
-        return postMapper.insertPost(post);
+        return baseMapper.insertPost(post);
     }
 
     /**
@@ -120,7 +118,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     public int updatePost(Post post) {
         post.setUpdateBy(ShiroUtils.getLoginName());
-        return postMapper.updatePost(post);
+        return baseMapper.updatePost(post);
     }
 
     /**
@@ -143,7 +141,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     public String checkPostNameUnique(Post post) {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-        Post info = postMapper.checkPostNameUnique(post.getPostName());
+        Post info = baseMapper.checkPostNameUnique(post.getPostName());
         if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
             return UserConstants.POST_NAME_NOT_UNIQUE;
         }
@@ -159,7 +157,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     public String checkPostCodeUnique(Post post) {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-        Post info = postMapper.checkPostCodeUnique(post.getPostCode());
+        Post info = baseMapper.checkPostCodeUnique(post.getPostCode());
         if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
             return UserConstants.POST_CODE_NOT_UNIQUE;
         }

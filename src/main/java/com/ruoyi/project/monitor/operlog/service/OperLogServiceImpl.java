@@ -2,10 +2,10 @@ package com.ruoyi.project.monitor.operlog.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.monitor.operlog.domain.OperLog;
 import com.ruoyi.project.monitor.operlog.mapper.OperLogMapper;
 
@@ -15,10 +15,7 @@ import com.ruoyi.project.monitor.operlog.mapper.OperLogMapper;
  * @author ruoyi
  */
 @Service
-public class OperLogServiceImpl implements IOperLogService {
-
-    @Autowired
-    private OperLogMapper operLogMapper;
+public class OperLogServiceImpl extends BaseServiceImpl<OperLogMapper, OperLog> implements IOperLogService {
 
     /**
      * 新增操作日志
@@ -27,7 +24,7 @@ public class OperLogServiceImpl implements IOperLogService {
      */
     @Override
     public void insertOperlog(OperLog operLog) {
-        operLogMapper.insertOperlog(operLog);
+        baseMapper.insertOperlog(operLog);
     }
 
     /**
@@ -38,7 +35,7 @@ public class OperLogServiceImpl implements IOperLogService {
      */
     @Override
     public List<OperLog> selectOperLogList(OperLog operLog) {
-        return operLogMapper.selectOperLogList(operLog);
+        return baseMapper.selectOperLogList(operLog);
     }
 
     /**
@@ -49,7 +46,7 @@ public class OperLogServiceImpl implements IOperLogService {
      */
     @Override
     public int deleteOperLogByIds(String ids) {
-        return operLogMapper.deleteOperLogByIds(Convert.toStrArray(ids));
+        return baseMapper.deleteOperLogByIds(Convert.toStrArray(ids));
     }
 
     /**
@@ -60,7 +57,7 @@ public class OperLogServiceImpl implements IOperLogService {
      */
     @Override
     public OperLog selectOperLogById(Long operId) {
-        return operLogMapper.selectOperLogById(operId);
+        return baseMapper.selectOperLogById(operId);
     }
 
     /**
@@ -68,6 +65,6 @@ public class OperLogServiceImpl implements IOperLogService {
      */
     @Override
     public void cleanOperLog() {
-        operLogMapper.cleanOperLog();
+        baseMapper.cleanOperLog();
     }
 }

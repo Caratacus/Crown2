@@ -2,6 +2,7 @@ package com.ruoyi.project.system.post.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.system.post.domain.Post;
 
 /**
@@ -9,7 +10,7 @@ import com.ruoyi.project.system.post.domain.Post;
  *
  * @author ruoyi
  */
-public interface IPostService {
+public interface IPostService extends BaseService<Post> {
 
     /**
      * 查询岗位信息集合

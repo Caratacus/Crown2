@@ -15,6 +15,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.system.config.service.IConfigService;
 import com.ruoyi.project.system.post.domain.Post;
@@ -34,12 +35,9 @@ import com.ruoyi.project.system.user.mapper.UserRoleMapper;
  * @author ruoyi
  */
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private RoleMapper roleMapper;
@@ -69,7 +67,7 @@ public class UserServiceImpl implements IUserService {
     @DataScope(tableAlias = "u")
     public List<User> selectUserList(User user) {
         // 生成数据权限过滤条件
-        return userMapper.selectUserList(user);
+        return baseMapper.selectUserList(user);
     }
 
     /**
@@ -80,7 +78,7 @@ public class UserServiceImpl implements IUserService {
      */
     @DataScope(tableAlias = "u")
     public List<User> selectAllocatedList(User user) {
-        return userMapper.selectAllocatedList(user);
+        return baseMapper.selectAllocatedList(user);
     }
 
     /**
@@ -91,7 +89,7 @@ public class UserServiceImpl implements IUserService {
      */
     @DataScope(tableAlias = "u")
     public List<User> selectUnallocatedList(User user) {
-        return userMapper.selectUnallocatedList(user);
+        return baseMapper.selectUnallocatedList(user);
     }
 
     /**
@@ -102,7 +100,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User selectUserByLoginName(String userName) {
-        return userMapper.selectUserByLoginName(userName);
+        return baseMapper.selectUserByLoginName(userName);
     }
 
     /**
@@ -113,7 +111,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User selectUserByPhoneNumber(String phoneNumber) {
-        return userMapper.selectUserByPhoneNumber(phoneNumber);
+        return baseMapper.selectUserByPhoneNumber(phoneNumber);
     }
 
     /**
@@ -124,7 +122,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User selectUserByEmail(String email) {
-        return userMapper.selectUserByEmail(email);
+        return baseMapper.selectUserByEmail(email);
     }
 
     /**
@@ -135,7 +133,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User selectUserById(Long userId) {
-        return userMapper.selectUserById(userId);
+        return baseMapper.selectUserById(userId);
     }
 
     /**
@@ -150,7 +148,7 @@ public class UserServiceImpl implements IUserService {
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 删除用户与岗位表
         userPostMapper.deleteUserPostByUserId(userId);
-        return userMapper.deleteUserById(userId);
+        return baseMapper.deleteUserById(userId);
     }
 
     /**
@@ -167,7 +165,7 @@ public class UserServiceImpl implements IUserService {
                 throw new BusinessException("不允许删除超级管理员用户");
             }
         }
-        return userMapper.deleteUserByIds(userIds);
+        return baseMapper.deleteUserByIds(userIds);
     }
 
     /**
@@ -183,7 +181,7 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy(ShiroUtils.getLoginName());
         // 新增用户信息
-        int rows = userMapper.insertUser(user);
+        int rows = baseMapper.insertUser(user);
         // 新增用户岗位关联
         insertUserPost(user);
         // 新增用户与角色管理
@@ -210,7 +208,7 @@ public class UserServiceImpl implements IUserService {
         userPostMapper.deleteUserPostByUserId(userId);
         // 新增用户与岗位管理
         insertUserPost(user);
-        return userMapper.updateUser(user);
+        return baseMapper.updateUser(user);
     }
 
     /**
@@ -221,7 +219,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public int updateUserInfo(User user) {
-        return userMapper.updateUser(user);
+        return baseMapper.updateUser(user);
     }
 
     /**
@@ -289,7 +287,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public String checkLoginNameUnique(String loginName) {
-        int count = userMapper.checkLoginNameUnique(loginName);
+        int count = baseMapper.checkLoginNameUnique(loginName);
         if (count > 0) {
             return UserConstants.USER_NAME_NOT_UNIQUE;
         }
@@ -305,7 +303,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public String checkPhoneUnique(User user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        User info = userMapper.checkPhoneUnique(user.getPhonenumber());
+        User info = baseMapper.checkPhoneUnique(user.getPhonenumber());
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
             return UserConstants.USER_PHONE_NOT_UNIQUE;
         }
@@ -321,7 +319,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public String checkEmailUnique(User user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        User info = userMapper.checkEmailUnique(user.getEmail());
+        User info = baseMapper.checkEmailUnique(user.getEmail());
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
             return UserConstants.USER_EMAIL_NOT_UNIQUE;
         }
@@ -387,7 +385,7 @@ public class UserServiceImpl implements IUserService {
         for (User user : userList) {
             try {
                 // 验证是否存在这个用户
-                User u = userMapper.selectUserByLoginName(user.getLoginName());
+                User u = baseMapper.selectUserByLoginName(user.getLoginName());
                 if (StringUtils.isNull(u)) {
                     user.setPassword(password);
                     user.setCreateBy(operName);
@@ -430,6 +428,6 @@ public class UserServiceImpl implements IUserService {
         if (User.isAdmin(user.getUserId())) {
             throw new BusinessException("不允许修改超级管理员用户");
         }
-        return userMapper.updateUser(user);
+        return baseMapper.updateUser(user);
     }
 }

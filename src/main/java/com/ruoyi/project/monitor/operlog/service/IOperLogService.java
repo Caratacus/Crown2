@@ -2,6 +2,7 @@ package com.ruoyi.project.monitor.operlog.service;
 
 import java.util.List;
 
+import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.monitor.operlog.domain.OperLog;
 
 /**
@@ -9,7 +10,7 @@ import com.ruoyi.project.monitor.operlog.domain.OperLog;
  *
  * @author ruoyi
  */
-public interface IOperLogService {
+public interface IOperLogService extends BaseService<OperLog> {
 
     /**
      * 新增操作日志

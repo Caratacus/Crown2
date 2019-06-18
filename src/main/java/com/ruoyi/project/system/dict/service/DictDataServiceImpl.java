@@ -2,11 +2,11 @@ package com.ruoyi.project.system.dict.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.dict.domain.DictData;
 import com.ruoyi.project.system.dict.mapper.DictDataMapper;
 
@@ -16,10 +16,7 @@ import com.ruoyi.project.system.dict.mapper.DictDataMapper;
  * @author ruoyi
  */
 @Service
-public class DictDataServiceImpl implements IDictDataService {
-
-    @Autowired
-    private DictDataMapper dictDataMapper;
+public class DictDataServiceImpl extends BaseServiceImpl<DictDataMapper, DictData> implements IDictDataService {
 
     /**
      * 根据条件分页查询字典数据
@@ -29,7 +26,7 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public List<DictData> selectDictDataList(DictData dictData) {
-        return dictDataMapper.selectDictDataList(dictData);
+        return baseMapper.selectDictDataList(dictData);
     }
 
     /**
@@ -40,7 +37,7 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public List<DictData> selectDictDataByType(String dictType) {
-        return dictDataMapper.selectDictDataByType(dictType);
+        return baseMapper.selectDictDataByType(dictType);
     }
 
     /**
@@ -52,7 +49,7 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public String selectDictLabel(String dictType, String dictValue) {
-        return dictDataMapper.selectDictLabel(dictType, dictValue);
+        return baseMapper.selectDictLabel(dictType, dictValue);
     }
 
     /**
@@ -63,7 +60,7 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public DictData selectDictDataById(Long dictCode) {
-        return dictDataMapper.selectDictDataById(dictCode);
+        return baseMapper.selectDictDataById(dictCode);
     }
 
     /**
@@ -74,7 +71,7 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public int deleteDictDataById(Long dictCode) {
-        return dictDataMapper.deleteDictDataById(dictCode);
+        return baseMapper.deleteDictDataById(dictCode);
     }
 
     /**
@@ -85,7 +82,7 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public int deleteDictDataByIds(String ids) {
-        return dictDataMapper.deleteDictDataByIds(Convert.toStrArray(ids));
+        return baseMapper.deleteDictDataByIds(Convert.toStrArray(ids));
     }
 
     /**
@@ -97,7 +94,7 @@ public class DictDataServiceImpl implements IDictDataService {
     @Override
     public int insertDictData(DictData dictData) {
         dictData.setCreateBy(ShiroUtils.getLoginName());
-        return dictDataMapper.insertDictData(dictData);
+        return baseMapper.insertDictData(dictData);
     }
 
     /**
@@ -109,6 +106,6 @@ public class DictDataServiceImpl implements IDictDataService {
     @Override
     public int updateDictData(DictData dictData) {
         dictData.setUpdateBy(ShiroUtils.getLoginName());
-        return dictDataMapper.updateDictData(dictData);
+        return baseMapper.updateDictData(dictData);
     }
 }
