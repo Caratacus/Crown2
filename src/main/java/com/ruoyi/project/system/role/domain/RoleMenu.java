@@ -14,6 +14,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RoleMenu {
+
     /**
      * 角色ID
      */

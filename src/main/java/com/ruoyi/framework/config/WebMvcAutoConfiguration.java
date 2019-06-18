@@ -61,7 +61,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         registry.addConverterFactory(new IEnumConverterFactory());
     }
 
-   @Bean
+    @Bean
     @ConditionalOnClass(Undertow.class)
     public UndertowServerFactoryCustomizer undertowServerFactoryCustomizer() {
         return new UndertowServerFactoryCustomizer();
