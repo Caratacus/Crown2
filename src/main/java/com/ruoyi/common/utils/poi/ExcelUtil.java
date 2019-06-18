@@ -540,6 +540,7 @@ public class ExcelUtil<T> {
         String downloadPath = RuoYiConfig.getDownloadPath() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists()) {
+            //noinspection ResultOfMethodCallIgnored
             desc.getParentFile().mkdirs();
         }
         return downloadPath;
