@@ -3,14 +3,21 @@ package com.ruoyi.project.system.role.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 角色表 sys_role
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class Role extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -19,6 +26,7 @@ public class Role extends BaseEntity {
      * 角色ID
      */
     @Excel(name = "角色序号")
+    @TableId
     private Long roleId;
 
     /**
@@ -57,99 +65,27 @@ public class Role extends BaseEntity {
     private String delFlag;
 
     /**
+     * 备注
+     */
+    private String remark;
+
+    /**
      * 用户是否存在此角色标识 默认不存在
      */
+    @TableField(exist = false)
     private boolean flag = false;
 
     /**
      * 菜单组
      */
+    @TableField(exist = false)
     private Long[] menuIds;
 
     /**
      * 部门组（数据权限）
      */
+    @TableField(exist = false)
     private Long[] deptIds;
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getDataScope() {
-        return dataScope;
-    }
-
-    public void setDataScope(String dataScope) {
-        this.dataScope = dataScope;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getRoleKey() {
-        return roleKey;
-    }
-
-    public void setRoleKey(String roleKey) {
-        this.roleKey = roleKey;
-    }
-
-    public String getRoleSort() {
-        return roleSort;
-    }
-
-    public void setRoleSort(String roleSort) {
-        this.roleSort = roleSort;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
-    public Long[] getMenuIds() {
-        return menuIds;
-    }
-
-    public void setMenuIds(Long[] menuIds) {
-        this.menuIds = menuIds;
-    }
-
-    public Long[] getDeptIds() {
-        return deptIds;
-    }
-
-    public void setDeptIds(Long[] deptIds) {
-        this.deptIds = deptIds;
-    }
 
     @Override
     public String toString() {

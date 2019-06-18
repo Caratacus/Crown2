@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.monitor.online.domain.UserOnline;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.monitor.online.domain.UserOnline;
  * @author ruoyi
  */
 @Mapper
-public interface UserOnlineMapper {
+public interface UserOnlineMapper extends BaseMapper<UserOnline> {
 
     /**
      * 通过会话序号查询信息

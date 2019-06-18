@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.notice.domain.Notice;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.notice.domain.Notice;
  * @author ruoyi
  */
 @Mapper
-public interface NoticeMapper {
+public interface NoticeMapper extends BaseMapper<Notice> {
 
     /**
      * 查询公告信息

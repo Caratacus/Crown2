@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.config.domain.Config;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.config.domain.Config;
  * @author ruoyi
  */
 @Mapper
-public interface ConfigMapper {
+public interface ConfigMapper extends BaseMapper<Config> {
 
     /**
      * 查询参数配置信息

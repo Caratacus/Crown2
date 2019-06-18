@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.user.domain.UserRole;
 
 /**
@@ -13,7 +14,7 @@ import com.ruoyi.project.system.user.domain.UserRole;
  * @author ruoyi
  */
 @Mapper
-public interface UserRoleMapper {
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 
     /**
      * 通过用户ID删除用户和角色关联

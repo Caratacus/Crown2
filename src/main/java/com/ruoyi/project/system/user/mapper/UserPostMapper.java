@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.user.domain.UserPost;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.user.domain.UserPost;
  * @author ruoyi
  */
 @Mapper
-public interface UserPostMapper {
+public interface UserPostMapper extends BaseMapper<UserPost> {
 
     /**
      * 通过用户ID删除用户和岗位关联

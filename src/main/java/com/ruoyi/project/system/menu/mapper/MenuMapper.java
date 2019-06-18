@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.menu.domain.Menu;
 
 /**
@@ -13,7 +14,7 @@ import com.ruoyi.project.system.menu.domain.Menu;
  * @author ruoyi
  */
 @Mapper
-public interface MenuMapper {
+public interface MenuMapper extends BaseMapper<Menu> {
 
     /**
      * 查询系统所有菜单（含按钮）

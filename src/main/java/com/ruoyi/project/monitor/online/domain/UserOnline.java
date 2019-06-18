@@ -5,14 +5,21 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.web.domain.BaseEntity;
 import com.ruoyi.project.monitor.online.domain.OnlineSession.OnlineStatus;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 当前在线会话 sys_user_online
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class UserOnline extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -20,6 +27,7 @@ public class UserOnline extends BaseEntity {
     /**
      * 用户会话id
      */
+    @TableId
     private String sessionId;
 
     /**
@@ -75,103 +83,8 @@ public class UserOnline extends BaseEntity {
     /**
      * 备份的当前用户会话
      */
+    @TableField(exist = false)
     private OnlineSession session;
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public String getIpaddr() {
-        return ipaddr;
-    }
-
-    public void setIpaddr(String ipaddr) {
-        this.ipaddr = ipaddr;
-    }
-
-    public String getLoginLocation() {
-        return loginLocation;
-    }
-
-    public void setLoginLocation(String loginLocation) {
-        this.loginLocation = loginLocation;
-    }
-
-    public String getBrowser() {
-        return browser;
-    }
-
-    public void setBrowser(String browser) {
-        this.browser = browser;
-    }
-
-    public String getOs() {
-        return os;
-    }
-
-    public void setOs(String os) {
-        this.os = os;
-    }
-
-    public Date getStartTimestamp() {
-        return startTimestamp;
-    }
-
-    public void setStartTimestamp(Date startTimestamp) {
-        this.startTimestamp = startTimestamp;
-    }
-
-    public Date getLastAccessTime() {
-        return lastAccessTime;
-    }
-
-    public void setLastAccessTime(Date lastAccessTime) {
-        this.lastAccessTime = lastAccessTime;
-    }
-
-    public Long getExpireTime() {
-        return expireTime;
-    }
-
-    public void setExpireTime(Long expireTime) {
-        this.expireTime = expireTime;
-    }
-
-    public OnlineStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OnlineStatus status) {
-        this.status = status;
-    }
-
-    public OnlineSession getSession() {
-        return session;
-    }
-
-    public void setSession(OnlineSession session) {
-        this.session = session;
-    }
 
     @Override
     public String toString() {

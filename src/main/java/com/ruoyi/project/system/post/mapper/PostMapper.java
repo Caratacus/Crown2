@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.post.domain.Post;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.post.domain.Post;
  * @author ruoyi
  */
 @Mapper
-public interface PostMapper {
+public interface PostMapper extends BaseMapper<Post> {
 
     /**
      * 查询岗位数据集合

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.role.domain.RoleDept;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.role.domain.RoleDept;
  * @author ruoyi
  */
 @Mapper
-public interface RoleDeptMapper {
+public interface RoleDeptMapper extends BaseMapper<RoleDept> {
 
     /**
      * 通过角色ID删除角色和部门关联

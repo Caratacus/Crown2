@@ -3,14 +3,20 @@ package com.ruoyi.project.system.config.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 参数配置表 sys_config
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class Config extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -19,6 +25,7 @@ public class Config extends BaseEntity {
      * 参数主键
      */
     @Excel(name = "参数主键")
+    @TableId
     private Long configId;
 
     /**
@@ -45,45 +52,11 @@ public class Config extends BaseEntity {
     @Excel(name = "系统内置", readConverterExp = "Y=是,N=否")
     private String configType;
 
-    public Long getConfigId() {
-        return configId;
-    }
+    /**
+     * 备注
+     */
+    private String remark;
 
-    public void setConfigId(Long configId) {
-        this.configId = configId;
-    }
-
-    public String getConfigName() {
-        return configName;
-    }
-
-    public void setConfigName(String configName) {
-        this.configName = configName;
-    }
-
-    public String getConfigKey() {
-        return configKey;
-    }
-
-    public void setConfigKey(String configKey) {
-        this.configKey = configKey;
-    }
-
-    public String getConfigValue() {
-        return configValue;
-    }
-
-    public void setConfigValue(String configValue) {
-        this.configValue = configValue;
-    }
-
-    public String getConfigType() {
-        return configType;
-    }
-
-    public void setConfigType(String configType) {
-        this.configType = configType;
-    }
 
     @Override
     public String toString() {

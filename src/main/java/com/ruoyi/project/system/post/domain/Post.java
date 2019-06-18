@@ -3,14 +3,21 @@ package com.ruoyi.project.system.post.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 岗位表 sys_post
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class Post extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -19,6 +26,7 @@ public class Post extends BaseEntity {
      * 岗位序号
      */
     @Excel(name = "岗位序号")
+    @TableId
     private Long postId;
 
     /**
@@ -46,57 +54,15 @@ public class Post extends BaseEntity {
     private String status;
 
     /**
+     * 备注
+     */
+    private String remark;
+
+    /**
      * 用户是否存在此岗位标识 默认不存在
      */
+    @TableField(exist = false)
     private boolean flag = false;
-
-    public Long getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-    public String getPostName() {
-        return postName;
-    }
-
-    public void setPostName(String postName) {
-        this.postName = postName;
-    }
-
-    public String getPostSort() {
-        return postSort;
-    }
-
-    public void setPostSort(String postSort) {
-        this.postSort = postSort;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
 
     @Override
     public String toString() {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 
@@ -19,6 +20,7 @@ public class BaseEntity implements Serializable {
     /**
      * 搜索值
      */
+    @TableField(exist = false)
     private String searchValue;
 
     /**
@@ -44,13 +46,9 @@ public class BaseEntity implements Serializable {
     private Date updateTime;
 
     /**
-     * 备注
-     */
-    private String remark;
-
-    /**
      * 请求参数
      */
+    @TableField(exist = false)
     private Map<String, Object> params;
 
     public String getSearchValue() {
@@ -91,14 +89,6 @@ public class BaseEntity implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
     public Map<String, Object> getParams() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.user.domain.User;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.user.domain.User;
  * @author ruoyi
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 根据条件分页查询用户列表

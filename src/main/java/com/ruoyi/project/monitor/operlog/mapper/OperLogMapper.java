@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.monitor.operlog.domain.OperLog;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.monitor.operlog.domain.OperLog;
  * @author ruoyi
  */
 @Mapper
-public interface OperLogMapper {
+public interface OperLogMapper extends BaseMapper<OperLog> {
 
     /**
      * 新增操作日志

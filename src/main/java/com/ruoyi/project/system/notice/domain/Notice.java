@@ -3,13 +3,19 @@ package com.ruoyi.project.system.notice.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 通知公告表 sys_notice
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class Notice extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -17,6 +23,7 @@ public class Notice extends BaseEntity {
     /**
      * 公告ID
      */
+    @TableId
     private Long noticeId;
     /**
      * 公告标题
@@ -35,45 +42,10 @@ public class Notice extends BaseEntity {
      */
     private String status;
 
-    public Long getNoticeId() {
-        return noticeId;
-    }
-
-    public void setNoticeId(Long noticeId) {
-        this.noticeId = noticeId;
-    }
-
-    public void setNoticeTitle(String noticeTitle) {
-        this.noticeTitle = noticeTitle;
-    }
-
-    public String getNoticeTitle() {
-        return noticeTitle;
-    }
-
-    public void setNoticeType(String noticeType) {
-        this.noticeType = noticeType;
-    }
-
-    public String getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeContent(String noticeContent) {
-        this.noticeContent = noticeContent;
-    }
-
-    public String getNoticeContent() {
-        return noticeContent;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
+    /**
+     * 备注
+     */
+    private String remark;
 
     @Override
     public String toString() {

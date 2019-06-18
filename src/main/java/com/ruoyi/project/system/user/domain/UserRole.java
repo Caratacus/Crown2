@@ -3,11 +3,16 @@ package com.ruoyi.project.system.user.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 用户和角色关联 sys_user_role
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class UserRole {
 
     /**
@@ -20,21 +25,6 @@ public class UserRole {
      */
     private Long roleId;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
 
     @Override
     public String toString() {

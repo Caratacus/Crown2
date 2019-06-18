@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.dept.domain.Dept;
 
 /**
@@ -13,7 +14,7 @@ import com.ruoyi.project.system.dept.domain.Dept;
  * @author ruoyi
  */
 @Mapper
-public interface DeptMapper {
+public interface DeptMapper extends BaseMapper<Dept> {
 
     /**
      * 查询部门人数

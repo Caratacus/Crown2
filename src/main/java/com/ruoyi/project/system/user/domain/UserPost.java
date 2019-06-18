@@ -3,11 +3,16 @@ package com.ruoyi.project.system.user.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 用户和岗位关联 sys_user_post
  *
  * @author ruoyi
  */
+@Setter
+@Getter
 public class UserPost {
 
     /**
@@ -18,22 +23,6 @@ public class UserPost {
      * 岗位ID
      */
     private Long postId;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
 
     @Override
     public String toString() {

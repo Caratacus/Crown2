@@ -103,8 +103,10 @@ mybatis-plus:
       field-strategy: not_empty
       id-type: auto
       db-type: mysql
+      table-prefix: sys_
     banner: false
    # super-mapper-class: org.crown.framework.mapper.BaseMapper
+    super-mapper-class: com.ruoyi.framework.mapper.BaseMapper
   #type-enums-package: org.crown.enums
   type-aliases-package: com.ruoyi.project
 # PageHelper分页插件

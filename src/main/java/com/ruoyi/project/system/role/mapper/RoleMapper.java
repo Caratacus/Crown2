@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.role.domain.Role;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.role.domain.Role;
  * @author ruoyi
  */
 @Mapper
-public interface RoleMapper {
+public interface RoleMapper extends BaseMapper<Role> {
 
     /**
      * 根据条件分页查询角色数据

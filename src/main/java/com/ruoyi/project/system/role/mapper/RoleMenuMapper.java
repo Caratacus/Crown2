@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.project.system.role.domain.RoleMenu;
 
 /**
@@ -12,7 +13,7 @@ import com.ruoyi.project.system.role.domain.RoleMenu;
  * @author ruoyi
  */
 @Mapper
-public interface RoleMenuMapper {
+public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
     /**
      * 通过角色ID删除角色和菜单关联
