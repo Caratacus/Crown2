@@ -17,7 +17,7 @@ public interface ${className}Mapper
      * @param ${primaryKey.attrname} ${tableComment}ID
      * @return ${tableComment}信息
      */
-	public ${className} select${className}ById(${primaryKey.attrType} ${primaryKey.attrname});
+        ${className} select${className}ById(${primaryKey.attrType} ${primaryKey.attrname});
 	
 	/**
      * 查询${tableComment}列表
@@ -25,7 +25,7 @@ public interface ${className}Mapper
      * @param ${classname} ${tableComment}信息
      * @return ${tableComment}集合
      */
-	public List<${className}> select${className}List(${className} ${classname});
+    List<${className}> select${className}List(${className} ${classname});
 	
 	/**
      * 新增${tableComment}
@@ -33,7 +33,7 @@ public interface ${className}Mapper
      * @param ${classname} ${tableComment}信息
      * @return 结果
      */
-	public int insert${className}(${className} ${classname});
+    int insert${className}(${className} ${classname});
 	
 	/**
      * 修改${tableComment}
@@ -41,7 +41,7 @@ public interface ${className}Mapper
      * @param ${classname} ${tableComment}信息
      * @return 结果
      */
-	public int update${className}(${className} ${classname});
+    int update${className}(${className} ${classname});
 	
 	/**
      * 删除${tableComment}
@@ -49,7 +49,7 @@ public interface ${className}Mapper
      * @param ${primaryKey.attrname} ${tableComment}ID
      * @return 结果
      */
-	public int delete${className}ById(${primaryKey.attrType} ${primaryKey.attrname});
+    int delete${className}ById(${primaryKey.attrType} ${primaryKey.attrname});
 	
 	/**
      * 批量删除${tableComment}
@@ -57,6 +57,6 @@ public interface ${className}Mapper
      * @param ${primaryKey.attrname}s 需要删除的数据ID
      * @return 结果
      */
-	public int delete${className}ByIds(String[] ${primaryKey.attrname}s);
+    int delete${className}ByIds(String[] ${primaryKey.attrname}s);
 	
 }

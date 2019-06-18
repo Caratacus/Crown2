@@ -72,7 +72,7 @@
     strong: [],
     u: [],
     ul: []
-  }
+  };
 
   /**
    * A pattern that recognizes a commonly useful subset of URLs that are safe.
@@ -89,7 +89,7 @@
   var DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i;
 
   function allowedAttribute (attr, allowedAttributeList) {
-    var attrName = attr.nodeName.toLowerCase()
+    var attrName = attr.nodeName.toLowerCase();
 
     if ($.inArray(attrName, allowedAttributeList) !== -1) {
       if ($.inArray(attrName, uriAttrs) !== -1) {
@@ -101,7 +101,7 @@
 
     var regExp = $(allowedAttributeList).filter(function (index, value) {
       return value instanceof RegExp
-    })
+    });
 
     // Check if a regular expression validates the attribute.
     for (var i = 0, l = regExp.length; i < l; i++) {
@@ -210,7 +210,7 @@
 
     DOMTokenList.prototype.add = function () {
       Array.prototype.forEach.call(arguments, _add.bind(this));
-    }
+    };
 
     DOMTokenList.prototype.remove = function () {
       Array.prototype.forEach.call(arguments, _remove.bind(this));
@@ -240,9 +240,8 @@
     return array1.length === array2.length && array1.every(function (element, index) {
       return element === array2[index];
     });
-  };
-
-  // <editor-fold desc="Shims">
+  }
+    // <editor-fold desc="Shims">
   if (!String.prototype.startsWith) {
     (function () {
       'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
@@ -540,9 +539,8 @@
 
   function deburrLetter (key) {
     return deburredLetters[key];
-  };
-
-  function normalizeToBase (string) {
+  }
+    function normalizeToBase (string) {
     string = string.toString();
     return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
   }
@@ -638,7 +636,7 @@
     TAB: 9, // KeyboardEvent.which value for tab key
     ARROW_UP: 38, // KeyboardEvent.which value for up arrow key
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
-  }
+  };
 
   var version = {
     success: false,
@@ -670,11 +668,11 @@
     POPOVERHEADER: 'popover-title',
     ICONBASE: 'glyphicon',
     TICKICON: 'glyphicon-ok'
-  }
+  };
 
   var Selector = {
     MENU: '.' + classNames.MENU
-  }
+  };
 
   var elementTemplates = {
     span: document.createElement('span'),
@@ -684,7 +682,7 @@
     li: document.createElement('li'),
     whitespace: document.createTextNode('\u00A0'),
     fragment: document.createDocumentFragment()
-  }
+  };
 
   elementTemplates.a.setAttribute('role', 'option');
   elementTemplates.subtext.className = 'text-muted';
@@ -800,7 +798,7 @@
 
       return elementTemplates.fragment;
     }
-  }
+  };
 
   var Selectpicker = function (element, options) {
     var that = this;

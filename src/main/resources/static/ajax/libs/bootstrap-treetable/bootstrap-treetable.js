@@ -36,7 +36,7 @@
             autoTheadWidth(true);
             // 缓存target对象
             target.data('bootstrap.tree.table', target);
-        }
+        };
         // 初始化容器
         var initContainer = function() {
             // 在外层包装一下div，样式用的bootstrap-table的
@@ -59,7 +59,7 @@
                 target.addClass('table-condensed');
             }
             target.html("");
-        }
+        };
         // 初始化工具栏
         var initToolbar = function() {
             var $toolbar = $("<div class='treetable-bars'></div>");
@@ -105,13 +105,13 @@
                     }
                 });
             }
-        }
+        };
         // 初始化隐藏列
         var initHiddenColumns = function(){
             $.each(target.hiddenColumns, function(i, field) {
                 target.find("."+field+"_cls").hide();
             });
-        }
+        };
         // 初始化表头
         var initHeader = function() {
             var $thr = $('<tr></tr>');
@@ -133,7 +133,7 @@
             var $thead = $('<thead class="treetable-thead"></thead>');
             $thead.append($thr);
             target.append($thead);
-        }
+        };
         // 初始化表体
         var initBody = function() {
             var $tbody = $('<tbody class="treetable-tbody"></tbody>');
@@ -142,7 +142,7 @@
             if (options.height) {
                 $tbody.css("height", options.height);
             }
-        }
+        };
         // 初始化数据服务
         var initServer = function(parms) {
             // 加载数据前先清空
@@ -150,7 +150,7 @@
             target.data_obj = {};
             var $tbody = target.find("tbody");
             // 添加加载loading
-            var $loading = '<tr><td colspan="' + options.columns.length + '"><div style="display: block;text-align: center;">正在努力地加载数据中，请稍候……</div></td></tr>'
+            var $loading = '<tr><td colspan="' + options.columns.length + '"><div style="display: block;text-align: center;">正在努力地加载数据中，请稍候……</div></td></tr>';
             $tbody.html($loading);
             if (options.url) {
                 $.ajax({
@@ -162,21 +162,21 @@
                         renderTable(data);
                     },
                     error: function(xhr, textStatus) {
-                        var _errorMsg = '<tr><td colspan="' + options.columns.length + '"><div style="display: block;text-align: center;">' + xhr.responseText + '</div></td></tr>'
+                        var _errorMsg = '<tr><td colspan="' + options.columns.length + '"><div style="display: block;text-align: center;">' + xhr.responseText + '</div></td></tr>';
                         $tbody.html(_errorMsg);
                     },
                 });
             } else {
                 renderTable(options.data);
             }
-        }
+        };
         // 加载完数据后渲染表格
         var renderTable = function(data) {
             var $tbody = target.find("tbody");
             // 先清空
             $tbody.html("");
             if (!data || data.length <= 0) {
-                var _empty = '<tr><td colspan="' + options.columns.length + '"><div style="display: block;text-align: center;">没有找到匹配的记录</div></td></tr>'
+                var _empty = '<tr><td colspan="' + options.columns.length + '"><div style="display: block;text-align: center;">没有找到匹配的记录</div></td></tr>';
                 $tbody.html(_empty);
                 return;
             }
@@ -187,7 +187,7 @@
             // 开始绘制
             if (rootNode) {
                 $.each(rootNode, function(i, item) {
-                    var _child_row_id = "row_id_" + i
+                    var _child_row_id = "row_id_" + i;
                     recursionNode(item, 1, _child_row_id, "row_root");
                 });
             }
@@ -204,13 +204,13 @@
             initHiddenColumns();
             // 动态设置表头宽度
             autoTheadWidth()
-        }
+        };
         // 动态设置表头宽度
         var autoTheadWidth = function(initFlag) {
             if(options.height>0){
                 var $thead = target.find("thead");
                 var $tbody = target.find("tbody");
-                var borderWidth = parseInt(target.css("border-left-width")) + parseInt(target.css("border-right-width"))
+                var borderWidth = parseInt(target.css("border-left-width")) + parseInt(target.css("border-right-width"));
                 
                 $thead.css("width", $tbody.children(":first").width());
                 if(initFlag){
@@ -230,7 +230,7 @@
                 }
             }
         
-        }
+        };
         // 缓存并格式化数据
         var formatData = function(data) {
             var _root = options.rootIdValue ? options.rootIdValue : null;
@@ -262,7 +262,7 @@
                 }
                 target.data_obj["id_" + item[options.code]] = item;
             });
-        }
+        };
         // 递归获取子节点并且设置子节点
         var recursionNode = function(parentNode, lv, row_id, p_id) {
             var $tbody = target.find("tbody");
@@ -271,7 +271,7 @@
             $tbody.append($tr);
             if (_ls) {
                 $.each(_ls, function(i, item) {
-                    var _child_row_id = row_id + "_" + i
+                    var _child_row_id = row_id + "_" + i;
                     recursionNode(item, (lv + 1), _child_row_id, row_id)
                 });
             }
@@ -357,13 +357,13 @@
                 }
             });
             return $tr;
-        }
+        };
         // 注册刷新按钮点击事件
         var registerRefreshBtnClickEvent = function(btn) {
             $(btn).off('click').on('click', function () {
                 target.refresh();
             });
-        }
+        };
         // 注册列选项事件
         var registerColumnClickEvent = function() {
             $(".bootstrap-tree-table .treetable-bars .columns label input").off('click').on('click', function () {
@@ -374,7 +374,7 @@
                     target.hideColumn($(this).val());
                 }
             });
-        }
+        };
         // 注册行点击选中事件
         var registerRowClickEvent = function() {
             target.find("tbody").find("tr").unbind();
@@ -405,7 +405,7 @@
                     }
                 }
             });
-        }
+        };
         // 注册小图标点击事件--展开缩起
         var registerExpanderEvent = function() {
             target.find("tbody").find("tr").find(".treetable-expander").unbind();
@@ -439,14 +439,14 @@
                     }
                 }
             });
-        }
+        };
         // 刷新数据
         target.refresh = function(parms) {
             if(parms){
                 target.lastAjaxParams=parms;
             }
             initServer(target.lastAjaxParams);
-        }
+        };
         // 添加数据刷新表格
         target.appendData = function(data) {
             // 下边的操作主要是为了查询时让一些没有根节点的节点显示
@@ -464,7 +464,7 @@
                 if (_p_data) {
                     p_id = _p_data.row_id;
                     if (row_id == "") {
-                        var _tmp = 0
+                        var _tmp = 0;
                         if (_c_list && _c_list.length > 0) {
                             _tmp = _c_list.length;
                         }
@@ -516,14 +516,14 @@
             registerExpanderEvent();
             registerRowClickEvent();
             initHiddenColumns();
-        }
+        };
 
         // 展开/折叠指定的行
         target.toggleRow=function(id) {
             var _rowData = target.data_obj["id_" + id];
             var $row_expander = $("#"+_rowData.row_id).find(".treetable-expander");
             $row_expander.trigger("click");
-        }
+        };
         // 展开指定的行
         target.expandRow=function(id) {
             var _rowData = target.data_obj["id_" + id];
@@ -532,7 +532,7 @@
             if (_isCollapsed) {
                 $row_expander.trigger("click");
             }
-        }
+        };
         // 折叠 指定的行
         target.collapseRow=function(id) {
             var _rowData = target.data_obj["id_" + id];
@@ -541,7 +541,7 @@
             if (_isExpanded) {
                 $row_expander.trigger("click");
             }
-        }
+        };
         // 展开所有的行
         target.expandAll=function() {
             target.find("tbody").find("tr").find(".treetable-expander").each(function(i,n){
@@ -550,7 +550,7 @@
                     $(n).trigger("click");
                 }
             })
-        }
+        };
         // 折叠所有的行
         target.collapseAll=function() {
             target.find("tbody").find("tr").find(".treetable-expander").each(function(i,n){
@@ -559,7 +559,7 @@
                     $(n).trigger("click");
                 }
             })
-        }
+        };
         // 显示指定列
         target.showColumn=function(field,flag) {
             var _index = $.inArray(field, target.hiddenColumns);
@@ -569,20 +569,20 @@
             target.find("."+field+"_cls").show();
             //是否更新列选项状态
             if(flag&&options.showColumns){
-                var $input = $(".bootstrap-tree-table .treetable-bars .columns label").find("input[value='"+field+"']")
+                var $input = $(".bootstrap-tree-table .treetable-bars .columns label").find("input[value='"+field+"']");
                 $input.prop("checked", 'checked');
             }
-        }
+        };
         // 隐藏指定列
         target.hideColumn=function(field,flag) {
             target.hiddenColumns.push(field);
             target.find("."+field+"_cls").hide();
             //是否更新列选项状态
             if(flag&&options.showColumns){
-                var $input = $(".bootstrap-tree-table .treetable-bars .columns label").find("input[value='"+field+"']")
+                var $input = $(".bootstrap-tree-table .treetable-bars .columns label").find("input[value='"+field+"']");
                 $input.prop("checked", '');
             }
-        }
+        };
         // 初始化
         init();
         return target;

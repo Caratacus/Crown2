@@ -460,7 +460,7 @@ $(function() {
     $('#ax_close_max').click(function(){
     	$('#content-main').toggleClass('max');
     	$('#ax_close_max').hide();
-    })
+    });
     
     // 双击选项卡全屏显示
     function activeTabMax() {

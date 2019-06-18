@@ -156,7 +156,7 @@ public class Server {
     /**
      * 设置Java虚拟机
      */
-    private void setJvmInfo() throws UnknownHostException {
+    private void setJvmInfo() {
         Properties props = System.getProperties();
         jvm.setTotal(Runtime.getRuntime().totalMemory());
         jvm.setMax(Runtime.getRuntime().maxMemory());

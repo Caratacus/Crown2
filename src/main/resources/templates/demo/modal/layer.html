@@ -137,23 +137,23 @@
 	    	$.modal.confirm("确认要点击确定吗?", function() {
 	    		$.modal.alert("ok");
 	    	});
-	    })
+	    });
 	    
 	    $("#button-msgReload").click(function(){
 	        $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
-	    })
+	    });
 	    
 	    $("#button-open-1").click(function(){
 	    	$.modal.open('添加用户', prefix + "/form");
-	    })
+	    });
 	    
 	    $("#button-open-2").click(function(){
 	    	$.modal.open('添加用户', prefix + "/form", '900', '320');
-	    })
+	    });
 	    
 	    $("#button-open-3").click(function(){
 	    	$.modal.open('添加用户', prefix + "/form", '900', '320', callback);
-	    })
+	    });
 	    
 	    $("#button-open-4").click(function(){
 	    	var btn = ['<i class="fa fa-check"></i> 点我回调', '<i class="fa fa-close"></i> 点我关闭'];
@@ -166,7 +166,7 @@
 				callBack: doSubmit
 			};
 			$.modal.openOptions(options);
-	    })
+	    });
 	    
 	    function doSubmit(index, layero) {
 	    	alert("进入了自定义选项提交方法");
@@ -178,15 +178,15 @@
 	    
 	    $("#button-open-5").click(function(){
 	    	$.modal.openFull('添加用户', prefix + "/form");
-	    })
+	    });
 	    
 	    $("#button-open-6").click(function(){
 	    	$.modal.openTab('添加用户', prefix + "/form");
-	    })
+	    });
 	    
 	    $("#button-open-7").click(function(){
 	    	$.modal.closeTab();
-	    })
+	    });
 	    
 	     $("#button-open-8").click(function(){
 	    	//tab层
@@ -205,7 +205,7 @@
 	    	         content: '内容3'
 	    	     }]
 	    	 });
-	    })
+	    });
 	    
 	    $("#button-open-9").click(function(){
 	    	layer.prompt({title: '输入任何口令，并确认', formType: 1}, function(pass, index){
@@ -215,7 +215,7 @@
 	    	    layer.msg('演示完毕！您的口令：'+ pass +'<br>您最后写下了：'+text);
 	    	  });
 	    	});
-	    })
+	    });
 	    
 	    $("#button-open-10").click(function(){
 	    	layer.open({
@@ -227,15 +227,15 @@
     		    layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});
     		  }
     		});
-	    })
+	    });
 	    
 	    $("#button-open-11").click(function(){
 	    	$.modal.loading("数据加载中");
-	    })
+	    });
 	    
 	    $("#button-open-12").click(function(){
 	    	$.modal.closeLoading();
-	    })
+	    });
 	    
 	    $("#button-open-13").click(function(){
 	    	layer.load(0, {shade: false}); // 0代表加载的风格，支持0-2

@@ -54,8 +54,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
     private Cache<String, Deque<Serializable>> cache;
 
     @Override
-    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o)
-            throws Exception {
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) {
         return false;
     }
 
@@ -115,7 +114,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
             }
 
             // 如果被踢出了，(前者或后者)直接退出，重定向到踢出后的地址
-            if ((Boolean) session.getAttribute("kickout") != null && (Boolean) session.getAttribute("kickout") == true) {
+            if (session.getAttribute("kickout") != null && (Boolean) session.getAttribute("kickout") == true) {
                 // 退出登录
                 subject.logout();
                 saveRequest(request);

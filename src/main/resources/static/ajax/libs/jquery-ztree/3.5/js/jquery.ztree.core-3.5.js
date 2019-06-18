@@ -1396,7 +1396,7 @@
 			} else if (setting.async.enable) {
 				if (!view.asyncNode(setting, node)) {
 					view.expandCollapseNode(setting, node, !node.open);
-					return;
+
 				}
 			} else if (node) {
 				view.expandCollapseNode(setting, node, !node.open);
@@ -1579,9 +1579,9 @@
 				refresh : function() {
 					this.setting.treeObj.empty();
 					var root = data.getRoot(this.setting),
-					nodes = root[this.setting.data.key.children]
+					nodes = root[this.setting.data.key.children];
 					data.initRoot(this.setting);
-					root[this.setting.data.key.children] = nodes
+					root[this.setting.data.key.children] = nodes;
 					data.initCache(this.setting);
 					view.createNodes(this.setting, 0, root[this.setting.data.key.children]);
 				},
@@ -1632,7 +1632,7 @@
 						view.setNodeFontCss(this.setting, node);
 					}
 				}
-			}
+			};
 			root.treeTools = zTreeTools;
 			data.setZTreeTools(setting, zTreeTools);
 

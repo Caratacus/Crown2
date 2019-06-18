@@ -677,7 +677,7 @@ public class Convert {
         if (obj instanceof String) {
             return (String) obj;
         } else if (obj instanceof byte[] || obj instanceof Byte[]) {
-            return str((Byte[]) obj, charset);
+            return str(obj, charset);
         } else if (obj instanceof ByteBuffer) {
             return str((ByteBuffer) obj, charset);
         }

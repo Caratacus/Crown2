@@ -51,10 +51,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
         if (attributeKeyStr.startsWith("javax.servlet")) {
             return false;
         }
-        if (attributeKeyStr.equals(ShiroConstants.CURRENT_USERNAME)) {
-            return false;
-        }
-        return true;
+        return !attributeKeyStr.equals(ShiroConstants.CURRENT_USERNAME);
     }
 
     @Override

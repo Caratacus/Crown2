@@ -132,7 +132,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     public boolean checkDeptExistUser(Long deptId) {
         int result = deptMapper.checkDeptExistUser(deptId);
-        return result > 0 ? true : false;
+        return result > 0;
     }
 
     /**

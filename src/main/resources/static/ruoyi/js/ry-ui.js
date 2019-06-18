@@ -237,7 +237,7 @@
                     search.orderByColumn = params.sort;
                     search.isAsc = params.order;
     		        return search;
-    		    }
+    		    };
     		    $("#" + $.table._option.id).bootstrapTable('refresh', params);
     		},
     		// 导出数据
@@ -568,16 +568,16 @@
             	}
             	if ($.common.isEmpty(title)) {
                     title = false;
-                };
+                }
                 if ($.common.isEmpty(url)) {
                     url = "/404.html";
-                };
+                }
                 if ($.common.isEmpty(width)) {
                 	width = 800;
-                };
+                }
                 if ($.common.isEmpty(height)) {
                 	height = ($(window).height() - 50);
-                };
+                }
                 if ($.common.isEmpty(callback)) {
                     callback = function(index, layero) {
                         var iframeWin = layero.find('iframe')[0];
@@ -640,16 +640,16 @@
             	}
             	if ($.common.isEmpty(title)) {
                     title = false;
-                };
+                }
                 if ($.common.isEmpty(url)) {
                     url = "/404.html";
-                };
+                }
                 if ($.common.isEmpty(width)) {
                 	width = 800;
-                };
+                }
                 if ($.common.isEmpty(height)) {
                 	height = ($(window).height() - 50);
-                };
+                }
                 var index = layer.open({
             		type: 2,
             		area: [width + 'px', height + 'px'],

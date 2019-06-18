@@ -23,22 +23,22 @@
 	_zTreeTools = function(setting, zTreeTools) {
 		zTreeTools.showNodes = function(nodes, options) {
 			view.showNodes(setting, nodes, options);
-		}
+		};
 		zTreeTools.showNode = function(node, options) {
 			if (!node) {
 				return;
 			}
 			view.showNodes(setting, [node], options);
-		}
+		};
 		zTreeTools.hideNodes = function(nodes, options) {
 			view.hideNodes(setting, nodes, options);
-		}
+		};
 		zTreeTools.hideNode = function(node, options) {
 			if (!node) {
 				return;
 			}
 			view.hideNodes(setting, [node], options);
-		}
+		};
 
 		var _checkNode = zTreeTools.checkNode;
 		if (_checkNode) {
@@ -55,7 +55,7 @@
 		initHideForExCheck: function(setting, n) {
 			if (n.isHidden && setting.check && setting.check.enable) {
 				if(typeof n._nocheck == "undefined") {
-					n._nocheck = !!n.nocheck
+					n._nocheck = !!n.nocheck;
 					n.nocheck = true;
 				}
 				n.check_Child_State = -1;
@@ -296,7 +296,7 @@
 		if (isLastNode) {
 			view.clearOldLastNode(setting, node);
 		}
-	}
+	};
 
 	var _makeChkFlag = data.makeChkFlag;
 	if (!!_makeChkFlag) {

@@ -20,7 +20,7 @@ public interface RoleMapper {
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    public List<Role> selectRoleList(Role role);
+    List<Role> selectRoleList(Role role);
 
     /**
      * 根据用户ID查询角色
@@ -28,7 +28,7 @@ public interface RoleMapper {
      * @param userId 用户ID
      * @return 角色列表
      */
-    public List<Role> selectRolesByUserId(Long userId);
+    List<Role> selectRolesByUserId(Long userId);
 
     /**
      * 通过角色ID查询角色
@@ -36,7 +36,7 @@ public interface RoleMapper {
      * @param roleId 角色ID
      * @return 角色对象信息
      */
-    public Role selectRoleById(Long roleId);
+    Role selectRoleById(Long roleId);
 
     /**
      * 通过角色ID删除角色
@@ -44,7 +44,7 @@ public interface RoleMapper {
      * @param roleId 角色ID
      * @return 结果
      */
-    public int deleteRoleById(Long roleId);
+    int deleteRoleById(Long roleId);
 
     /**
      * 批量角色用户信息
@@ -52,7 +52,7 @@ public interface RoleMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    public int deleteRoleByIds(Long[] ids);
+    int deleteRoleByIds(Long[] ids);
 
     /**
      * 修改角色信息
@@ -60,7 +60,7 @@ public interface RoleMapper {
      * @param role 角色信息
      * @return 结果
      */
-    public int updateRole(Role role);
+    int updateRole(Role role);
 
     /**
      * 新增角色信息
@@ -68,7 +68,7 @@ public interface RoleMapper {
      * @param role 角色信息
      * @return 结果
      */
-    public int insertRole(Role role);
+    int insertRole(Role role);
 
     /**
      * 校验角色名称是否唯一
@@ -76,7 +76,7 @@ public interface RoleMapper {
      * @param roleName 角色名称
      * @return 角色信息
      */
-    public Role checkRoleNameUnique(String roleName);
+    Role checkRoleNameUnique(String roleName);
 
     /**
      * 校验角色权限是否唯一
@@ -84,5 +84,5 @@ public interface RoleMapper {
      * @param roleKey 角色权限
      * @return 角色信息
      */
-    public Role checkRoleKeyUnique(String roleKey);
+    Role checkRoleKeyUnique(String roleKey);
 }

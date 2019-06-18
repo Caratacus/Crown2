@@ -47,7 +47,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
     }
 
     @Override
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean preHandle(ServletRequest request, ServletResponse response) {
         try {
             Subject subject = getSubject(request, response);
             String redirectUrl = getRedirectUrl(request, response, subject);

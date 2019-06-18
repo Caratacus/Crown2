@@ -17,7 +17,7 @@ public interface IGenService {
      * @param tableInfo 表信息
      * @return 数据库表列表
      */
-    public List<TableInfo> selectTableList(TableInfo tableInfo);
+    List<TableInfo> selectTableList(TableInfo tableInfo);
 
     /**
      * 生成代码
@@ -25,7 +25,7 @@ public interface IGenService {
      * @param tableName 表名称
      * @return 数据
      */
-    public byte[] generatorCode(String tableName);
+    byte[] generatorCode(String tableName);
 
     /**
      * 批量生成代码
@@ -33,5 +33,5 @@ public interface IGenService {
      * @param tableNames 表数组
      * @return 数据
      */
-    public byte[] generatorCode(String[] tableNames);
+    byte[] generatorCode(String[] tableNames);
 }

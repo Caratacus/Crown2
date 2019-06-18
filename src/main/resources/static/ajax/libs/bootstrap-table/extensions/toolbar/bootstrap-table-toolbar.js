@@ -32,8 +32,7 @@
             $("body").append($(vModal));
 
             var vFormAvd = createFormAvd(pColumns, searchText, that),
-                timeoutId = 0;;
-
+                timeoutId = 0;
             $('#avdSearchModalContent' + "_" + that.options.idTable).append(vFormAvd.join(''));
 
             $('#' + that.options.idForm).off('keyup blur', 'input').on('keyup blur', 'input', function (event) {
@@ -132,7 +131,7 @@
 
         html.push(sprintf('<div class="columns columns-%s btn-group pull-%s" role="group">', this.options.buttonsAlign, this.options.buttonsAlign));
         html.push(sprintf('<button class="btn btn-default%s' + '" type="button" name="advancedSearch" title="%s">', that.options.iconSize === undefined ? '' : ' btn-' + that.options.iconSize, that.options.formatAdvancedSearch()));
-        html.push(sprintf('<i class="%s %s"></i>', that.options.iconsPrefix, that.options.icons.advancedSearchIcon))
+        html.push(sprintf('<i class="%s %s"></i>', that.options.iconsPrefix, that.options.icons.advancedSearchIcon));
         html.push('</button></div>');
 
         that.$toolbar.prepend(html.join(''));
@@ -151,7 +150,7 @@
         }
 
         if (typeof this.options.idTable === 'undefined') {
-            return;
+
         } else {
             if (!firstLoad) {
                 var height = parseInt($(".bootstrap-table").height());

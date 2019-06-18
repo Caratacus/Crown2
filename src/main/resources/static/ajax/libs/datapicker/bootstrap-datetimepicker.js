@@ -114,7 +114,7 @@
     this.icons = {
       leftArrow: this.fontAwesome ? 'fa-arrow-left' : (this.bootcssVer === 3 ? 'glyphicon-arrow-left' : 'icon-arrow-left'),
       rightArrow: this.fontAwesome ? 'fa-arrow-right' : (this.bootcssVer === 3 ? 'glyphicon-arrow-right' : 'icon-arrow-right')
-    }
+    };
     this.icontype = this.fontAwesome ? 'fa' : 'glyphicon';
 
     this._attachEvents();
@@ -124,7 +124,7 @@
         if ($(e.target).closest('.datetimepicker').length === 0) {
             that.hide();
         }
-    }
+    };
 
     this.formatViewType = 'datetime';
     if ('formatViewType' in options) {
@@ -304,7 +304,7 @@
         res.push('disabled');
       }
       return res.concat((render ? render : []));
-    }
+    };
     this.onRenderMonth = function (date) {
       var render = (options.onRenderMonth || function () { return []; })(date);
       var res = ['month'];
@@ -312,7 +312,7 @@
         render = [render];
       }
       return res.concat((render ? render : []));
-    }
+    };
     this.startDate = new Date(-8639968443048000);
     this.endDate = new Date(8639968443048000);
     this.datesDisabled = [];
@@ -723,7 +723,7 @@
         endMonth = this.endDate.getUTCMonth() + 1,
         currentDate = (new UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate())).valueOf(),
         today = new Date();
-      this.setTitle('.datetimepicker-days', dates[this.language].months[month] + ' ' + year)
+      this.setTitle('.datetimepicker-days', dates[this.language].months[month] + ' ' + year);
       if (this.formatViewType === 'time') {
         var formatted = this.getFormattedDate();
         this.setTitle('.datetimepicker-hours', formatted);
@@ -785,7 +785,7 @@
       html = [];
       var txt = '', meridian = '', meridianOld = '';
       var hoursDisabled = this.hoursDisabled || [];
-      d = new Date(this.viewDate)
+      d = new Date(this.viewDate);
       for (var i = 0; i < 24; i++) {
         d.setUTCHours(i);
         classes = this.onRenderHour(d);

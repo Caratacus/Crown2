@@ -126,7 +126,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public boolean deleteRoleById(Long roleId) {
-        return roleMapper.deleteRoleById(roleId) > 0 ? true : false;
+        return roleMapper.deleteRoleById(roleId) > 0;
     }
 
     /**

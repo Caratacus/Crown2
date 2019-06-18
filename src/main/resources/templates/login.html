@@ -18,7 +18,9 @@
     <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
     <style type="text/css">label.error { position:inherit;  }</style>
     <script>
-        if(window.top!==window.self){window.top.location=window.location};
+        if (window.top !== window.self) {
+            window.top.location = window.location
+        }
     </script>
 </head>
 
@@ -73,7 +75,7 @@
             </div>
         </div>
     </div>
-<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+<script th:inline="javascript"> var ctx = [[;@{/}]]; var captchaType = [[${captchaType}]]; ;</script>
 <!-- 全局js -->
 <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
