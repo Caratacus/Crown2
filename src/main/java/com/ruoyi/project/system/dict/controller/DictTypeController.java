@@ -77,7 +77,7 @@ public class DictTypeController extends WebController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(DictType dict) {
-        return toAjax(dictTypeService.insertDictType(dict));
+        return toAjax(dictTypeService.save(dict));
     }
 
     /**
@@ -119,7 +119,7 @@ public class DictTypeController extends WebController {
     @GetMapping("/detail/{dictId}")
     public String detail(@PathVariable("dictId") Long dictId, ModelMap mmap) {
         mmap.put("dict", dictTypeService.getById(dictId));
-        mmap.put("dictList", dictTypeService.selectDictTypeAll());
+        mmap.put("dictList", dictTypeService.list());
         return "system/dict/data/data";
     }
 

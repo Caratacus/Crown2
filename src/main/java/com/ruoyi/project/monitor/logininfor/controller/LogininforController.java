@@ -67,7 +67,7 @@ public class LogininforController extends WebController {
     public AjaxResult remove(String ids) {
         return toAjax(
                 logininforService.remove(
-                        Wrappers.<Logininfor>lambdaQuery().inOrThrow(Logininfor::getInfoId, StringUtils.split2List(ids, ","))
+                        Wrappers.<Logininfor>lambdaQuery().inOrThrow(Logininfor::getInfoId, StringUtils.split2List(ids))
                 ));
     }
 

@@ -68,7 +68,7 @@ public class OperlogController extends WebController {
     public AjaxResult remove(String ids) {
         return toAjax(
                 operLogService.remove(
-                        Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.split2List(ids, ","))
+                        Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.split2List(ids))
                 )
         );
     }

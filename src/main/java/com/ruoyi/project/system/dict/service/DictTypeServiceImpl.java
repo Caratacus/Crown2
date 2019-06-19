@@ -2,7 +2,6 @@ package com.ruoyi.project.system.dict.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,11 +9,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.dict.domain.DictType;
-import com.ruoyi.project.system.dict.mapper.DictDataMapper;
 import com.ruoyi.project.system.dict.mapper.DictTypeMapper;
 
 /**
@@ -25,10 +23,6 @@ import com.ruoyi.project.system.dict.mapper.DictTypeMapper;
 @Service
 public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictType> implements IDictTypeService {
 
-
-    @Autowired
-    private DictDataMapper dictDataMapper;
-
     /**
      * 根据条件分页查询字典类型
      *
@@ -37,28 +31,14 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
      */
     @Override
     public List<DictType> selectDictTypeList(DictType dictType) {
-        return baseMapper.selectDictTypeList(dictType);
-    }
-
-    /**
-     * 根据所有字典类型
-     *
-     * @return 字典类型集合信息
-     */
-    @Override
-    public List<DictType> selectDictTypeAll() {
-        return baseMapper.selectDictTypeAll();
-    }
-
-    /**
-     * 通过字典ID删除字典信息
-     *
-     * @param dictId 字典ID
-     * @return 结果
-     */
-    @Override
-    public int deleteDictTypeById(Long dictId) {
-        return baseMapper.deleteDictTypeById(dictId);
+        String beginTime = TypeUtils.castToString(dictType.getParams().get("beginTime"));
+        String endTime = TypeUtils.castToString(dictType.getParams().get("endTime"));
+        return query().like(StringUtils.isNotEmpty(dictType.getDictName()), DictType::getDictName, dictType.getDictName())
+                .eq(StringUtils.isNotEmpty(dictType.getStatus()), DictType::getStatus, dictType.getStatus())
+                .like(StringUtils.isNotEmpty(dictType.getDictType()), DictType::getDictType, dictType.getDictType())
+                .gt(StringUtils.isNotEmpty(beginTime), DictType::getCreateTime, beginTime)
+                .lt(StringUtils.isNotEmpty(endTime), DictType::getCreateTime, endTime)
+                .list();
     }
 
     /**
@@ -68,7 +48,7 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
      * @return 结果
      */
     @Override
-    public int deleteDictTypeByIds(String ids) {
+    public boolean deleteDictTypeByIds(String ids) {
         Long[] dictIds = Convert.toLongArray(ids);
         for (Long dictId : dictIds) {
             DictType dictType = getById(dictId);
@@ -76,21 +56,9 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
                 throw new BusinessException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
             }
         }
-
-        return baseMapper.deleteDictTypeByIds(dictIds);
+        return delete().inOrThrow(DictType::getDictId, StringUtils.split2List(ids)).execute();
     }
 
-    /**
-     * 新增保存字典类型信息
-     *
-     * @param dictType 字典类型信息
-     * @return 结果
-     */
-    @Override
-    public int insertDictType(DictType dictType) {
-        dictType.setCreateBy(ShiroUtils.getLoginName());
-        return baseMapper.insertDictType(dictType);
-    }
 
     /**
      * 修改保存字典类型信息
@@ -100,13 +68,12 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
      */
     @Override
     @Transactional
-    public int updateDictType(DictType dictType) {
-        dictType.setUpdateBy(ShiroUtils.getLoginName());
+    public boolean updateDictType(DictType dictType) {
         DictType oldDict = getById(dictType.getDictId());
         DictType updateDictType = new DictType();
         updateDictType.setDictType(dictType.getDictType());
         update(updateDictType, Wrappers.<DictType>lambdaQuery().eq(DictType::getDictType, oldDict.getDictType()));
-        return baseMapper.updateDictType(dictType);
+        return updateById(dictType);
     }
 
     /**
@@ -118,7 +85,7 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
     @Override
     public String checkDictTypeUnique(DictType dict) {
         Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();
-        DictType dictType = baseMapper.checkDictTypeUnique(dict.getDictType());
+        DictType dictType = query().eq(DictType::getDictType, dict.getDictType()).getOne();
         if (StringUtils.isNotNull(dictType) && dictType.getDictId().longValue() != dictId.longValue()) {
             return UserConstants.DICT_TYPE_NOT_UNIQUE;
         }

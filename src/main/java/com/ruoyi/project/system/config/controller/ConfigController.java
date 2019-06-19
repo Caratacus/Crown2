@@ -114,7 +114,7 @@ public class ConfigController extends WebController {
     public AjaxResult remove(String ids) {
         return toAjax(
                 configService.remove(
-                        Wrappers.<Config>lambdaQuery().inOrThrow(Config::getConfigId, StringUtils.split2List(ids, ",")
+                        Wrappers.<Config>lambdaQuery().inOrThrow(Config::getConfigId, StringUtils.split2List(ids)
                         )
                 ));
     }

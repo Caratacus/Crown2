@@ -311,8 +311,16 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return list.toArray(new String[0]);
     }
 
+    public static String[] split2Array(final String str) {
+        return split2Array(str, ",");
+    }
+
     public static List<String> split2List(final String str, final String separatorChars) {
         return splitWorker(str, separatorChars, -1, false);
+    }
+
+    public static List<String> split2List(final String str) {
+        return split2List(str, ",");
     }
 
     /**

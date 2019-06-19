@@ -108,7 +108,7 @@ public class DictDataController extends WebController {
     @ResponseBody
     public AjaxResult remove(String ids) {
         return toAjax(
-                dictDataService.remove(Wrappers.<DictData>lambdaQuery().inOrThrow(DictData::getDictCode, StringUtils.split2List(ids, ",")))
+                dictDataService.remove(Wrappers.<DictData>lambdaQuery().inOrThrow(DictData::getDictCode, StringUtils.split2List(ids)))
         );
     }
 }
