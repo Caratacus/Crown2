@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
@@ -63,7 +65,10 @@ public class LogininforController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
-        return toAjax(logininforService.deleteLogininforByIds(ids));
+        return toAjax(
+                logininforService.remove(
+                        Wrappers.<Logininfor>lambdaQuery().inOrThrow(Logininfor::getInfoId, StringUtils.splitWorker(ids, ",", -1, false))
+                ));
     }
 
     @RequiresPermissions("monitor:logininfor:remove")
@@ -71,7 +76,7 @@ public class LogininforController extends WebController {
     @PostMapping("/clean")
     @ResponseBody
     public AjaxResult clean() {
-        logininforService.cleanLogininfor();
+        logininforService.remove();
         return success();
     }
 }

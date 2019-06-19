@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.common.utils.text.Convert;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
 import com.ruoyi.project.monitor.logininfor.mapper.LogininforMapper;
@@ -18,16 +19,6 @@ import com.ruoyi.project.monitor.logininfor.mapper.LogininforMapper;
 public class LogininforServiceImpl extends BaseServiceImpl<LogininforMapper, Logininfor> implements ILogininforService {
 
     /**
-     * 新增系统登录日志
-     *
-     * @param logininfor 访问日志对象
-     */
-    @Override
-    public void insertLogininfor(Logininfor logininfor) {
-        baseMapper.insertLogininfor(logininfor);
-    }
-
-    /**
      * 查询系统登录日志集合
      *
      * @param logininfor 访问日志对象
@@ -35,25 +26,15 @@ public class LogininforServiceImpl extends BaseServiceImpl<LogininforMapper, Log
      */
     @Override
     public List<Logininfor> selectLogininforList(Logininfor logininfor) {
-        return baseMapper.selectLogininforList(logininfor);
+        String beginTime = TypeUtils.castToString(logininfor.getParams().get("beginTime"));
+        String endTime = TypeUtils.castToString(logininfor.getParams().get("endTime"));
+        return query().select()
+                .like(StringUtils.isNotEmpty(logininfor.getIpaddr()), Logininfor::getIpaddr, logininfor.getIpaddr())
+                .eq(StringUtils.isNotEmpty(logininfor.getStatus()), Logininfor::getStatus, logininfor.getStatus())
+                .like(StringUtils.isNotEmpty(logininfor.getLoginName()), Logininfor::getLoginName, logininfor.getLoginName())
+                .ge(StringUtils.isNotEmpty(beginTime), Logininfor::getLoginTime, beginTime)
+                .le(StringUtils.isNotEmpty(endTime), Logininfor::getLoginTime, logininfor.getParams().get("endTime"))
+                .list();
     }
 
-    /**
-     * 批量删除系统登录日志
-     *
-     * @param ids 需要删除的数据
-     * @return
-     */
-    @Override
-    public int deleteLogininforByIds(String ids) {
-        return baseMapper.deleteLogininforByIds(Convert.toStrArray(ids));
-    }
-
-    /**
-     * 清空系统登录日志
-     */
-    @Override
-    public void cleanLogininfor() {
-        baseMapper.cleanLogininfor();
-    }
 }

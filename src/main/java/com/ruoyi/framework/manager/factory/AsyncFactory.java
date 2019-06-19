@@ -12,7 +12,7 @@ import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.project.monitor.logininfor.domain.Logininfor;
-import com.ruoyi.project.monitor.logininfor.service.LogininforServiceImpl;
+import com.ruoyi.project.monitor.logininfor.service.ILogininforService;
 import com.ruoyi.project.monitor.online.domain.OnlineSession;
 import com.ruoyi.project.monitor.online.domain.UserOnline;
 import com.ruoyi.project.monitor.online.service.IUserOnlineService;
@@ -118,7 +118,7 @@ public class AsyncFactory {
                     logininfor.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(LogininforServiceImpl.class).insertLogininfor(logininfor);
+                SpringUtils.getBean(ILogininforService.class).save(logininfor);
             }
         };
     }

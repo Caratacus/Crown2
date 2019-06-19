@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
-import com.ruoyi.framework.web.domain.BaseEntity;
+import com.ruoyi.framework.web.domain.BaseQueryParams;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class Logininfor extends BaseEntity {
+public class Logininfor extends BaseQueryParams {
 
     private static final long serialVersionUID = 1L;
 
