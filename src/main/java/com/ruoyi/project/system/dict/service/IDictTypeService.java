@@ -28,14 +28,6 @@ public interface IDictTypeService extends BaseService<DictType> {
     List<DictType> selectDictTypeAll();
 
     /**
-     * 根据字典类型ID查询信息
-     *
-     * @param dictId 字典类型ID
-     * @return 字典类型
-     */
-    DictType selectDictTypeById(Long dictId);
-
-    /**
      * 通过字典ID删除字典信息
      *
      * @param dictId 字典ID

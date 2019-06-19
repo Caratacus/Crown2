@@ -85,7 +85,7 @@ public class DictTypeController extends WebController {
      */
     @GetMapping("/edit/{dictId}")
     public String edit(@PathVariable("dictId") Long dictId, ModelMap mmap) {
-        mmap.put("dict", dictTypeService.selectDictTypeById(dictId));
+        mmap.put("dict", dictTypeService.getById(dictId));
         return prefix + "/edit";
     }
 
@@ -118,7 +118,7 @@ public class DictTypeController extends WebController {
     @RequiresPermissions("system:dict:list")
     @GetMapping("/detail/{dictId}")
     public String detail(@PathVariable("dictId") Long dictId, ModelMap mmap) {
-        mmap.put("dict", dictTypeService.selectDictTypeById(dictId));
+        mmap.put("dict", dictTypeService.getById(dictId));
         mmap.put("dictList", dictTypeService.selectDictTypeAll());
         return "system/dict/data/data";
     }

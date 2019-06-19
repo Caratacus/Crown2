@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
@@ -50,17 +51,6 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
     }
 
     /**
-     * 根据字典类型ID查询信息
-     *
-     * @param dictId 字典类型ID
-     * @return 字典类型
-     */
-    @Override
-    public DictType selectDictTypeById(Long dictId) {
-        return baseMapper.selectDictTypeById(dictId);
-    }
-
-    /**
      * 通过字典ID删除字典信息
      *
      * @param dictId 字典ID
@@ -81,8 +71,8 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
     public int deleteDictTypeByIds(String ids) {
         Long[] dictIds = Convert.toLongArray(ids);
         for (Long dictId : dictIds) {
-            DictType dictType = selectDictTypeById(dictId);
-            if (dictDataMapper.countDictDataByType(dictType.getDictType()) > 0) {
+            DictType dictType = getById(dictId);
+            if (query().eq(DictType::getDictType, dictType.getDictType()).exist()) {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
             }
         }
@@ -112,8 +102,10 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
     @Transactional
     public int updateDictType(DictType dictType) {
         dictType.setUpdateBy(ShiroUtils.getLoginName());
-        DictType oldDict = baseMapper.selectDictTypeById(dictType.getDictId());
-        dictDataMapper.updateDictDataType(oldDict.getDictType(), dictType.getDictType());
+        DictType oldDict = getById(dictType.getDictId());
+        DictType updateDictType = new DictType();
+        updateDictType.setDictType(dictType.getDictType());
+        update(updateDictType, Wrappers.<DictType>lambdaQuery().eq(DictType::getDictType, oldDict.getDictType()));
         return baseMapper.updateDictType(dictType);
     }
 

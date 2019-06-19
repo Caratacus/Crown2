@@ -102,7 +102,7 @@ public class DeptController extends WebController {
     @GetMapping("/remove/{deptId}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("deptId") Long deptId) {
-        if (deptService.count(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId,deptId)) > 0) {
+        if (deptService.count(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)) > 0) {
             return AjaxResult.warn("存在下级部门,不允许删除");
         }
         if (deptService.checkDeptExistUser(deptId)) {

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.common.utils.security.ShiroUtils;
-import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.dict.domain.DictData;
 import com.ruoyi.project.system.dict.mapper.DictDataMapper;
@@ -26,7 +26,10 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictDataMapper, DictDat
      */
     @Override
     public List<DictData> selectDictDataList(DictData dictData) {
-        return baseMapper.selectDictDataList(dictData);
+        return query().eq(StringUtils.isNotEmpty(dictData.getDictType()), DictData::getDictType, dictData.getDictType())
+                .like(StringUtils.isNotEmpty(dictData.getDictLabel()), DictData::getDictLabel, dictData.getDictLabel())
+                .eq(StringUtils.isNotEmpty(dictData.getStatus()), DictData::getStatus, dictData.getStatus())
+                .list();
     }
 
     /**
@@ -37,7 +40,7 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictDataMapper, DictDat
      */
     @Override
     public List<DictData> selectDictDataByType(String dictType) {
-        return baseMapper.selectDictDataByType(dictType);
+        return query().eq(DictData::getDictType, dictType).eq(DictData::getStatus, "0").orderByAsc(DictData::getDictSort).list();
     }
 
     /**
@@ -49,63 +52,8 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictDataMapper, DictDat
      */
     @Override
     public String selectDictLabel(String dictType, String dictValue) {
-        return baseMapper.selectDictLabel(dictType, dictValue);
+        return query().select(DictData::getDictLabel).eq(DictData::getDictType, dictType).eq(DictData::getDictValue, dictValue).getObj(TypeUtils::castToString);
     }
 
-    /**
-     * 根据字典数据ID查询信息
-     *
-     * @param dictCode 字典数据ID
-     * @return 字典数据
-     */
-    @Override
-    public DictData selectDictDataById(Long dictCode) {
-        return baseMapper.selectDictDataById(dictCode);
-    }
 
-    /**
-     * 通过字典ID删除字典数据信息
-     *
-     * @param dictCode 字典数据ID
-     * @return 结果
-     */
-    @Override
-    public int deleteDictDataById(Long dictCode) {
-        return baseMapper.deleteDictDataById(dictCode);
-    }
-
-    /**
-     * 批量删除字典数据
-     *
-     * @param ids 需要删除的数据
-     * @return 结果
-     */
-    @Override
-    public int deleteDictDataByIds(String ids) {
-        return baseMapper.deleteDictDataByIds(Convert.toStrArray(ids));
-    }
-
-    /**
-     * 新增保存字典数据信息
-     *
-     * @param dictData 字典数据信息
-     * @return 结果
-     */
-    @Override
-    public int insertDictData(DictData dictData) {
-        dictData.setCreateBy(ShiroUtils.getLoginName());
-        return baseMapper.insertDictData(dictData);
-    }
-
-    /**
-     * 修改保存字典数据信息
-     *
-     * @param dictData 字典数据信息
-     * @return 结果
-     */
-    @Override
-    public int updateDictData(DictData dictData) {
-        dictData.setUpdateBy(ShiroUtils.getLoginName());
-        return baseMapper.updateDictData(dictData);
-    }
 }

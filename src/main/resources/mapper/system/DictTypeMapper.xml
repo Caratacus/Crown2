@@ -45,11 +45,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectDictTypeVo"/>
 	</select>
 	
-	<select id="selectDictTypeById" parameterType="Long" resultMap="DictTypeResult">
-		<include refid="selectDictTypeVo"/>
-		where dict_id = #{dictId}
-	</select>
-	
 	<select id="checkDictTypeUnique" parameterType="String" resultMap="DictTypeResult">
 		<include refid="selectDictTypeVo"/>
 		where dict_type = #{dictType}

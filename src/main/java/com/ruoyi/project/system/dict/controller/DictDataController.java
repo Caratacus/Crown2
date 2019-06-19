@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
@@ -77,7 +79,7 @@ public class DictDataController extends WebController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(DictData dict) {
-        return toAjax(dictDataService.insertDictData(dict));
+        return toAjax(dictDataService.save(dict));
     }
 
     /**
@@ -85,7 +87,7 @@ public class DictDataController extends WebController {
      */
     @GetMapping("/edit/{dictCode}")
     public String edit(@PathVariable("dictCode") Long dictCode, ModelMap mmap) {
-        mmap.put("dict", dictDataService.selectDictDataById(dictCode));
+        mmap.put("dict", dictDataService.getById(dictCode));
         return prefix + "/edit";
     }
 
@@ -97,7 +99,7 @@ public class DictDataController extends WebController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(DictData dict) {
-        return toAjax(dictDataService.updateDictData(dict));
+        return toAjax(dictDataService.updateById(dict));
     }
 
     @Log(title = "字典数据", businessType = BusinessType.DELETE)
@@ -105,6 +107,8 @@ public class DictDataController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
-        return toAjax(dictDataService.deleteDictDataByIds(ids));
+        return toAjax(
+                dictDataService.remove(Wrappers.<DictData>lambdaQuery().inOrThrow(DictData::getDictCode, StringUtils.split2List(ids, ",")))
+        );
     }
 }

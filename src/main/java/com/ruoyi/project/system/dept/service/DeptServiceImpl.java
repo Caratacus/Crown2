@@ -225,7 +225,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
     @Override
     public String checkDeptNameUnique(Dept dept) {
         Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
-        Dept info = query().eq(Dept::getDeptName,dept.getDeptName()).eq(Dept::getParentId,dept.getParentId()).getOne();
+        Dept info = query().eq(Dept::getDeptName, dept.getDeptName()).eq(Dept::getParentId, dept.getParentId()).getOne();
         if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue()) {
             return UserConstants.DEPT_NAME_NOT_UNIQUE;
         }
