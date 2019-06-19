@@ -17,7 +17,7 @@ import com.ruoyi.framework.web.controller.WebController;
 public class SwaggerController extends WebController {
 
     @RequiresPermissions("tool:swagger:view")
-    @GetMapping()
+    @GetMapping
     public String index() {
         return redirect("/swagger-ui.html");
     }

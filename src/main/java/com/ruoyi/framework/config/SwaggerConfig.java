@@ -1,6 +1,25 @@
+/*
+ * Copyright (c) 2018-2022 Caratacus, (caratacus@qq.com).
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.ruoyi.framework.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,53 +34,38 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Swagger2的接口配置
+ * <p>
+ * RESTful 服务 API 管理框架 Swagger 配置初始化
+ * </p>
  *
- * @author ruoyi
+ * @author Caratacus
  */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
-    /**
-     * 系统基础配置
-     */
-    @Autowired
-    private RuoYiConfig ruoYiConfig;
-
-    /**
-     * 创建API
-     */
     @Bean
-    public Docket createRestApi() {
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
                 .apiInfo(apiInfo())
-                // 设置哪些接口暴露给Swagger展示
                 .select()
-                // 扫描所有有注解的api，用这种方式更灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                // 扫描指定包中的swagger注解
-                //.apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
-                // 扫描所有 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build();
+                .paths(PathSelectors.any()).build().useDefaultResponseMessages(false);
     }
 
     /**
-     * 添加摘要信息
+     * 获取swagger ApiInfo
+     *
+     * @return
      */
-    private ApiInfo apiInfo() {
-        // 用ApiInfoBuilder进行定制
+    ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                // 设置标题
-                .title("标题：若依管理系统_接口文档")
-                // 描述
-                .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
-                // 作者信息
-                .contact(new Contact(ruoYiConfig.getName(), null, null))
-                // 版本
-                .version("版本号:" + ruoYiConfig.getVersion())
+                .title("Crown API")
+                .description("Crown Swagger API 文档")
+                .termsOfServiceUrl("https://github.com/Caratacus/Crown2")
+                .version("2.0")
+                .contact(new Contact("Crown2", "https://github.com/Caratacus", "caratacus@qq.cn"))
                 .build();
     }
+
 }
