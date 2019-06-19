@@ -1,10 +1,13 @@
 package com.ruoyi.project.monitor.operlog.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.common.utils.text.Convert;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.monitor.operlog.domain.OperLog;
 import com.ruoyi.project.monitor.operlog.mapper.OperLogMapper;
@@ -18,16 +21,6 @@ import com.ruoyi.project.monitor.operlog.mapper.OperLogMapper;
 public class OperLogServiceImpl extends BaseServiceImpl<OperLogMapper, OperLog> implements IOperLogService {
 
     /**
-     * 新增操作日志
-     *
-     * @param operLog 操作日志对象
-     */
-    @Override
-    public void insertOperlog(OperLog operLog) {
-        baseMapper.insertOperlog(operLog);
-    }
-
-    /**
      * 查询系统操作日志集合
      *
      * @param operLog 操作日志对象
@@ -35,36 +28,16 @@ public class OperLogServiceImpl extends BaseServiceImpl<OperLogMapper, OperLog> 
      */
     @Override
     public List<OperLog> selectOperLogList(OperLog operLog) {
-        return baseMapper.selectOperLogList(operLog);
+        String beginTime = TypeUtils.castToString(operLog.getParams().get("beginTime"));
+        String endTime = TypeUtils.castToString(operLog.getParams().get("endTime"));
+        return query().like(StringUtils.isNotEmpty(operLog.getTitle()), OperLog::getTitle, operLog.getTitle())
+                .eq(Objects.nonNull(operLog.getBusinessType()), OperLog::getBusinessType, operLog.getBusinessType())
+                .in(CollectionUtils.isNotEmpty(operLog.getBusinessTypes()), OperLog::getBusinessType, operLog.getBusinessTypes())
+                .eq(Objects.nonNull(operLog.getStatus()), OperLog::getStatus, operLog.getStatus())
+                .like(StringUtils.isNotEmpty(operLog.getOperName()), OperLog::getOperName, operLog.getOperName())
+                .gt(StringUtils.isNotEmpty(beginTime), OperLog::getOperTime, beginTime)
+                .lt(StringUtils.isNotEmpty(endTime), OperLog::getOperTime, endTime)
+                .list();
     }
 
-    /**
-     * 批量删除系统操作日志
-     *
-     * @param ids 需要删除的数据
-     * @return
-     */
-    @Override
-    public int deleteOperLogByIds(String ids) {
-        return baseMapper.deleteOperLogByIds(Convert.toStrArray(ids));
-    }
-
-    /**
-     * 查询操作日志详细
-     *
-     * @param operId 操作ID
-     * @return 操作日志对象
-     */
-    @Override
-    public OperLog selectOperLogById(Long operId) {
-        return baseMapper.selectOperLogById(operId);
-    }
-
-    /**
-     * 清空操作日志
-     */
-    @Override
-    public void cleanOperLog() {
-        baseMapper.cleanOperLog();
-    }
 }

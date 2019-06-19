@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
@@ -64,13 +66,17 @@ public class OperlogController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
-        return toAjax(operLogService.deleteOperLogByIds(ids));
+        return toAjax(
+                operLogService.remove(
+                        Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.splitWorker(ids, ",", -1, false))
+                )
+        );
     }
 
     @RequiresPermissions("monitor:operlog:detail")
     @GetMapping("/detail/{operId}")
     public String detail(@PathVariable("operId") Long operId, ModelMap mmap) {
-        mmap.put("operLog", operLogService.selectOperLogById(operId));
+        mmap.put("operLog", operLogService.getById(operId));
         return prefix + "/detail";
     }
 
@@ -79,7 +85,7 @@ public class OperlogController extends WebController {
     @PostMapping("/clean")
     @ResponseBody
     public AjaxResult clean() {
-        operLogService.cleanOperLog();
+        operLogService.remove();
         return success();
     }
 }

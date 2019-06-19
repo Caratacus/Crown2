@@ -1,13 +1,15 @@
 package com.ruoyi.project.monitor.operlog.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
-import com.ruoyi.framework.web.domain.BaseEntity;
+import com.ruoyi.framework.web.domain.BaseQueryParams;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +21,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class OperLog extends BaseEntity {
+public class OperLog extends BaseQueryParams {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,7 +47,8 @@ public class OperLog extends BaseEntity {
     /**
      * 业务类型数组
      */
-    private Integer[] businessTypes;
+    @TableField(exist = false)
+    private List<Integer> businessTypes;
 
     /**
      * 请求方法
