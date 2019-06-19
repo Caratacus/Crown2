@@ -79,6 +79,7 @@ public class Dept extends BaseEntity {
     /**
      * 父部门名称
      */
+    @TableField(exist = false)
     private String parentName;
 
     @Override

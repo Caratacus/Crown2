@@ -57,6 +57,7 @@ import com.ruoyi.framework.mapper.BaseMapper;
 import com.ruoyi.framework.service.BaseService;
 
 
+
 /**
  * <p>
  * 基础Service实现 继承于Mybatis-plus
@@ -123,20 +124,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveBatch(Collection<T> entityList) {
+        //批量对象插入 不存在直接返回true
         if (CollectionUtils.isEmpty(entityList)) {
             return;
         }
         baseMapper.insertBatchSomeColumn(entityList);
     }
 
-    /**
-     * <p>
-     * TableId 注解存在更新记录，否插入一条记录
-     * </p>
-     *
-     * @param entity 实体对象
-     * @return boolean
-     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveOrUpdate(T entity) {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
@@ -101,13 +102,13 @@ public class DeptController extends WebController {
     @GetMapping("/remove/{deptId}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("deptId") Long deptId) {
-        if (deptService.selectDeptCount(deptId) > 0) {
+        if (deptService.count(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId,deptId)) > 0) {
             return AjaxResult.warn("存在下级部门,不允许删除");
         }
         if (deptService.checkDeptExistUser(deptId)) {
             return AjaxResult.warn("部门存在用户,不允许删除");
         }
-        return toAjax(deptService.deleteDeptById(deptId));
+        return toAjax(deptService.removeById(deptId));
     }
 
     /**

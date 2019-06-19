@@ -39,14 +39,6 @@ public interface IDeptService extends BaseService<Dept> {
     List<Ztree> roleDeptTreeData(Role role);
 
     /**
-     * 查询部门人数
-     *
-     * @param parentId 父部门ID
-     * @return 结果
-     */
-    int selectDeptCount(Long parentId);
-
-    /**
      * 查询部门是否存在用户
      *
      * @param deptId 部门ID
@@ -55,20 +47,12 @@ public interface IDeptService extends BaseService<Dept> {
     boolean checkDeptExistUser(Long deptId);
 
     /**
-     * 删除部门管理信息
-     *
-     * @param deptId 部门ID
-     * @return 结果
-     */
-    int deleteDeptById(Long deptId);
-
-    /**
      * 新增保存部门信息
      *
      * @param dept 部门信息
      * @return 结果
      */
-    int insertDept(Dept dept);
+    boolean insertDept(Dept dept);
 
     /**
      * 修改保存部门信息
@@ -76,7 +60,7 @@ public interface IDeptService extends BaseService<Dept> {
      * @param dept 部门信息
      * @return 结果
      */
-    int updateDept(Dept dept);
+    boolean updateDept(Dept dept);
 
     /**
      * 根据部门ID查询信息

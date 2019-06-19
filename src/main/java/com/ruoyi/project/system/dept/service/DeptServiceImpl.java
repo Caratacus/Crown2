@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.web.domain.Ztree;
@@ -107,19 +106,6 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
     }
 
     /**
-     * 查询部门人数
-     *
-     * @param parentId 部门ID
-     * @return 结果
-     */
-    @Override
-    public int selectDeptCount(Long parentId) {
-        Dept dept = new Dept();
-        dept.setParentId(parentId);
-        return baseMapper.selectDeptCount(dept);
-    }
-
-    /**
      * 查询部门是否存在用户
      *
      * @param deptId 部门ID
@@ -127,19 +113,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
      */
     @Override
     public boolean checkDeptExistUser(Long deptId) {
-        int result = baseMapper.checkDeptExistUser(deptId);
-        return result > 0;
-    }
-
-    /**
-     * 删除部门管理信息
-     *
-     * @param deptId 部门ID
-     * @return 结果
-     */
-    @Override
-    public int deleteDeptById(Long deptId) {
-        return baseMapper.deleteDeptById(deptId);
+        return query().eq(Dept::getDeptId, deptId).exist();
     }
 
     /**
@@ -149,15 +123,14 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
      * @return 结果
      */
     @Override
-    public int insertDept(Dept dept) {
+    public boolean insertDept(Dept dept) {
         Dept info = baseMapper.selectDeptById(dept.getParentId());
         // 如果父节点不为"正常"状态,则不允许新增子节点
         if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
             throw new BusinessException("部门停用，不允许新增");
         }
-        dept.setCreateBy(ShiroUtils.getLoginName());
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
-        return baseMapper.insertDept(dept);
+        return save(dept);
     }
 
     /**
@@ -168,7 +141,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
      */
     @Override
     @Transactional
-    public int updateDept(Dept dept) {
+    public boolean updateDept(Dept dept) {
         Dept newParentDept = baseMapper.selectDeptById(dept.getParentId());
         Dept oldDept = selectDeptById(dept.getDeptId());
         if (StringUtils.isNotNull(newParentDept) && StringUtils.isNotNull(oldDept)) {
@@ -177,8 +150,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
             dept.setAncestors(newAncestors);
             updateDeptChildren(dept.getDeptId(), newAncestors, oldAncestors);
         }
-        dept.setUpdateBy(ShiroUtils.getLoginName());
-        int result = baseMapper.updateDept(dept);
+        boolean result = updateById(dept);
         if (UserConstants.DEPT_NORMAL.equals(dept.getStatus())) {
             // 如果该部门是启用状态，则启用该部门的所有上级部门
             updateParentDeptStatus(dept);
@@ -253,7 +225,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
     @Override
     public String checkDeptNameUnique(Dept dept) {
         Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
-        Dept info = baseMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
+        Dept info = query().eq(Dept::getDeptName,dept.getDeptName()).eq(Dept::getParentId,dept.getParentId()).getOne();
         if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue()) {
             return UserConstants.DEPT_NAME_NOT_UNIQUE;
         }

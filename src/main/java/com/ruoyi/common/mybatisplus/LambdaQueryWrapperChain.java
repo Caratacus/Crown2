@@ -35,6 +35,7 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrapper;
 import com.ruoyi.framework.service.BaseService;
 
+
 /**
  * Lambda查询Wrapper
  *
@@ -89,6 +90,10 @@ public class LambdaQueryWrapperChain<T> extends AbstractChainWrapper<T, SFunctio
 
     public Integer count() {
         return baseService.count(getWrapper());
+    }
+
+    public boolean exist() {
+        return baseService.exist(getWrapper());
     }
 
     public IPage<T> page(IPage<T> page) {

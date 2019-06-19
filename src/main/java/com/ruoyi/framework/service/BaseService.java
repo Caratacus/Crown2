@@ -35,6 +35,7 @@ import com.ruoyi.common.mybatisplus.LambdaDeleteWrapperChain;
 import com.ruoyi.common.mybatisplus.LambdaQueryWrapperChain;
 import com.ruoyi.common.mybatisplus.LambdaUpdateWrapperChain;
 
+
 /**
  * <p>
  * 基础Service 继承于Mybatis-plus
@@ -59,7 +60,7 @@ public interface BaseService<T> {
     boolean save(T entity);
 
     /**
-     * <p>p
+     * <p>
      * 插入（批量）
      * </p>
      *
@@ -210,6 +211,17 @@ public interface BaseService<T> {
      */
     default int count() {
         return count(Wrappers.emptyWrapper());
+    }
+
+    /**
+     * <p>
+     * 根据 Wrapper 条件，查询记录是否存在
+     * </p>
+     *
+     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
+     */
+    default boolean exist(Wrapper<T> queryWrapper) {
+        return count(queryWrapper) > 0;
     }
 
     /**
