@@ -88,7 +88,7 @@ public class PostController extends WebController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Post post) {
-        return toAjax(postService.insertPost(post));
+        return toAjax(postService.save(post));
     }
 
     /**
@@ -96,7 +96,7 @@ public class PostController extends WebController {
      */
     @GetMapping("/edit/{postId}")
     public String edit(@PathVariable("postId") Long postId, ModelMap mmap) {
-        mmap.put("post", postService.selectPostById(postId));
+        mmap.put("post", postService.getById(postId));
         return prefix + "/edit";
     }
 
@@ -108,7 +108,7 @@ public class PostController extends WebController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Post post) {
-        return toAjax(postService.updatePost(post));
+        return toAjax(postService.updateById(post));
     }
 
     /**

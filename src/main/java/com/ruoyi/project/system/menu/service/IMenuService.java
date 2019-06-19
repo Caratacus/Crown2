@@ -34,13 +34,6 @@ public interface IMenuService extends BaseService<Menu> {
     List<Menu> selectMenuList(Menu menu);
 
     /**
-     * 查询菜单集合
-     *
-     * @return 所有菜单信息
-     */
-    List<Menu> selectMenuAll();
-
-    /**
      * 根据用户ID查询权限
      *
      * @param userId 用户ID
@@ -76,7 +69,7 @@ public interface IMenuService extends BaseService<Menu> {
      * @param menuId 菜单ID
      * @return 结果
      */
-    int deleteMenuById(Long menuId);
+    boolean deleteMenuById(Long menuId);
 
     /**
      * 根据菜单ID查询信息
@@ -86,21 +79,6 @@ public interface IMenuService extends BaseService<Menu> {
      */
     Menu selectMenuById(Long menuId);
 
-    /**
-     * 查询菜单数量
-     *
-     * @param parentId 菜单父ID
-     * @return 结果
-     */
-    int selectCountMenuByParentId(Long parentId);
-
-    /**
-     * 查询菜单使用数量
-     *
-     * @param menuId 菜单ID
-     * @return 结果
-     */
-    int selectCountRoleMenuByMenuId(Long menuId);
 
     /**
      * 新增保存菜单信息
@@ -108,7 +86,7 @@ public interface IMenuService extends BaseService<Menu> {
      * @param menu 菜单信息
      * @return 结果
      */
-    int insertMenu(Menu menu);
+    boolean insertMenu(Menu menu);
 
     /**
      * 修改保存菜单信息
@@ -116,7 +94,7 @@ public interface IMenuService extends BaseService<Menu> {
      * @param menu 菜单信息
      * @return 结果
      */
-    int updateMenu(Menu menu);
+    boolean updateMenu(Menu menu);
 
     /**
      * 校验菜单名称是否唯一

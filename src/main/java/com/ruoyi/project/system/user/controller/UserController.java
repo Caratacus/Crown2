@@ -96,7 +96,7 @@ public class UserController extends WebController {
     @GetMapping("/add")
     public String add(ModelMap mmap) {
         mmap.put("roles", roleService.selectRoleAll());
-        mmap.put("posts", postService.selectPostAll());
+        mmap.put("posts", postService.list());
         return prefix + "/add";
     }
 

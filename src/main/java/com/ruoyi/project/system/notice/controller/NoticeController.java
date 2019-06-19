@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.WebController;
@@ -68,7 +70,7 @@ public class NoticeController extends WebController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Notice notice) {
-        return toAjax(noticeService.insertNotice(notice));
+        return toAjax(noticeService.save(notice));
     }
 
     /**
@@ -76,7 +78,7 @@ public class NoticeController extends WebController {
      */
     @GetMapping("/edit/{noticeId}")
     public String edit(@PathVariable("noticeId") Long noticeId, ModelMap mmap) {
-        mmap.put("notice", noticeService.selectNoticeById(noticeId));
+        mmap.put("notice", noticeService.getById(noticeId));
         return prefix + "/edit";
     }
 
@@ -88,7 +90,7 @@ public class NoticeController extends WebController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Notice notice) {
-        return toAjax(noticeService.updateNotice(notice));
+        return toAjax(noticeService.updateById(notice));
     }
 
     /**
@@ -99,6 +101,6 @@ public class NoticeController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
-        return toAjax(noticeService.deleteNoticeByIds(ids));
+        return toAjax(noticeService.remove(Wrappers.<Notice>lambdaQuery().inOrThrow(Notice::getNoticeId, StringUtils.split2List(ids))));
     }
 }

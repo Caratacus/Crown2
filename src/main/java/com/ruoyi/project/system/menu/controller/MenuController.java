@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.WebController;
@@ -20,6 +21,8 @@ import com.ruoyi.framework.web.domain.Ztree;
 import com.ruoyi.project.system.menu.domain.Menu;
 import com.ruoyi.project.system.menu.service.IMenuService;
 import com.ruoyi.project.system.role.domain.Role;
+import com.ruoyi.project.system.role.domain.RoleMenu;
+import com.ruoyi.project.system.role.service.IRoleMenuService;
 
 /**
  * 菜单信息
@@ -34,6 +37,8 @@ public class MenuController extends WebController {
 
     @Autowired
     private IMenuService menuService;
+    @Autowired
+    private IRoleMenuService roleMenuService;
 
     @RequiresPermissions("system:menu:view")
     @GetMapping()
@@ -56,10 +61,10 @@ public class MenuController extends WebController {
     @GetMapping("/remove/{menuId}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("menuId") Long menuId) {
-        if (menuService.selectCountMenuByParentId(menuId) > 0) {
+        if (menuService.exist(Wrappers.<Menu>lambdaQuery().eq(Menu::getMenuId, menuId))) {
             return AjaxResult.warn("存在子菜单,不允许删除");
         }
-        if (menuService.selectCountRoleMenuByMenuId(menuId) > 0) {
+        if (roleMenuService.exist(Wrappers.<RoleMenu>lambdaQuery().eq(RoleMenu::getMenuId, menuId))) {
             return AjaxResult.warn("菜单已分配,不允许删除");
         }
         return toAjax(menuService.deleteMenuById(menuId));
@@ -144,7 +149,7 @@ public class MenuController extends WebController {
      */
     @GetMapping("/menuTreeData")
     @ResponseBody
-    public List<Ztree> menuTreeData(Role role) {
+    public List<Ztree> menuTreeData() {
         return menuService.menuTreeData();
     }
 

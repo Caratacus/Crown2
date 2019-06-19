@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.post.domain.Post;
 import com.ruoyi.project.system.post.mapper.PostMapper;
-import com.ruoyi.project.system.user.mapper.UserPostMapper;
+import com.ruoyi.project.system.user.domain.UserPost;
 
 /**
  * 岗位信息 服务层处理
@@ -24,7 +23,7 @@ import com.ruoyi.project.system.user.mapper.UserPostMapper;
 public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implements IPostService {
 
     @Autowired
-    private UserPostMapper userPostMapper;
+    private IUserPostService userPostService;
 
     /**
      * 查询岗位信息集合
@@ -34,18 +33,12 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
      */
     @Override
     public List<Post> selectPostList(Post post) {
-        return baseMapper.selectPostList(post);
+        return query().like(StringUtils.isNotEmpty(post.getPostCode()), Post::getPostCode, post.getPostCode())
+                .eq(StringUtils.isNotEmpty(post.getStatus()), Post::getStatus, post.getStatus())
+                .like(StringUtils.isNotEmpty(post.getPostName()), Post::getPostName, post.getPostName())
+                .list();
     }
 
-    /**
-     * 查询所有岗位
-     *
-     * @return 岗位列表
-     */
-    @Override
-    public List<Post> selectPostAll() {
-        return baseMapper.selectPostAll();
-    }
 
     /**
      * 根据用户ID查询岗位
@@ -56,7 +49,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     @Override
     public List<Post> selectPostsByUserId(Long userId) {
         List<Post> userPosts = baseMapper.selectPostsByUserId(userId);
-        List<Post> posts = baseMapper.selectPostAll();
+        List<Post> posts = list();
         for (Post post : posts) {
             for (Post userRole : userPosts) {
                 if (post.getPostId().longValue() == userRole.getPostId().longValue()) {
@@ -68,69 +61,19 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         return posts;
     }
 
-    /**
-     * 通过岗位ID查询岗位信息
-     *
-     * @param postId 岗位ID
-     * @return 角色对象信息
-     */
-    @Override
-    public Post selectPostById(Long postId) {
-        return baseMapper.selectPostById(postId);
-    }
 
-    /**
-     * 批量删除岗位信息
-     *
-     * @param ids 需要删除的数据ID
-     * @throws Exception
-     */
     @Override
-    public int deletePostByIds(String ids) {
+    public boolean deletePostByIds(String ids) {
         Long[] postIds = Convert.toLongArray(ids);
         for (Long postId : postIds) {
-            Post post = selectPostById(postId);
-            if (countUserPostById(postId) > 0) {
+            Post post = getById(postId);
+            if (userPostService.query().eq(UserPost::getPostId, postId).exist()) {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", post.getPostName()));
             }
         }
-        return baseMapper.deletePostByIds(postIds);
+        return delete().inOrThrow(Post::getPostId, StringUtils.split2List(ids)).execute();
     }
 
-    /**
-     * 新增保存岗位信息
-     *
-     * @param post 岗位信息
-     * @return 结果
-     */
-    @Override
-    public int insertPost(Post post) {
-        post.setCreateBy(ShiroUtils.getLoginName());
-        return baseMapper.insertPost(post);
-    }
-
-    /**
-     * 修改保存岗位信息
-     *
-     * @param post 岗位信息
-     * @return 结果
-     */
-    @Override
-    public int updatePost(Post post) {
-        post.setUpdateBy(ShiroUtils.getLoginName());
-        return baseMapper.updatePost(post);
-    }
-
-    /**
-     * 通过岗位ID查询岗位使用数量
-     *
-     * @param postId 岗位ID
-     * @return 结果
-     */
-    @Override
-    public int countUserPostById(Long postId) {
-        return userPostMapper.countUserPostById(postId);
-    }
 
     /**
      * 校验岗位名称是否唯一
@@ -141,7 +84,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     @Override
     public String checkPostNameUnique(Post post) {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-        Post info = baseMapper.checkPostNameUnique(post.getPostName());
+        Post info = query().eq(Post::getPostName, post.getPostName()).getOne();
         if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
             return UserConstants.POST_NAME_NOT_UNIQUE;
         }
@@ -157,7 +100,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     @Override
     public String checkPostCodeUnique(Post post) {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-        Post info = baseMapper.checkPostCodeUnique(post.getPostCode());
+        Post info = query().eq(Post::getPostCode, post.getPostCode()).getOne();
         if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
             return UserConstants.POST_CODE_NOT_UNIQUE;
         }

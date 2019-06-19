@@ -20,12 +20,6 @@ public interface IPostService extends BaseService<Post> {
      */
     List<Post> selectPostList(Post post);
 
-    /**
-     * 查询所有岗位
-     *
-     * @return 岗位列表
-     */
-    List<Post> selectPostAll();
 
     /**
      * 根据用户ID查询岗位
@@ -35,13 +29,6 @@ public interface IPostService extends BaseService<Post> {
      */
     List<Post> selectPostsByUserId(Long userId);
 
-    /**
-     * 通过岗位ID查询岗位信息
-     *
-     * @param postId 岗位ID
-     * @return 角色对象信息
-     */
-    Post selectPostById(Long postId);
 
     /**
      * 批量删除岗位信息
@@ -50,31 +37,7 @@ public interface IPostService extends BaseService<Post> {
      * @return 结果
      * @throws Exception 异常
      */
-    int deletePostByIds(String ids);
-
-    /**
-     * 新增保存岗位信息
-     *
-     * @param post 岗位信息
-     * @return 结果
-     */
-    int insertPost(Post post);
-
-    /**
-     * 修改保存岗位信息
-     *
-     * @param post 岗位信息
-     * @return 结果
-     */
-    int updatePost(Post post);
-
-    /**
-     * 通过岗位ID查询岗位使用数量
-     *
-     * @param postId 岗位ID
-     * @return 结果
-     */
-    int countUserPostById(Long postId);
+    boolean deletePostByIds(String ids);
 
     /**
      * 校验岗位名称
