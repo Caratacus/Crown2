@@ -38,6 +38,7 @@ public class Menu extends BaseEntity {
     /**
      * 父菜单名称
      */
+    @TableField(exist = false)
     private String parentName;
 
     /**
