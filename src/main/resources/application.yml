@@ -104,8 +104,14 @@ spring:
     restart:
       # 热部署开关
       enabled: true
-
 mybatis-plus:
+  configuration:
+    cache-enabled: false
+    default-executor-type: reuse
+    jdbc-type-for-null: 'null'
+    lazy-loading-enabled: true
+    local-cache-scope: session
+    map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/**/*Mapper.xml
   global-config:
     db-config:
@@ -113,6 +119,8 @@ mybatis-plus:
       id-type: auto
       db-type: mysql
       table-prefix: sys_
+      logic-delete-value: 2
+      logic-not-delete-value: 0
     banner: false
    # super-mapper-class: org.crown.framework.mapper.BaseMapper
     super-mapper-class: com.ruoyi.framework.mapper.BaseMapper

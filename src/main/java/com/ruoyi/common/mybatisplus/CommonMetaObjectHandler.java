@@ -20,11 +20,12 @@
  */
 package com.ruoyi.common.mybatisplus;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.apache.ibatis.reflection.MetaObject;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.ruoyi.common.utils.security.ShiroUtils;
 
 /**
  * 通用填充类 适用于mybatis plus
@@ -42,39 +43,43 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
      */
     private final String updateTime = "updateTime";
     /**
-     * 创建者ID
+     * 创建者
      */
-    private final String createUid = "createUid";
-
+    private final String createBy = "createBy";
     /**
-     * 修改者ID
+     * 修改者
      */
-    private final String updateUid = "updateUid";
+    private final String updateBy = "createBy";
+    /**
+     * 删除标志（0代表存在 2代表删除）
+     */
+    private final String delFlag = "delFlag";
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        setInsertFieldValByName(createTime, LocalDateTime.now(), metaObject);
-        //  setInsertFieldValByName(createUid, currentUid(), metaObject);
-        setInsertFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-        //  setInsertFieldValByName(updateUid, currentUid(), metaObject);
+        //setInsertFieldValByName(delFlag, "0", metaObject);
+        setInsertFieldValByName(createTime, new Date(), metaObject);
+        setInsertFieldValByName(createBy, currentLoginName(), metaObject);
+        setInsertFieldValByName(updateTime, new Date(), metaObject);
+        setInsertFieldValByName(updateBy, currentLoginName(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        setUpdateFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-        // setUpdateFieldValByName(updateUid, currentUid(), metaObject);
+        setUpdateFieldValByName(updateTime, new Date(), metaObject);
+        setUpdateFieldValByName(updateBy, currentLoginName(), metaObject);
     }
 
-    /*  *//**
-     * 获取当前用户ID
-     *//*
-    private Integer currentUid() {
-        Integer uid = null;
+    /*  *
+     * 获取当前用户名
+     */
+    private String currentLoginName() {
+        String loginName = "";
         try {
-            uid = ApiUtils.currentUid();
+            loginName = ShiroUtils.getLoginName();
         } catch (Exception ignored) {
         }
-        return uid;
-    }*/
+        return loginName;
+    }
 
 }

@@ -1,7 +1,5 @@
 package com.ruoyi.project.system.config.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ruoyi.framework.mapper.BaseMapper;
@@ -22,14 +20,6 @@ public interface ConfigMapper extends BaseMapper<Config> {
      * @return 参数配置信息
      */
     Config selectConfig(Config config);
-
-    /**
-     * 查询参数配置列表
-     *
-     * @param config 参数配置信息
-     * @return 参数配置集合
-     */
-    List<Config> selectConfigList(Config config);
 
     /**
      * 根据键名查询参数配置信息
