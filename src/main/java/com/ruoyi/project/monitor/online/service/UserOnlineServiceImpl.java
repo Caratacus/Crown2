@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.shiro.session.OnlineSessionDAO;
 import com.ruoyi.project.monitor.online.domain.UserOnline;
@@ -37,46 +36,6 @@ public class UserOnlineServiceImpl extends BaseServiceImpl<UserOnlineMapper, Use
     }
 
     /**
-     * 通过会话序号删除信息
-     *
-     * @param sessionId 会话ID
-     * @return 在线用户信息
-     */
-    @Override
-    public void deleteOnlineById(String sessionId) {
-        UserOnline userOnline = selectOnlineById(sessionId);
-        if (StringUtils.isNotNull(userOnline)) {
-            baseMapper.deleteOnlineById(sessionId);
-        }
-    }
-
-    /**
-     * 通过会话序号删除信息
-     *
-     * @param sessions 会话ID集合
-     * @return 在线用户信息
-     */
-    @Override
-    public void batchDeleteOnline(List<String> sessions) {
-        for (String sessionId : sessions) {
-            UserOnline userOnline = selectOnlineById(sessionId);
-            if (StringUtils.isNotNull(userOnline)) {
-                baseMapper.deleteOnlineById(sessionId);
-            }
-        }
-    }
-
-    /**
-     * 保存会话信息
-     *
-     * @param online 会话信息
-     */
-    @Override
-    public void saveOnline(UserOnline online) {
-        baseMapper.saveOnline(online);
-    }
-
-    /**
      * 查询会话集合
      *
      * @param userOnline
@@ -98,7 +57,7 @@ public class UserOnlineServiceImpl extends BaseServiceImpl<UserOnlineMapper, Use
             return;
         }
         session.setTimeout(1000);
-        baseMapper.deleteOnlineById(sessionId);
+        removeById(sessionId);
     }
 
     /**

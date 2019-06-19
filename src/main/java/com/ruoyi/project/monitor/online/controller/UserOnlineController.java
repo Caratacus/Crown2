@@ -75,7 +75,7 @@ public class UserOnlineController extends WebController {
             onlineSession.setStatus(OnlineStatus.off_line);
             onlineSessionDAO.update(onlineSession);
             online.setStatus(OnlineStatus.off_line);
-            userOnlineService.saveOnline(online);
+            userOnlineService.updateById(online);
         }
         return success();
     }
@@ -99,7 +99,7 @@ public class UserOnlineController extends WebController {
         onlineSession.setStatus(OnlineStatus.off_line);
         onlineSessionDAO.update(onlineSession);
         online.setStatus(OnlineStatus.off_line);
-        userOnlineService.saveOnline(online);
+        userOnlineService.updateById(online);
         return success();
     }
 }

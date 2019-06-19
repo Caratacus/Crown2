@@ -15,6 +15,7 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.constant.ShiroConstants;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.project.monitor.online.domain.OnlineSession;
@@ -103,7 +104,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
         }
         if (needOfflineIdList.size() > 0) {
             try {
-                userOnlineService.batchDeleteOnline(needOfflineIdList);
+                userOnlineService.remove(Wrappers.<UserOnline>lambdaQuery().in(UserOnline::getSessionId, needOfflineIdList));
             } catch (Exception e) {
                 log.error("batch delete db session error.", e);
             }

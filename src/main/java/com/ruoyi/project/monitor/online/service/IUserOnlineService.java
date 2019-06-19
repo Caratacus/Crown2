@@ -22,29 +22,6 @@ public interface IUserOnlineService extends BaseService<UserOnline> {
     UserOnline selectOnlineById(String sessionId);
 
     /**
-     * 通过会话序号删除信息
-     *
-     * @param sessionId 会话ID
-     * @return 在线用户信息
-     */
-    void deleteOnlineById(String sessionId);
-
-    /**
-     * 通过会话序号删除信息
-     *
-     * @param sessions 会话ID集合
-     * @return 在线用户信息
-     */
-    void batchDeleteOnline(List<String> sessions);
-
-    /**
-     * 保存会话信息
-     *
-     * @param online 会话信息
-     */
-    void saveOnline(UserOnline online);
-
-    /**
      * 查询会话集合
      *
      * @param userOnline 分页参数

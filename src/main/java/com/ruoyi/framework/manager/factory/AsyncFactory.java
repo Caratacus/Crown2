@@ -53,7 +53,7 @@ public class AsyncFactory {
                 online.setOs(session.getOs());
                 online.setStatus(session.getStatus());
                 online.setSession(session);
-                SpringUtils.getBean(IUserOnlineService.class).saveOnline(online);
+                SpringUtils.getBean(IUserOnlineService.class).saveOrUpdate(online);
 
             }
         };

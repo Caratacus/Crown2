@@ -104,6 +104,6 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
             return;
         }
         onlineSession.setStatus(OnlineSession.OnlineStatus.off_line);
-        onlineService.deleteOnlineById(String.valueOf(onlineSession.getId()));
+        onlineService.removeById(onlineSession.getId());
     }
 }

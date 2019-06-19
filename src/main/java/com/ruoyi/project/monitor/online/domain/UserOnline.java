@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.ruoyi.framework.web.domain.BaseEntity;
+import com.ruoyi.framework.web.domain.BaseQueryParams;
 import com.ruoyi.project.monitor.online.domain.OnlineSession.OnlineStatus;
 
 import lombok.Getter;
@@ -20,14 +20,14 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class UserOnline extends BaseEntity {
+public class UserOnline extends BaseQueryParams {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 用户会话id
      */
-    @TableId
+    @TableId("sessionId")
     private String sessionId;
 
     /**
