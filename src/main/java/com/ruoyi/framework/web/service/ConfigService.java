@@ -23,7 +23,7 @@ public class ConfigService {
      * @return 参数键值
      */
     public String getKey(String configKey) {
-        return configService.selectConfigByKey(configKey);
+        return configService.getConfigValueByKey(configKey);
     }
 
 }

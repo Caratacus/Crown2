@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
@@ -79,7 +81,7 @@ public class ConfigController extends WebController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Config config) {
-        return toAjax(configService.insertConfig(config));
+        return toAjax(configService.save(config));
     }
 
     /**
@@ -87,7 +89,7 @@ public class ConfigController extends WebController {
      */
     @GetMapping("/edit/{configId}")
     public String edit(@PathVariable("configId") Long configId, ModelMap mmap) {
-        mmap.put("config", configService.selectConfigById(configId));
+        mmap.put("config", configService.getById(configId));
         return prefix + "/edit";
     }
 
@@ -99,7 +101,7 @@ public class ConfigController extends WebController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Config config) {
-        return toAjax(configService.updateConfig(config));
+        return toAjax(configService.updateById(config));
     }
 
     /**
@@ -110,7 +112,11 @@ public class ConfigController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
-        return toAjax(configService.deleteConfigByIds(ids));
+        return toAjax(
+                configService.remove(
+                        Wrappers.<Config>lambdaQuery().inOrThrow(Config::getConfigId, StringUtils.split2List(ids, ",")
+                        )
+                ));
     }
 
     /**

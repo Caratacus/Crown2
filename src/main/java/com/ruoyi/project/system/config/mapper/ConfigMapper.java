@@ -13,43 +13,4 @@ import com.ruoyi.project.system.config.domain.Config;
 @Mapper
 public interface ConfigMapper extends BaseMapper<Config> {
 
-    /**
-     * 查询参数配置信息
-     *
-     * @param config 参数配置信息
-     * @return 参数配置信息
-     */
-    Config selectConfig(Config config);
-
-    /**
-     * 根据键名查询参数配置信息
-     *
-     * @param configKey 参数键名
-     * @return 参数配置信息
-     */
-    Config checkConfigKeyUnique(String configKey);
-
-    /**
-     * 新增参数配置
-     *
-     * @param config 参数配置信息
-     * @return 结果
-     */
-    int insertConfig(Config config);
-
-    /**
-     * 修改参数配置
-     *
-     * @param config 参数配置信息
-     * @return 结果
-     */
-    int updateConfig(Config config);
-
-    /**
-     * 批量删除参数配置
-     *
-     * @param configIds 需要删除的数据ID
-     * @return 结果
-     */
-    int deleteConfigByIds(String[] configIds);
 }

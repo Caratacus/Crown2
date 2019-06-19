@@ -381,7 +381,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         StringBuilder successMsg = new StringBuilder();
         StringBuilder failureMsg = new StringBuilder();
         String operName = ShiroUtils.getLoginName();
-        String password = configService.selectConfigByKey("sys.user.initPassword");
+        String password = configService.getConfigValueByKey("sys.user.initPassword");
         for (User user : userList) {
             try {
                 // 验证是否存在这个用户

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
@@ -68,7 +68,7 @@ public class OperlogController extends WebController {
     public AjaxResult remove(String ids) {
         return toAjax(
                 operLogService.remove(
-                        Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.splitWorker(ids, ",", -1, false))
+                        Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.split2List(ids, ","))
                 )
         );
     }
