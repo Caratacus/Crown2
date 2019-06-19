@@ -55,11 +55,21 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
      */
     @Override
     public List<Menu> selectMenuList(Menu menu) {
-        return query().like(StringUtils.isNotEmpty(menu.getMenuName()), Menu::getMenuName, menu.getMenuName())
-                .eq(StringUtils.isNotEmpty(menu.getVisible()), Menu::getVisible, menu.getVisible())
-                .orderByAsc(Menu::getParentId)
-                .orderByAsc(Menu::getOrderNum)
-                .list();
+
+        List<Menu> menuList;
+        User user = ShiroUtils.getSysUser();
+        if (user.isAdmin()) {
+            menuList = query().like(StringUtils.isNotEmpty(menu.getMenuName()), Menu::getMenuName, menu.getMenuName())
+                    .eq(StringUtils.isNotEmpty(menu.getVisible()), Menu::getVisible, menu.getVisible())
+                    .orderByAsc(Menu::getParentId)
+                    .orderByAsc(Menu::getOrderNum)
+                    .list();
+        } else {
+            menu.getParams().put("userId", user.getUserId());
+            menuList = baseMapper.selectMenuListByUserId(menu);
+        }
+        return menuList;
+
     }
 
     /**
@@ -113,7 +123,16 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
     @Override
     public List<Menu> list() {
-        return query().orderByAsc(Menu::getParentId).orderByAsc(Menu::getOrderNum).list();
+        List<Menu> menuList;
+        User user = ShiroUtils.getSysUser();
+        if (user.isAdmin()) {
+            menuList = query().orderByAsc(Menu::getParentId).orderByAsc(Menu::getOrderNum).list();
+        } else {
+            menuList = baseMapper.selectMenuAllByUserId(user.getUserId());
+        }
+        return menuList;
+
+
     }
 
     /**

@@ -28,6 +28,22 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @param userId 用户ID
      * @return 菜单列表
      */
+    List<Menu> selectMenuAllByUserId(Long userId);
+
+    /**
+     * 查询系统菜单列表
+     *
+     * @param menu 菜单信息
+     * @return 菜单列表
+     */
+    List<Menu> selectMenuListByUserId(Menu menu);
+
+    /**
+     * 根据用户ID查询菜单
+     *
+     * @param userId 用户ID
+     * @return 菜单列表
+     */
     List<Menu> selectMenusByUserId(Long userId);
 
     /**

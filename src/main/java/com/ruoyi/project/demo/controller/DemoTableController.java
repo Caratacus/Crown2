@@ -167,6 +167,22 @@ public class DemoTableController extends WebController {
     }
 
     /**
+     * 动态增删改查
+     */
+    @GetMapping("/curd")
+    public String curd() {
+        return prefix + "/curd";
+    }
+
+    /**
+     * 表格拖拽操作
+     */
+    @GetMapping("/reorder")
+    public String reorder() {
+        return prefix + "/reorder";
+    }
+
+    /**
      * 表格其他操作
      */
     @GetMapping("/other")

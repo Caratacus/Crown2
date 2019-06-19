@@ -41,7 +41,7 @@
 	<script th:src="@{/ajax/libs/layui/layui.js}"></script>
 	<script th:src="@{/ruoyi/js/common.js?v=3.4.0}"></script>
 	<script th:src="@{/ruoyi/js/ry-ui.js?v=3.4.0}"></script>
-	<script th:inline="javascript"> var ctx = [[@{/}]]; ;</script>
+	<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
 </div>
 
 <!-- ztree树插件 -->
@@ -166,4 +166,10 @@
 <!-- sparkline线状图插件 -->
 <div th:fragment="sparkline-js">
     <script th:src="@{/ajax/libs/report/sparkline/jquery.sparkline.min.js}"></script>
+</div>
+
+<!-- 表格拖拽插件 -->
+<div th:fragment="bootstrap-table-reorder-js">
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder/bootstrap-table-reorder.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder/jquery.tablednd.js}"></script>
 </div>
