@@ -1,6 +1,5 @@
 package com.ruoyi.common.utils.spring;
 
-import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -89,14 +88,4 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
         return beanFactory.getAliases(name);
     }
 
-    /**
-     * 获取aop代理对象
-     *
-     * @param invoker
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T getAopProxy(T invoker) {
-        return (T) AopContext.currentProxy();
-    }
 }
