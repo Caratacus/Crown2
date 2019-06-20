@@ -1,6 +1,5 @@
 package com.ruoyi.project.system.role.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +17,6 @@ import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
-import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.role.domain.Role;
@@ -26,7 +24,7 @@ import com.ruoyi.project.system.role.domain.RoleDept;
 import com.ruoyi.project.system.role.domain.RoleMenu;
 import com.ruoyi.project.system.role.mapper.RoleMapper;
 import com.ruoyi.project.system.user.domain.UserRole;
-import com.ruoyi.project.system.user.mapper.UserRoleMapper;
+import com.ruoyi.project.system.user.service.IUserRoleService;
 
 /**
  * 角色 业务层处理
@@ -39,9 +37,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     @Autowired
     private IRoleMenuService roleMenuService;
     @Autowired
-    private UserRoleMapper userRoleMapper;
-    @Autowired
     private IRoleDeptService roleDeptService;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     /**
      * 根据条件分页查询角色数据
@@ -127,7 +125,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         List<Long> roleIds = StringUtils.split2List(ids, TypeUtils::castToLong);
         for (Long roleId : roleIds) {
             Role role = getById(roleId);
-            if (countUserRoleByRoleId(roleId) > 0) {
+            if (userRoleService.query().eq(UserRole::getRoleId, roleId).exist()) {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
             }
         }
@@ -249,16 +247,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return UserConstants.ROLE_KEY_UNIQUE;
     }
 
-    /**
-     * 通过角色ID查询角色使用数量
-     *
-     * @param roleId 角色ID
-     * @return 结果
-     */
-    @Override
-    public int countUserRoleByRoleId(Long roleId) {
-        return userRoleMapper.countUserRoleByRoleId(roleId);
-    }
 
     /**
      * 角色状态修改
@@ -281,8 +269,8 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      * @return 结果
      */
     @Override
-    public int deleteAuthUser(UserRole userRole) {
-        return userRoleMapper.deleteUserRoleInfo(userRole);
+    public boolean deleteAuthUser(UserRole userRole) {
+        return userRoleService.delete().eq(UserRole::getRoleId, userRole.getRoleId()).eq(UserRole::getUserId, userRole.getUserId()).execute();
     }
 
     /**
@@ -292,8 +280,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      * @param userIds 需要删除的用户数据ID
      * @return 结果
      */
-    public int deleteAuthUsers(Long roleId, String userIds) {
-        return userRoleMapper.deleteUserRoleInfos(roleId, Convert.toLongArray(userIds));
+    public boolean deleteAuthUsers(Long roleId, String userIds) {
+        return userRoleService.delete().eq(UserRole::getRoleId, roleId).inOrThrow(UserRole::getUserId, StringUtils.split2List(userIds)).execute();
+
     }
 
     /**
@@ -303,17 +292,16 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      * @param userIds 需要删除的用户数据ID
      * @return 结果
      */
-    public int insertAuthUsers(Long roleId, String userIds) {
-        Long[] users = Convert.toLongArray(userIds);
-        // 新增用户与角色管理
-        List<UserRole> list = new ArrayList<>();
-        for (Long userId : users) {
-            UserRole ur = new UserRole();
-            ur.setUserId(userId);
-            ur.setRoleId(roleId);
-            list.add(ur);
-        }
-        return userRoleMapper.batchUserRole(list);
+    public boolean insertAuthUsers(Long roleId, String userIds) {
+        userRoleService.saveBatch(
+                StringUtils.split2List(userIds, TypeUtils::castToLong).stream().map(userId -> {
+                    UserRole ur = new UserRole();
+                    ur.setUserId(userId);
+                    ur.setRoleId(roleId);
+                    return ur;
+                }).collect(Collectors.toList())
+        );
+        return true;
     }
 
 }

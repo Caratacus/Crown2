@@ -71,59 +71,5 @@ public interface UserMapper extends BaseMapper<User> {
      */
     User selectUserById(Long userId);
 
-    /**
-     * 通过用户ID删除用户
-     *
-     * @param userId 用户ID
-     * @return 结果
-     */
-    int deleteUserById(Long userId);
 
-    /**
-     * 批量删除用户信息
-     *
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    int deleteUserByIds(Long[] ids);
-
-    /**
-     * 修改用户信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
-    int updateUser(User user);
-
-    /**
-     * 新增用户信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
-    int insertUser(User user);
-
-    /**
-     * 校验用户名称是否唯一
-     *
-     * @param loginName 登录名称
-     * @return 结果
-     */
-    int checkLoginNameUnique(String loginName);
-
-    /**
-     * 校验手机号码是否唯一
-     *
-     * @param phonenumber 手机号码
-     * @return 结果
-     */
-    User checkPhoneUnique(String phonenumber);
-
-    /**
-     * 校验email是否唯一
-     *
-     * @param email 用户邮箱
-     * @return 结果
-     */
-    User checkEmailUnique(String email);
 }

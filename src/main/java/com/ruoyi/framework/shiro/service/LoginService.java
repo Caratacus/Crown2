@@ -111,6 +111,6 @@ public class LoginService {
     public void recordLoginInfo(User user) {
         user.setLoginIp(ShiroUtils.getIp());
         user.setLoginDate(DateUtils.getNowDate());
-        userService.updateUserInfo(user);
+        userService.updateById(user);
     }
 }

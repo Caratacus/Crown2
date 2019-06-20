@@ -75,7 +75,7 @@ public class ProfileController extends WebController {
         User user = getSysUser();
         if (StringUtils.isNotEmpty(newPassword) && passwordService.matches(user, oldPassword)) {
             user.setPassword(newPassword);
-            if (userService.resetUserPwd(user) > 0) {
+            if (userService.resetUserPwd(user)) {
                 setSysUser(userService.selectUserById(user.getUserId()));
                 return success();
             }
@@ -118,7 +118,7 @@ public class ProfileController extends WebController {
         currentUser.setEmail(user.getEmail());
         currentUser.setPhonenumber(user.getPhonenumber());
         currentUser.setSex(user.getSex());
-        if (userService.updateUserInfo(currentUser) > 0) {
+        if (userService.updateById(currentUser)) {
             setSysUser(userService.selectUserById(currentUser.getUserId()));
             return success();
         }
@@ -137,7 +137,7 @@ public class ProfileController extends WebController {
             if (!file.isEmpty()) {
                 String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
                 currentUser.setAvatar(avatar);
-                if (userService.updateUserInfo(currentUser) > 0) {
+                if (userService.updateById(currentUser)) {
                     setSysUser(userService.selectUserById(currentUser.getUserId()));
                     return success();
                 }

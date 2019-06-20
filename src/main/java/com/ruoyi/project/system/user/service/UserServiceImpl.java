@@ -1,7 +1,8 @@
 package com.ruoyi.project.system.user.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
-import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.shiro.service.PasswordService;
@@ -26,7 +27,6 @@ import com.ruoyi.project.system.user.domain.User;
 import com.ruoyi.project.system.user.domain.UserPost;
 import com.ruoyi.project.system.user.domain.UserRole;
 import com.ruoyi.project.system.user.mapper.UserMapper;
-import com.ruoyi.project.system.user.mapper.UserPostMapper;
 import com.ruoyi.project.system.user.mapper.UserRoleMapper;
 
 /**
@@ -46,10 +46,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     private PostMapper postMapper;
 
     @Autowired
-    private UserPostMapper userPostMapper;
+    private IUserPostService userPostService;
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @Autowired
     private IConfigService configService;
@@ -137,35 +139,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     /**
-     * 通过用户ID删除用户
-     *
-     * @param userId 用户ID
-     * @return 结果
-     */
-    @Override
-    public int deleteUserById(Long userId) {
-        // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
-        // 删除用户与岗位表
-        userPostMapper.deleteUserPostByUserId(userId);
-        return baseMapper.deleteUserById(userId);
-    }
-
-    /**
      * 批量删除用户信息
      *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
     @Override
-    public int deleteUserByIds(String ids) {
-        Long[] userIds = Convert.toLongArray(ids);
+    public boolean deleteUserByIds(String ids) {
+        List<Long> userIds = StringUtils.split2List(ids, TypeUtils::castToLong);
         for (Long userId : userIds) {
             if (User.isAdmin(userId)) {
                 throw new BusinessException("不允许删除超级管理员用户");
             }
         }
-        return baseMapper.deleteUserByIds(userIds);
+        return delete().inOrThrow(User::getUserId, userIds).execute();
     }
 
     /**
@@ -176,17 +163,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      */
     @Override
     @Transactional
-    public int insertUser(User user) {
+    public boolean insertUser(User user) {
         user.randomSalt();
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-        user.setCreateBy(ShiroUtils.getLoginName());
         // 新增用户信息
-        int rows = baseMapper.insertUser(user);
+        save(user);
         // 新增用户岗位关联
         insertUserPost(user);
         // 新增用户与角色管理
         insertUserRole(user);
-        return rows;
+        return true;
     }
 
     /**
@@ -197,30 +183,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      */
     @Override
     @Transactional
-    public int updateUser(User user) {
+    public boolean updateUser(User user) {
         Long userId = user.getUserId();
         user.setUpdateBy(ShiroUtils.getLoginName());
         // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
+        userRoleService.delete().eq(UserRole::getUserId, userId).execute();
         // 新增用户与角色管理
         insertUserRole(user);
         // 删除用户与岗位关联
-        userPostMapper.deleteUserPostByUserId(userId);
+        userPostService.delete().eq(UserPost::getUserId, userId).execute();
         // 新增用户与岗位管理
         insertUserPost(user);
-        return baseMapper.updateUser(user);
+        return updateById(user);
     }
 
-    /**
-     * 修改用户个人详细信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
-    @Override
-    public int updateUserInfo(User user) {
-        return baseMapper.updateUser(user);
-    }
 
     /**
      * 修改用户密码
@@ -229,10 +205,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @return 结果
      */
     @Override
-    public int resetUserPwd(User user) {
+    public boolean resetUserPwd(User user) {
         user.randomSalt();
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-        return updateUserInfo(user);
+        return updateById(user);
     }
 
     /**
@@ -241,20 +217,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @param user 用户对象
      */
     public void insertUserRole(User user) {
-        Long[] roles = user.getRoleIds();
-        if (StringUtils.isNotNull(roles)) {
-            // 新增用户与角色管理
-            List<UserRole> list = new ArrayList<>();
-            for (Long roleId : user.getRoleIds()) {
-                UserRole ur = new UserRole();
-                ur.setUserId(user.getUserId());
-                ur.setRoleId(roleId);
-                list.add(ur);
-            }
-            if (list.size() > 0) {
-                userRoleMapper.batchUserRole(list);
-            }
-        }
+        userRoleService.saveBatch(
+                Arrays.stream(user.getRoleIds()).map(roleId -> {
+                    UserRole ur = new UserRole();
+                    ur.setUserId(user.getUserId());
+                    ur.setRoleId(roleId);
+                    return ur;
+                }).collect(Collectors.toList())
+        );
     }
 
     /**
@@ -263,20 +233,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @param user 用户对象
      */
     public void insertUserPost(User user) {
-        Long[] posts = user.getPostIds();
-        if (StringUtils.isNotNull(posts)) {
-            // 新增用户与岗位管理
-            List<UserPost> list = new ArrayList<>();
-            for (Long postId : user.getPostIds()) {
-                UserPost up = new UserPost();
-                up.setUserId(user.getUserId());
-                up.setPostId(postId);
-                list.add(up);
-            }
-            if (list.size() > 0) {
-                userPostMapper.batchUserPost(list);
-            }
-        }
+        userPostService.saveBatch(
+                Arrays.stream(user.getPostIds()).map(postId -> {
+                    UserPost up = new UserPost();
+                    up.setUserId(user.getUserId());
+                    up.setPostId(postId);
+                    return up;
+                }).collect(Collectors.toList())
+        );
     }
 
     /**
@@ -287,11 +251,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      */
     @Override
     public String checkLoginNameUnique(String loginName) {
-        int count = baseMapper.checkLoginNameUnique(loginName);
-        if (count > 0) {
-            return UserConstants.USER_NAME_NOT_UNIQUE;
-        }
-        return UserConstants.USER_NAME_UNIQUE;
+        return query().eq(User::getLoginName, loginName).exist() ? UserConstants.USER_NAME_NOT_UNIQUE : UserConstants.USER_NAME_UNIQUE;
     }
 
     /**
@@ -303,7 +263,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public String checkPhoneUnique(User user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        User info = baseMapper.checkPhoneUnique(user.getPhonenumber());
+        User info = query().select(User::getUserId, User::getPhonenumber).eq(User::getPhonenumber, user.getPhonenumber()).getOne();
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
             return UserConstants.USER_PHONE_NOT_UNIQUE;
         }
@@ -319,7 +279,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public String checkEmailUnique(User user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        User info = baseMapper.checkEmailUnique(user.getEmail());
+        User info = query().select(User::getUserId, User::getEmail).eq(User::getEmail, user.getEmail()).getOne();
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
             return UserConstants.USER_EMAIL_NOT_UNIQUE;
         }
@@ -424,10 +384,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @return 结果
      */
     @Override
-    public int changeStatus(User user) {
+    public boolean changeStatus(User user) {
         if (User.isAdmin(user.getUserId())) {
             throw new BusinessException("不允许修改超级管理员用户");
         }
-        return baseMapper.updateUser(user);
+        return updateById(user);
     }
 }

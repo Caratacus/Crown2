@@ -28,11 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        left join sys_dept d on u.dept_id = d.dept_id
     </sql>
     
-    <sql id="selectRoleVo">
-		select r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status, r.del_flag, r.create_time, r.remark 
-        from sys_role r
-	</sql>
-	
 	<select id="selectRoleList" parameterType="Role" resultMap="RoleResult">
 		<include refid="selectRoleContactVo"/>
 		where r.del_flag = '0'
@@ -62,5 +57,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectRoleContactVo"/>
 		WHERE r.del_flag = '0' and ur.user_id = #{userId}
 	</select>
-	
+
 </mapper>

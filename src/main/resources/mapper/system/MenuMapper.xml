@@ -23,11 +23,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="remark"         column="remark"         />
 	</resultMap>
 	
-	<sql id="selectMenuVo">
-        select menu_id, menu_name, parent_id, order_num, url, target, menu_type, visible, ifnull(perms,'') as perms, icon, create_by, create_time 
-		from sys_menu
-    </sql>
-    
     <select id="selectMenusByUserId" parameterType="Long" resultMap="MenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m

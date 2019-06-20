@@ -69,21 +69,13 @@ public interface IUserService extends BaseService<User> {
     User selectUserById(Long userId);
 
     /**
-     * 通过用户ID删除用户
-     *
-     * @param userId 用户ID
-     * @return 结果
-     */
-    int deleteUserById(Long userId);
-
-    /**
      * 批量删除用户信息
      *
      * @param ids 需要删除的数据ID
      * @return 结果
      * @throws Exception 异常
      */
-    int deleteUserByIds(String ids);
+    boolean deleteUserByIds(String ids);
 
     /**
      * 保存用户信息
@@ -91,7 +83,7 @@ public interface IUserService extends BaseService<User> {
      * @param user 用户信息
      * @return 结果
      */
-    int insertUser(User user);
+    boolean insertUser(User user);
 
     /**
      * 保存用户信息
@@ -99,15 +91,8 @@ public interface IUserService extends BaseService<User> {
      * @param user 用户信息
      * @return 结果
      */
-    int updateUser(User user);
+    boolean updateUser(User user);
 
-    /**
-     * 修改用户详细信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
-    int updateUserInfo(User user);
 
     /**
      * 修改用户密码信息
@@ -115,7 +100,7 @@ public interface IUserService extends BaseService<User> {
      * @param user 用户信息
      * @return 结果
      */
-    int resetUserPwd(User user);
+    boolean resetUserPwd(User user);
 
     /**
      * 校验用户名称是否唯一
@@ -172,5 +157,5 @@ public interface IUserService extends BaseService<User> {
      * @param user 用户信息
      * @return 结果
      */
-    int changeStatus(User user);
+    boolean changeStatus(User user);
 }

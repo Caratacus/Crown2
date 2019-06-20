@@ -103,13 +103,6 @@ public interface IRoleService extends BaseService<Role> {
      */
     String checkRoleKeyUnique(Role role);
 
-    /**
-     * 通过角色ID查询角色使用数量
-     *
-     * @param roleId 角色ID
-     * @return 结果
-     */
-    int countUserRoleByRoleId(Long roleId);
 
     /**
      * 角色状态修改
@@ -125,7 +118,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param userRole 用户和角色关联信息
      * @return 结果
      */
-    int deleteAuthUser(UserRole userRole);
+    boolean deleteAuthUser(UserRole userRole);
 
     /**
      * 批量取消授权用户角色
@@ -134,7 +127,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param userIds 需要删除的用户数据ID
      * @return 结果
      */
-    int deleteAuthUsers(Long roleId, String userIds);
+    boolean deleteAuthUsers(Long roleId, String userIds);
 
     /**
      * 批量选择授权用户角色
@@ -143,5 +136,5 @@ public interface IRoleService extends BaseService<Role> {
      * @param userIds 需要删除的用户数据ID
      * @return 结果
      */
-    int insertAuthUsers(Long roleId, String userIds);
+    boolean insertAuthUsers(Long roleId, String userIds);
 }
