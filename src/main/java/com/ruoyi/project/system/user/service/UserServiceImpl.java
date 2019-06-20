@@ -20,14 +20,13 @@ import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.framework.shiro.service.PasswordService;
 import com.ruoyi.project.system.config.service.IConfigService;
 import com.ruoyi.project.system.post.domain.Post;
-import com.ruoyi.project.system.post.mapper.PostMapper;
+import com.ruoyi.project.system.post.service.IPostService;
 import com.ruoyi.project.system.role.domain.Role;
 import com.ruoyi.project.system.role.service.IRoleService;
 import com.ruoyi.project.system.user.domain.User;
 import com.ruoyi.project.system.user.domain.UserPost;
 import com.ruoyi.project.system.user.domain.UserRole;
 import com.ruoyi.project.system.user.mapper.UserMapper;
-import com.ruoyi.project.system.user.mapper.UserRoleMapper;
 
 /**
  * 用户 业务层处理
@@ -43,13 +42,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     private IRoleService roleService;
 
     @Autowired
-    private PostMapper postMapper;
+    private IPostService postService;
 
     @Autowired
     private IUserPostService userPostService;
 
-    @Autowired
-    private UserRoleMapper userRoleMapper;
     @Autowired
     private IUserRoleService userRoleService;
 
@@ -313,7 +310,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      */
     @Override
     public String selectUserPostGroup(Long userId) {
-        List<Post> list = postMapper.selectPostsByUserId(userId);
+        List<Post> list = postService.selectPostsByUserId(userId);
         StringBuilder idsStr = new StringBuilder();
         for (Post post : list) {
             idsStr.append(post.getPostName()).append(",");

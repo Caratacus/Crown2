@@ -27,6 +27,13 @@ public interface IPostService extends BaseService<Post> {
      * @param userId 用户ID
      * @return 岗位列表
      */
+    List<Post> selectAllPostsByUserId(Long userId);
+    /**
+     * 根据用户ID查询岗位
+     *
+     * @param userId 用户ID
+     * @return 岗位列表
+     */
     List<Post> selectPostsByUserId(Long userId);
 
 

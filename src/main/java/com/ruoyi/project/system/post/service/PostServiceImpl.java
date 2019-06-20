@@ -48,8 +48,8 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
      * @return 岗位列表
      */
     @Override
-    public List<Post> selectPostsByUserId(Long userId) {
-        List<Post> userPosts = baseMapper.selectPostsByUserId(userId);
+    public List<Post> selectAllPostsByUserId(Long userId) {
+        List<Post> userPosts = selectPostsByUserId(userId);
         List<Post> posts = list();
         for (Post post : posts) {
             for (Post userRole : userPosts) {
@@ -60,6 +60,17 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
             }
         }
         return posts;
+    }
+
+    /**
+     * 根据用户ID查询岗位
+     *
+     * @param userId 用户ID
+     * @return 岗位列表
+     */
+    @Override
+    public List<Post> selectPostsByUserId(Long userId) {
+        return baseMapper.selectPostsByUserId(userId);
     }
 
 
