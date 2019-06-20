@@ -46,14 +46,6 @@ public interface IRoleService extends BaseService<Role> {
     List<Role> selectRoleAll();
 
     /**
-     * 通过角色ID查询角色
-     *
-     * @param roleId 角色ID
-     * @return 角色对象信息
-     */
-    Role selectRoleById(Long roleId);
-
-    /**
      * 通过角色ID删除角色
      *
      * @param roleId 角色ID
@@ -68,7 +60,8 @@ public interface IRoleService extends BaseService<Role> {
      * @return 结果
      * @throws Exception 异常
      */
-    int deleteRoleByIds(String ids);
+    boolean deleteRoleByIds(String ids);
+
 
     /**
      * 新增保存角色信息
@@ -76,7 +69,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param role 角色信息
      * @return 结果
      */
-    int insertRole(Role role);
+    boolean insertRole(Role role);
 
     /**
      * 修改保存角色信息
@@ -84,7 +77,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param role 角色信息
      * @return 结果
      */
-    int updateRole(Role role);
+    boolean updateRole(Role role);
 
     /**
      * 修改数据权限信息
@@ -92,7 +85,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param role 角色信息
      * @return 结果
      */
-    int authDataScope(Role role);
+    boolean authDataScope(Role role);
 
     /**
      * 校验角色名称是否唯一
@@ -124,7 +117,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param role 角色信息
      * @return 结果
      */
-    int changeStatus(Role role);
+    boolean changeStatus(Role role);
 
     /**
      * 取消授权用户角色

@@ -10,7 +10,6 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TypeUtils;
-import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.dict.domain.DictType;
 import com.ruoyi.project.system.dict.mapper.DictTypeMapper;
@@ -49,14 +48,14 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
      */
     @Override
     public boolean deleteDictTypeByIds(String ids) {
-        Long[] dictIds = Convert.toLongArray(ids);
+        List<Long> dictIds = StringUtils.split2List(ids, TypeUtils::castToLong);
         for (Long dictId : dictIds) {
             DictType dictType = getById(dictId);
             if (query().eq(DictType::getDictType, dictType.getDictType()).exist()) {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
             }
         }
-        return delete().inOrThrow(DictType::getDictId, StringUtils.split2List(ids)).execute();
+        return delete().inOrThrow(DictType::getDictId, dictIds).execute();
     }
 
 

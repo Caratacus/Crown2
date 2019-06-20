@@ -1,4 +1,4 @@
-package com.ruoyi.project.system.post.service;
+package com.ruoyi.project.system.user.service;
 
 import org.springframework.stereotype.Service;
 

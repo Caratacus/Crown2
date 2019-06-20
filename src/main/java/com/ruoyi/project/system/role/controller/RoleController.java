@@ -91,7 +91,7 @@ public class RoleController extends WebController {
      */
     @GetMapping("/edit/{roleId}")
     public String edit(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-        mmap.put("role", roleService.selectRoleById(roleId));
+        mmap.put("role", roleService.getById(roleId));
         return prefix + "/edit";
     }
 
@@ -111,7 +111,7 @@ public class RoleController extends WebController {
      */
     @GetMapping("/authDataScope/{roleId}")
     public String authDataScope(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-        mmap.put("role", roleService.selectRoleById(roleId));
+        mmap.put("role", roleService.getById(roleId));
         return prefix + "/dataScope";
     }
 
@@ -123,7 +123,7 @@ public class RoleController extends WebController {
     @PostMapping("/authDataScope")
     @ResponseBody
     public AjaxResult authDataScopeSave(Role role) {
-        if (roleService.authDataScope(role) > 0) {
+        if (roleService.authDataScope(role)) {
             setSysUser(userService.selectUserById(getSysUser().getUserId()));
             return success();
         }
@@ -185,7 +185,7 @@ public class RoleController extends WebController {
     @RequiresPermissions("system:role:edit")
     @GetMapping("/authUser/{roleId}")
     public String authUser(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-        mmap.put("role", roleService.selectRoleById(roleId));
+        mmap.put("role", roleService.getById(roleId));
         return prefix + "/authUser";
     }
 
@@ -226,7 +226,7 @@ public class RoleController extends WebController {
      */
     @GetMapping("/authUser/selectUser/{roleId}")
     public String selectUser(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-        mmap.put("role", roleService.selectRoleById(roleId));
+        mmap.put("role", roleService.getById(roleId));
         return prefix + "/selectUser";
     }
 

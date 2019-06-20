@@ -1,4 +1,4 @@
-package com.ruoyi.project.system.post.service;
+package com.ruoyi.project.system.user.service;
 
 import com.ruoyi.framework.service.BaseService;
 import com.ruoyi.project.system.user.domain.UserPost;

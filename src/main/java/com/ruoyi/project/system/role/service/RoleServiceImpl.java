@@ -5,15 +5,18 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.common.utils.text.Convert;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
@@ -21,9 +24,7 @@ import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.role.domain.Role;
 import com.ruoyi.project.system.role.domain.RoleDept;
 import com.ruoyi.project.system.role.domain.RoleMenu;
-import com.ruoyi.project.system.role.mapper.RoleDeptMapper;
 import com.ruoyi.project.system.role.mapper.RoleMapper;
-import com.ruoyi.project.system.role.mapper.RoleMenuMapper;
 import com.ruoyi.project.system.user.domain.UserRole;
 import com.ruoyi.project.system.user.mapper.UserRoleMapper;
 
@@ -36,13 +37,11 @@ import com.ruoyi.project.system.user.mapper.UserRoleMapper;
 public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implements IRoleService {
 
     @Autowired
-    private RoleMenuMapper roleMenuMapper;
-
+    private IRoleMenuService roleMenuService;
     @Autowired
     private UserRoleMapper userRoleMapper;
-
     @Autowired
-    private RoleDeptMapper roleDeptMapper;
+    private IRoleDeptService roleDeptService;
 
     /**
      * 根据条件分页查询角色数据
@@ -55,6 +54,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     public List<Role> selectRoleList(Role role) {
         return baseMapper.selectRoleList(role);
     }
+
 
     /**
      * 根据用户ID查询权限
@@ -106,17 +106,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     }
 
     /**
-     * 通过角色ID查询角色
-     *
-     * @param roleId 角色ID
-     * @return 角色对象信息
-     */
-    @Override
-    public Role selectRoleById(Long roleId) {
-        return baseMapper.selectRoleById(roleId);
-    }
-
-    /**
      * 通过角色ID删除角色
      *
      * @param roleId 角色ID
@@ -124,7 +113,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      */
     @Override
     public boolean deleteRoleById(Long roleId) {
-        return baseMapper.deleteRoleById(roleId) > 0;
+        return delete().eq(Role::getRoleId, roleId).execute();
     }
 
     /**
@@ -134,15 +123,15 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      * @throws Exception
      */
     @Override
-    public int deleteRoleByIds(String ids) {
-        Long[] roleIds = Convert.toLongArray(ids);
+    public boolean deleteRoleByIds(String ids) {
+        List<Long> roleIds = StringUtils.split2List(ids, TypeUtils::castToLong);
         for (Long roleId : roleIds) {
-            Role role = selectRoleById(roleId);
+            Role role = getById(roleId);
             if (countUserRoleByRoleId(roleId) > 0) {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
             }
         }
-        return baseMapper.deleteRoleByIds(roleIds);
+        return delete().inOrThrow(Role::getRoleId, roleIds).execute();
     }
 
     /**
@@ -153,10 +142,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      */
     @Override
     @Transactional
-    public int insertRole(Role role) {
-        role.setCreateBy(ShiroUtils.getLoginName());
+    public boolean insertRole(Role role) {
         // 新增角色信息
-        baseMapper.insertRole(role);
+        save(role);
         ShiroUtils.clearCachedAuthorizationInfo();
         return insertRoleMenu(role);
     }
@@ -169,13 +157,12 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      */
     @Override
     @Transactional
-    public int updateRole(Role role) {
-        role.setUpdateBy(ShiroUtils.getLoginName());
+    public boolean updateRole(Role role) {
         // 修改角色信息
-        baseMapper.updateRole(role);
+        updateById(role);
         ShiroUtils.clearCachedAuthorizationInfo();
         // 删除角色与菜单关联
-        roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
+        roleMenuService.delete().eq(RoleMenu::getRoleId, role.getRoleId()).execute();
         return insertRoleMenu(role);
     }
 
@@ -187,12 +174,11 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      */
     @Override
     @Transactional
-    public int authDataScope(Role role) {
-        role.setUpdateBy(ShiroUtils.getLoginName());
+    public boolean authDataScope(Role role) {
         // 修改角色信息
-        baseMapper.updateRole(role);
+        updateById(role);
         // 删除角色与部门关联
-        roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
+        roleDeptService.delete().eq(RoleDept::getRoleId, role.getRoleId()).execute();
         // 新增角色和部门信息（数据权限）
         return insertRoleDept(role);
     }
@@ -202,20 +188,16 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      *
      * @param role 角色对象
      */
-    public int insertRoleMenu(Role role) {
-        int rows = 1;
-        // 新增用户与角色管理
-        List<RoleMenu> list = new ArrayList<>();
-        for (Long menuId : role.getMenuIds()) {
-            RoleMenu rm = new RoleMenu();
-            rm.setRoleId(role.getRoleId());
-            rm.setMenuId(menuId);
-            list.add(rm);
-        }
-        if (list.size() > 0) {
-            rows = roleMenuMapper.batchRoleMenu(list);
-        }
-        return rows;
+    public boolean insertRoleMenu(Role role) {
+        roleMenuService.saveBatch(
+                Arrays.stream(role.getMenuIds()).map(menuId -> {
+                    RoleMenu rm = new RoleMenu();
+                    rm.setRoleId(role.getRoleId());
+                    rm.setMenuId(menuId);
+                    return rm;
+                }).collect(Collectors.toList())
+        );
+        return true;
     }
 
     /**
@@ -223,20 +205,16 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      *
      * @param role 角色对象
      */
-    public int insertRoleDept(Role role) {
-        int rows = 1;
-        // 新增角色与部门（数据权限）管理
-        List<RoleDept> list = new ArrayList<>();
-        for (Long deptId : role.getDeptIds()) {
-            RoleDept rd = new RoleDept();
-            rd.setRoleId(role.getRoleId());
-            rd.setDeptId(deptId);
-            list.add(rd);
-        }
-        if (list.size() > 0) {
-            rows = roleDeptMapper.batchRoleDept(list);
-        }
-        return rows;
+    private boolean insertRoleDept(Role role) {
+        roleDeptService.saveBatch(
+                Arrays.stream(role.getDeptIds()).map(deptId -> {
+                    RoleDept rd = new RoleDept();
+                    rd.setRoleId(role.getRoleId());
+                    rd.setDeptId(deptId);
+                    return rd;
+                }).collect(Collectors.toList())
+        );
+        return true;
     }
 
     /**
@@ -248,7 +226,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     @Override
     public String checkRoleNameUnique(Role role) {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        Role info = baseMapper.checkRoleNameUnique(role.getRoleName());
+        Role info = query().eq(Role::getRoleName, role.getRoleName()).getOne();
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
             return UserConstants.ROLE_NAME_NOT_UNIQUE;
         }
@@ -264,7 +242,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     @Override
     public String checkRoleKeyUnique(Role role) {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        Role info = baseMapper.checkRoleKeyUnique(role.getRoleKey());
+        Role info = query().eq(Role::getRoleKey, role.getRoleKey()).getOne();
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
             return UserConstants.ROLE_KEY_NOT_UNIQUE;
         }
@@ -289,8 +267,11 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      * @return 结果
      */
     @Override
-    public int changeStatus(Role role) {
-        return baseMapper.updateRole(role);
+    public boolean changeStatus(Role role) {
+        Role updateRole = new Role();
+        updateRole.setStatus(role.getStatus());
+        return update(updateRole, Wrappers.<Role>lambdaQuery().eq(Role::getRoleId, role.getRoleId()));
+
     }
 
     /**
@@ -334,4 +315,5 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         }
         return userRoleMapper.batchUserRole(list);
     }
+
 }

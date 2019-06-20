@@ -21,7 +21,7 @@ import com.ruoyi.project.system.config.service.IConfigService;
 import com.ruoyi.project.system.post.domain.Post;
 import com.ruoyi.project.system.post.mapper.PostMapper;
 import com.ruoyi.project.system.role.domain.Role;
-import com.ruoyi.project.system.role.mapper.RoleMapper;
+import com.ruoyi.project.system.role.service.IRoleService;
 import com.ruoyi.project.system.user.domain.User;
 import com.ruoyi.project.system.user.domain.UserPost;
 import com.ruoyi.project.system.user.domain.UserRole;
@@ -40,7 +40,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-    private RoleMapper roleMapper;
+    private IRoleService roleService;
 
     @Autowired
     private PostMapper postMapper;
@@ -334,7 +334,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      */
     @Override
     public String selectUserRoleGroup(Long userId) {
-        List<Role> list = roleMapper.selectRolesByUserId(userId);
+        List<Role> list = roleService.selectRolesByUserId(userId);
         StringBuilder idsStr = new StringBuilder();
         for (Role role : list) {
             idsStr.append(role.getRoleName()).append(",");

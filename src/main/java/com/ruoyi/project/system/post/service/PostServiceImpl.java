@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.text.Convert;
+import com.ruoyi.common.utils.TypeUtils;
 import com.ruoyi.framework.service.impl.BaseServiceImpl;
 import com.ruoyi.project.system.post.domain.Post;
 import com.ruoyi.project.system.post.mapper.PostMapper;
 import com.ruoyi.project.system.user.domain.UserPost;
+import com.ruoyi.project.system.user.service.IUserPostService;
 
 /**
  * 岗位信息 服务层处理
@@ -64,14 +65,14 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
     @Override
     public boolean deletePostByIds(String ids) {
-        Long[] postIds = Convert.toLongArray(ids);
+        List<Long> postIds = StringUtils.split2List(ids, TypeUtils::castToLong);
         for (Long postId : postIds) {
             Post post = getById(postId);
             if (userPostService.query().eq(UserPost::getPostId, postId).exist()) {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", post.getPostName()));
             }
         }
-        return delete().inOrThrow(Post::getPostId, StringUtils.split2List(ids)).execute();
+        return delete().inOrThrow(Post::getPostId, postIds).execute();
     }
 
 
