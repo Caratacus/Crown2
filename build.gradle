@@ -1,4 +1,4 @@
-description = "Crown"
+description = "Crown2"
 
 configurations.all {
     //每隔100天检查远程依赖是否存在更新
