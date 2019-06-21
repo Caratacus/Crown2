@@ -23,11 +23,6 @@ public class RuoYiConfig {
     private String version;
 
     /**
-     * 版权年份
-     */
-    private String copyrightYear;
-
-    /**
      * 实例演示开关
      */
     private boolean demoEnabled;
@@ -56,14 +51,6 @@ public class RuoYiConfig {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getCopyrightYear() {
-        return copyrightYear;
-    }
-
-    public void setCopyrightYear(String copyrightYear) {
-        this.copyrightYear = copyrightYear;
     }
 
     public boolean isDemoEnabled() {
