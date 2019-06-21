@@ -1,6 +1,6 @@
 package com.ruoyi.project.tool.gen.domain;
 
-import com.alibaba.fastjson.JSON;
+import com.ruoyi.common.utils.JacksonUtils;
 import com.ruoyi.common.utils.StringUtils;
 
 /**
@@ -73,7 +73,7 @@ public class ColumnInfo {
     public void setColumnComment(String columnComment) {
         // 根据列描述解析列的配置信息
         if (StringUtils.isNoneEmpty(columnComment) && columnComment.startsWith("{")) {
-            this.configInfo = JSON.parseObject(columnComment, ColumnConfigInfo.class);
+            this.configInfo = JacksonUtils.readValue(columnComment, ColumnConfigInfo.class);
             this.columnComment = configInfo.getTitle();
         } else {
             this.columnComment = columnComment;

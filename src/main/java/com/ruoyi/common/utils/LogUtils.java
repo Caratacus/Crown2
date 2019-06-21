@@ -10,8 +10,6 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * 处理并记录日志文件
  *
@@ -109,7 +107,7 @@ public class LogUtils {
 
     protected static String getParams(HttpServletRequest request) {
         Map<String, String[]> params = request.getParameterMap();
-        return JSON.toJSONString(params);
+        return JacksonUtils.toJson(params);
     }
 
     protected static String getUsername() {
