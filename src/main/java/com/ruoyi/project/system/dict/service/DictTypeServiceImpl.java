@@ -22,12 +22,6 @@ import com.ruoyi.project.system.dict.mapper.DictTypeMapper;
 @Service
 public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictType> implements IDictTypeService {
 
-    /**
-     * 根据条件分页查询字典类型
-     *
-     * @param dictType 字典类型信息
-     * @return 字典类型集合信息
-     */
     @Override
     public List<DictType> selectDictTypeList(DictType dictType) {
         String beginTime = TypeUtils.castToString(dictType.getParams().get("beginTime"));
@@ -40,12 +34,6 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
                 .list();
     }
 
-    /**
-     * 批量删除字典类型
-     *
-     * @param ids 需要删除的数据
-     * @return 结果
-     */
     @Override
     public boolean deleteDictTypeByIds(String ids) {
         List<Long> dictIds = StringUtils.split2List(ids, TypeUtils::castToLong);
@@ -58,12 +46,6 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
         return delete().inOrThrow(DictType::getDictId, dictIds).execute();
     }
 
-    /**
-     * 修改保存字典类型信息
-     *
-     * @param dictType 字典类型信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public boolean updateDictType(DictType dictType) {
@@ -74,12 +56,6 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
         return updateById(dictType);
     }
 
-    /**
-     * 校验字典类型称是否唯一
-     *
-     * @param dict 字典类型
-     * @return 结果
-     */
     @Override
     public String checkDictTypeUnique(DictType dict) {
         Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();

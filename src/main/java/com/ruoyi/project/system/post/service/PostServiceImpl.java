@@ -26,12 +26,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     @Autowired
     private IUserPostService userPostService;
 
-    /**
-     * 查询岗位信息集合
-     *
-     * @param post 岗位信息
-     * @return 岗位信息集合
-     */
     @Override
     public List<Post> selectPostList(Post post) {
         return query().like(StringUtils.isNotEmpty(post.getPostCode()), Post::getPostCode, post.getPostCode())
@@ -40,12 +34,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
                 .list();
     }
 
-    /**
-     * 根据用户ID查询岗位
-     *
-     * @param userId 用户ID
-     * @return 岗位列表
-     */
     @Override
     public List<Post> selectAllPostsByUserId(Long userId) {
         List<Post> userPosts = selectPostsByUserId(userId);
@@ -61,12 +49,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         return posts;
     }
 
-    /**
-     * 根据用户ID查询岗位
-     *
-     * @param userId 用户ID
-     * @return 岗位列表
-     */
     @Override
     public List<Post> selectPostsByUserId(Long userId) {
         return baseMapper.selectPostsByUserId(userId);
@@ -84,12 +66,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         return delete().inOrThrow(Post::getPostId, postIds).execute();
     }
 
-    /**
-     * 校验岗位名称是否唯一
-     *
-     * @param post 岗位信息
-     * @return 结果
-     */
     @Override
     public String checkPostNameUnique(Post post) {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
@@ -100,12 +76,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         return UserConstants.POST_NAME_UNIQUE;
     }
 
-    /**
-     * 校验岗位编码是否唯一
-     *
-     * @param post 岗位信息
-     * @return 结果
-     */
     @Override
     public String checkPostCodeUnique(Post post) {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();

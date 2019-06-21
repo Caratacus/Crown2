@@ -18,12 +18,6 @@ import com.ruoyi.project.system.notice.mapper.NoticeMapper;
 @Service
 public class NoticeServiceImpl extends BaseServiceImpl<NoticeMapper, Notice> implements INoticeService {
 
-    /**
-     * 查询公告列表
-     *
-     * @param notice 公告信息
-     * @return 公告集合
-     */
     @Override
     public List<Notice> selectNoticeList(Notice notice) {
         return query().like(StringUtils.isNotEmpty(notice.getNoticeTitle()), Notice::getNoticeTitle, notice.getNoticeTitle())

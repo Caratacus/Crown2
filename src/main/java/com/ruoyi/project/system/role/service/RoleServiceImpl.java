@@ -41,24 +41,12 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     @Autowired
     private IUserRoleService userRoleService;
 
-    /**
-     * 根据条件分页查询角色数据
-     *
-     * @param role 角色信息
-     * @return 角色数据集合信息
-     */
     @Override
     @DataScope(tableAlias = "u")
     public List<Role> selectRoleList(Role role) {
         return baseMapper.selectRoleList(role);
     }
 
-    /**
-     * 根据用户ID查询权限
-     *
-     * @param userId 用户ID
-     * @return 权限列表
-     */
     @Override
     public Set<String> selectRoleKeys(Long userId) {
         List<Role> perms = baseMapper.selectRolesByUserId(userId);
@@ -71,12 +59,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return permsSet;
     }
 
-    /**
-     * 根据用户ID查询角色
-     *
-     * @param userId 用户ID
-     * @return 角色列表
-     */
     @Override
     public List<Role> selectRolesByUserId(Long userId) {
         List<Role> userRoles = baseMapper.selectRolesByUserId(userId);
@@ -92,33 +74,16 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return roles;
     }
 
-    /**
-     * 查询所有角色
-     *
-     * @return 角色列表
-     */
     @Override
     public List<Role> selectRoleAll() {
         return ((IRoleService) AopContext.currentProxy()).selectRoleList(new Role());
     }
 
-    /**
-     * 通过角色ID删除角色
-     *
-     * @param roleId 角色ID
-     * @return 结果
-     */
     @Override
     public boolean deleteRoleById(Long roleId) {
         return delete().eq(Role::getRoleId, roleId).execute();
     }
 
-    /**
-     * 批量删除角色信息
-     *
-     * @param ids 需要删除的数据ID
-     * @throws Exception
-     */
     @Override
     public boolean deleteRoleByIds(String ids) {
         List<Long> roleIds = StringUtils.split2List(ids, TypeUtils::castToLong);
@@ -131,12 +96,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return delete().inOrThrow(Role::getRoleId, roleIds).execute();
     }
 
-    /**
-     * 新增保存角色信息
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public boolean insertRole(Role role) {
@@ -146,12 +105,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return insertRoleMenu(role);
     }
 
-    /**
-     * 修改保存角色信息
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public boolean updateRole(Role role) {
@@ -163,12 +116,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return insertRoleMenu(role);
     }
 
-    /**
-     * 修改数据权限信息
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public boolean authDataScope(Role role) {
@@ -214,12 +161,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return true;
     }
 
-    /**
-     * 校验角色名称是否唯一
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
     @Override
     public String checkRoleNameUnique(Role role) {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
@@ -230,12 +171,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return UserConstants.ROLE_NAME_UNIQUE;
     }
 
-    /**
-     * 校验角色权限是否唯一
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
     @Override
     public String checkRoleKeyUnique(Role role) {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
@@ -246,12 +181,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return UserConstants.ROLE_KEY_UNIQUE;
     }
 
-    /**
-     * 角色状态修改
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
     @Override
     public boolean changeStatus(Role role) {
         Role updateRole = new Role();
@@ -260,12 +189,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
 
     }
 
-    /**
-     * 取消授权用户角色
-     *
-     * @param userRole 用户和角色关联信息
-     * @return 结果
-     */
     @Override
     public boolean deleteAuthUser(UserRole userRole) {
         return userRoleService.delete().eq(UserRole::getRoleId, userRole.getRoleId()).eq(UserRole::getUserId, userRole.getUserId()).execute();

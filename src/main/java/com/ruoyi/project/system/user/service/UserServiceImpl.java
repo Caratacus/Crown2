@@ -56,12 +56,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Autowired
     private PasswordService passwordService;
 
-    /**
-     * 根据条件分页查询用户列表
-     *
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
     @Override
     @DataScope(tableAlias = "u")
     public List<User> selectUserList(User user) {
@@ -91,56 +85,26 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return baseMapper.selectUnallocatedList(user);
     }
 
-    /**
-     * 通过用户名查询用户
-     *
-     * @param userName 用户名
-     * @return 用户对象信息
-     */
     @Override
     public User selectUserByLoginName(String userName) {
         return baseMapper.selectUserByLoginName(userName);
     }
 
-    /**
-     * 通过手机号码查询用户
-     *
-     * @param phoneNumber 手机号码
-     * @return 用户对象信息
-     */
     @Override
     public User selectUserByPhoneNumber(String phoneNumber) {
         return baseMapper.selectUserByPhoneNumber(phoneNumber);
     }
 
-    /**
-     * 通过邮箱查询用户
-     *
-     * @param email 邮箱
-     * @return 用户对象信息
-     */
     @Override
     public User selectUserByEmail(String email) {
         return baseMapper.selectUserByEmail(email);
     }
 
-    /**
-     * 通过用户ID查询用户
-     *
-     * @param userId 用户ID
-     * @return 用户对象信息
-     */
     @Override
     public User selectUserById(Long userId) {
         return baseMapper.selectUserById(userId);
     }
 
-    /**
-     * 批量删除用户信息
-     *
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
     @Override
     public boolean deleteUserByIds(String ids) {
         List<Long> userIds = StringUtils.split2List(ids, TypeUtils::castToLong);
@@ -152,12 +116,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return delete().inOrThrow(User::getUserId, userIds).execute();
     }
 
-    /**
-     * 新增保存用户信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public boolean insertUser(User user) {
@@ -172,12 +130,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return true;
     }
 
-    /**
-     * 修改保存用户信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public boolean updateUser(User user) {
@@ -194,12 +146,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return updateById(user);
     }
 
-    /**
-     * 修改用户密码
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
     @Override
     public boolean resetUserPwd(User user) {
         user.randomSalt();
@@ -239,23 +185,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         );
     }
 
-    /**
-     * 校验登录名称是否唯一
-     *
-     * @param loginName 用户名
-     * @return
-     */
     @Override
     public String checkLoginNameUnique(String loginName) {
         return query().eq(User::getLoginName, loginName).exist() ? UserConstants.USER_NAME_NOT_UNIQUE : UserConstants.USER_NAME_UNIQUE;
     }
 
-    /**
-     * 校验用户名称是否唯一
-     *
-     * @param user 用户信息
-     * @return
-     */
     @Override
     public String checkPhoneUnique(User user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
@@ -266,12 +200,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return UserConstants.USER_PHONE_UNIQUE;
     }
 
-    /**
-     * 校验email是否唯一
-     *
-     * @param user 用户信息
-     * @return
-     */
     @Override
     public String checkEmailUnique(User user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
@@ -282,12 +210,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return UserConstants.USER_EMAIL_UNIQUE;
     }
 
-    /**
-     * 查询用户所属角色组
-     *
-     * @param userId 用户ID
-     * @return 结果
-     */
     @Override
     public String selectUserRoleGroup(Long userId) {
         List<Role> list = roleService.selectRolesByUserId(userId);
@@ -301,12 +223,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return idsStr.toString();
     }
 
-    /**
-     * 查询用户所属岗位组
-     *
-     * @param userId 用户ID
-     * @return 结果
-     */
     @Override
     public String selectUserPostGroup(Long userId) {
         List<Post> list = postService.selectPostsByUserId(userId);
@@ -320,13 +236,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return idsStr.toString();
     }
 
-    /**
-     * 导入用户数据
-     *
-     * @param userList        用户数据列表
-     * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
-     * @return 结果
-     */
     @Override
     public String importUser(List<User> userList, Boolean isUpdateSupport) {
         if (StringUtils.isNull(userList) || userList.size() == 0) {
@@ -372,13 +281,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         }
         return successMsg.toString();
     }
-
-    /**
-     * 用户状态修改
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
     @Override
     public boolean changeStatus(User user) {
         if (User.isAdmin(user.getUserId())) {

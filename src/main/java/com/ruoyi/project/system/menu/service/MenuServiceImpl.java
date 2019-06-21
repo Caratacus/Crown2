@@ -30,12 +30,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
-    /**
-     * 根据用户查询菜单
-     *
-     * @param user 用户信息
-     * @return 菜单列表
-     */
     @Override
     public List<Menu> selectMenusByUser(User user) {
         List<Menu> menus;
@@ -48,11 +42,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         return TreeUtils.getChildPerms(menus, 0);
     }
 
-    /**
-     * 查询菜单集合
-     *
-     * @return 所有菜单信息
-     */
     @Override
     public List<Menu> selectMenuList(Menu menu) {
 
@@ -72,12 +61,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
     }
 
-    /**
-     * 根据用户ID查询权限
-     *
-     * @param userId 用户ID
-     * @return 权限列表
-     */
     @Override
     public Set<String> selectPermsByUserId(Long userId) {
         List<String> perms = baseMapper.selectPermsByUserId(userId);
@@ -90,12 +73,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         return permsSet;
     }
 
-    /**
-     * 根据角色ID查询菜单
-     *
-     * @param role 角色对象
-     * @return 菜单列表
-     */
     @Override
     public List<Ztree> roleMenuTreeData(Role role) {
         Long roleId = role.getRoleId();
@@ -110,11 +87,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         return ztrees;
     }
 
-    /**
-     * 查询所有菜单
-     *
-     * @return 菜单列表
-     */
     @Override
     public List<Ztree> menuTreeData() {
         List<Menu> menuList = list();
@@ -134,11 +106,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
     }
 
-    /**
-     * 查询系统所有权限
-     *
-     * @return 权限列表
-     */
     @Override
     public LinkedHashMap<String, String> selectPermsAll() {
         return list().stream()
@@ -191,59 +158,29 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         return sb.toString();
     }
 
-    /**
-     * 删除菜单管理信息
-     *
-     * @param menuId 菜单ID
-     * @return 结果
-     */
     @Override
     public boolean deleteMenuById(Long menuId) {
         ShiroUtils.clearCachedAuthorizationInfo();
         return delete().and(e -> e.eq(Menu::getMenuId, menuId).or().eq(Menu::getParentId, menuId)).execute();
     }
 
-    /**
-     * 根据菜单ID查询信息
-     *
-     * @param menuId 菜单ID
-     * @return 菜单信息
-     */
     @Override
     public Menu selectMenuById(Long menuId) {
         return baseMapper.selectMenuById(menuId);
     }
 
-    /**
-     * 新增保存菜单信息
-     *
-     * @param menu 菜单信息
-     * @return 结果
-     */
     @Override
     public boolean insertMenu(Menu menu) {
         ShiroUtils.clearCachedAuthorizationInfo();
         return save(menu);
     }
 
-    /**
-     * 修改保存菜单信息
-     *
-     * @param menu 菜单信息
-     * @return 结果
-     */
     @Override
     public boolean updateMenu(Menu menu) {
         ShiroUtils.clearCachedAuthorizationInfo();
         return updateById(menu);
     }
 
-    /**
-     * 校验菜单名称是否唯一
-     *
-     * @param menu 菜单信息
-     * @return 结果
-     */
     @Override
     public String checkMenuNameUnique(Menu menu) {
         Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();

@@ -24,32 +24,16 @@ public class UserOnlineServiceImpl extends BaseServiceImpl<UserOnlineMapper, Use
     @Autowired
     private OnlineSessionDAO onlineSessionDAO;
 
-    /**
-     * 通过会话序号查询信息
-     *
-     * @param sessionId 会话ID
-     * @return 在线用户信息
-     */
     @Override
     public UserOnline selectOnlineById(String sessionId) {
         return baseMapper.selectOnlineById(sessionId);
     }
 
-    /**
-     * 查询会话集合
-     *
-     * @param userOnline
-     */
     @Override
     public List<UserOnline> selectUserOnlineList(UserOnline userOnline) {
         return baseMapper.selectUserOnlineList(userOnline);
     }
 
-    /**
-     * 强退用户
-     *
-     * @param sessionId 会话ID
-     */
     @Override
     public void forceLogout(String sessionId) {
         Session session = onlineSessionDAO.readSession(sessionId);
@@ -60,11 +44,6 @@ public class UserOnlineServiceImpl extends BaseServiceImpl<UserOnlineMapper, Use
         removeById(sessionId);
     }
 
-    /**
-     * 查询会话集合
-     *
-     * @param expiredDate
-     */
     @Override
     public List<UserOnline> selectOnlineByExpired(Date expiredDate) {
         String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);

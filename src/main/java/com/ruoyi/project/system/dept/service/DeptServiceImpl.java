@@ -24,24 +24,12 @@ import com.ruoyi.project.system.role.domain.Role;
 @Service
 public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implements IDeptService {
 
-    /**
-     * 查询部门管理数据
-     *
-     * @param dept 部门信息
-     * @return 部门信息集合
-     */
     @Override
     @DataScope(tableAlias = "d")
     public List<Dept> selectDeptList(Dept dept) {
         return baseMapper.selectDeptList(dept);
     }
 
-    /**
-     * 查询部门管理树
-     *
-     * @param dept 部门信息
-     * @return 所有部门信息
-     */
     @Override
     @DataScope(tableAlias = "d")
     public List<Ztree> selectDeptTree(Dept dept) {
@@ -49,12 +37,6 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
         return initZtree(deptList);
     }
 
-    /**
-     * 根据角色ID查询部门（数据权限）
-     *
-     * @param role 角色对象
-     * @return 部门列表（数据权限）
-     */
     @Override
     public List<Ztree> roleDeptTreeData(Role role) {
         Long roleId = role.getRoleId();
@@ -105,23 +87,11 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
         return ztrees;
     }
 
-    /**
-     * 查询部门是否存在用户
-     *
-     * @param deptId 部门ID
-     * @return 结果 true 存在 false 不存在
-     */
     @Override
     public boolean checkDeptExistUser(Long deptId) {
         return query().eq(Dept::getDeptId, deptId).exist();
     }
 
-    /**
-     * 新增保存部门信息
-     *
-     * @param dept 部门信息
-     * @return 结果
-     */
     @Override
     public boolean insertDept(Dept dept) {
         Dept info = baseMapper.selectDeptById(dept.getParentId());
@@ -133,12 +103,6 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
         return save(dept);
     }
 
-    /**
-     * 修改保存部门信息
-     *
-     * @param dept 部门信息
-     * @return 结果
-     */
     @Override
     @Transactional
     public boolean updateDept(Dept dept) {
@@ -205,23 +169,11 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
         }
     }
 
-    /**
-     * 根据部门ID查询信息
-     *
-     * @param deptId 部门ID
-     * @return 部门信息
-     */
     @Override
     public Dept selectDeptById(Long deptId) {
         return baseMapper.selectDeptById(deptId);
     }
 
-    /**
-     * 校验部门名称是否唯一
-     *
-     * @param dept 部门信息
-     * @return 结果
-     */
     @Override
     public String checkDeptNameUnique(Dept dept) {
         Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();

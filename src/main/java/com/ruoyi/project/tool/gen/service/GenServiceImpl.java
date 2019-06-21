@@ -36,23 +36,11 @@ public class GenServiceImpl implements IGenService {
     @Autowired
     private GenMapper genMapper;
 
-    /**
-     * 查询ry数据库表信息
-     *
-     * @param tableInfo 表信息
-     * @return 数据库表列表
-     */
     @Override
     public List<TableInfo> selectTableList(TableInfo tableInfo) {
         return genMapper.selectTableList(tableInfo);
     }
 
-    /**
-     * 生成代码
-     *
-     * @param tableName 表名称
-     * @return 数据
-     */
     @Override
     public byte[] generatorCode(String tableName) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -62,12 +50,6 @@ public class GenServiceImpl implements IGenService {
         return outputStream.toByteArray();
     }
 
-    /**
-     * 批量生成代码
-     *
-     * @param tableNames 表数组
-     * @return 数据
-     */
     @Override
     public byte[] generatorCode(String[] tableNames) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

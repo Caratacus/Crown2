@@ -18,12 +18,6 @@ import com.ruoyi.project.monitor.logininfor.mapper.LogininforMapper;
 @Service
 public class LogininforServiceImpl extends BaseServiceImpl<LogininforMapper, Logininfor> implements ILogininforService {
 
-    /**
-     * 查询系统登录日志集合
-     *
-     * @param logininfor 访问日志对象
-     * @return 登录记录集合
-     */
     @Override
     public List<Logininfor> selectLogininforList(Logininfor logininfor) {
         String beginTime = TypeUtils.castToString(logininfor.getParams().get("beginTime"));
