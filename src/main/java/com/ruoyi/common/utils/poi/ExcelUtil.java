@@ -353,8 +353,6 @@ public class ExcelUtil<T> {
     public Cell createCell(Excel attr, Row row, int column) {
         // 创建列
         Cell cell = row.createCell(column);
-        // 设置列中写入内容为String类型
-        cell.setCellType(CellType.STRING);
         // 写入列名
         cell.setCellValue(attr.name());
         CellStyle cellStyle = createStyle(attr, row, column);
@@ -424,7 +422,6 @@ public class ExcelUtil<T> {
                 } else if (StringUtils.isNotEmpty(readConverterExp) && StringUtils.isNotNull(value)) {
                     cell.setCellValue(convertByExp(String.valueOf(value), readConverterExp));
                 } else {
-                    cell.setCellType(CellType.STRING);
                     // 如果数据存在就填入,不存在填入空格.
                     cell.setCellValue(StringUtils.isNull(value) ? attr.defaultValue() : value + attr.suffix());
                 }
@@ -661,7 +658,7 @@ public class ExcelUtil<T> {
         try {
             Cell cell = row.getCell(column);
             if (cell != null) {
-                if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+                if (cell.getCellType() == CellType.NUMERIC) {
                     val = cell.getNumericCellValue();
                     if (HSSFDateUtil.isCellDateFormatted(cell)) {
                         val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换
@@ -672,11 +669,11 @@ public class ExcelUtil<T> {
                             val = new DecimalFormat("0").format(val);
                         }
                     }
-                } else if (cell.getCellTypeEnum() == CellType.STRING) {
+                } else if (cell.getCellType() == CellType.STRING) {
                     val = cell.getStringCellValue();
-                } else if (cell.getCellTypeEnum() == CellType.BOOLEAN) {
+                } else if (cell.getCellType() == CellType.BOOLEAN) {
                     val = cell.getBooleanCellValue();
-                } else if (cell.getCellTypeEnum() == CellType.ERROR) {
+                } else if (cell.getCellType() == CellType.ERROR) {
                     val = cell.getErrorCellValue();
                 }
 
