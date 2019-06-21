@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.system.post.mapper.PostMapper">
 
 	<resultMap type="Post" id="PostResult">
@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="updateTime"    column="update_time"   />
 		<result property="remark"        column="remark"        />
 	</resultMap>
-	
+
 	<select id="selectPostsByUserId" parameterType="Long" resultMap="PostResult">
 		SELECT p.post_id, p.post_name, p.post_code
 		FROM sys_user u
@@ -24,7 +24,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 LEFT JOIN sys_post p ON up.post_id = p.post_id
 		WHERE up.user_id = #{userId}
 	</select>
-	
 
 
 </mapper>

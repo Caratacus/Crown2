@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.system.menu.mapper.MenuMapper">
 
 	<resultMap type="Menu" id="MenuResult">
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="updateBy"       column="update_by"      />
 		<result property="remark"         column="remark"         />
 	</resultMap>
-	
+
     <select id="selectMenusByUserId" parameterType="Long" resultMap="MenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by m.parent_id, m.order_num
 	</select>
 
-	<select id="selectMenuAllByUserId" parameterType="Long" resultMap="MenuResult">
+    <select id="selectMenuAllByUserId" parameterType="Long" resultMap="MenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
@@ -43,50 +43,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by m.parent_id, m.order_num
 	</select>
 
-	<select id="selectMenuListByUserId" parameterType="Menu" resultMap="MenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-		left join sys_role_menu rm on m.menu_id = rm.menu_id
-		left join sys_user_role ur on rm.role_id = ur.role_id
-		LEFT JOIN sys_role ro on ur.role_id = ro.role_id
-		where ur.user_id = #{params.userId}
-		<if test="menuName != null and menuName != ''">
-			AND m.menu_name like concat('%', #{menuName}, '%')
-		</if>
-		<if test="visible != null and visible != ''">
-			AND m.visible = #{visible}
-		</if>
-		order by m.parent_id, m.order_num
-	</select>
+    <select id="selectMenuListByUserId" parameterType="Menu" resultMap="MenuResult">
+        select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.target, m.menu_type, m.icon, m.order_num,
+        m.create_time
+        from sys_menu m
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_user_role ur on rm.role_id = ur.role_id
+        LEFT JOIN sys_role ro on ur.role_id = ro.role_id
+        where ur.user_id = #{params.userId}
+        <if test="menuName != null and menuName != ''">
+            AND m.menu_name like concat('%', #{menuName}, '%')
+        </if>
+        <if test="visible != null and visible != ''">
+            AND m.visible = #{visible}
+        </if>
+        order by m.parent_id, m.order_num
+    </select>
 
-	<select id="selectMenuNormalAll" resultMap="MenuResult">
+    <select id="selectMenuNormalAll" resultMap="MenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m
 		where m.menu_type in ('M', 'C') and m.visible = 0
 		order by m.parent_id, m.order_num
 	</select>
-	
-	<select id="selectPermsByUserId" parameterType="Long" resultType="String">
+
+    <select id="selectPermsByUserId" parameterType="Long" resultType="String">
 		select distinct m.perms
 		from sys_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 		where ur.user_id = #{userId}
 	</select>
-	
-	<select id="selectMenuTree" parameterType="Long" resultType="String">
+
+    <select id="selectMenuTree" parameterType="Long" resultType="String">
 		select concat(m.menu_id, ifnull(m.perms,'')) as perms
 		from sys_menu m
 			left join sys_role_menu rm on m.menu_id = rm.menu_id
 		where rm.role_id = #{roleId}
 		order by m.parent_id, m.order_num
 	</select>
-	
-	<select id="selectMenuById" parameterType="Long" resultMap="MenuResult">
+
+    <select id="selectMenuById" parameterType="Long" resultMap="MenuResult">
 		SELECT t.menu_id, t.parent_id, t.menu_name, t.order_num, t.url, t.target, t.menu_type, t.visible, t.perms, t.icon, t.remark,
 			(SELECT menu_name FROM sys_menu WHERE menu_id = t.parent_id) parent_name
 		FROM sys_menu t
 		where t.menu_id = #{menuId}
 	</select>
-	
+
 </mapper>

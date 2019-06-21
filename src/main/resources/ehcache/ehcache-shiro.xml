@@ -22,8 +22,8 @@
            overflowToDisk="false"
            statistics="true">
     </cache>
-    
-     <!-- 系统活跃用户缓存 -->
+
+    <!-- 系统活跃用户缓存 -->
     <cache name="sys-userCache"
            maxEntriesLocalHeap="10000"
            overflowToDisk="false"
@@ -32,7 +32,7 @@
            timeToLiveSeconds="0"
            timeToIdleSeconds="0"
            statistics="true">
-     </cache>
+    </cache>
 
 </ehcache>
 	
