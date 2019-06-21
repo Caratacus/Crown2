@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.web.domain.BaseQueryParams;
@@ -27,7 +28,7 @@ public class UserOnline extends BaseQueryParams {
     /**
      * 用户会话id
      */
-    @TableId("sessionId")
+    @TableId(value = "sessionId", type = IdType.INPUT)
     private String sessionId;
 
     /**
