@@ -62,7 +62,6 @@ public interface IRoleService extends BaseService<Role> {
      */
     boolean deleteRoleByIds(String ids);
 
-
     /**
      * 新增保存角色信息
      *
@@ -102,7 +101,6 @@ public interface IRoleService extends BaseService<Role> {
      * @return 结果
      */
     String checkRoleKeyUnique(Role role);
-
 
     /**
      * 角色状态修改

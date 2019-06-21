@@ -20,7 +20,6 @@ public interface IPostService extends BaseService<Post> {
      */
     List<Post> selectPostList(Post post);
 
-
     /**
      * 根据用户ID查询岗位
      *
@@ -28,6 +27,7 @@ public interface IPostService extends BaseService<Post> {
      * @return 岗位列表
      */
     List<Post> selectAllPostsByUserId(Long userId);
+
     /**
      * 根据用户ID查询岗位
      *
@@ -35,7 +35,6 @@ public interface IPostService extends BaseService<Post> {
      * @return 岗位列表
      */
     List<Post> selectPostsByUserId(Long userId);
-
 
     /**
      * 批量删除岗位信息

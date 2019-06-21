@@ -93,7 +93,6 @@ public interface IUserService extends BaseService<User> {
      */
     boolean updateUser(User user);
 
-
     /**
      * 修改用户密码信息
      *

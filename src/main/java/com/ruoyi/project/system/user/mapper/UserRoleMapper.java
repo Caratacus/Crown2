@@ -13,5 +13,4 @@ import com.ruoyi.project.system.user.domain.UserRole;
 @Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
-
 }

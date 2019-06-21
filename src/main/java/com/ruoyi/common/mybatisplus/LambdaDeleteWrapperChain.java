@@ -30,7 +30,6 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrapper;
 import com.ruoyi.framework.service.BaseService;
 
-
 /**
  * Lambda删除Wrapper
  *

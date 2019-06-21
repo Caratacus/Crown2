@@ -31,5 +31,4 @@ public interface RoleMapper extends BaseMapper<Role> {
      */
     List<Role> selectRolesByUserId(Long userId);
 
-
 }

@@ -13,5 +13,4 @@ import com.ruoyi.project.system.role.domain.RoleMenu;
 @Mapper
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
-
 }

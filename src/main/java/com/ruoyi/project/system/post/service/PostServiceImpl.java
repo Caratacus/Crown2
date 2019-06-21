@@ -40,7 +40,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
                 .list();
     }
 
-
     /**
      * 根据用户ID查询岗位
      *
@@ -73,7 +72,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         return baseMapper.selectPostsByUserId(userId);
     }
 
-
     @Override
     public boolean deletePostByIds(String ids) {
         List<Long> postIds = StringUtils.split2List(ids, TypeUtils::castToLong);
@@ -85,7 +83,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         }
         return delete().inOrThrow(Post::getPostId, postIds).execute();
     }
-
 
     /**
      * 校验岗位名称是否唯一

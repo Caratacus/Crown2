@@ -53,7 +53,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return baseMapper.selectRoleList(role);
     }
 
-
     /**
      * 根据用户ID查询权限
      *
@@ -246,7 +245,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         }
         return UserConstants.ROLE_KEY_UNIQUE;
     }
-
 
     /**
      * 角色状态修改

@@ -146,7 +146,6 @@ public abstract class JacksonUtils {
         return objectMapper;
     }
 
-
     /**
      * 包装 MappingJackson2HttpMessageConverter
      *

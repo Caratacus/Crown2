@@ -12,7 +12,6 @@ import com.ruoyi.project.monitor.operlog.domain.OperLog;
  */
 public interface IOperLogService extends BaseService<OperLog> {
 
-
     /**
      * 查询系统操作日志集合
      *

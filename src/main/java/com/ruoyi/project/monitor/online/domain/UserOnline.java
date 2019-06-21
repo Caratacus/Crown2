@@ -2,9 +2,6 @@ package com.ruoyi.project.monitor.online.domain;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -87,20 +84,4 @@ public class UserOnline extends BaseQueryParams {
     @TableField(exist = false)
     private OnlineSession session;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("sessionId", getSessionId())
-                .append("loginName", getLoginName())
-                .append("deptName", getDeptName())
-                .append("ipaddr", getIpaddr())
-                .append("loginLocation", getLoginLocation())
-                .append("browser", getBrowser())
-                .append("os", getOs())
-                .append("status", getStatus())
-                .append("startTimestamp", getStartTimestamp())
-                .append("lastAccessTime", getLastAccessTime())
-                .append("expireTime", getExpireTime())
-                .toString();
-    }
 }

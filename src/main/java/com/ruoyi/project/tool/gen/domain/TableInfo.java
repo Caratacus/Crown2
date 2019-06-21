@@ -100,9 +100,4 @@ public class TableInfo extends BaseEntity {
         this.primaryKey = primaryKey;
     }
 
-    @Override
-    public String toString() {
-        return "TableInfo [tableName=" + tableName + ", tableComment=" + tableComment + ", primaryKey=" + primaryKey
-                + ", columns=" + columns + ", className=" + className + ", classname=" + classname + "]";
-    }
 }

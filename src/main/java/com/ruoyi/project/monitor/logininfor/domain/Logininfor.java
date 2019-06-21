@@ -2,9 +2,6 @@ package com.ruoyi.project.monitor.logininfor.domain;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseQueryParams;
@@ -78,18 +75,4 @@ public class Logininfor extends BaseQueryParams {
     @Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("infoId", getInfoId())
-                .append("loginName", getLoginName())
-                .append("ipaddr", getIpaddr())
-                .append("loginLocation", getLoginLocation())
-                .append("browser", getBrowser())
-                .append("os", getOs())
-                .append("status", getStatus())
-                .append("msg", getMsg())
-                .append("loginTime", getLoginTime())
-                .toString();
-    }
 }

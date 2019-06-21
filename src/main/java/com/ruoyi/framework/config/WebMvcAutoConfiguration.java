@@ -50,7 +50,6 @@ import io.undertow.Undertow;
 @Configuration
 public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
-
     @Override
     public Validator getValidator() {
         return new SpringValidatorAdapter(new ValidatorCollectionImpl());

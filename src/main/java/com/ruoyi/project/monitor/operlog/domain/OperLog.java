@@ -3,9 +3,6 @@ package com.ruoyi.project.monitor.operlog.domain;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
@@ -116,24 +113,4 @@ public class OperLog extends BaseQueryParams {
     @Excel(name = "操作时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date operTime;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("operId", getOperId())
-                .append("title", getTitle())
-                .append("businessType", getBusinessType())
-                .append("businessTypes", getBusinessTypes())
-                .append("method", getMethod())
-                .append("operatorType", getOperatorType())
-                .append("operName", getOperName())
-                .append("deptName", getDeptName())
-                .append("operUrl", getOperUrl())
-                .append("operIp", getOperIp())
-                .append("operLocation", getOperLocation())
-                .append("operParam", getOperParam())
-                .append("status", getStatus())
-                .append("errorMsg", getErrorMsg())
-                .append("operTime", getOperTime())
-                .toString();
-    }
 }

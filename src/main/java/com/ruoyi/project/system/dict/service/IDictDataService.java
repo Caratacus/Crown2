@@ -37,5 +37,4 @@ public interface IDictDataService extends BaseService<DictData> {
      */
     String selectDictLabel(String dictType, String dictValue);
 
-
 }

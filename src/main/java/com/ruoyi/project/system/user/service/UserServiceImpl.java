@@ -194,7 +194,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return updateById(user);
     }
 
-
     /**
      * 修改用户密码
      *

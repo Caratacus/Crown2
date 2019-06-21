@@ -55,5 +55,4 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictDataMapper, DictDat
         return query().select(DictData::getDictLabel).eq(DictData::getDictType, dictType).eq(DictData::getDictValue, dictValue).getObj(TypeUtils::castToString);
     }
 
-
 }

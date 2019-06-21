@@ -3,9 +3,6 @@ package com.ruoyi.project.system.menu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -92,24 +89,4 @@ public class Menu extends BaseEntity {
     @TableField(exist = false)
     private List<Menu> children = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("menuId", getMenuId())
-                .append("menuName", getMenuName())
-                .append("parentId", getParentId())
-                .append("orderNum", getOrderNum())
-                .append("url", getUrl())
-                .append("target", getTarget())
-                .append("menuType", getMenuType())
-                .append("visible", getVisible())
-                .append("perms", getPerms())
-                .append("icon", getIcon())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .toString();
-    }
 }

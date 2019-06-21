@@ -58,7 +58,6 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
         return delete().inOrThrow(DictType::getDictId, dictIds).execute();
     }
 
-
     /**
      * 修改保存字典类型信息
      *

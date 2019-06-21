@@ -132,7 +132,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         }
         return menuList;
 
-
     }
 
     /**
@@ -214,7 +213,6 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     public Menu selectMenuById(Long menuId) {
         return baseMapper.selectMenuById(menuId);
     }
-
 
     /**
      * 新增保存菜单信息

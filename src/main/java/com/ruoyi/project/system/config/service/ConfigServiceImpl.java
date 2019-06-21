@@ -37,7 +37,6 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper, Config> imp
                 .list();
     }
 
-
     @Override
     public String checkConfigKeyUnique(Config config) {
         Long configId = Objects.isNull(config.getConfigId()) ? -1L : config.getConfigId();

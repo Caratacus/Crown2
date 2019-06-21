@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.google.common.collect.Maps;
+import com.ruoyi.common.utils.JacksonUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,11 @@ public class BaseQueryParams implements Serializable {
             params = Maps.newHashMap();
         }
         return params;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + ": " + JacksonUtils.toJson(this);
     }
 
 }

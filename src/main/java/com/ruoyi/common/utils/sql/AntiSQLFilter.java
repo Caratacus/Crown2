@@ -68,7 +68,6 @@ public class AntiSQLFilter {
         return builder.unmodifiable().build();
     }
 
-
     public static String[] getSafeValues(String[] oldValues) {
         if (ArrayUtils.isNotEmpty(oldValues)) {
             String[] newValues = new String[oldValues.length];

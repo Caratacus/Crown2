@@ -35,7 +35,6 @@ import com.ruoyi.common.mybatisplus.LambdaDeleteWrapperChain;
 import com.ruoyi.common.mybatisplus.LambdaQueryWrapperChain;
 import com.ruoyi.common.mybatisplus.LambdaUpdateWrapperChain;
 
-
 /**
  * <p>
  * 基础Service 继承于Mybatis-plus

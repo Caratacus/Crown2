@@ -62,7 +62,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
      */
     List<String> selectMenuTree(Long roleId);
 
-
     /**
      * 根据菜单ID查询信息
      *

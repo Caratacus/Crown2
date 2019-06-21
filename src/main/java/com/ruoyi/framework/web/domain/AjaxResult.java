@@ -2,9 +2,6 @@ package com.ruoyi.framework.web.domain;
 
 import java.util.HashMap;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.ruoyi.common.utils.StringUtils;
 
 /**
@@ -223,12 +220,4 @@ public class AjaxResult extends HashMap<String, Object> {
         this.data = data;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("code", getCode())
-                .append("msg", getMsg())
-                .append("data", getData())
-                .toString();
-    }
 }
