@@ -226,6 +226,17 @@ public interface BaseService<T> {
 
     /**
      * <p>
+     * 根据 Wrapper 条件，查询记录是否不存在
+     * </p>
+     *
+     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
+     */
+    default boolean nonExist(Wrapper<T> queryWrapper) {
+        return !exist(queryWrapper);
+    }
+
+    /**
+     * <p>
      * 根据 Wrapper 条件，查询总记录数
      * </p>
      *

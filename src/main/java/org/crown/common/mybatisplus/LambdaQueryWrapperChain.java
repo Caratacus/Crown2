@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.crown.framework.service.BaseService;
+
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
@@ -33,7 +35,6 @@ import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrapper;
-import org.crown.framework.service.BaseService;
 
 /**
  * Lambda查询Wrapper
@@ -93,6 +94,10 @@ public class LambdaQueryWrapperChain<T> extends AbstractChainWrapper<T, SFunctio
 
     public boolean exist() {
         return baseService.exist(getWrapper());
+    }
+
+    public boolean nonExist() {
+        return baseService.nonExist(getWrapper());
     }
 
     public IPage<T> page(IPage<T> page) {
