@@ -3,21 +3,20 @@ package ${package}.controller;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.framework.aspectj.lang.annotation.Log;
-import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.aspectj.lang.annotation.Log;
+import org.crown.framework.aspectj.lang.enums.BusinessType;
 import ${package}.domain.${className};
 import ${package}.service.I${className}Service;
-import com.ruoyi.framework.web.controller.WebController;
-import com.ruoyi.framework.web.page.TableDataInfo;
-import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.domain.AjaxResult;
+import org.crown.common.utils.poi.ExcelUtil;
 
 /**
  * ${tableComment}信息操作处理

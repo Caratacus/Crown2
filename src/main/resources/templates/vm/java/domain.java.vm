@@ -1,18 +1,13 @@
 package ${package}.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ruoyi.framework.web.domain.BaseEntity;
 #foreach ($column in $columns)
 #if($column.attrType == 'Date' && ($column.attrname != 'createTime' && $column.attrname != 'updateTime'))
-import java.util.Date;
-#break
+	#break
 #end
 #end
 #foreach ($column in $columns)
 #if($column.attrType == 'BigDecimal')
-import java.math.BigDecimal;
-#break
+	#break
 #end
 #end
 

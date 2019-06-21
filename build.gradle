@@ -23,7 +23,7 @@ buildscript {
     }
 }
 
-group = "com.ruoyi"
+group = "org.crown"
 version = "2.0"
 
 apply plugin: "java-library"
