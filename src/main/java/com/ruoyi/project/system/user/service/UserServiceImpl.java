@@ -281,6 +281,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         }
         return successMsg.toString();
     }
+
     @Override
     public boolean changeStatus(User user) {
         if (User.isAdmin(user.getUserId())) {
