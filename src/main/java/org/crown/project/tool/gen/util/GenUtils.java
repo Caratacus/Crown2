@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.velocity.VelocityContext;
-
 import org.crown.common.constant.CommonMap;
 import org.crown.common.constant.Constants;
 import org.crown.common.utils.DateUtils;

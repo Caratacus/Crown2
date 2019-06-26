@@ -7,6 +7,7 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
@@ -80,8 +81,9 @@ public class ConfigController extends WebController {
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Config config) {
-        return toAjax(configService.save(config));
+    public ApiResponses<Void> addSave(Config config) {
+        configService.save(config);
+        return success();
     }
 
     /**
@@ -100,8 +102,10 @@ public class ConfigController extends WebController {
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Config config) {
-        return toAjax(configService.updateById(config));
+    public ApiResponses<Void> editSave(Config config) {
+        configService.updateById(config);
+        return success();
+
     }
 
     /**
@@ -111,12 +115,14 @@ public class ConfigController extends WebController {
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(
-                configService.remove(
-                        Wrappers.<Config>lambdaQuery().inOrThrow(Config::getConfigId, StringUtils.split2List(ids)
-                        )
-                ));
+    public ApiResponses<Void> remove(String ids) {
+
+        configService.remove(
+                Wrappers.<Config>lambdaQuery().inOrThrow(Config::getConfigId, StringUtils.split2List(ids)
+                )
+        );
+        return success();
+
     }
 
     /**

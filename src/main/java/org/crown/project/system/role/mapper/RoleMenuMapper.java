@@ -2,7 +2,6 @@ package org.crown.project.system.role.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.crown.framework.mapper.BaseMapper;
-
 import org.crown.project.system.role.domain.RoleMenu;
 
 /**

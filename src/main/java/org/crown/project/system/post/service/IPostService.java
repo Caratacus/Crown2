@@ -2,8 +2,8 @@ package org.crown.project.system.post.service;
 
 import java.util.List;
 
-import org.crown.project.system.post.domain.Post;
 import org.crown.framework.service.BaseService;
+import org.crown.project.system.post.domain.Post;
 
 /**
  * 岗位信息 服务层

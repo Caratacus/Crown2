@@ -7,6 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.common.utils.text.Convert;
+import org.crown.framework.aspectj.lang.annotation.Log;
+import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.page.TableDataInfo;
+import org.crown.project.tool.gen.domain.TableInfo;
 import org.crown.project.tool.gen.service.IGenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import org.crown.common.utils.text.Convert;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.project.tool.gen.domain.TableInfo;
 
 /**
  * 代码生成 操作处理

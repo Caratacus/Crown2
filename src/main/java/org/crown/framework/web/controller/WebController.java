@@ -5,16 +5,13 @@ import java.util.List;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.common.utils.sql.SqlUtil;
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
-import org.crown.framework.web.domain.AjaxResult;
-import org.crown.framework.web.domain.AjaxResult.Type;
 import org.crown.framework.web.page.PageDomain;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.framework.web.page.TableSupport;
 import org.crown.project.system.user.domain.User;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * web层通用数据处理
@@ -46,61 +43,6 @@ public class WebController extends SuperController {
         rspData.setRows(list);
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
-    }
-
-    /**
-     * 响应返回结果
-     *
-     * @param rows 影响行数
-     * @return 操作结果
-     */
-    protected AjaxResult toAjax(int rows) {
-        return rows > 0 ? success() : error();
-    }
-
-    /**
-     * 响应返回结果
-     *
-     * @param result 结果
-     * @return 操作结果
-     */
-    protected AjaxResult toAjax(boolean result) {
-        return result ? success() : error();
-    }
-
-    /**
-     * 返回成功
-     */
-    public AjaxResult success() {
-        return AjaxResult.success();
-    }
-
-    /**
-     * 返回失败消息
-     */
-    public AjaxResult error() {
-        return AjaxResult.error();
-    }
-
-    /**
-     * 返回成功消息
-     */
-    public AjaxResult success(String message) {
-        return AjaxResult.success(message);
-    }
-
-    /**
-     * 返回失败消息
-     */
-    public AjaxResult error(String message) {
-        return AjaxResult.error(message);
-    }
-
-    /**
-     * 返回错误码消息
-     */
-    public AjaxResult error(Type type, String message) {
-        return new AjaxResult(type, message);
     }
 
     /**

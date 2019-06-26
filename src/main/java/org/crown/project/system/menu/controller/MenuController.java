@@ -3,8 +3,18 @@ package org.crown.project.system.menu.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.framework.aspectj.lang.annotation.Log;
+import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.domain.Ztree;
 import org.crown.project.system.menu.domain.Menu;
 import org.crown.project.system.menu.service.IMenuService;
+import org.crown.project.system.role.domain.Role;
+import org.crown.project.system.role.domain.RoleMenu;
+import org.crown.project.system.role.service.IRoleMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,14 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
-import org.crown.framework.web.domain.Ztree;
-import org.crown.project.system.role.domain.Role;
-import org.crown.project.system.role.domain.RoleMenu;
-import org.crown.project.system.role.service.IRoleMenuService;
 
 /**
  * 菜单信息
@@ -60,14 +62,12 @@ public class MenuController extends WebController {
     @RequiresPermissions("system:menu:remove")
     @GetMapping("/remove/{menuId}")
     @ResponseBody
-    public AjaxResult remove(@PathVariable("menuId") Long menuId) {
-        if (menuService.exist(Wrappers.<Menu>lambdaQuery().eq(Menu::getMenuId, menuId))) {
-            return AjaxResult.warn("存在子菜单,不允许删除");
-        }
-        if (roleMenuService.exist(Wrappers.<RoleMenu>lambdaQuery().eq(RoleMenu::getMenuId, menuId))) {
-            return AjaxResult.warn("菜单已分配,不允许删除");
-        }
-        return toAjax(menuService.deleteMenuById(menuId));
+    public ApiResponses<Void> remove(@PathVariable("menuId") Long menuId) {
+        ApiAssert.isFalse(ErrorCodeEnum.MENU_EXISTING_LOWER_LEVEL_MENU, menuService.exist(Wrappers.<Menu>lambdaQuery().eq(Menu::getMenuId, menuId)));
+        ApiAssert.isFalse(ErrorCodeEnum.MENU_EXISTING_USING, roleMenuService.exist(Wrappers.<RoleMenu>lambdaQuery().eq(RoleMenu::getMenuId, menuId)));
+        menuService.deleteMenuById(menuId);
+        return success();
+
     }
 
     /**
@@ -94,8 +94,10 @@ public class MenuController extends WebController {
     @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Menu menu) {
-        return toAjax(menuService.insertMenu(menu));
+    public ApiResponses<Void> addSave(Menu menu) {
+        menuService.insertMenu(menu);
+        return success();
+
     }
 
     /**
@@ -114,8 +116,10 @@ public class MenuController extends WebController {
     @RequiresPermissions("system:menu:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Menu menu) {
-        return toAjax(menuService.updateMenu(menu));
+    public ApiResponses<Void> editSave(Menu menu) {
+        menuService.updateMenu(menu);
+        return success();
+
     }
 
     /**

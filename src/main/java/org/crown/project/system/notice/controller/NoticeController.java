@@ -6,8 +6,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.notice.domain.Notice;
 import org.crown.project.system.notice.service.INoticeService;
@@ -69,8 +69,10 @@ public class NoticeController extends WebController {
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Notice notice) {
-        return toAjax(noticeService.save(notice));
+    public ApiResponses<Void> addSave(Notice notice) {
+        noticeService.save(notice);
+        return success();
+
     }
 
     /**
@@ -89,8 +91,10 @@ public class NoticeController extends WebController {
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Notice notice) {
-        return toAjax(noticeService.updateById(notice));
+    public ApiResponses<Void> editSave(Notice notice) {
+        noticeService.updateById(notice);
+        return success();
+
     }
 
     /**
@@ -100,7 +104,9 @@ public class NoticeController extends WebController {
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(noticeService.remove(Wrappers.<Notice>lambdaQuery().inOrThrow(Notice::getNoticeId, StringUtils.split2List(ids))));
+    public ApiResponses<Void> remove(String ids) {
+        noticeService.remove(Wrappers.<Notice>lambdaQuery().inOrThrow(Notice::getNoticeId, StringUtils.split2List(ids)));
+        return success();
+
     }
 }

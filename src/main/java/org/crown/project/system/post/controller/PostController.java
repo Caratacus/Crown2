@@ -3,6 +3,13 @@ package org.crown.project.system.post.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.framework.aspectj.lang.annotation.Log;
+import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.domain.AjaxResult;
+import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.post.domain.Post;
 import org.crown.project.system.post.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import org.crown.common.utils.poi.ExcelUtil;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
-import org.crown.framework.web.page.TableDataInfo;
 
 /**
  * 岗位信息操作处理
@@ -64,12 +64,10 @@ public class PostController extends WebController {
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        try {
-            return toAjax(postService.deletePostByIds(ids));
-        } catch (Exception e) {
-            return error(e.getMessage());
-        }
+    public ApiResponses<Void> remove(String ids) {
+        postService.deletePostByIds(ids);
+        return success();
+
     }
 
     /**
@@ -87,8 +85,10 @@ public class PostController extends WebController {
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Post post) {
-        return toAjax(postService.save(post));
+    public ApiResponses<Void> addSave(Post post) {
+        postService.save(post);
+        return success();
+
     }
 
     /**
@@ -107,8 +107,10 @@ public class PostController extends WebController {
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Post post) {
-        return toAjax(postService.updateById(post));
+    public ApiResponses<Void> editSave(Post post) {
+        postService.updateById(post);
+        return success();
+
     }
 
     /**

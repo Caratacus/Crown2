@@ -9,13 +9,12 @@ import org.crown.framework.aspectj.lang.annotation.Excel;
 import org.crown.framework.aspectj.lang.annotation.Excels;
 import org.crown.framework.web.domain.BaseEntity;
 import org.crown.project.system.dept.domain.Dept;
+import org.crown.project.system.role.domain.Role;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-
-import org.crown.project.system.role.domain.Role;
 
 import lombok.Getter;
 import lombok.Setter;

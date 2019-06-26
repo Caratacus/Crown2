@@ -7,11 +7,10 @@ import org.apache.shiro.session.Session;
 import org.crown.common.utils.DateUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import org.crown.project.monitor.online.domain.UserOnline;
 import org.crown.project.monitor.online.mapper.UserOnlineMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 在线用户 服务层处理

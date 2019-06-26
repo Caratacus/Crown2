@@ -3,9 +3,8 @@ package org.crown.project.system.post.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.crown.project.system.post.domain.Post;
-
 import org.crown.framework.mapper.BaseMapper;
+import org.crown.project.system.post.domain.Post;
 
 /**
  * 岗位信息 数据层

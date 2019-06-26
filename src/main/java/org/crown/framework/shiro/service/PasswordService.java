@@ -14,11 +14,10 @@ import org.crown.common.exception.user.UserPasswordRetryLimitExceedException;
 import org.crown.common.utils.MessageUtils;
 import org.crown.framework.manager.AsyncManager;
 import org.crown.framework.manager.factory.AsyncFactory;
+import org.crown.project.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import org.crown.project.system.user.domain.User;
 
 /**
  * 登录密码方法

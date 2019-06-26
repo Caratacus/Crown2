@@ -6,9 +6,8 @@ import javax.servlet.ServletResponse;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 import org.crown.common.constant.ShiroConstants;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.crown.project.monitor.online.domain.OnlineSession;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 同步Session数据到Db

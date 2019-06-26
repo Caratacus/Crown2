@@ -7,6 +7,7 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
@@ -64,11 +65,9 @@ public class LogininforController extends WebController {
     @Log(title = "登陆日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(
-                logininforService.remove(
-                        Wrappers.<Logininfor>lambdaQuery().inOrThrow(Logininfor::getInfoId, StringUtils.split2List(ids))
-                ));
+    public ApiResponses<Void> remove(String ids) {
+        logininforService.remove(Wrappers.<Logininfor>lambdaQuery().inOrThrow(Logininfor::getInfoId, StringUtils.split2List(ids)));
+        return success();
     }
 
     @RequiresPermissions("monitor:logininfor:remove")
@@ -77,6 +76,6 @@ public class LogininforController extends WebController {
     @ResponseBody
     public AjaxResult clean() {
         logininforService.remove();
-        return success();
+        return AjaxResult.success();
     }
 }

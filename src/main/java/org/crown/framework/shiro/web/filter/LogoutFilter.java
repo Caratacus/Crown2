@@ -17,10 +17,9 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.manager.AsyncManager;
 import org.crown.framework.manager.factory.AsyncFactory;
+import org.crown.project.system.user.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.crown.project.system.user.domain.User;
 
 /**
  * 退出过滤器

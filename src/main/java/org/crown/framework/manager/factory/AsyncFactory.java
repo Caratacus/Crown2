@@ -8,9 +8,6 @@ import org.crown.common.utils.LogUtils;
 import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.common.utils.spring.SpringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.crown.project.monitor.logininfor.domain.Logininfor;
 import org.crown.project.monitor.logininfor.service.ILogininforService;
 import org.crown.project.monitor.online.domain.OnlineSession;
@@ -18,6 +15,8 @@ import org.crown.project.monitor.online.domain.UserOnline;
 import org.crown.project.monitor.online.service.IUserOnlineService;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.monitor.operlog.service.IOperLogService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.bitwalker.useragentutils.UserAgent;
 

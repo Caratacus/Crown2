@@ -3,8 +3,17 @@ package org.crown.project.system.dept.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.common.utils.StringUtils;
+import org.crown.framework.aspectj.lang.annotation.Log;
+import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.domain.Ztree;
 import org.crown.project.system.dept.domain.Dept;
 import org.crown.project.system.dept.service.IDeptService;
+import org.crown.project.system.role.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,13 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.crown.common.utils.StringUtils;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
-import org.crown.framework.web.domain.Ztree;
-import org.crown.project.system.role.domain.Role;
 
 /**
  * 部门信息
@@ -66,8 +68,10 @@ public class DeptController extends WebController {
     @RequiresPermissions("system:dept:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Dept dept) {
-        return toAjax(deptService.insertDept(dept));
+    public ApiResponses<Void> addSave(Dept dept) {
+        deptService.insertDept(dept);
+        return success();
+
     }
 
     /**
@@ -90,8 +94,10 @@ public class DeptController extends WebController {
     @RequiresPermissions("system:dept:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Dept dept) {
-        return toAjax(deptService.updateDept(dept));
+    public ApiResponses<Void> editSave(Dept dept) {
+        deptService.updateDept(dept);
+        return success();
+
     }
 
     /**
@@ -101,14 +107,17 @@ public class DeptController extends WebController {
     @RequiresPermissions("system:dept:remove")
     @GetMapping("/remove/{deptId}")
     @ResponseBody
-    public AjaxResult remove(@PathVariable("deptId") Long deptId) {
-        if (deptService.count(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)) > 0) {
+    public ApiResponses<Void> remove(@PathVariable("deptId") Long deptId) {
+        /*if (deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)) > 0) {
             return AjaxResult.warn("存在下级部门,不允许删除");
-        }
-        if (deptService.checkDeptExistUser(deptId)) {
+        }*/
+
+        ApiAssert.isFalse(ErrorCodeEnum.DEPT_EXISTING_LOWER_LEVEL_DEPT, deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)));
+        ApiAssert.isFalse(ErrorCodeEnum.DEPT_EXISTING_USER, deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)));
+       /* if (deptService.checkDeptExistUser(deptId)) {
             return AjaxResult.warn("部门存在用户,不允许删除");
-        }
-        return toAjax(deptService.removeById(deptId));
+        }*/
+        return success();
     }
 
     /**

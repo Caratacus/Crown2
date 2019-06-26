@@ -2,18 +2,17 @@ package org.crown.project.system.post.service;
 
 import java.util.List;
 
-import org.crown.project.system.post.domain.Post;
-import org.crown.project.system.post.mapper.PostMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import org.crown.common.constant.UserConstants;
 import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
+import org.crown.project.system.post.domain.Post;
+import org.crown.project.system.post.mapper.PostMapper;
 import org.crown.project.system.user.domain.UserPost;
 import org.crown.project.system.user.service.IUserPostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 岗位信息 服务层处理

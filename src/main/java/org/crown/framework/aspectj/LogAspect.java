@@ -18,12 +18,11 @@ import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessStatus;
 import org.crown.framework.manager.AsyncManager;
 import org.crown.framework.manager.factory.AsyncFactory;
+import org.crown.project.monitor.operlog.domain.OperLog;
+import org.crown.project.system.user.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import org.crown.project.monitor.operlog.domain.OperLog;
-import org.crown.project.system.user.domain.User;
 
 /**
  * 操作日志记录处理

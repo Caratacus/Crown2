@@ -12,6 +12,10 @@ import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.crown.common.constant.Constants;
+import org.crown.common.exception.base.BaseException;
+import org.crown.common.utils.StringUtils;
+import org.crown.framework.config.GenConfig;
 import org.crown.project.tool.gen.domain.ColumnInfo;
 import org.crown.project.tool.gen.domain.TableInfo;
 import org.crown.project.tool.gen.mapper.GenMapper;
@@ -19,11 +23,6 @@ import org.crown.project.tool.gen.util.GenUtils;
 import org.crown.project.tool.gen.util.VelocityInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import org.crown.common.constant.Constants;
-import org.crown.common.exception.base.BaseException;
-import org.crown.common.utils.StringUtils;
-import org.crown.framework.config.GenConfig;
 
 /**
  * 代码生成 服务层处理

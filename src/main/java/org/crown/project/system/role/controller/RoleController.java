@@ -6,9 +6,11 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
+import org.crown.project.system.role.domain.Role;
 import org.crown.project.system.role.service.IRoleService;
 import org.crown.project.system.user.domain.User;
 import org.crown.project.system.user.domain.UserRole;
@@ -21,8 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import org.crown.project.system.role.domain.Role;
 
 /**
  * 角色信息
@@ -81,8 +81,9 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Role role) {
-        return toAjax(roleService.insertRole(role));
+    public ApiResponses<Void> addSave(Role role) {
+        roleService.insertRole(role);
+        return success();
 
     }
 
@@ -102,8 +103,10 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Role role) {
-        return toAjax(roleService.updateRole(role));
+    public ApiResponses<Void> editSave(Role role) {
+        roleService.updateRole(role);
+        return success();
+
     }
 
     /**
@@ -122,24 +125,20 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/authDataScope")
     @ResponseBody
-    public AjaxResult authDataScopeSave(Role role) {
-        if (roleService.authDataScope(role)) {
-            setSysUser(userService.selectUserById(getSysUser().getUserId()));
-            return success();
-        }
-        return error();
+    public ApiResponses<Void> authDataScopeSave(Role role) {
+        roleService.authDataScope(role);
+        setSysUser(userService.selectUserById(getSysUser().getUserId()));
+        return success();
     }
 
     @RequiresPermissions("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        try {
-            return toAjax(roleService.deleteRoleByIds(ids));
-        } catch (Exception e) {
-            return error(e.getMessage());
-        }
+    public ApiResponses<Void> remove(String ids) {
+        roleService.deleteRoleByIds(ids);
+        return success();
+
     }
 
     /**
@@ -175,8 +174,10 @@ public class RoleController extends WebController {
     @RequiresPermissions("system:role:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public AjaxResult changeStatus(Role role) {
-        return toAjax(roleService.changeStatus(role));
+    public ApiResponses<Void> changeStatus(Role role) {
+        roleService.changeStatus(role);
+        return success();
+
     }
 
     /**
@@ -207,8 +208,10 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancel")
     @ResponseBody
-    public AjaxResult cancelAuthUser(UserRole userRole) {
-        return toAjax(roleService.deleteAuthUser(userRole));
+    public ApiResponses<Void> cancelAuthUser(UserRole userRole) {
+        roleService.deleteAuthUser(userRole);
+        return success();
+
     }
 
     /**
@@ -217,8 +220,10 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancelAll")
     @ResponseBody
-    public AjaxResult cancelAuthUserAll(Long roleId, String userIds) {
-        return toAjax(roleService.deleteAuthUsers(roleId, userIds));
+    public ApiResponses<Void> cancelAuthUserAll(Long roleId, String userIds) {
+        roleService.deleteAuthUsers(roleId, userIds);
+        return success();
+
     }
 
     /**
@@ -248,7 +253,9 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/selectAll")
     @ResponseBody
-    public AjaxResult selectAuthUserAll(Long roleId, String userIds) {
-        return toAjax(roleService.insertAuthUsers(roleId, userIds));
+    public ApiResponses<Void> selectAuthUserAll(Long roleId, String userIds) {
+        roleService.insertAuthUsers(roleId, userIds);
+        return success();
+
     }
 }

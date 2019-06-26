@@ -1,10 +1,11 @@
 package org.crown.project.system.dept.domain;
 
+import org.crown.framework.web.domain.BaseEntity;
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import org.crown.framework.web.domain.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;

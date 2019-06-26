@@ -107,7 +107,7 @@ public interface IUserService extends BaseService<User> {
      * @param loginName 登录名称
      * @return 结果
      */
-    String checkLoginNameUnique(String loginName);
+    boolean checkLoginNameUnique(String loginName);
 
     /**
      * 校验手机号码是否唯一

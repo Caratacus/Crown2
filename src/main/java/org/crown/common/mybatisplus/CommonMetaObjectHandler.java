@@ -23,9 +23,9 @@ package org.crown.common.mybatisplus;
 import java.util.Date;
 
 import org.apache.ibatis.reflection.MetaObject;
+import org.crown.common.utils.security.ShiroUtils;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import org.crown.common.utils.security.ShiroUtils;
 
 /**
  * 通用填充类 适用于mybatis plus

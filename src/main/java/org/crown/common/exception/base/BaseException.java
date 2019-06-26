@@ -1,8 +1,7 @@
 package org.crown.common.exception.base;
 
-import org.springframework.util.StringUtils;
-
 import org.crown.common.utils.MessageUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * 基础异常

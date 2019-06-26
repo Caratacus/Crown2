@@ -3,12 +3,11 @@ package org.crown.project.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.crown.framework.web.domain.AjaxResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import org.crown.framework.web.domain.AjaxResult;
 
 /**
  * 表单相关

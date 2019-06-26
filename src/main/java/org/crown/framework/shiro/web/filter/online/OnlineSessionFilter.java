@@ -12,11 +12,10 @@ import org.apache.shiro.web.util.WebUtils;
 import org.crown.common.constant.ShiroConstants;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-
 import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.system.user.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 自定义访问控制

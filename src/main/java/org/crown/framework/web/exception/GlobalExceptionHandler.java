@@ -1,20 +1,24 @@
 package org.crown.framework.web.exception;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.AuthorizationException;
 import org.crown.common.exception.BusinessException;
 import org.crown.common.exception.DemoModeException;
 import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.PermissionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.exception.ApiException;
+import org.crown.framework.model.ErrorCode;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.web.domain.AjaxResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.crown.framework.web.domain.AjaxResult;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 全局异常处理器
@@ -22,9 +26,27 @@ import org.crown.framework.web.domain.AjaxResult;
  * @author ruoyi
  */
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    /**
+     * 自定义 REST 业务异常
+     *
+     * @param request
+     * @param response
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = ApiException.class)
+    public ApiResponses handleBadRequest(ApiException exception) {
+        ErrorCode code = exception.getErrorCode();
+        if (code.getHttpCode() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
+            log.info("Info: error: {} ,httpCode: {} ,msg: {}", code.getError(), code.getHttpCode(), code.getMsg());
+        } else {
+            log.warn("Warn: error: {} ,httpCode: {} ,msg: {}", code.getError(), code.getHttpCode(), code.getMsg());
+        }
+        return ApiResponses.failure(ErrorCodeEnum.JSON_FORMAT_ERROR.convert());
+    }
 
     /**
      * 权限校验失败 如果请求为ajax返回json，普通请求跳转页面

@@ -3,18 +3,17 @@ package org.crown.project.system.dept.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.crown.project.system.dept.domain.Dept;
-import org.crown.project.system.dept.mapper.DeptMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import org.crown.common.constant.UserConstants;
 import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.aspectj.lang.annotation.DataScope;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.web.domain.Ztree;
+import org.crown.project.system.dept.domain.Dept;
+import org.crown.project.system.dept.mapper.DeptMapper;
 import org.crown.project.system.role.domain.Role;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 部门管理 服务实现

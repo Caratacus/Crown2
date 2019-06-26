@@ -4,9 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.crown.project.system.dept.domain.Dept;
-
 import org.crown.framework.mapper.BaseMapper;
+import org.crown.project.system.dept.domain.Dept;
 
 /**
  * 部门管理 数据层

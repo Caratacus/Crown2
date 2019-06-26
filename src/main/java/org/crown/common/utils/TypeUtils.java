@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.TimeZone;
 
-import org.crown.common.exception.CrownException;
+import org.crown.framework.exception.CrownException;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

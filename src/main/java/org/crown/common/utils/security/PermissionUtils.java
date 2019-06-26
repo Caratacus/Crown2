@@ -2,7 +2,6 @@ package org.crown.common.utils.security;
 
 import org.apache.commons.lang3.StringUtils;
 import org.crown.common.constant.PermissionConstants;
-
 import org.crown.common.utils.MessageUtils;
 
 /**

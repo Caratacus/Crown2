@@ -5,16 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.crown.project.demo.domain.UserOperateModel;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
@@ -24,6 +14,15 @@ import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.PageDomain;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.framework.web.page.TableSupport;
+import org.crown.project.demo.domain.UserOperateModel;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 操作控制
@@ -212,7 +211,7 @@ public class DemoOperateController extends WebController {
     @ResponseBody
     public AjaxResult clean() {
         users.clear();
-        return success();
+        return AjaxResult.success();
     }
 
     /**

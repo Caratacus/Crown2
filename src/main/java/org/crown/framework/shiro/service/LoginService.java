@@ -14,13 +14,12 @@ import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.manager.AsyncManager;
 import org.crown.framework.manager.factory.AsyncFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
 import org.crown.project.system.user.domain.User;
 import org.crown.project.system.user.domain.UserStatus;
 import org.crown.project.system.user.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * 登录校验方法

@@ -38,13 +38,13 @@ public class LoginController extends WebController {
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            return success();
+            return AjaxResult.success();
         } catch (AuthenticationException e) {
             String msg = "用户或密码错误";
             if (StringUtils.isNotEmpty(e.getMessage())) {
                 msg = e.getMessage();
             }
-            return error(msg);
+            return AjaxResult.error(msg);
         }
     }
 

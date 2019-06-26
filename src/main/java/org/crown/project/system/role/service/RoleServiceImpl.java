@@ -13,6 +13,10 @@ import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.aspectj.lang.annotation.DataScope;
 import org.crown.framework.service.impl.BaseServiceImpl;
+import org.crown.project.system.role.domain.Role;
+import org.crown.project.system.role.domain.RoleDept;
+import org.crown.project.system.role.domain.RoleMenu;
+import org.crown.project.system.role.mapper.RoleMapper;
 import org.crown.project.system.user.domain.UserRole;
 import org.crown.project.system.user.service.IUserRoleService;
 import org.springframework.aop.framework.AopContext;
@@ -21,11 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-
-import org.crown.project.system.role.domain.Role;
-import org.crown.project.system.role.domain.RoleDept;
-import org.crown.project.system.role.domain.RoleMenu;
-import org.crown.project.system.role.mapper.RoleMapper;
 
 /**
  * 角色 业务层处理

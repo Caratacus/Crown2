@@ -6,7 +6,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
-
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.bean.BeanUtils;
 import org.crown.framework.shiro.realm.UserRealm;

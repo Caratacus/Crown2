@@ -1,13 +1,18 @@
 package org.crown.project.system.user.controller;
 
-import org.crown.common.utils.StringUtils;
+import java.io.IOException;
+
 import org.crown.common.utils.file.FileUploadUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.config.RuoYiConfig;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.shiro.service.PasswordService;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
+import org.crown.project.system.user.domain.User;
+import org.crown.project.system.user.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import org.crown.project.system.user.domain.User;
-import org.crown.project.system.user.service.IUserService;
 
 /**
  * 个人信息 业务处理
@@ -71,18 +73,13 @@ public class ProfileController extends WebController {
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
     @ResponseBody
-    public AjaxResult resetPwd(String oldPassword, String newPassword) {
+    public ApiResponses<Void> resetPwd(String oldPassword, @RequestParam("newPassword") String newPassword) {
         User user = getSysUser();
-        if (StringUtils.isNotEmpty(newPassword) && passwordService.matches(user, oldPassword)) {
-            user.setPassword(newPassword);
-            if (userService.resetUserPwd(user)) {
-                setSysUser(userService.selectUserById(user.getUserId()));
-                return success();
-            }
-            return error();
-        } else {
-            return error("修改密码失败，旧密码错误");
-        }
+        ApiAssert.isTrue(ErrorCodeEnum.USER_OLD_PASSWORD_ERROR, passwordService.matches(user, oldPassword));
+        user.setPassword(newPassword);
+        userService.resetUserPwd(user);
+        setSysUser(userService.selectUserById(user.getUserId()));
+        return success();
 
     }
 
@@ -112,17 +109,15 @@ public class ProfileController extends WebController {
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
     @ResponseBody
-    public AjaxResult update(User user) {
+    public ApiResponses<Void> update(User user) {
         User currentUser = getSysUser();
         currentUser.setUserName(user.getUserName());
         currentUser.setEmail(user.getEmail());
         currentUser.setPhonenumber(user.getPhonenumber());
         currentUser.setSex(user.getSex());
-        if (userService.updateById(currentUser)) {
-            setSysUser(userService.selectUserById(currentUser.getUserId()));
-            return success();
-        }
-        return error();
+        userService.updateById(currentUser);
+        setSysUser(userService.selectUserById(currentUser.getUserId()));
+        return success();
     }
 
     /**
@@ -131,21 +126,18 @@ public class ProfileController extends WebController {
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updateAvatar")
     @ResponseBody
-    public AjaxResult updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
+    public ApiResponses<Void> updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
         User currentUser = getSysUser();
+        ApiAssert.isFalse(ErrorCodeEnum.USER_AVATAR_NOT_EMPTY, file.isEmpty());
+        String avatar = null;
         try {
-            if (!file.isEmpty()) {
-                String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
-                currentUser.setAvatar(avatar);
-                if (userService.updateById(currentUser)) {
-                    setSysUser(userService.selectUserById(currentUser.getUserId()));
-                    return success();
-                }
-            }
-            return error();
-        } catch (Exception e) {
-            log.error("修改头像失败！", e);
-            return error(e.getMessage());
+            avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
+        } catch (IOException e) {
+            ApiAssert.failure(ErrorCodeEnum.USER_AVATAR_UPLOAD_FAIL);
         }
+        currentUser.setAvatar(avatar);
+        userService.updateById(currentUser);
+        setSysUser(userService.selectUserById(currentUser.getUserId()));
+        return success();
     }
 }

@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.crown.common.utils.StringUtils;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.domain.AjaxResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.crown.common.utils.StringUtils;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,7 +53,7 @@ public class TestController extends WebController {
         if (!users.isEmpty() && users.containsKey(userId)) {
             return AjaxResult.success(users.get(userId));
         } else {
-            return error("用户不存在");
+            return AjaxResult.error("用户不存在");
         }
     }
 
@@ -63,7 +62,7 @@ public class TestController extends WebController {
     @PostMapping("/save")
     public AjaxResult save(UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-            return error("用户ID不能为空");
+            return AjaxResult.error("用户ID不能为空");
         }
         return AjaxResult.success(users.put(user.getUserId(), user));
     }
@@ -73,10 +72,10 @@ public class TestController extends WebController {
     @PutMapping("/update")
     public AjaxResult update(UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-            return error("用户ID不能为空");
+            return AjaxResult.error("用户ID不能为空");
         }
         if (users.isEmpty() || !users.containsKey(user.getUserId())) {
-            return error("用户不存在");
+            return AjaxResult.error("用户不存在");
         }
         users.remove(user.getUserId());
         return AjaxResult.success(users.put(user.getUserId(), user));
@@ -88,9 +87,9 @@ public class TestController extends WebController {
     public AjaxResult delete(@PathVariable Integer userId) {
         if (!users.isEmpty() && users.containsKey(userId)) {
             users.remove(userId);
-            return success();
+            return AjaxResult.success();
         } else {
-            return error("用户不存在");
+            return AjaxResult.error("用户不存在");
         }
     }
 }

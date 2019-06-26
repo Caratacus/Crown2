@@ -30,7 +30,9 @@ import org.crown.common.constant.PageCons;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.sql.AntiSQLFilter;
+import org.crown.framework.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -61,6 +63,46 @@ public class SuperController {
                 setValue(DateUtils.parseDate(text));
             }
         });
+    }
+
+    /**
+     * 成功返回
+     *
+     * @param object
+     * @return
+     */
+    public <T> ApiResponses<T> success(T object) {
+        return ApiResponses.<T>success(response, object);
+    }
+
+    /**
+     * 成功返回
+     *
+     * @return
+     */
+    public ApiResponses<Void> success() {
+        return success(HttpStatus.OK);
+    }
+
+    /**
+     * 成功返回
+     *
+     * @param status
+     * @param object
+     * @return
+     */
+    public <T> ApiResponses<T> success(HttpStatus status, T object) {
+        return ApiResponses.<T>success(response, status, object);
+    }
+
+    /**
+     * 成功返回
+     *
+     * @param status
+     * @return
+     */
+    public ApiResponses<Void> success(HttpStatus status) {
+        return ApiResponses.<Void>success(response, status);
     }
 
     /**

@@ -3,9 +3,10 @@ package org.crown.project.system.menu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.crown.framework.web.domain.BaseEntity;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import org.crown.framework.web.domain.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -3,6 +3,14 @@ package org.crown.project.system.dict.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.framework.aspectj.lang.annotation.Log;
+import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.domain.AjaxResult;
+import org.crown.framework.web.page.TableDataInfo;
+import org.crown.project.system.dict.domain.DictType;
 import org.crown.project.system.dict.service.IDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,14 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import org.crown.common.utils.poi.ExcelUtil;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.project.system.dict.domain.DictType;
 
 /**
  * 数据字典信息
@@ -76,8 +76,10 @@ public class DictTypeController extends WebController {
     @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(DictType dict) {
-        return toAjax(dictTypeService.save(dict));
+    public ApiResponses<Void> addSave(DictType dict) {
+        dictTypeService.save(dict);
+        return success();
+
     }
 
     /**
@@ -96,20 +98,20 @@ public class DictTypeController extends WebController {
     @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(DictType dict) {
-        return toAjax(dictTypeService.updateDictType(dict));
+    public ApiResponses<Void> editSave(DictType dict) {
+        dictTypeService.updateDictType(dict);
+        return success();
     }
 
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:dict:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        try {
-            return toAjax(dictTypeService.deleteDictTypeByIds(ids));
-        } catch (Exception e) {
-            return error(e.getMessage());
-        }
+    public ApiResponses<Void> remove(String ids) {
+        dictTypeService.deleteDictTypeByIds(ids);
+
+        return success();
+
     }
 
     /**

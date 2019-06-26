@@ -3,15 +3,19 @@ package org.crown.project.system.user.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.crown.common.constant.UserConstants;
-import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.post.service.IPostService;
+import org.crown.project.system.role.service.IRoleService;
+import org.crown.project.system.user.domain.User;
+import org.crown.project.system.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,10 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import org.crown.project.system.role.service.IRoleService;
-import org.crown.project.system.user.domain.User;
-import org.crown.project.system.user.service.IUserService;
 
 /**
  * 用户信息
@@ -107,14 +107,12 @@ public class UserController extends WebController {
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(User user) {
-        if (StringUtils.isNotNull(user.getUserId()) && User.isAdmin(user.getUserId())) {
-            return error("不允许修改超级管理员用户");
-        }
-        if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(user.getLoginName()))) {
-            return error("保存用户'" + user.getLoginName() + "'失败，登录账号已存在");
-        }
-        return toAjax(userService.insertUser(user));
+    public ApiResponses<Void> addSave(User user) {
+        ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
+        ApiAssert.isFalse(ErrorCodeEnum.USER_ACCOUNT_EXIST.convert(String.format("登录账号%s已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
+        userService.insertUser(user);
+        return success();
+
     }
 
     /**
@@ -135,11 +133,11 @@ public class UserController extends WebController {
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(User user) {
-        if (StringUtils.isNotNull(user.getUserId()) && User.isAdmin(user.getUserId())) {
-            return error("不允许修改超级管理员用户");
-        }
-        return toAjax(userService.updateUser(user));
+    public ApiResponses<Void> editSave(User user) {
+        ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
+        userService.updateUser(user);
+        return success();
+
     }
 
     @RequiresPermissions("system:user:resetPwd")
@@ -154,20 +152,20 @@ public class UserController extends WebController {
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
     @ResponseBody
-    public AjaxResult resetPwd(User user) {
-        return toAjax(userService.resetUserPwd(user));
+    public ApiResponses<Void> resetPwd(User user) {
+        userService.resetUserPwd(user);
+        return success();
+
     }
 
     @RequiresPermissions("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        try {
-            return toAjax(userService.deleteUserByIds(ids));
-        } catch (Exception e) {
-            return error(e.getMessage());
-        }
+    public ApiResponses<Void> remove(String ids) {
+        userService.deleteUserByIds(ids);
+        return success();
+
     }
 
     /**
@@ -176,7 +174,7 @@ public class UserController extends WebController {
     @PostMapping("/checkLoginNameUnique")
     @ResponseBody
     public String checkLoginNameUnique(User user) {
-        return userService.checkLoginNameUnique(user.getLoginName());
+        return userService.checkLoginNameUnique(user.getLoginName()) ? "1" : "0";
     }
 
     /**
@@ -204,7 +202,9 @@ public class UserController extends WebController {
     @RequiresPermissions("system:user:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public AjaxResult changeStatus(User user) {
-        return toAjax(userService.changeStatus(user));
+    public ApiResponses<Void> changeStatus(User user) {
+        userService.changeStatus(user);
+        return success();
+
     }
 }

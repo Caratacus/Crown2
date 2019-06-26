@@ -18,29 +18,21 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.common.exception;
+package org.crown.framework.modelmapper.jdk8;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.Module;
 
 /**
- * <p>
- * Crown异常类
- * </p>
+ * Supports the JDK8 data types  with  ModelMapper
  *
- * @author Caratacus
+ * @author Chun Han Hsiao
  */
-public class CrownException extends RuntimeException {
+public class Jdk8Module implements Module {
 
-    private static final long serialVersionUID = 1L;
-
-    public CrownException(String message) {
-        super(message);
+    @Override
+    public void setupModule(ModelMapper modelMapper) {
+        modelMapper.getConfiguration().getConverters().add(0, new FromOptionalConverter());
+        modelMapper.getConfiguration().getConverters().add(0, new ToOptionalConverter());
     }
-
-    public CrownException(Throwable throwable) {
-        super(throwable);
-    }
-
-    public CrownException(String message, Throwable throwable) {
-        super(message, throwable);
-    }
-
 }

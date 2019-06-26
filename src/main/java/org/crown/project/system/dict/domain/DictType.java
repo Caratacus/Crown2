@@ -1,8 +1,9 @@
 package org.crown.project.system.dict.domain;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import org.crown.framework.aspectj.lang.annotation.Excel;
 import org.crown.framework.web.domain.BaseEntity;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import lombok.Getter;
 import lombok.Setter;

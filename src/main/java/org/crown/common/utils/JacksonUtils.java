@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.crown.common.exception.CrownException;
+import org.crown.framework.exception.CrownException;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 

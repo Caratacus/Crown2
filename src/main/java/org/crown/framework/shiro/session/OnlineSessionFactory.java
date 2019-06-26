@@ -9,10 +9,9 @@ import org.apache.shiro.web.session.mgt.WebSessionContext;
 import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.StringUtils;
-import org.springframework.stereotype.Component;
-
 import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.monitor.online.domain.UserOnline;
+import org.springframework.stereotype.Component;
 
 import eu.bitwalker.useragentutils.UserAgent;
 

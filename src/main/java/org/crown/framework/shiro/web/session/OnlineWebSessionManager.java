@@ -14,14 +14,13 @@ import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crown.common.constant.ShiroConstants;
 import org.crown.common.utils.spring.SpringUtils;
+import org.crown.project.monitor.online.domain.OnlineSession;
+import org.crown.project.monitor.online.domain.UserOnline;
+import org.crown.project.monitor.online.service.UserOnlineServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-
-import org.crown.project.monitor.online.domain.OnlineSession;
-import org.crown.project.monitor.online.domain.UserOnline;
-import org.crown.project.monitor.online.service.UserOnlineServiceImpl;
 
 /**
  * 主要是在此如果会话的属性修改了 就标识下其修改了 然后方便 OnlineSessionDao同步

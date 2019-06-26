@@ -21,11 +21,10 @@ import org.apache.shiro.web.util.WebUtils;
 import org.crown.common.constant.ShiroConstants;
 import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.crown.framework.web.domain.AjaxResult;
 import org.crown.project.system.user.domain.User;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 登录帐号控制过滤器

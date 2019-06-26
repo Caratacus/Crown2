@@ -15,18 +15,17 @@ import org.crown.framework.shiro.service.PasswordService;
 import org.crown.project.system.config.service.IConfigService;
 import org.crown.project.system.post.domain.Post;
 import org.crown.project.system.post.service.IPostService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import org.crown.project.system.role.domain.Role;
 import org.crown.project.system.role.service.IRoleService;
 import org.crown.project.system.user.domain.User;
 import org.crown.project.system.user.domain.UserPost;
 import org.crown.project.system.user.domain.UserRole;
 import org.crown.project.system.user.mapper.UserMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 用户 业务层处理
@@ -186,8 +185,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
-    public String checkLoginNameUnique(String loginName) {
-        return query().eq(User::getLoginName, loginName).exist() ? UserConstants.USER_NAME_NOT_UNIQUE : UserConstants.USER_NAME_UNIQUE;
+    public boolean checkLoginNameUnique(String loginName) {
+        return query().eq(User::getLoginName, loginName).exist();
     }
 
     @Override

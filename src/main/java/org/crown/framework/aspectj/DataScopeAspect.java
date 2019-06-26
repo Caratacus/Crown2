@@ -11,11 +11,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.aspectj.lang.annotation.DataScope;
-import org.springframework.stereotype.Component;
-
 import org.crown.framework.web.domain.BaseEntity;
 import org.crown.project.system.role.domain.Role;
 import org.crown.project.system.user.domain.User;
+import org.springframework.stereotype.Component;
 
 /**
  * 数据过滤处理

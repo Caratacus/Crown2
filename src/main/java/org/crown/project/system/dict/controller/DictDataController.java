@@ -3,6 +3,15 @@ package org.crown.project.system.dict.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.common.utils.StringUtils;
+import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.framework.aspectj.lang.annotation.Log;
+import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.domain.AjaxResult;
+import org.crown.framework.web.page.TableDataInfo;
+import org.crown.project.system.dict.domain.DictData;
 import org.crown.project.system.dict.service.IDictDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,14 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.poi.ExcelUtil;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.project.system.dict.domain.DictData;
 
 /**
  * 数据字典信息
@@ -78,8 +79,10 @@ public class DictDataController extends WebController {
     @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(DictData dict) {
-        return toAjax(dictDataService.save(dict));
+    public ApiResponses<Void> addSave(DictData dict) {
+        dictDataService.save(dict);
+        return success();
+
     }
 
     /**
@@ -98,17 +101,20 @@ public class DictDataController extends WebController {
     @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(DictData dict) {
-        return toAjax(dictDataService.updateById(dict));
+    public ApiResponses<Void> editSave(DictData dict) {
+        dictDataService.updateById(dict);
+        return success();
+
     }
 
     @Log(title = "字典数据", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:dict:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(
-                dictDataService.remove(Wrappers.<DictData>lambdaQuery().inOrThrow(DictData::getDictCode, StringUtils.split2List(ids)))
-        );
+    public ApiResponses<Void> remove(String ids) {
+
+        dictDataService.remove(Wrappers.<DictData>lambdaQuery().inOrThrow(DictData::getDictCode, StringUtils.split2List(ids)));
+        return success();
+
     }
 }

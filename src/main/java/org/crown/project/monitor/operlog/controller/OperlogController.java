@@ -7,6 +7,7 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
@@ -65,12 +66,9 @@ public class OperlogController extends WebController {
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(
-                operLogService.remove(
-                        Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.split2List(ids))
-                )
-        );
+    public ApiResponses<Void> remove(String ids) {
+        operLogService.remove(Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.split2List(ids)));
+        return success();
     }
 
     @RequiresPermissions("monitor:operlog:detail")
@@ -86,6 +84,6 @@ public class OperlogController extends WebController {
     @ResponseBody
     public AjaxResult clean() {
         operLogService.remove();
-        return success();
+        return AjaxResult.success();
     }
 }

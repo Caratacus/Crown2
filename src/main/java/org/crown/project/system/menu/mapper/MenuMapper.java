@@ -3,9 +3,8 @@ package org.crown.project.system.menu.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.crown.project.system.menu.domain.Menu;
-
 import org.crown.framework.mapper.BaseMapper;
+import org.crown.project.system.menu.domain.Menu;
 
 /**
  * 菜单表 数据层

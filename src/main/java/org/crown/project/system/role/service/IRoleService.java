@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.crown.framework.service.BaseService;
-import org.crown.project.system.user.domain.UserRole;
 import org.crown.project.system.role.domain.Role;
+import org.crown.project.system.user.domain.UserRole;
 
 /**
  * 角色业务层
@@ -71,20 +71,20 @@ public interface IRoleService extends BaseService<Role> {
     boolean insertRole(Role role);
 
     /**
-     * 修改保存角色信息
-     *
-     * @param role 角色信息
-     * @return 结果
-     */
-    boolean updateRole(Role role);
-
-    /**
      * 修改数据权限信息
      *
      * @param role 角色信息
      * @return 结果
      */
     boolean authDataScope(Role role);
+
+    /**
+     * 修改保存角色信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    boolean updateRole(Role role);
 
     /**
      * 校验角色名称是否唯一

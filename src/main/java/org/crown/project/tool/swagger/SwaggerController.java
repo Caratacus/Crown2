@@ -1,11 +1,10 @@
 package org.crown.project.tool.swagger;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.framework.web.controller.WebController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.crown.framework.web.controller.WebController;
 
 /**
  * swagger 接口

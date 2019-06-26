@@ -21,11 +21,6 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.spring.SpringUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import org.crown.framework.shiro.realm.UserRealm;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
 import org.crown.framework.shiro.session.OnlineSessionFactory;
@@ -36,6 +31,10 @@ import org.crown.framework.shiro.web.filter.online.OnlineSessionFilter;
 import org.crown.framework.shiro.web.filter.sync.SyncOnlineSessionFilter;
 import org.crown.framework.shiro.web.session.OnlineWebSessionManager;
 import org.crown.framework.shiro.web.session.SpringSessionValidationScheduler;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 

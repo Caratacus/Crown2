@@ -2,9 +2,9 @@ package org.crown.project.system.dept.service;
 
 import java.util.List;
 
-import org.crown.project.system.dept.domain.Dept;
 import org.crown.framework.service.BaseService;
 import org.crown.framework.web.domain.Ztree;
+import org.crown.project.system.dept.domain.Dept;
 import org.crown.project.system.role.domain.Role;
 
 /**
