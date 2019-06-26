@@ -1350,6 +1350,12 @@ table_type = {
     bootstrapTreeTable: 1
 };
 
+/** 消息状态码 */
+web_status = {
+	SUCCESS: 0,
+	FAIL: 500,
+	WARNING: 301
+};
 
 /** 弹窗状态码 */
 modal_status = {

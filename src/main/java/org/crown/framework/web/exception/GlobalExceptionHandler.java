@@ -8,7 +8,6 @@ import org.crown.common.exception.BusinessException;
 import org.crown.common.exception.DemoModeException;
 import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.PermissionUtils;
-import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.exception.ApiException;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.responses.ApiResponses;
@@ -45,7 +44,7 @@ public class GlobalExceptionHandler {
         } else {
             log.warn("Warn: error: {} ,httpCode: {} ,msg: {}", code.getError(), code.getHttpCode(), code.getMsg());
         }
-        return ApiResponses.failure(ErrorCodeEnum.JSON_FORMAT_ERROR.convert());
+        return ApiResponses.failure(code);
     }
 
     /**
