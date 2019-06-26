@@ -75,6 +75,8 @@ dependencies {
     api("net.java.dev.jna:jna-platform:5.3.1")
     api("org.jsoup:jsoup:1.12.1")
     api("org.apache.poi:poi-ooxml:4.1.0")
+    api("org.apache.httpcomponents:httpcore:4.4.11")
+    api("org.apache.httpcomponents:httpclient:4.5.8")
     implementation("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")

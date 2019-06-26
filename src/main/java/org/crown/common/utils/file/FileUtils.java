@@ -108,4 +108,24 @@ public class FileUtils {
         }
         return filename;
     }
+
+    /**
+     * 创建目录
+     *
+     * @param dirPath
+     * @return
+     */
+    public static boolean makeDir(String dirPath) {
+        return makeDir(new File(dirPath));
+    }
+
+    /**
+     * 创建目录
+     *
+     * @param file
+     * @return
+     */
+    public static boolean makeDir(File file) {
+        return !(!file.exists() && !file.isDirectory()) || file.mkdirs();
+    }
 }

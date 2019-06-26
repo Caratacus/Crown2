@@ -59,7 +59,7 @@
                     sortOrder: options.sortOrder,                       // 排序方式  asc 或者 desc
                     pagination: options.pagination,                     // 是否显示分页（*）
                     pageNumber: 1,                                      // 初始化加载第一页，默认第一页
-                    pageSize: options.pageSize,                         // 每页的记录行数（*） 
+                    pageSize: options.pageSize,                         // 每页的记录行数（*）
                     pageList: options.pageList,                         // 可供选择的每页的行数（*）
                     escape: options.escape,                             // 转义HTML字符串
                     showFooter: options.showFooter,                     // 是否显示表尾
@@ -107,7 +107,7 @@
                         isAsc:          params.order
             		};
             	var currentId = $.common.isEmpty($.table._option.formId) ? $('form').attr('id') : $.table._option.formId;
-            	return $.extend(curParams, $.common.formToJSON(currentId)); 
+            	return $.extend(curParams, $.common.formToJSON(currentId));
             },
             // 请求获取数据后处理回调函数
             responseHandler: function(res) {
@@ -607,9 +607,9 @@
             },
             // 弹出层指定参数选项
             openOptions: function (options) {
-            	var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url; 
-            	var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title; 
-                var _width = $.common.isEmpty(options.width) ? "800" : options.width; 
+            	var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
+            	var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
+                var _width = $.common.isEmpty(options.width) ? "800" : options.width;
                 var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
                 var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
                 if ($.common.isEmpty(options.yes)) {
@@ -710,24 +710,32 @@
         },
         // 操作封装处理
         operate: {
-        	// 提交数据
-        	submit: function(url, type, dataType, data, callback) {
-            	var config = {
-        	        url: url,
-        	        type: type,
-        	        dataType: dataType,
-        	        data: data,
-        	        beforeSend: function () {
-        	        	$.modal.loading("正在处理中，请稍后...");
-        	        },
-        	        success: function(result) {
-        	        	if (typeof callback == "function") {
-        	        	    callback(result);
-        	        	}
-        	        	$.operate.ajaxSuccess(result);
-        	        }
-        	    };
-        	    $.ajax(config)
+            // 提交数据
+            submit: function(url, type, dataType, data, callback) {
+                var config = {
+                    url: url,
+                    type: type,
+                    dataType: dataType,
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                    },
+                    success: function(result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                        var status = result.status;
+                        var msg = result.msg;
+                        if (status >= 200 && status <= 299) {
+                            $.operate.ajaxSuccess(msg);
+                        } else if (status >= 300 && status < 500) {
+                            $.operate.ajaxWarn(msg);
+                        } else {
+                            $.operate.ajaxError(msg);
+                        }
+                    }
+                };
+                $.ajax(config);
             },
             // post请求传输
             post: function(url, data, callback) {
@@ -745,7 +753,7 @@
        				width: width,
        				height: height,
        				url: $.operate.detailUrl(id),
-       				skin: 'layui-layer-gray', 
+       				skin: 'layui-layer-gray',
        				btn: ['关闭'],
        				yes: function (index, layero) {
        	                layer.close(index);
@@ -779,7 +787,7 @@
 	            	    $.operate.submit(url, "post", "json", data);
 	                }
             	});
-            	
+
             },
             // 批量删除信息
             removeAll: function() {
@@ -864,139 +872,177 @@
                 return url;
             },
             // 保存信息 刷新表格
-            save: function(url, data, callback) {
-            	var config = {
-        	        url: url,
-        	        type: "post",
-        	        dataType: "json",
-        	        data: data,
-        	        beforeSend: function () {
-        	        	$.modal.loading("正在处理中，请稍后...");
-        	        	$.modal.disable();
-        	        },
-        	        success: function(result) {
-        	        	if (typeof callback == "function") {
-        	        	    callback(result);
-        	        	}
-        	        	$.operate.successCallback(result);
-        	        }
-        	    };
-        	    $.ajax(config)
+            save: function (url, data, callback) {
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                        $.modal.disable();
+                    },
+                    success: function (result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                        var status = result.status;
+                        var msg = result.msg;
+                        if (status >= 200 && status <= 299) {
+                            $.operate.successCallback(msg);
+                        } else if (status >= 300 && status < 500) {
+                            $.operate.warnCallback(msg);
+                        } else {
+                            $.operate.errorCallback(msg);
+                        }
+                    }
+                };
+                $.ajax(config);
             },
             // 保存信息 弹出提示框
-            saveModal: function(url, data, callback) {
-            	var config = {
-        	        url: url,
-        	        type: "post",
-        	        dataType: "json",
-        	        data: data,
-        	        beforeSend: function () {
-        	        	$.modal.loading("正在处理中，请稍后...");
-        	        },
-        	        success: function(result) {
-        	        	if (typeof callback == "function") {
-        	        	    callback(result);
-        	        	}
-        	        	if (result.code == web_status.SUCCESS) {
-	                        $.modal.alertSuccess(result.msg)
-	                    } else if (result.code == web_status.WARNING) {
-	                        $.modal.alertWarning(result.msg)
-	                    } else {
-	                    	$.modal.alertError(result.msg);
-	                    }
-        	        	$.modal.closeLoading();
-        	        }
-        	    };
-        	    $.ajax(config)
+            saveModal: function (url, data, callback) {
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                    },
+                    success: function (result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                        var status = result.status;
+                        var msg = result.msg;
+                        if (status >= 200 && status <= 299) {
+                            $.modal.alertSuccess(msg);
+                        } else if (status >= 300 && status < 500) {
+                            $.modal.alertWarning(msg);
+                        } else {
+                            $.modal.alertError(msg);
+                        }
+                        $.modal.closeLoading();
+                    }
+                };
+                $.ajax(config);
             },
             // 保存选项卡信息
-            saveTab: function(url, data, callback) {
-            	var config = {
-        	        url: url,
-        	        type: "post",
-        	        dataType: "json",
-        	        data: data,
-        	        beforeSend: function () {
-        	        	$.modal.loading("正在处理中，请稍后...");
-        	        },
-        	        success: function(result) {
-        	        	if (typeof callback == "function") {
-        	        	    callback(result);
-        	        	}
-        	        	$.operate.successTabCallback(result);
-        	        }
-        	    };
-        	    $.ajax(config)
+            saveTab: function (url, data, callback) {
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                    },
+                    success: function (result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                        var status = result.status;
+                        var msg = result.msg;
+                        if (status >= 200 && status <= 299) {
+                            $.operate.successTabCallback(msg);
+                        } else if (status >= 300 && status < 500) {
+                            $.operate.warnTabCallback(msg);
+                        } else {
+                            $.operate.errorTabCallback(msg);
+                        }
+                    }
+                };
+                $.ajax(config);
             },
             // 保存结果弹出msg刷新table表格
-            ajaxSuccess: function (result) {
-            	if (result.code == web_status.SUCCESS && $.table._option.type == table_type.bootstrapTable) {
-                	$.modal.msgSuccess(result.msg);
-            		$.table.refresh();
-                } else if (result.code == web_status.SUCCESS && $.table._option.type == table_type.bootstrapTreeTable) {
-                	$.modal.msgSuccess(result.msg);
-                	$.treeTable.refresh();
-                } else if (result.code == web_status.WARNING) {
-                    $.modal.alertWarning(result.msg)
-                }  else {
-                	$.modal.alertError(result.msg);
+            ajaxSuccess: function (msg) {
+                if ($.table._option.type == table_type.bootstrapTable) {
+                    $.modal.msgSuccess(msg);
+                    $.table.refresh();
+                } else if ($.table._option.type == table_type.bootstrapTreeTable) {
+                    $.modal.msgSuccess(msg);
+                    $.treeTable.refresh();
                 }
-            	$.modal.closeLoading();
+                $.modal.closeLoading();
+            },
+            // 弹出警告msg刷新table表格
+            ajaxWarn: function (msg) {
+                $.modal.alertWarning(msg);
+                $.modal.closeLoading();
+            },
+            // 弹出错误msg刷新table表格
+            ajaxError: function (msg) {
+                $.modal.alertError(msg);
+                $.modal.closeLoading();
             },
             // 成功结果提示msg（父窗体全局更新）
-            saveSuccess: function (result) {
-            	if (result.code == web_status.SUCCESS) {
-            		$.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
-                } else if (result.code == web_status.WARNING) {
-                    $.modal.alertWarning(result.msg)
-                }  else {
-                	$.modal.alertError(result.msg);
-                }
-            	$.modal.closeLoading();
+            saveSuccess: function (msg) {
+                $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                $.modal.closeLoading();
+            },
+            // 弹出警告msg刷新table表格
+            saveWarn: function (msg) {
+                $.modal.msgReload(msg, modal_status.WARNING);
+                $.modal.closeLoading();
+            },
+            // 弹出错误msg刷新table表格
+            saveError: function (msg) {
+                $.modal.msgReload(msg, modal_status.FAIL);
+                $.modal.closeLoading();
             },
             // 成功回调执行事件（父窗体静默更新）
-            successCallback: function(result) {
-                if (result.code == web_status.SUCCESS) {
-                	var parent = window.parent;
-                    if (parent.$.table._option.type == table_type.bootstrapTable) {
-                        $.modal.close();
-                        parent.$.modal.msgSuccess(result.msg);
-                        parent.$.table.refresh();
-                    } else if (parent.$.table._option.type == table_type.bootstrapTreeTable) {
-                        $.modal.close();
-                        parent.$.modal.msgSuccess(result.msg);
-                        parent.$.treeTable.refresh();
-                    } else {
-                        $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
-                    }
-                } else if (result.code == web_status.WARNING) {
-                    $.modal.alertWarning(result.msg)
-                }  else {
-                    $.modal.alertError(result.msg);
+            successCallback: function (msg) {
+                var parent = window.parent;
+                if (parent.$.table._option.type == table_type.bootstrapTable) {
+                    $.modal.close();
+                    parent.$.modal.msgSuccess(msg);
+                    parent.$.table.refresh();
+                } else if (parent.$.table._option.type == table_type.bootstrapTreeTable) {
+                    $.modal.close();
+                    parent.$.modal.msgSuccess(msg);
+                    parent.$.treeTable.refresh();
+                } else {
+                    $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
                 }
                 $.modal.closeLoading();
                 $.modal.enable();
             },
+            // 弹出警告msg刷新table表格
+            warnCallback: function (msg) {
+                $.modal.alertWarning(msg);
+                $.modal.closeLoading();
+                $.modal.enable();
+            },
+            // 弹出错误msg刷新table表格
+            errorCallback: function (msg) {
+                $.modal.alertError(msg);
+                $.modal.closeLoading();
+                $.modal.enable();
+            },
             // 选项卡成功回调执行事件（父窗体静默更新）
-            successTabCallback: function(result) {
-                if (result.code == web_status.SUCCESS) {
-                	var topWindow = $(window.parent.document);
-    	            var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
-    	            var $contentWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
-    	            $.modal.close();
-    	            $contentWindow.$.modal.msgSuccess(result.msg);
-    	            $contentWindow.$(".layui-layer-padding").removeAttr("style");
-    	            if ($contentWindow.$.table._option.type == table_type.bootstrapTable) {
-    	        		$contentWindow.$.table.refresh();
-    	        	} else if ($contentWindow.$.table._option.type == table_type.bootstrapTreeTable) {
-    	        		$contentWindow.$.treeTable.refresh();
-                    }
-    	            $.modal.closeTab();
-                } else if (result.code == web_status.WARNING) {
-                    $.modal.alertWarning(result.msg)
-                } else {
-                    $.modal.alertError(result.msg);
+            successTabCallback: function (msg) {
+                var topWindow = $(window.parent.document);
+                var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
+                var $contentWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
+                $.modal.close();
+                $contentWindow.$.modal.msgSuccess(msg);
+                $contentWindow.$(".layui-layer-padding").removeAttr("style");
+                if ($contentWindow.$.table._option.type == table_type.bootstrapTable) {
+                    $contentWindow.$.table.refresh();
+                } else if ($contentWindow.$.table._option.type == table_type.bootstrapTreeTable) {
+                    $contentWindow.$.treeTable.refresh();
                 }
+                $.modal.closeTab();
+                $.modal.closeLoading();
+            },
+            // 保存结果弹出msg刷新table表格
+            warnTabCallback: function (msg) {
+                $.modal.alertWarning(msg);
+                $.modal.closeLoading();
+            },
+            // 保存结果弹出msg刷新table表格
+            errorTabCallback: function (msg) {
+                $.modal.alertError(msg);
                 $.modal.closeLoading();
             }
         },
@@ -1304,12 +1350,6 @@ table_type = {
     bootstrapTreeTable: 1
 };
 
-/** 消息状态码 */
-web_status = {
-    SUCCESS: 0,
-    FAIL: 500,
-    WARNING: 301
-};
 
 /** 弹窗状态码 */
 modal_status = {

@@ -75,7 +75,15 @@ function submitHandler() {
         processData: false,
         contentType: false,
         success: function(result) {
-        	$.operate.saveSuccess(result);
+			var status = result.status;
+			var msg = result.msg;
+			if (status >= 200 && status <= 299) {
+				$.operate.saveSuccess(msg);
+			}else if(status >= 300 && status < 500){
+				$.operate.saveWarn(msg);
+			}else{
+				$.operate.saveError(msg);
+			}
         }
     })
 }
