@@ -10,7 +10,6 @@ import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.monitor.operlog.service.IOperLogService;
@@ -84,8 +83,8 @@ public class OperlogController extends WebController {
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/clean")
     @ResponseBody
-    public AjaxResult clean() {
+    public ApiResponses<Void> clean() {
         operLogService.remove();
-        return AjaxResult.success();
+        return success();
     }
 }

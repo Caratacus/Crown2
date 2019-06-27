@@ -10,7 +10,6 @@ import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
 import org.crown.project.monitor.logininfor.service.ILogininforService;
@@ -76,8 +75,8 @@ public class LogininforController extends WebController {
     @Log(title = "登陆日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")
     @ResponseBody
-    public AjaxResult clean() {
+    public ApiResponses<Void> clean() {
         logininforService.remove();
-        return AjaxResult.success();
+        return success();
     }
 }
