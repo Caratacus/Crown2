@@ -37,7 +37,8 @@ public class CommonController extends WebController {
      * @param delete   是否删除
      */
     @GetMapping("common/download")
-    public void fileDownload(String fileName, Boolean delete) {
+    @ResponseBody
+    public Void fileDownload(String fileName, Boolean delete) {
         try {
             if (!FileUtils.isValidFilename(fileName)) {
                 throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
@@ -56,6 +57,7 @@ public class CommonController extends WebController {
         } catch (Exception e) {
             log.error("下载文件失败", e);
         }
+        return null;
     }
 
     /**

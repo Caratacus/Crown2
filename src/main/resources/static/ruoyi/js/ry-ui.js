@@ -250,13 +250,14 @@
 	    			var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
 	    			$.modal.loading("正在导出数据，请稍后...");
 	    			$.post($.table._option.exportUrl, $("#" + currentId).serializeArray(), function(result) {
-	    				if (result.code == web_status.SUCCESS) {
-	    			        window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
-	    				} else if (result.code == web_status.WARNING) {
-	                        $.modal.alertWarning(result.msg)
-	                    } else {
-	    					$.modal.alertError(result.msg);
-	    				}
+						var status = result.status;
+						if (status >= 200 && status <= 299) {
+							window.location.href = ctx + "common/download?fileName=" + encodeURI(result.result.excelName) + "&delete=" + true;
+						} else if (status >= 300 && status < 500) {
+							$.modal.alertWarning(result.msg);
+						} else {
+							$.modal.alertError(result.msg);
+						}
 	    				$.modal.closeLoading();
 	    			});
     			});
