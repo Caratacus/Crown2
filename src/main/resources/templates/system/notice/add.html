@@ -69,14 +69,14 @@
 	            processData: false,
 	            dataType: 'json',
 	            success: function(result) {
-	                if (result.code == web_status.SUCCESS) {
-	                	$(obj).summernote('editor.insertImage', result.url, result.fileName);
+					var status = result.status;
+					if (status >= 200 && status <= 299) {
+						$(obj).summernote('editor.insertImage', result.result.url, result.result.fileName);
+					} else if (status >= 300 && status < 500) {
+						$.modal.alertWarning(result.msg);
 					} else {
 						$.modal.alertError(result.msg);
 					}
-	            },
-	            error: function(error) {
-	                $.modal.alertWarning("图片上传失败。");
 	            }
 	        });
 	    }

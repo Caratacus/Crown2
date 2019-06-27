@@ -30,6 +30,7 @@ import org.springframework.http.HttpStatus;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * GET: 200 OK
@@ -43,6 +44,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Accessors(chain = true)
 public class ApiResponses<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -102,9 +104,9 @@ public class ApiResponses<T> implements Serializable {
      */
     public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception) {
         FailedResponse failedResponse = new FailedResponse();
-        failedResponse.setError(errorCode.getError());
-        failedResponse.setStatus(errorCode.getHttpCode());
-        failedResponse.setMsg(errorCode.getMsg());
+        failedResponse.setError(errorCode.getError())
+                .setStatus(errorCode.getHttpCode())
+                .setMsg(errorCode.getMsg());
         ResponseUtils.exceptionMsg(failedResponse, exception);
         return failedResponse;
     }
@@ -116,10 +118,9 @@ public class ApiResponses<T> implements Serializable {
      */
     public static <T> ApiResponses<T> failure(ErrorCode errorCode) {
         FailedResponse failedResponse = new FailedResponse();
-        failedResponse.setError(errorCode.getError());
-        failedResponse.setStatus(errorCode.getHttpCode());
-        failedResponse.setMsg(errorCode.getMsg());
-        return failedResponse;
+        return failedResponse.setError(errorCode.getError())
+                .setStatus(errorCode.getHttpCode())
+                .setMsg(errorCode.getMsg());
     }
 
 }

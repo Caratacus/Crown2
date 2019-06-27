@@ -18,36 +18,28 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.framework.responses;
+package org.crown.framework.model;
 
-import java.time.LocalDateTime;
+import org.crown.framework.model.convert.Convert;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
- * 失败返回
+ * <p>
+ * Upload DTO
+ * </p>
  *
  * @author Caratacus
  */
 @Setter
 @Getter
-@Accessors(chain = true)
-public class FailedResponse extends ApiResponses {
+@AllArgsConstructor
+public class UploadDTO extends Convert {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * 错误状态码
-     */
-    private String error;
-    /**
-     * 异常信息
-     */
-    private String exception;
-    /**
-     * 当前时间戳
-     */
-    private LocalDateTime time = LocalDateTime.now();
+    protected String url;
+
+    protected String fileName;
 
 }

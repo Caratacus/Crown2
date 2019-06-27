@@ -22,6 +22,7 @@ package org.crown.framework.responses;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * 成功返回
@@ -30,6 +31,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Accessors(chain = true)
 public class SuccessResponses<T> extends ApiResponses<T> {
 
     private static final long serialVersionUID = 1L;

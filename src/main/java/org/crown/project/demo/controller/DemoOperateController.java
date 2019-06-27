@@ -180,11 +180,11 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/importData")
     @ResponseBody
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+    public ApiResponses<Void> importData(MultipartFile file, boolean updateSupport) throws Exception {
         ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
         List<UserOperateModel> userList = util.importExcel(file.getInputStream());
         String message = importUser(userList, updateSupport);
-        return AjaxResult.success(message);
+        return success().setMsg(message);
     }
 
     /**

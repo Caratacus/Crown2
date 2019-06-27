@@ -5,15 +5,20 @@ import org.crown.common.utils.file.FileUploadUtils;
 import org.crown.common.utils.file.FileUtils;
 import org.crown.common.utils.http.HttpUtils;
 import org.crown.framework.config.RuoYiConfig;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.model.UploadDTO;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.mchange.lang.ThrowableUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 通用请求处理
@@ -21,9 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ruoyi
  */
 @Controller
+@Slf4j
 public class CommonController extends WebController {
-
-    private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
     /**
      * 文件上传路径
@@ -55,7 +59,8 @@ public class CommonController extends WebController {
                 FileUtils.deleteFile(filePath);
             }
         } catch (Exception e) {
-            log.error("下载文件失败", e);
+            log.error(ThrowableUtils.extractStackTrace(e));
+            ApiAssert.failure(ErrorCodeEnum.FILE_DOWNLOAD_FAIL);
         }
         return null;
     }
@@ -65,19 +70,18 @@ public class CommonController extends WebController {
      */
     @PostMapping("/common/upload")
     @ResponseBody
-    public AjaxResult uploadFile(MultipartFile file) {
+    public ApiResponses<UploadDTO> uploadFile(MultipartFile file) {
         try {
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             String url = HttpUtils.getDomain(request) + UPLOAD_PATH + fileName;
-            AjaxResult ajax = AjaxResult.success();
-            ajax.put("fileName", fileName);
-            ajax.put("url", url);
-            return ajax;
+            return success(new UploadDTO(url, fileName));
         } catch (Exception e) {
-            return AjaxResult.error(e.getMessage());
+            log.error(ThrowableUtils.extractStackTrace(e));
+            ApiAssert.failure(ErrorCodeEnum.FILE_UPLOAD_FAIL);
         }
+        return null;
     }
 }

@@ -265,13 +265,14 @@
     		// 下载模板
     		importTemplate: function() {
     			$.get($.table._option.importTemplateUrl, function(result) {
-    				if (result.code == web_status.SUCCESS) {
-    			        window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
-    				} else if (result.code == web_status.WARNING) {
-                        $.modal.alertWarning(result.msg)
-                    } else {
-    					$.modal.alertError(result.msg);
-    				}
+					var status = result.status;
+					if (status >= 200 && status <= 299) {
+						window.location.href = ctx + "common/download?fileName=" + encodeURI(result.result.excelName) + "&delete=" + true;
+					} else if (status >= 300 && status < 500) {
+						$.modal.alertWarning(result.msg);
+					} else {
+						$.modal.alertError(result.msg);
+					}
     			});
             },
             // 导入数据
@@ -308,19 +309,20 @@
             				processData: false,
             				type: 'POST',
             				success: function (result) {
-            					if (result.code == web_status.SUCCESS) {
-            						$.modal.closeAll();
-            						$.modal.alertSuccess(result.msg);
-            						$.table.refresh();
-            					} else if (result.code == web_status.WARNING) {
-            						layer.close(index);
-            						$.modal.enable();
-        	                        $.modal.alertWarning(result.msg)
-        	                    } else {
-            						layer.close(index);
-            						$.modal.enable();
-            						$.modal.alertError(result.msg);
-            					}
+								var status = result.status;
+								if (status >= 200 && status <= 299) {
+									$.modal.closeAll();
+									$.modal.alertSuccess(result.msg);
+									$.table.refresh();
+								} else if (status >= 300 && status < 500) {
+									layer.close(index);
+									$.modal.enable();
+									$.modal.alertWarning(result.msg)
+								} else {
+									layer.close(index);
+									$.modal.enable();
+									$.modal.alertError(result.msg);
+								}
             				}
             			});
             		}
@@ -1349,13 +1351,6 @@
 table_type = {
     bootstrapTable: 0,
     bootstrapTreeTable: 1
-};
-
-/** 消息状态码 */
-web_status = {
-	SUCCESS: 0,
-	FAIL: 500,
-	WARNING: 301
 };
 
 /** 弹窗状态码 */

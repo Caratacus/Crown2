@@ -11,7 +11,6 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.post.service.IPostService;
 import org.crown.project.system.role.service.IRoleService;
@@ -76,11 +75,11 @@ public class UserController extends WebController {
     @RequiresPermissions("system:user:import")
     @PostMapping("/importData")
     @ResponseBody
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+    public ApiResponses<Void> importData(MultipartFile file, boolean updateSupport) throws Exception {
         ExcelUtil<User> util = new ExcelUtil<>(User.class);
         List<User> userList = util.importExcel(file.getInputStream());
         String message = userService.importUser(userList, updateSupport);
-        return AjaxResult.success(message);
+        return success().setMsg(message);
     }
 
     @RequiresPermissions("system:user:view")
