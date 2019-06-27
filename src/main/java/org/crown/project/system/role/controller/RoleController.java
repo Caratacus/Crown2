@@ -6,9 +6,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.role.domain.Role;
 import org.crown.project.system.role.service.IRoleService;
@@ -60,10 +60,11 @@ public class RoleController extends WebController {
     @RequiresPermissions("system:role:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(Role role) {
+    public ApiResponses<ExcelDTO> export(Role role) {
         List<Role> list = roleService.selectRoleList(role);
         ExcelUtil<Role> util = new ExcelUtil<>(Role.class);
-        return util.exportExcel(list, "角色数据");
+        return success(new ExcelDTO(util.exportExcel(list, "角色数据")));
+
     }
 
     /**

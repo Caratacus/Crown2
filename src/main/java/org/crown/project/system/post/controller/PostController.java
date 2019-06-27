@@ -6,9 +6,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.post.domain.Post;
 import org.crown.project.system.post.service.IPostService;
@@ -54,10 +54,11 @@ public class PostController extends WebController {
     @RequiresPermissions("system:post:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(Post post) {
+    public ApiResponses<ExcelDTO> export(Post post) {
         List<Post> list = postService.selectPostList(post);
         ExcelUtil<Post> util = new ExcelUtil<>(Post.class);
-        return util.exportExcel(list, "岗位数据");
+        return success(new ExcelDTO(util.exportExcel(list, "岗位数据")));
+
     }
 
     @RequiresPermissions("system:post:remove")

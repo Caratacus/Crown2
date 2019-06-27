@@ -9,6 +9,8 @@ import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.common.utils.text.Convert;
+import org.crown.framework.model.ExcelDTO;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.PageDomain;
@@ -157,10 +159,10 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(UserOperateModel user) {
+    public ApiResponses<ExcelDTO> export(UserOperateModel user) {
         List<UserOperateModel> list = new ArrayList<>(users.values());
         ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
-        return util.exportExcel(list, "用户数据");
+        return success(new ExcelDTO(util.exportExcel(list, "用户数据")));
     }
 
     /**
@@ -168,9 +170,9 @@ public class DemoOperateController extends WebController {
      */
     @GetMapping("/importTemplate")
     @ResponseBody
-    public AjaxResult importTemplate() {
+    public ApiResponses<ExcelDTO> importTemplate() {
         ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
-        return util.importTemplateExcel("用户数据");
+        return success(new ExcelDTO(util.importTemplateExcel("用户数据")));
     }
 
     /**

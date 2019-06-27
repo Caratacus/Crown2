@@ -7,9 +7,9 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.dict.domain.DictData;
 import org.crown.project.system.dict.service.IDictDataService;
@@ -57,10 +57,11 @@ public class DictDataController extends WebController {
     @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(DictData dictData) {
+    public ApiResponses<ExcelDTO> export(DictData dictData) {
         List<DictData> list = dictDataService.selectDictDataList(dictData);
         ExcelUtil<DictData> util = new ExcelUtil<>(DictData.class);
-        return util.exportExcel(list, "字典数据");
+        return success(new ExcelDTO(util.exportExcel(list, "字典数据")));
+
     }
 
     /**

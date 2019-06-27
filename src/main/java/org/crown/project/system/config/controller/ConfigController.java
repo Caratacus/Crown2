@@ -7,9 +7,9 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.config.domain.Config;
 import org.crown.project.system.config.service.IConfigService;
@@ -60,10 +60,10 @@ public class ConfigController extends WebController {
     @RequiresPermissions("system:config:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(Config config) {
+    public ApiResponses<ExcelDTO> export(Config config) {
         List<Config> list = configService.selectConfigList(config);
         ExcelUtil<Config> util = new ExcelUtil<>(Config.class);
-        return util.exportExcel(list, "参数数据");
+        return success(new ExcelDTO(util.exportExcel(list, "参数数据")));
     }
 
     /**

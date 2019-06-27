@@ -47,7 +47,6 @@ import org.crown.framework.aspectj.lang.annotation.Excel;
 import org.crown.framework.aspectj.lang.annotation.Excel.Type;
 import org.crown.framework.aspectj.lang.annotation.Excels;
 import org.crown.framework.config.RuoYiConfig;
-import org.crown.framework.web.domain.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -234,7 +233,7 @@ public class ExcelUtil<T> {
      * @param sheetName 工作表的名称
      * @return 结果
      */
-    public AjaxResult exportExcel(List<T> list, String sheetName) {
+    public String exportExcel(List<T> list, String sheetName) {
         this.init(list, sheetName, Type.EXPORT);
         return exportExcel();
     }
@@ -245,7 +244,7 @@ public class ExcelUtil<T> {
      * @param sheetName 工作表的名称
      * @return 结果
      */
-    public AjaxResult importTemplateExcel(String sheetName) {
+    public String importTemplateExcel(String sheetName) {
         this.init(null, sheetName, Type.IMPORT);
         return exportExcel();
     }
@@ -255,7 +254,7 @@ public class ExcelUtil<T> {
      *
      * @return 结果
      */
-    public AjaxResult exportExcel() {
+    public String exportExcel() {
         OutputStream out = null;
         try {
             // 取出一共有多少个sheet.
@@ -288,7 +287,7 @@ public class ExcelUtil<T> {
             String filename = encodingFilename(sheetName);
             out = new FileOutputStream(getAbsoluteFile(filename));
             wb.write(out);
-            return AjaxResult.success(filename);
+            return filename;
         } catch (Exception e) {
             log.error("导出Excel异常{}", e.getMessage());
             throw new BusinessException("导出Excel失败，请联系网站管理员！");

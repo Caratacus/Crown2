@@ -6,9 +6,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.dict.domain.DictType;
 import org.crown.project.system.dict.service.IDictTypeService;
@@ -54,11 +54,12 @@ public class DictTypeController extends WebController {
     @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(DictType dictType) {
+    public ApiResponses<ExcelDTO> export(DictType dictType) {
 
         List<DictType> list = dictTypeService.selectDictTypeList(dictType);
         ExcelUtil<DictType> util = new ExcelUtil<>(DictType.class);
-        return util.exportExcel(list, "字典类型");
+        return success(new ExcelDTO(util.exportExcel(list, "字典类型")));
+
     }
 
     /**

@@ -7,6 +7,7 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
@@ -57,10 +58,11 @@ public class OperlogController extends WebController {
     @RequiresPermissions("monitor:operlog:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(OperLog operLog) {
+    public ApiResponses<ExcelDTO> export(OperLog operLog) {
         List<OperLog> list = operLogService.selectOperLogList(operLog);
         ExcelUtil<OperLog> util = new ExcelUtil<>(OperLog.class);
-        return util.exportExcel(list, "操作日志");
+        return success(new ExcelDTO(util.exportExcel(list, "操作日志")));
+
     }
 
     @RequiresPermissions("monitor:operlog:remove")

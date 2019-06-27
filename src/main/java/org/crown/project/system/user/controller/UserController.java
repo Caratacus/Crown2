@@ -7,6 +7,7 @@ import org.crown.common.utils.poi.ExcelUtil;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
@@ -65,10 +66,10 @@ public class UserController extends WebController {
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(User user) {
+    public ApiResponses<ExcelDTO> export(User user) {
         List<User> list = userService.selectUserList(user);
         ExcelUtil<User> util = new ExcelUtil<>(User.class);
-        return util.exportExcel(list, "用户数据");
+        return success(new ExcelDTO(util.exportExcel(list, "用户数据")));
     }
 
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
@@ -85,9 +86,9 @@ public class UserController extends WebController {
     @RequiresPermissions("system:user:view")
     @GetMapping("/importTemplate")
     @ResponseBody
-    public AjaxResult importTemplate() {
+    public ApiResponses<ExcelDTO> importTemplate() {
         ExcelUtil<User> util = new ExcelUtil<>(User.class);
-        return util.importTemplateExcel("用户数据");
+        return success(new ExcelDTO(util.importTemplateExcel("用户数据")));
     }
 
     /**
