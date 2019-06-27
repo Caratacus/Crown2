@@ -1,7 +1,9 @@
 package org.crown.project.common;
 
+import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.file.FileUploadUtils;
+import org.crown.common.utils.file.FileUtil;
 import org.crown.common.utils.file.FileUtils;
 import org.crown.common.utils.http.HttpUtils;
 import org.crown.framework.config.RuoYiConfig;
@@ -44,10 +46,9 @@ public class CommonController extends WebController {
     @ResponseBody
     public Void fileDownload(String fileName, Boolean delete) {
         try {
-            if (!FileUtils.isValidFilename(fileName)) {
-                throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
-            }
-            String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+            ApiAssert.isTrue(ErrorCodeEnum.FILE_ILLEGAL_FILENAME.convert(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName)), FileUtils.isValidFilename(fileName));
+            String filePrefix = FileUtil.getFilePrefix(fileName);
+            String realFileName = fileName.split("_")[0] + "_" + DateUtils.dateTimeNow() + "." + filePrefix;
             String filePath = RuoYiConfig.getDownloadPath() + fileName;
 
             response.setCharacterEncoding("utf-8");
@@ -59,7 +60,7 @@ public class CommonController extends WebController {
                 FileUtils.deleteFile(filePath);
             }
         } catch (Exception e) {
-            log.error(ThrowableUtils.extractStackTrace(e));
+            log.error("下载文件异常 {}", ThrowableUtils.extractStackTrace(e));
             ApiAssert.failure(ErrorCodeEnum.FILE_DOWNLOAD_FAIL);
         }
         return null;
@@ -79,7 +80,7 @@ public class CommonController extends WebController {
             String url = HttpUtils.getDomain(request) + UPLOAD_PATH + fileName;
             return success(new UploadDTO(url, fileName));
         } catch (Exception e) {
-            log.error(ThrowableUtils.extractStackTrace(e));
+            log.error("上传文件异常 {}", ThrowableUtils.extractStackTrace(e));
             ApiAssert.failure(ErrorCodeEnum.FILE_UPLOAD_FAIL);
         }
         return null;

@@ -130,9 +130,9 @@ public enum ErrorCodeEnum {
     MENU_EXISTING_LOWER_LEVEL_MENU(HttpServletResponse.SC_BAD_REQUEST, true, "当前菜单存在子菜单，不允许删除"),
     MENU_EXISTING_USING(HttpServletResponse.SC_BAD_REQUEST, true, "菜单已被使用，不允许删除"),
     //File
-    FILE_UPLOAD_FAIL(HttpServletResponse.SC_BAD_REQUEST, true, "文件上传失败"),
-    FILE_DOWNLOAD_FAIL(HttpServletResponse.SC_BAD_REQUEST, true, "文件下载失败"),
-
+    FILE_UPLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "文件上传失败"),
+    FILE_DOWNLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "文件下载失败"),
+    FILE_ILLEGAL_FILENAME(HttpServletResponse.SC_BAD_REQUEST, true, "文件名称非法，不允许下载"),
     ;
 
     private final int httpCode;
