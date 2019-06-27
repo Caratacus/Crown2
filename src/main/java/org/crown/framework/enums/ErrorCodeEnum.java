@@ -151,7 +151,7 @@ public enum ErrorCodeEnum {
      * @param msg
      * @return
      */
-    public ErrorCode convert(String msg) {
+    public ErrorCode overrideMsg(String msg) {
         return ErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg).build();
     }
 

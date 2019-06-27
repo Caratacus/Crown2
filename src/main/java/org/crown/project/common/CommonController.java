@@ -46,7 +46,7 @@ public class CommonController extends WebController {
     @ResponseBody
     public Void fileDownload(String fileName, Boolean delete) {
         try {
-            ApiAssert.isTrue(ErrorCodeEnum.FILE_ILLEGAL_FILENAME.convert(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName)), FileUtils.isValidFilename(fileName));
+            ApiAssert.isTrue(ErrorCodeEnum.FILE_ILLEGAL_FILENAME.overrideMsg(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName)), FileUtils.isValidFilename(fileName));
             String filePrefix = FileUtil.getFilePrefix(fileName);
             String realFileName = fileName.split("_")[0] + "_" + DateUtils.dateTimeNow() + "." + filePrefix;
             String filePath = RuoYiConfig.getDownloadPath() + fileName;
