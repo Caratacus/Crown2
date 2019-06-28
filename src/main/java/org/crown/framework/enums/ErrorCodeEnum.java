@@ -125,6 +125,7 @@ public enum ErrorCodeEnum {
     USER_ACCOUNT_EXIST(HttpServletResponse.SC_BAD_REQUEST, true, "账号已存在"),
     USER_NOT_ONLINE(HttpServletResponse.SC_BAD_REQUEST, true, "用户已下线"),
     USER_CANNOT_RETREAT_CURRENT_ACCOUNT(HttpServletResponse.SC_BAD_REQUEST, true, "当前登陆用户无法强退"),
+    USER_ELSEWHERE_LOGIN(HttpServletResponse.SC_UNAUTHORIZED, true, "您已在别处登录，请您修改密码或重新登录"),
 
     //menu
     MENU_EXISTING_LOWER_LEVEL_MENU(HttpServletResponse.SC_BAD_REQUEST, true, "当前菜单存在子菜单，不允许删除"),

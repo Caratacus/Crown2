@@ -21,7 +21,8 @@ import org.apache.shiro.web.util.WebUtils;
 import org.crown.common.constant.ShiroConstants;
 import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.framework.web.domain.AjaxResult;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.utils.ResponseUtils;
 import org.crown.project.system.user.domain.User;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -139,8 +140,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         if (ServletUtils.isAjaxRequest(req)) {
-            AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
-            ServletUtils.renderString(res, objectMapper.writeValueAsString(ajaxResult));
+            ResponseUtils.sendFail(req,res, ErrorCodeEnum.USER_ELSEWHERE_LOGIN);
         } else {
             WebUtils.issueRedirect(request, response, kickoutUrl);
         }

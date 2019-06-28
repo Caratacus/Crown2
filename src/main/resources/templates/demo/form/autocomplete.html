@@ -160,7 +160,10 @@
 	    var testBsSuggest = $("#suggest-demo-1").bsSuggest({
 	        url: ctx + "demo/form/userModel",
 	        idField: "userId",
-	        keyField: "userName"
+	        keyField: "userName",
+            fnProcessData: function (json) {    // url 获取数据时，对数据的处理，作为 fnGetData 的回调函数
+                return json.result;
+            }
 	    }).on('onDataRequestSuccess', function (e, result) {
 	        console.log('onDataRequestSuccess: ', result);
 	    }).on('onSetSelectValue', function (e, keyword) {
@@ -173,7 +176,10 @@
 	        url: ctx + "demo/form/userModel",
 	        showBtn: false,
 	        idField: "userId",
-	        keyField: "userName"
+	        keyField: "userName",
+            fnProcessData: function (json) {    // url 获取数据时，对数据的处理，作为 fnGetData 的回调函数
+                return json.result;
+            }
 	    }).on('onDataRequestSuccess', function (e, result) {
 	        console.log('onDataRequestSuccess: ', result);
 	    }).on('onSetSelectValue', function (e, keyword) {
@@ -314,7 +320,7 @@
 	    
 	    $.get(ctx + "demo/form/collection", function(data){
 	    	$("#typeahead-demo-3").typeahead({
-		        source: data.value
+		        source: data.result.value
 		    });
         },'json');
     </script>

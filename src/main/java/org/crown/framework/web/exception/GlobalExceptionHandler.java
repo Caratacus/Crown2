@@ -31,13 +31,11 @@ public class GlobalExceptionHandler {
     /**
      * 自定义 REST 业务异常
      *
-     * @param request
-     * @param response
      * @param exception
      * @return
      */
     @ExceptionHandler(value = ApiException.class)
-    public ApiResponses handleBadRequest(ApiException exception) {
+    public ApiResponses<Void> handleBadRequest(ApiException exception) {
         ErrorCode code = exception.getErrorCode();
         if (code.getHttpCode() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
             log.info("Info: error: {} ,httpCode: {} ,msg: {}", code.getError(), code.getHttpCode(), code.getMsg());
