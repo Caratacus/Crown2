@@ -5,13 +5,16 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.crown.common.utils.ServletUtils;
-import org.crown.common.utils.StringUtils;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 登录验证
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author ruoyi
  */
 @Controller
+@Slf4j
 public class LoginController extends WebController {
 
     @GetMapping("/login")
@@ -33,19 +37,16 @@ public class LoginController extends WebController {
 
     @PostMapping("/login")
     @ResponseBody
-    public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe) {
+    public ApiResponses<Void> ajaxLogin(String username, String password, Boolean rememberMe) {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            return AjaxResult.success();
         } catch (AuthenticationException e) {
-            String msg = "用户或密码错误";
-            if (StringUtils.isNotEmpty(e.getMessage())) {
-                msg = e.getMessage();
-            }
-            return AjaxResult.error(msg);
+            log.warn("用户登陆失败 {}", e.getMessage());
+            ApiAssert.failure(ErrorCodeEnum.USER_USERNAME_OR_PASSWORD_IS_WRONG);
         }
+        return success();
     }
 
     @GetMapping("/unauth")

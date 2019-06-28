@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.crown.common.utils.StringUtils;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.AjaxResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -84,13 +85,9 @@ public class TestController extends WebController {
     @ApiOperation("删除用户信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @DeleteMapping("/{userId}")
-    public AjaxResult delete(@PathVariable Integer userId) {
-        if (!users.isEmpty() && users.containsKey(userId)) {
-            users.remove(userId);
-            return AjaxResult.success();
-        } else {
-            return AjaxResult.error("用户不存在");
-        }
+    public ApiResponses<Void> delete(@PathVariable Integer userId) {
+        users.remove(userId);
+        return success();
     }
 }
 

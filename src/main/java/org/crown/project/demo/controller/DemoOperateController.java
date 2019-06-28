@@ -192,12 +192,12 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
+    public ApiResponses<Void> remove(String ids) {
         Integer[] userIds = Convert.toIntArray(ids);
         for (Integer userId : userIds) {
             users.remove(userId);
         }
-        return AjaxResult.success();
+        return success();
     }
 
     /**
@@ -211,9 +211,9 @@ public class DemoOperateController extends WebController {
 
     @PostMapping("/clean")
     @ResponseBody
-    public AjaxResult clean() {
+    public ApiResponses<Void> clean() {
         users.clear();
-        return AjaxResult.success();
+        return success();
     }
 
     /**
