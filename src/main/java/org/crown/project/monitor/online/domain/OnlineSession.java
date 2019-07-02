@@ -25,6 +25,10 @@ public class OnlineSession extends SimpleSession {
      * 部门名称
      */
     private String deptName;
+    /**
+     * 用户头像
+     */
+    private String avatar;
 
     /**
      * 登录IP地址
@@ -59,6 +63,14 @@ public class OnlineSession extends SimpleSession {
     @Override
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getBrowser() {
