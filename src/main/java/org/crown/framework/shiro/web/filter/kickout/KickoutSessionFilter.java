@@ -19,9 +19,9 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.crown.common.constant.ShiroConstants;
-import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.utils.RequestUtils;
 import org.crown.framework.utils.ResponseUtils;
 import org.crown.project.system.user.domain.User;
 
@@ -139,7 +139,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
     private void sendLogOutResponse(ServletRequest request, ServletResponse response) throws IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        if (ServletUtils.isAjaxRequest(req)) {
+        if (RequestUtils.isAjaxRequest(req)) {
             ResponseUtils.sendFail(req,res, ErrorCodeEnum.USER_ELSEWHERE_LOGIN);
         } else {
             WebUtils.issueRedirect(request, response, kickoutUrl);

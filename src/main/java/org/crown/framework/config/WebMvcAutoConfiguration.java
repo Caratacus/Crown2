@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.crown.common.undertow.UndertowServerFactoryCustomizer;
 import org.crown.common.utils.JacksonUtils;
+import org.crown.common.utils.spring.Crown2HandlerExceptionResolver;
 import org.crown.common.utils.spring.enums.IEnumConverterFactory;
 import org.crown.common.utils.spring.validator.ValidatorCollectionImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -35,6 +36,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.undertow.Undertow;
@@ -74,6 +76,11 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.forEach(JacksonUtils.wrapperObjectMapper());
+    }
+
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        exceptionResolvers.add(new Crown2HandlerExceptionResolver());
     }
 
 }

@@ -18,39 +18,29 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.common.cons;
+package org.crown.common.exception;
 
 /**
- * PAGE 常量
+ * <p>
+ * Crown2异常类
+ * </p>
  *
  * @author Caratacus
  */
-public interface PageCons {
+public class Crown2Exception extends RuntimeException {
 
-    /**
-     * 页数
-     */
-    String PAGE_PAGE = "cursor";
-    /**
-     * 分页大小
-     */
-    String PAGE_ROWS = "limit";
-    /**
-     * 排序字段 ASC
-     */
-    String PAGE_ASCS = "ascs";
-    /**
-     * 排序字段 DESC
-     */
-    String PAGE_DESCS = "descs";
-    /**
-     * 查询总数
-     */
-    String SEARCH_COUNT = "searchCount";
-    /**
-     * 默认每页条目20,最大条目数100
-     */
-    int DEFAULT_LIMIT = 20;
-    int MAX_LIMIT = 100;
+    private static final long serialVersionUID = 1L;
+
+    public Crown2Exception(String message) {
+        super(message);
+    }
+
+    public Crown2Exception(Throwable throwable) {
+        super(throwable);
+    }
+
+    public Crown2Exception(String message, Throwable throwable) {
+        super(message, throwable);
+    }
 
 }

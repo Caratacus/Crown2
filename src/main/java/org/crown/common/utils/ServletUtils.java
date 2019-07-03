@@ -90,28 +90,4 @@ public class ServletUtils {
         return null;
     }
 
-    /**
-     * 是否是Ajax异步请求
-     *
-     * @param request
-     */
-    public static boolean isAjaxRequest(HttpServletRequest request) {
-        String accept = request.getHeader("accept");
-        if (accept != null && accept.contains("application/json")) {
-            return true;
-        }
-
-        String xRequestedWith = request.getHeader("X-Requested-With");
-        if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
-            return true;
-        }
-
-        String uri = request.getRequestURI();
-        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
-            return true;
-        }
-
-        String ajax = request.getParameter("__ajax");
-        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
-    }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
@@ -38,7 +39,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataValidation;
-import org.crown.common.exception.BusinessException;
+import org.crown.common.exception.ExcelException;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.reflect.ReflectUtils;
@@ -290,22 +291,9 @@ public class ExcelUtil<T> {
             return filename;
         } catch (Exception e) {
             log.error("导出Excel异常{}", e.getMessage());
-            throw new BusinessException("导出Excel失败，请联系网站管理员！");
+            throw new ExcelException("导出Excel失败，请联系网站管理员！");
         } finally {
-            if (wb != null) {
-                try {
-                    wb.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
+            IOUtils.closeQuietly(wb,out);
         }
     }
 
@@ -425,7 +413,7 @@ public class ExcelUtil<T> {
                 }
             }
         } catch (Exception e) {
-            log.error("导出Excel失败{}", e);
+            log.error("导出Excel添加单元格失败:{}", e.getMessage());
         }
         return cell;
     }

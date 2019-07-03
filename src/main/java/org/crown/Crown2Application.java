@@ -18,20 +18,17 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.common.cons;
+package org.crown;
 
-/**
- * <p>
- * API常量
- * </p>
- *
- * @author Caratacus
- */
-public interface APICons {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-    String API_REQURL = "API_REQURL";
-    String API_MAPPING = "API_MAPPING";
-    String API_METHOD = "API_METHOD";
-    String API_BEGIN_TIME = "API_BEGIN_TIME";
-    String API_UID = "API_UID";
+@SpringBootApplication
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
+public class Crown2Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Crown2Application.class, args);
+    }
 }
