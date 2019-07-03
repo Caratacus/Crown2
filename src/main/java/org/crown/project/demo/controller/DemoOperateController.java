@@ -12,7 +12,6 @@ import org.crown.common.utils.text.Convert;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.crown.framework.web.page.PageDomain;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.framework.web.page.TableSupport;
@@ -40,7 +39,7 @@ public class DemoOperateController extends WebController {
     private final static Map<Integer, UserOperateModel> users = new LinkedHashMap<>();
 
     static {
-        users.put(1, new UserOperateModel(1, "1000001", "测试1", "0", "15888888888", "ry@qq.com", 150.0, "0"));
+        users.put(1, new UserOperateModel(1, "1000001", "2222222", "0", "15888888888", "ry@qq.com", 150.0, "0"));
         users.put(2, new UserOperateModel(2, "1000002", "测试2", "1", "15666666666", "ry@qq.com", 180.0, "1"));
         users.put(3, new UserOperateModel(3, "1000003", "测试3", "0", "15666666666", "ry@qq.com", 110.0, "1"));
         users.put(4, new UserOperateModel(4, "1000004", "测试4", "1", "15666666666", "ry@qq.com", 220.0, "1"));
@@ -130,10 +129,11 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(UserOperateModel user) {
+    public ApiResponses<Void> addSave(UserOperateModel user) {
         int userId = users.size() + 1;
         user.setUserId(userId);
-        return AjaxResult.success(users.put(userId, user));
+        users.put(userId, user);
+        return success();
     }
 
     /**
@@ -150,8 +150,9 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(UserOperateModel user) {
-        return AjaxResult.success(users.put(user.getUserId(), user));
+    public ApiResponses<Void> editSave(UserOperateModel user) {
+        users.put(user.getUserId(), user);
+        return success();
     }
 
     /**

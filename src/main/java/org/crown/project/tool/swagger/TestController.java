@@ -5,10 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.crown.common.utils.StringUtils;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.domain.AjaxResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,44 +40,32 @@ public class TestController extends WebController {
 
     @ApiOperation("获取用户列表")
     @GetMapping("/list")
-    public AjaxResult userList() {
+    public ApiResponses<List<UserEntity>> userList() {
         List<UserEntity> userList = new ArrayList<>(users.values());
-        return AjaxResult.success(userList);
+        return success(userList);
     }
 
     @ApiOperation("获取用户详细")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{userId}")
-    public AjaxResult getUser(@PathVariable Integer userId) {
-        if (!users.isEmpty() && users.containsKey(userId)) {
-            return AjaxResult.success(users.get(userId));
-        } else {
-            return AjaxResult.error("用户不存在");
-        }
+    public ApiResponses<UserEntity> getUser(@PathVariable Integer userId) {
+            return success(users.get(userId));
     }
 
     @ApiOperation("新增用户")
     @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PostMapping("/save")
-    public AjaxResult save(UserEntity user) {
-        if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-            return AjaxResult.error("用户ID不能为空");
-        }
-        return AjaxResult.success(users.put(user.getUserId(), user));
+    public ApiResponses<Void> save(UserEntity user) {
+        users.put(user.getUserId(), user);
+        return success();
     }
 
     @ApiOperation("更新用户")
     @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PutMapping("/update")
-    public AjaxResult update(UserEntity user) {
-        if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-            return AjaxResult.error("用户ID不能为空");
-        }
-        if (users.isEmpty() || !users.containsKey(user.getUserId())) {
-            return AjaxResult.error("用户不存在");
-        }
+    public ApiResponses<Void> update(UserEntity user) {
         users.remove(user.getUserId());
-        return AjaxResult.success(users.put(user.getUserId(), user));
+        return success();
     }
 
     @ApiOperation("删除用户信息")

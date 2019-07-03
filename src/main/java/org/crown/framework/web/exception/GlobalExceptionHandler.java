@@ -7,11 +7,10 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.crown.common.exception.BusinessException;
 import org.crown.common.exception.DemoModeException;
 import org.crown.common.utils.ServletUtils;
-import org.crown.common.utils.security.PermissionUtils;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.exception.ApiException;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.responses.ApiResponses;
-import org.crown.framework.web.domain.AjaxResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -52,7 +51,7 @@ public class GlobalExceptionHandler {
     public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e) {
         log.error(e.getMessage(), e);
         if (ServletUtils.isAjaxRequest(request)) {
-            return AjaxResult.error(PermissionUtils.getMsg(e.getMessage()));
+            return ApiResponses.failure(ErrorCodeEnum.INTERNAL_SERVER_ERROR.convert());
         } else {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("error/unauth");
@@ -64,27 +63,18 @@ public class GlobalExceptionHandler {
      * 请求方式不支持
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-    public AjaxResult handleException(HttpRequestMethodNotSupportedException e) {
+    public ApiResponses<Void> handleException(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage(), e);
-        return AjaxResult.error("不支持' " + e.getMethod() + "'请求");
-    }
-
-    /**
-     * 拦截未知的运行时异常
-     */
-    @ExceptionHandler(RuntimeException.class)
-    public AjaxResult notFount(RuntimeException e) {
-        log.error("运行时异常:", e);
-        return AjaxResult.error("运行时异常:" + e.getMessage());
+        return ApiResponses.failure(ErrorCodeEnum.METHOD_NOT_ALLOWED.convert());
     }
 
     /**
      * 系统异常
      */
     @ExceptionHandler(Exception.class)
-    public AjaxResult handleException(Exception e) {
+    public ApiResponses<Void> handleException(Exception e) {
         log.error(e.getMessage(), e);
-        return AjaxResult.error("服务器错误，请联系管理员");
+        return ApiResponses.failure(ErrorCodeEnum.INTERNAL_SERVER_ERROR.convert());
     }
 
     /**
@@ -94,7 +84,7 @@ public class GlobalExceptionHandler {
     public Object businessException(HttpServletRequest request, BusinessException e) {
         log.error(e.getMessage(), e);
         if (ServletUtils.isAjaxRequest(request)) {
-            return AjaxResult.error(e.getMessage());
+            return ApiResponses.failure(ErrorCodeEnum.INTERNAL_SERVER_ERROR.convert());
         } else {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("errorMessage", e.getMessage());
@@ -107,7 +97,7 @@ public class GlobalExceptionHandler {
      * 演示模式异常
      */
     @ExceptionHandler(DemoModeException.class)
-    public AjaxResult demoModeException(DemoModeException e) {
-        return AjaxResult.error("演示模式，不允许操作");
+    public ApiResponses<Void> demoModeException(DemoModeException e) {
+        return ApiResponses.failure(ErrorCodeEnum.DEMO_SYSTEM_CANNOT_DO.convert());
     }
 }
