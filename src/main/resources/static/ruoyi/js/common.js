@@ -1,6 +1,6 @@
 /**
  * 通用方法封装处理
- * Copyright (c) 2019 ruoyi 
+ * Copyright (c) 2019 ruoyi
  */
 $(function() {
 	// select2复选框事件绑定
@@ -12,7 +12,7 @@ $(function() {
 			})
 		})
 	}
-	
+
 	// iCheck单选框及复选框事件绑定
 	if ($.fn.iCheck !== undefined) {
 		$(".check-box:not(.noicheck),.radio-box:not(.noicheck)").each(function() {
@@ -22,7 +22,7 @@ $(function() {
             })
         })
 	}
-	 
+
 	// laydate 时间控件绑定
 	if ($(".select-time").length > 0) {
 		layui.use('laydate', function() {
@@ -203,7 +203,7 @@ function createMenuItem(dataUrl, menuName) {
         // 添加选项卡对应的iframe
         var str1 = '<iframe class="RuoYi_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" data-panel="' + panelUrl + '" seamless></iframe>';
         $('.mainContent', topWindow).find('iframe.RuoYi_iframe').hide().parents('.mainContent').append(str1);
-        
+
         window.parent.$.modal.loading("数据加载中，请稍后...");
         $('.mainContent iframe:visible', topWindow).load(function () {
         	window.parent.$.modal.closeLoading();
@@ -234,7 +234,16 @@ var log = {
 /** 设置全局ajax处理 */
 $.ajaxSetup({
     complete: function(XMLHttpRequest, textStatus) {
-        if (textStatus == 'timeout') {
+		if (XMLHttpRequest.status == 401) {
+            $.modal.alertWarning("登录超时，请重新登录");
+            $.modal.enable();
+            $.modal.closeLoading();
+            if (ctx === "/") {
+                location.href = '/login';
+            } else {
+                location.href = ctx + '/login';
+            }
+		}else if (textStatus == 'timeout') {
         	$.modal.alertWarning("服务器超时，请稍后再试！");
         	$.modal.enable();
             $.modal.closeLoading();

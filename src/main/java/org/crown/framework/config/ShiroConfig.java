@@ -209,6 +209,13 @@ public class ShiroConfig {
     }
 
     /**
+     * UserFilter
+     */
+    public UserFilter userFilter() {
+        return  new UserFilter();
+    }
+
+    /**
      * Shiro过滤器配置
      */
     @Bean
@@ -248,6 +255,7 @@ public class ShiroConfig {
         filters.put("kickout", kickoutSessionFilter());
         // 注销成功，则跳转到指定页面
         filters.put("logout", logoutFilter());
+        filters.put("user", userFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
         // 所有请求需要认证
