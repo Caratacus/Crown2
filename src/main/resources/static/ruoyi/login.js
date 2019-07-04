@@ -29,14 +29,15 @@ function login() {
             "validateCode" : validateCode,
             "rememberMe": rememberMe
         },
-        success: function(r) {
-            if (r.code == 0) {
+        success: function(result) {
+            var status = result.status;
+            if (status >= 200 && status <= 299) {
                 location.href = ctx + 'index';
             } else {
-            	$.modal.closeLoading();
-            	$('.imgcode').click();
-            	$(".code").val("");
-            	$.modal.msg(r.msg);
+                $.modal.closeLoading();
+                $('.imgcode').click();
+                $(".code").val("");
+                $.modal.msg(result.msg);
             }
         }
     });

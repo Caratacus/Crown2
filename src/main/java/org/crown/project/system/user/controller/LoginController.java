@@ -38,7 +38,7 @@ public class LoginController extends WebController {
             subject.login(token);
         } catch (AuthenticationException e) {
             log.warn("用户登陆失败 {}", e.getMessage());
-            ApiAssert.failure(ErrorCodeEnum.USER_USERNAME_OR_PASSWORD_IS_WRONG);
+            ApiAssert.failure(ErrorCodeEnum.USER_USERNAME_OR_PASSWORD_IS_WRONG.overrideMsg(e.getMessage()));
         }
         return success();
     }
