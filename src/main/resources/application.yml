@@ -7,7 +7,7 @@ ruoyi:
   # 实例演示开关
   demoEnabled: true
   # 文件路径
-  profile: /develop/logs/ruoyifile
+  profile: /develop/logs/ruoyifile/
   # 获取ip地址开关
   addressEnabled: true
 

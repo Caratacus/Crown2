@@ -1,10 +1,14 @@
 package org.crown.common.utils.file;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.crown.common.exception.Crown2Exception;
 import org.crown.common.exception.file.FileNameLengthLimitExceededException;
 import org.crown.common.exception.file.FileSizeLimitExceededException;
 import org.crown.common.exception.file.InvalidExtensionException;
@@ -14,11 +18,14 @@ import org.crown.common.utils.StringUtils;
 import org.crown.framework.config.RuoYiConfig;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 文件上传工具类
  *
  * @author ruoyi
  */
+@Slf4j
 public class FileUploadUtils {
 
     /**
@@ -98,11 +105,19 @@ public class FileUploadUtils {
         }
 
         assertAllowed(file, allowedExtension);
-
         String fileName = extractFilename(file);
-
         File desc = getAbsoluteFile(baseDir, fileName);
-        file.transferTo(desc);
+        BufferedOutputStream stream = null;
+        try {
+            byte[] bytes = file.getBytes();
+            stream = new BufferedOutputStream(new FileOutputStream(desc));
+            stream.write(bytes);
+        } catch (Exception e) {
+            log.error("上传文件出现错误:{}", e.getMessage());
+            throw new Crown2Exception("上传文件出现错误");
+        } finally {
+            IOUtils.closeQuietly(stream);
+        }
         return fileName;
     }
 
