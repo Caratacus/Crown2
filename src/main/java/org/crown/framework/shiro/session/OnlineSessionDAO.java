@@ -5,8 +5,8 @@ import java.util.Date;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
-import org.crown.framework.manager.AsyncManager;
-import org.crown.framework.manager.factory.AsyncFactory;
+import org.crown.framework.manager.ThreadExecutors;
+import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.monitor.online.domain.UserOnline;
 import org.crown.project.monitor.online.service.IUserOnlineService;
@@ -90,7 +90,7 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
         if (onlineSession.isAttributeChanged()) {
             onlineSession.resetAttributeChanged();
         }
-        AsyncManager.me().execute(AsyncFactory.syncSessionToDb(onlineSession));
+        ThreadExecutors.execute(TimerTasks.syncSession(onlineSession));
     }
 
     /**

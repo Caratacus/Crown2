@@ -16,8 +16,8 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessStatus;
-import org.crown.framework.manager.AsyncManager;
-import org.crown.framework.manager.factory.AsyncFactory;
+import org.crown.framework.manager.ThreadExecutors;
+import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.system.user.domain.User;
 import org.slf4j.Logger;
@@ -99,7 +99,7 @@ public class LogAspect {
             // 处理设置注解上的参数
             getControllerMethodDescription(controllerLog, operLog);
             // 保存数据库
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
+            ThreadExecutors.execute(TimerTasks.recordOper(operLog));
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("==前置通知异常==");

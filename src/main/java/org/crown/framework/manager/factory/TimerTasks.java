@@ -15,19 +15,17 @@ import org.crown.project.monitor.online.domain.UserOnline;
 import org.crown.project.monitor.online.service.IUserOnlineService;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.monitor.operlog.service.IOperLogService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import eu.bitwalker.useragentutils.UserAgent;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * 异步工厂（产生任务用）
+ * TimerTask异步 工具类
  *
- * @author liuhulu
+ * @author Caratacus
  */
-public class AsyncFactory {
-
-    private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
+@Slf4j
+public class TimerTasks {
 
     /**
      * 同步session到数据库
@@ -35,7 +33,7 @@ public class AsyncFactory {
      * @param session 在线用户会话
      * @return 任务task
      */
-    public static TimerTask syncSessionToDb(final OnlineSession session) {
+    public static TimerTask syncSession(final OnlineSession session) {
         return new TimerTask() {
             @Override
             public void run() {
@@ -98,7 +96,7 @@ public class AsyncFactory {
                 s.append(LogUtils.getBlock(status));
                 s.append(LogUtils.getBlock(message));
                 // 打印信息到日志
-                sys_user_logger.info(s.toString(), args);
+                log.info(s.toString(), args);
                 // 获取客户端操作系统
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器

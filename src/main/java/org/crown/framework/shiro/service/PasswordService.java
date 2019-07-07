@@ -12,8 +12,8 @@ import org.crown.common.constant.ShiroConstants;
 import org.crown.common.exception.user.UserPasswordNotMatchException;
 import org.crown.common.exception.user.UserPasswordRetryLimitExceedException;
 import org.crown.common.utils.MessageUtils;
-import org.crown.framework.manager.AsyncManager;
-import org.crown.framework.manager.factory.AsyncFactory;
+import org.crown.framework.manager.ThreadExecutors;
+import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.project.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,12 +50,12 @@ public class PasswordService {
             loginRecordCache.put(loginName, retryCount);
         }
         if (retryCount.incrementAndGet() > Integer.valueOf(maxRetryCount)) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGIN_FAIL, MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount)));
+            ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGIN_FAIL, MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount)));
             throw new UserPasswordRetryLimitExceedException(Integer.valueOf(maxRetryCount));
         }
 
         if (!matches(user, password)) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGIN_FAIL, MessageUtils.message("user.password.retry.limit.count", retryCount)));
+            ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGIN_FAIL, MessageUtils.message("user.password.retry.limit.count", retryCount)));
             loginRecordCache.put(loginName, retryCount);
             throw new UserPasswordNotMatchException();
         } else {
