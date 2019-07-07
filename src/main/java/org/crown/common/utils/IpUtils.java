@@ -27,6 +27,9 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.crown.common.utils.http.HttpUtils;
+
+import com.alibaba.fastjson.JSONObject;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -42,6 +45,11 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public abstract class IpUtils {
+
+    /**
+     * 获取IP地址所在地址接口路径
+     */
+    public static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";
 
     /**
      * <p>
@@ -209,5 +217,41 @@ public abstract class IpUtils {
             return null;
         }
         return bytes;
+    }
+
+    /**
+     * 获取IP地址所在地址
+     *
+     * @param ip
+     * @return
+     */
+    public static String getRealAddress(String ip) {
+        String address = "未获取地址";
+        // 内网不查询
+        if (IpUtils.internalIp(ip)) {
+            return "内网IP";
+        }
+        String repoStr = HttpUtils.sendPost(IP_URL,
+                Maps.<String, String>builder()
+                        .put("accept", "*/*")
+                        .put("connection", "Keep-Alive")
+                        .put("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)")
+                        .put("Accept-Charset", "utf-8")
+                        .put("contentType", "utf-8")
+                        .build(),
+                Maps.<String, String>builder()
+                        .put("ip", ip)
+                        .build());
+        if (org.crown.common.utils.StringUtils.isNotEmpty(repoStr)) {
+            JSONObject jsonObject = JSONObject.parseObject(repoStr);
+            if (jsonObject.getIntValue("code") == 0) {
+                JSONObject data = jsonObject.getJSONObject("data");
+                String country = data.getString("country");
+                String region = data.getString("region");
+                String city = data.getString("city");
+                address = country + "-" + region + "-" + city;
+            }
+        }
+        return address;
     }
 }

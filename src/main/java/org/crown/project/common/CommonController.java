@@ -3,7 +3,6 @@ package org.crown.project.common;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.file.FileUploadUtils;
-import org.crown.common.utils.file.FileUtil;
 import org.crown.common.utils.file.FileUtils;
 import org.crown.common.utils.http.HttpUtils;
 import org.crown.framework.config.RuoYiConfig;
@@ -47,7 +46,7 @@ public class CommonController extends WebController {
     public Void fileDownload(String fileName, Boolean delete) {
         try {
             ApiAssert.isTrue(ErrorCodeEnum.FILE_ILLEGAL_FILENAME.overrideMsg(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName)), FileUtils.isValidFilename(fileName));
-            String filePrefix = FileUtil.getFilePrefix(fileName);
+            String filePrefix = FileUtils.getFilePrefix(fileName);
             String realFileName = fileName.split("_")[0] + "_" + DateUtils.dateTimeNow() + "." + filePrefix;
             String filePath = RuoYiConfig.getDownloadPath() + fileName;
 
