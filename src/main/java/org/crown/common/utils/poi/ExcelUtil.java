@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -39,7 +41,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataValidation;
-import org.crown.common.exception.ExcelException;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.reflect.ReflectUtils;
@@ -48,6 +49,7 @@ import org.crown.framework.aspectj.lang.annotation.Excel;
 import org.crown.framework.aspectj.lang.annotation.Excel.Type;
 import org.crown.framework.aspectj.lang.annotation.Excels;
 import org.crown.framework.config.RuoYiConfig;
+import org.crown.framework.exception.MsgException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -290,8 +292,7 @@ public class ExcelUtil<T> {
             wb.write(out);
             return filename;
         } catch (Exception e) {
-            log.error("导出Excel异常{}", e.getMessage());
-            throw new ExcelException("导出Excel失败，请联系网站管理员！");
+            throw new MsgException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "导出Excel失败，请联系网站管理员！");
         } finally {
             IOUtils.closeQuietly(wb, out);
         }

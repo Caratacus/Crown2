@@ -92,7 +92,6 @@ public class FileUploadUtils {
      * @param allowedExtension 上传文件类型
      * @return 返回上传成功的文件名
      * @throws IOException               比如读写文件出错时
-     * @throws InvalidExtensionException 文件校验异常
      */
     public static String upload(String baseDir, MultipartFile file, String[] allowedExtension)
             throws IOException {
@@ -155,7 +154,6 @@ public class FileUploadUtils {
      *
      * @param file 上传的文件
      * @return
-     * @throws InvalidExtensionException
      */
     public static void assertAllowed(MultipartFile file, String[] allowedExtension) {
         long size = file.getSize();
