@@ -27,7 +27,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.crown.framework.exception.CrownException;
+import javax.servlet.http.HttpServletResponse;
+
+import org.crown.framework.exception.Crown2Exception;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
@@ -80,7 +82,7 @@ public abstract class JacksonUtils {
         try {
             return getObjectMapper().writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new CrownException(e);
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "JSON转换失败", e);
         }
     }
 

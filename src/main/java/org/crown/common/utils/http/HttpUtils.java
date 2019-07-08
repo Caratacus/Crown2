@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.IOUtils;
@@ -45,7 +46,7 @@ import org.crown.common.enums.HTTPMethod;
 import org.crown.common.utils.JacksonUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.file.FileUtils;
-import org.crown.framework.exception.CrownException;
+import org.crown.framework.exception.Crown2Exception;
 import org.springframework.util.StreamUtils;
 
 import lombok.AccessLevel;
@@ -198,7 +199,7 @@ public abstract class HttpUtils {
     private static void setConfigs(HttpRequestBase httpRequestBase, HttpHost proxyhttpHost, Map<String, String> headMap,
                                    Map<String, String> paramMap) {
         if (httpRequestBase == null) {
-            throw new CrownException("Error : SetConfigs Fail! HttpRequestBase Is Null!");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "HttpRequestBase Is Null");
         }
         // 设置代理服务器
         if (null != proxyhttpHost) {
@@ -346,7 +347,7 @@ public abstract class HttpUtils {
     public static String sendEntity(HTTPMethod method, String url, ContentType bodyType, Map<String, String> headMap, Object object,
                                     CookieStore cookieStore) {
         if (StringUtils.isBlank(url) || null == object) {
-            throw new CrownException("Error : Params does not support");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "请求路径不能为空");
         }
         HttpEntityEnclosingRequestBase httpEntityMethod = null;
         switch (method) {

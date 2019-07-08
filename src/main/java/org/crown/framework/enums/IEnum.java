@@ -18,29 +18,22 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.framework.exception;
+package org.crown.framework.enums;
 
 /**
  * <p>
- * Crown异常类
+ * 通用枚举
  * </p>
  *
  * @author Caratacus
  */
-public class CrownException extends RuntimeException {
+public interface IEnum {
 
-    private static final long serialVersionUID = 1L;
-
-    public CrownException(String message) {
-        super(message);
-    }
-
-    public CrownException(Throwable throwable) {
-        super(throwable);
-    }
-
-    public CrownException(String message, Throwable throwable) {
-        super(message, throwable);
-    }
+    /**
+     * 获取枚举值
+     *
+     * @return
+     */
+    int getValue();
 
 }
