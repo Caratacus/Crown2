@@ -5,7 +5,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.crown.common.constant.ShiroConstants;
+import org.crown.common.cons.ShiroConstants;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
 

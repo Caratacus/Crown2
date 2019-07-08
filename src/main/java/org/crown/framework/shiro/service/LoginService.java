@@ -2,15 +2,15 @@ package org.crown.framework.shiro.service;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.crown.common.constant.Constants;
-import org.crown.common.constant.ShiroConstants;
-import org.crown.common.constant.UserConstants;
+import org.crown.common.cons.Constants;
+import org.crown.common.cons.ShiroConstants;
+import org.crown.common.cons.UserConstants;
 import org.crown.common.utils.DateUtils;
-import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.framework.exception.MsgException;
+import org.crown.framework.exception.Crown2Exception;
 import org.crown.framework.manager.ThreadExecutors;
 import org.crown.framework.manager.factory.TimerTasks;
+import org.crown.framework.spring.ApplicationUtils;
 import org.crown.project.system.user.domain.User;
 import org.crown.project.system.user.domain.UserStatus;
 import org.crown.project.system.user.service.IUserService;
@@ -37,27 +37,27 @@ public class LoginService {
      */
     public User login(String username, String password) {
         // 验证码校验
-        if (!StringUtils.isEmpty(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA))) {
+        if (!StringUtils.isEmpty(ApplicationUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA))) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "验证码错误"));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "验证码错误");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "验证码错误");
         }
         // 用户名或密码为空 错误
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "用户名或密码为空"));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码为空");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码为空");
         }
         // 密码如果不在指定范围内 错误
         if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
                 || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "用户名或密码错误"));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
         }
 
         // 用户名不在指定范围内 错误
         if (username.length() < UserConstants.USERNAME_MIN_LENGTH
                 || username.length() > UserConstants.USERNAME_MAX_LENGTH) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "用户名或密码错误"));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
         }
 
         // 查询用户信息
@@ -73,17 +73,17 @@ public class LoginService {
 
         if (user == null) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "用户名或密码错误"));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
         }
 
         if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "对不起，您的账号已被删除"));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "对不起，您的账号已被删除");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "对不起，您的账号已被删除");
         }
 
         if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "用户已被禁用，请联系管理员", user.getRemark()));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "用户已被禁用，请联系管理员");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "用户已被禁用，请联系管理员");
         }
 
         passwordService.validate(user, password);

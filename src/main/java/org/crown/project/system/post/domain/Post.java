@@ -1,6 +1,6 @@
 package org.crown.project.system.post.domain;
 
-import org.crown.framework.aspectj.lang.annotation.Excel;
+import org.crown.common.annotation.Excel;
 import org.crown.framework.web.domain.BaseEntity;
 
 import com.baomidou.mybatisplus.annotation.TableField;

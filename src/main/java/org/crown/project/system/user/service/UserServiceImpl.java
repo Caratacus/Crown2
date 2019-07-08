@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.framework.aspectj.lang.annotation.DataScope;
+import org.crown.common.annotation.DataScope;
 import org.crown.framework.enums.ErrorCodeEnum;
-import org.crown.framework.exception.MsgException;
+import org.crown.framework.exception.Crown2Exception;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.shiro.service.PasswordService;
 import org.crown.framework.utils.ApiAssert;
@@ -234,7 +234,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public String importUser(List<User> userList, Boolean isUpdateSupport) {
         if (StringUtils.isNull(userList) || userList.size() == 0) {
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;
@@ -270,7 +270,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         }
         if (failureNum > 0) {
             failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, failureMsg.toString());
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, failureMsg.toString());
         } else {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }

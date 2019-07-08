@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.crown.common.utils.Maps;
+import org.crown.common.utils.StringUtils;
 
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 
@@ -54,6 +55,11 @@ import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
  */
 public class AntiSQLFilter {
 
+    /**
+     * 仅支持字母、数字、下划线、空格、逗号（支持多个字段排序）
+     */
+    private static final String SQL_PATTERN = "[a-zA-Z0-9_ ,]+";
+
     private static final String[] keyWords = {";", "\"", "\'", "/*", "*/", "--", "exec",
             "select", "update", "delete", "insert",
             "alter", "drop", "create", "shutdown"};
@@ -81,8 +87,12 @@ public class AntiSQLFilter {
     }
 
     public static String getSafeValue(String oldValue) {
-        StringBuilder sb = new StringBuilder(oldValue);
-        String lowerCase = oldValue.toLowerCase();
+        String value = escapeOrderBySql(oldValue);
+        if (StringUtils.EMPTY.equals(value)) {
+            return value;
+        }
+        StringBuilder sb = new StringBuilder(value);
+        String lowerCase = value.toLowerCase();
         for (String keyWord : keyWords) {
             int x;
             while ((x = lowerCase.indexOf(keyWord)) >= 0) {
@@ -96,6 +106,23 @@ public class AntiSQLFilter {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 检查字符，防止注入绕过
+     */
+    public static String escapeOrderBySql(String value) {
+        if (StringUtils.isNotEmpty(value) && !isValidOrderBySql(value)) {
+            return StringUtils.EMPTY;
+        }
+        return value;
+    }
+
+    /**
+     * 验证 order by 语法是否符合规范
+     */
+    public static boolean isValidOrderBySql(String value) {
+        return value.matches(SQL_PATTERN);
     }
 
 }

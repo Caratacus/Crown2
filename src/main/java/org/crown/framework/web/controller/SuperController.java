@@ -26,7 +26,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.crown.common.constant.PageCons;
+import org.crown.common.cons.PageCons;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.sql.AntiSQLFilter;

@@ -3,11 +3,10 @@ package org.crown.framework.manager.factory;
 import java.util.Date;
 import java.util.TimerTask;
 
-import org.crown.common.constant.Constants;
+import org.crown.common.cons.Constants;
 import org.crown.common.utils.IpUtils;
-import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.common.utils.spring.ApplicationUtils;
+import org.crown.framework.spring.ApplicationUtils;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
 import org.crown.project.monitor.logininfor.service.ILogininforService;
 import org.crown.project.monitor.online.domain.OnlineSession;
@@ -84,7 +83,7 @@ public class TimerTasks {
      * @return 任务task
      */
     public static TimerTask recordLogininfor(final String username, final String status, final String message, final Object... args) {
-        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        final UserAgent userAgent = UserAgent.parseUserAgentString(ApplicationUtils.getRequest().getHeader("User-Agent"));
         final String ip = ShiroUtils.getIp();
         return new TimerTask() {
             @Override

@@ -3,8 +3,8 @@ package org.crown.project.demo.domain;
 import java.util.Date;
 
 import org.crown.common.utils.DateUtils;
-import org.crown.framework.aspectj.lang.annotation.Excel;
-import org.crown.framework.aspectj.lang.annotation.Excel.Type;
+import org.crown.common.annotation.Excel;
+import org.crown.common.annotation.Excel.Type;
 import org.crown.framework.web.domain.BaseEntity;
 
 public class UserOperateModel extends BaseEntity {

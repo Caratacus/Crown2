@@ -14,10 +14,10 @@ import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.crown.common.constant.Constants;
+import org.crown.common.cons.Constants;
 import org.crown.common.utils.StringUtils;
-import org.crown.framework.config.GenConfig;
-import org.crown.framework.exception.MsgException;
+import org.crown.project.config.GenConfig;
+import org.crown.framework.exception.Crown2Exception;
 import org.crown.project.tool.gen.domain.ColumnInfo;
 import org.crown.project.tool.gen.domain.TableInfo;
 import org.crown.project.tool.gen.mapper.GenMapper;
@@ -101,7 +101,7 @@ public class GenServiceImpl implements IGenService {
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
             } catch (IOException e) {
-                throw new MsgException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "渲染模板失败，表名：" + table.getTableName(), e);
+                throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "渲染模板失败，表名：" + table.getTableName(), e);
             }
         }
     }

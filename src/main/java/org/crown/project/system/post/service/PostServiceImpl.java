@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
-import org.crown.framework.exception.MsgException;
+import org.crown.framework.exception.Crown2Exception;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.system.post.domain.Post;
 import org.crown.project.system.post.mapper.PostMapper;
@@ -61,7 +61,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         for (Long postId : postIds) {
             Post post = getById(postId);
             if (userPostService.query().eq(UserPost::getPostId, postId).exist()) {
-                throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, post.getPostName() + "已分配，不能删除");
+                throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, post.getPostName() + "已分配，不能删除");
             }
         }
         return delete().inOrThrow(Post::getPostId, postIds).execute();

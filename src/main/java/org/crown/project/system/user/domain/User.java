@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.crown.framework.aspectj.lang.annotation.Excel;
-import org.crown.framework.aspectj.lang.annotation.Excels;
+import org.crown.common.annotation.Excel;
+import org.crown.common.annotation.Excels;
 import org.crown.framework.web.domain.BaseEntity;
 import org.crown.project.system.dept.domain.Dept;
 import org.crown.project.system.role.domain.Role;

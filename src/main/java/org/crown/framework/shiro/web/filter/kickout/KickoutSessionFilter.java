@@ -18,7 +18,7 @@ import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.crown.common.constant.ShiroConstants;
+import org.crown.common.cons.ShiroConstants;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.utils.RequestUtils;

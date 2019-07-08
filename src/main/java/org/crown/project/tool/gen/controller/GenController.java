@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.crown.common.utils.text.Convert;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.common.utils.converter.Convert;
+import org.crown.common.annotation.Log;
+import org.crown.common.enums.BusinessType;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.tool.gen.domain.TableInfo;

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
-import org.crown.framework.exception.MsgException;
+import org.crown.framework.exception.Crown2Exception;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.system.dict.domain.DictType;
 import org.crown.project.system.dict.mapper.DictTypeMapper;
@@ -42,7 +42,7 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
         for (Long dictId : dictIds) {
             DictType dictType = getById(dictId);
             if (query().eq(DictType::getDictType, dictType.getDictType()).exist()) {
-                throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, dictType.getDictName() + "已分配，不能删除");
+                throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, dictType.getDictName() + "已分配，不能删除");
             }
         }
         return delete().inOrThrow(DictType::getDictId, dictIds).execute();

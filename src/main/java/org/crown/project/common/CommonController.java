@@ -5,7 +5,7 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.file.FileUploadUtils;
 import org.crown.common.utils.file.FileUtils;
 import org.crown.common.utils.http.HttpUtils;
-import org.crown.framework.config.RuoYiConfig;
+import org.crown.project.config.RuoYiConfig;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.UploadDTO;
 import org.crown.framework.responses.ApiResponses;

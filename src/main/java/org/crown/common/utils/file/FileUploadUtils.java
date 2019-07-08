@@ -14,8 +14,8 @@ import org.apache.commons.io.IOUtils;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.Md5Utils;
 import org.crown.common.utils.StringUtils;
-import org.crown.framework.config.RuoYiConfig;
-import org.crown.framework.exception.MsgException;
+import org.crown.project.config.RuoYiConfig;
+import org.crown.framework.exception.Crown2Exception;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +97,7 @@ public class FileUploadUtils {
             throws IOException {
         int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "文件名过长，文件名最大长度为：" + DEFAULT_FILE_NAME_LENGTH);
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "文件名过长，文件名最大长度为：" + DEFAULT_FILE_NAME_LENGTH);
         }
 
         assertAllowed(file, allowedExtension);
@@ -109,7 +109,7 @@ public class FileUploadUtils {
             stream = new BufferedOutputStream(new FileOutputStream(desc));
             stream.write(bytes);
         } catch (Exception e) {
-            throw new MsgException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "上传文件出现错误！", e);
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "上传文件出现错误！", e);
         } finally {
             IOUtils.closeQuietly(stream);
         }
@@ -158,12 +158,12 @@ public class FileUploadUtils {
     public static void assertAllowed(MultipartFile file, String[] allowedExtension) {
         long size = file.getSize();
         if (size > DEFAULT_MAX_SIZE) {
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "上传的文件大小超出限制的文件大小！允许的文件最大大小是：" + DEFAULT_MAX_SIZE / 1024 / 1024 + "MB！");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "上传的文件大小超出限制的文件大小！允许的文件最大大小是：" + DEFAULT_MAX_SIZE / 1024 / 1024 + "MB！");
         }
 
         String extension = getExtension(file);
         if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "不支持该类型文件上传，当前文件类型为：[" + extension + "]！允许的文件类型为：" + Arrays.toString(allowedExtension));
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "不支持该类型文件上传，当前文件类型为：[" + extension + "]！允许的文件类型为：" + Arrays.toString(allowedExtension));
         }
 
     }

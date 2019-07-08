@@ -3,7 +3,7 @@ package org.crown.project.tool.gen.util;
 import java.util.Properties;
 
 import org.apache.velocity.app.Velocity;
-import org.crown.common.constant.Constants;
+import org.crown.common.cons.Constants;
 
 /**
  * VelocityEngine工厂

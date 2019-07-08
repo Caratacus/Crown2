@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.crown.common.constant.Constants;
-import org.crown.common.constant.ShiroConstants;
-import org.crown.framework.exception.MsgException;
+import org.crown.common.cons.Constants;
+import org.crown.common.cons.ShiroConstants;
+import org.crown.framework.exception.Crown2Exception;
 import org.crown.framework.manager.ThreadExecutors;
 import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.project.system.user.domain.User;
@@ -50,13 +50,13 @@ public class PasswordService {
         }
         if (retryCount.incrementAndGet() > Integer.valueOf(maxRetryCount)) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGIN_FAIL, "密码输入错误" + maxRetryCount + "次，帐户锁定10分钟"));
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "密码输入错误" + maxRetryCount + "次，帐户锁定10分钟");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "密码输入错误" + maxRetryCount + "次，帐户锁定10分钟");
         }
 
         if (!matches(user, password)) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGIN_FAIL, "密码输入错误" + retryCount + "次"));
             loginRecordCache.put(loginName, retryCount);
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "密码输入错误" + retryCount + "次");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "密码输入错误" + retryCount + "次");
         } else {
             clearLoginRecordCache(loginName);
         }

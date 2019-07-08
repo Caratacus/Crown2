@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
-import org.crown.common.utils.text.Convert;
-import org.crown.framework.exception.MsgException;
+import org.crown.common.utils.converter.Convert;
+import org.crown.framework.exception.Crown2Exception;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
@@ -102,7 +102,7 @@ public class DemoOperateController extends WebController {
                 }
             }
         }
-        PageDomain pageDomain = TableSupport.buildPageRequest();
+        PageDomain pageDomain = TableSupport.getPageDomain(request);
         if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());
@@ -228,7 +228,7 @@ public class DemoOperateController extends WebController {
      */
     public String importUser(List<UserOperateModel> userList, Boolean isUpdateSupport) {
         if (StringUtils.isNull(userList) || userList.size() == 0) {
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;
@@ -266,7 +266,7 @@ public class DemoOperateController extends WebController {
         }
         if (failureNum > 0) {
             failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, failureMsg.toString());
+            throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, failureMsg.toString());
         } else {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }

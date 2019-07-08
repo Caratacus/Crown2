@@ -1,7 +1,9 @@
 package org.crown.framework.web.page;
 
-import org.crown.common.constant.Constants;
-import org.crown.common.utils.ServletUtils;
+import javax.servlet.http.HttpServletRequest;
+
+import org.crown.common.cons.Constants;
+import org.crown.common.utils.TypeUtils;
 
 /**
  * 表格数据处理
@@ -13,17 +15,14 @@ public class TableSupport {
     /**
      * 封装分页对象
      */
-    public static PageDomain getPageDomain() {
+    public static PageDomain getPageDomain(HttpServletRequest request) {
         PageDomain pageDomain = new PageDomain();
-        pageDomain.setPageNum(ServletUtils.getParameterToInt(Constants.PAGE_NUM));
-        pageDomain.setPageSize(ServletUtils.getParameterToInt(Constants.PAGE_SIZE));
-        pageDomain.setOrderByColumn(ServletUtils.getParameter(Constants.ORDER_BY_COLUMN));
-        pageDomain.setIsAsc(ServletUtils.getParameter(Constants.IS_ASC));
+        pageDomain.setPageNum(TypeUtils.castToInt(request.getParameter(Constants.PAGE_NUM)));
+        pageDomain.setPageSize(TypeUtils.castToInt(request.getParameter(Constants.PAGE_SIZE)));
+        pageDomain.setOrderByColumn(request.getParameter(Constants.ORDER_BY_COLUMN));
+        pageDomain.setIsAsc(request.getParameter(Constants.IS_ASC));
         return pageDomain;
     }
 
-    public static PageDomain buildPageRequest() {
-        return getPageDomain();
-    }
 
 }

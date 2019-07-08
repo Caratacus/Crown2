@@ -3,9 +3,9 @@ package org.crown.project.system.user.controller;
 import java.io.IOException;
 
 import org.crown.common.utils.file.FileUploadUtils;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
-import org.crown.framework.config.RuoYiConfig;
+import org.crown.common.annotation.Log;
+import org.crown.common.enums.BusinessType;
+import org.crown.project.config.RuoYiConfig;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.shiro.service.PasswordService;

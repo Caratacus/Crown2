@@ -208,7 +208,7 @@ public class DemoTableController extends WebController {
                 }
             }
         }
-        PageDomain pageDomain = TableSupport.buildPageRequest();
+        PageDomain pageDomain = TableSupport.getPageDomain(request);
         if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());

@@ -44,12 +44,12 @@ import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.reflect.ReflectUtils;
-import org.crown.common.utils.text.Convert;
-import org.crown.framework.aspectj.lang.annotation.Excel;
-import org.crown.framework.aspectj.lang.annotation.Excel.Type;
-import org.crown.framework.aspectj.lang.annotation.Excels;
-import org.crown.framework.config.RuoYiConfig;
-import org.crown.framework.exception.MsgException;
+import org.crown.common.utils.converter.Convert;
+import org.crown.common.annotation.Excel;
+import org.crown.common.annotation.Excel.Type;
+import org.crown.common.annotation.Excels;
+import org.crown.project.config.RuoYiConfig;
+import org.crown.framework.exception.Crown2Exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -292,7 +292,7 @@ public class ExcelUtils<T> {
             wb.write(out);
             return filename;
         } catch (Exception e) {
-            throw new MsgException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "导出Excel失败，请联系网站管理员！");
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "导出Excel失败，请联系网站管理员！");
         } finally {
             IOUtils.closeQuietly(wb, out);
         }

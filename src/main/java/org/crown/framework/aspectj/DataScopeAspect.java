@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.framework.aspectj.lang.annotation.DataScope;
+import org.crown.common.annotation.DataScope;
 import org.crown.framework.web.domain.BaseEntity;
 import org.crown.project.system.role.domain.Role;
 import org.crown.project.system.user.domain.User;
@@ -51,7 +51,7 @@ public class DataScopeAspect {
     public static final String DATA_SCOPE = "dataScope";
 
     // 配置织入点
-    @Pointcut("@annotation(org.crown.framework.aspectj.lang.annotation.DataScope)")
+    @Pointcut("@annotation(org.crown.common.annotation.DataScope)")
     public void dataScopePointCut() {
     }
 

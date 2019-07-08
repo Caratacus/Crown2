@@ -5,7 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.crown.common.utils.Threads;
-import org.crown.common.utils.spring.ApplicationUtils;
+import org.crown.framework.spring.ApplicationUtils;
 
 /**
  * 线程异步执行工具类

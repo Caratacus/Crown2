@@ -2,7 +2,7 @@ package org.crown.project.monitor.logininfor.domain;
 
 import java.util.Date;
 
-import org.crown.framework.aspectj.lang.annotation.Excel;
+import org.crown.common.annotation.Excel;
 import org.crown.framework.web.domain.BaseQueryParams;
 
 import com.baomidou.mybatisplus.annotation.TableId;

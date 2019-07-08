@@ -3,8 +3,8 @@ package org.crown.project.system.menu.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessType;
+import org.crown.common.annotation.Log;
+import org.crown.common.enums.BusinessType;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;

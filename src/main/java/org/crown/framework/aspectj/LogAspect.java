@@ -11,13 +11,13 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.crown.common.utils.JacksonUtils;
-import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.framework.aspectj.lang.annotation.Log;
-import org.crown.framework.aspectj.lang.enums.BusinessStatus;
+import org.crown.common.annotation.Log;
+import org.crown.common.enums.BusinessStatus;
 import org.crown.framework.manager.ThreadExecutors;
 import org.crown.framework.manager.factory.TimerTasks;
+import org.crown.framework.spring.ApplicationUtils;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.system.user.domain.User;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class LogAspect {
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     // 配置织入点
-    @Pointcut("@annotation(org.crown.framework.aspectj.lang.annotation.Log)")
+    @Pointcut("@annotation(org.crown.common.annotation.Log)")
     public void logPointCut() {
     }
 
@@ -78,8 +78,7 @@ public class LogAspect {
             // 请求的地址
             String ip = ShiroUtils.getIp();
             operLog.setOperIp(ip);
-
-            operLog.setOperUrl(ServletUtils.getRequest().getRequestURI());
+            operLog.setOperUrl(ApplicationUtils.getRequest().getRequestURI());
             if (currentUser != null) {
                 operLog.setOperName(currentUser.getLoginName());
                 if (StringUtils.isNotNull(currentUser.getDept())
@@ -134,7 +133,7 @@ public class LogAspect {
      * @param operLog
      */
     private void setRequestValue(OperLog operLog) {
-        Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
+        Map<String, String[]> map = ApplicationUtils.getRequest().getParameterMap();
         String params = JacksonUtils.toJson(map);
         operLog.setOperParam(StringUtils.substring(params, 0, 2000));
     }

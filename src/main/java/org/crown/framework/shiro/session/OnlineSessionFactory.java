@@ -7,8 +7,8 @@ import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SessionFactory;
 import org.apache.shiro.web.session.mgt.WebSessionContext;
 import org.crown.common.utils.IpUtils;
-import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.StringUtils;
+import org.crown.framework.spring.ApplicationUtils;
 import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.monitor.online.domain.UserOnline;
 import org.springframework.stereotype.Component;
@@ -38,7 +38,7 @@ public class OnlineSessionFactory implements SessionFactory {
             WebSessionContext sessionContext = (WebSessionContext) initData;
             HttpServletRequest request = (HttpServletRequest) sessionContext.getServletRequest();
             if (request != null) {
-                UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+                UserAgent userAgent = UserAgent.parseUserAgentString(ApplicationUtils.getRequest().getHeader("User-Agent"));
                 // 获取客户端操作系统
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器
