@@ -49,7 +49,7 @@ public class TestController extends WebController {
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{userId}")
     public ApiResponses<UserEntity> getUser(@PathVariable Integer userId) {
-            return success(users.get(userId));
+        return success(users.get(userId));
     }
 
     @ApiOperation("新增用户")

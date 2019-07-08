@@ -293,7 +293,7 @@ public class ExcelUtil<T> {
             log.error("导出Excel异常{}", e.getMessage());
             throw new ExcelException("导出Excel失败，请联系网站管理员！");
         } finally {
-            IOUtils.closeQuietly(wb,out);
+            IOUtils.closeQuietly(wb, out);
         }
     }
 

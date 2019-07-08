@@ -165,12 +165,10 @@ public class FileUtils {
         return request.getSession().getServletContext().getResourceAsStream(path);
     }
 
-
     /**
      * 获取文件后缀名
      *
-     * @param fileName
-     *            文件名
+     * @param fileName 文件名
      * @return
      */
     public static String getFilePrefix(String fileName) {
@@ -183,8 +181,7 @@ public class FileUtils {
     /**
      * 获取文件上级目录
      *
-     * @param path
-     *            文件路径
+     * @param path 文件路径
      * @return
      */
     public static String getFileParentPath(String path) {
@@ -247,10 +244,8 @@ public class FileUtils {
      * http下载文件
      *
      * @param httpUrl
-     * @param dir
-     *            文件目录
-     * @param fileName
-     *            文件名称
+     * @param dir      文件目录
+     * @param fileName 文件名称
      * @return
      */
     public static boolean httpDownload(String httpUrl, String dir, String fileName) {
@@ -294,8 +289,7 @@ public class FileUtils {
     /**
      * 计算文件大小(适用于计算文件及文件夹大小)
      *
-     * @param file
-     *            文件
+     * @param file 文件
      * @return 返回long类型字节(B)
      */
     public static long size(File file) {
@@ -308,8 +302,7 @@ public class FileUtils {
     /**
      * 计算文件大小
      *
-     * @param filePath
-     *            文件路径
+     * @param filePath 文件路径
      * @return 返回long类型字节(B)
      */
     public static long size(String filePath) {
@@ -319,10 +312,8 @@ public class FileUtils {
     /**
      * 拷贝文件方法
      *
-     * @param oldPath
-     *            String 原文件路径 如：c:/fqf.txt
-     * @param newPath
-     *            String 复制后路径 如：f:/fqf.txt
+     * @param oldPath String 原文件路径 如：c:/fqf.txt
+     * @param newPath String 复制后路径 如：f:/fqf.txt
      */
     public static void copyFile(String oldPath, String newPath) {
         InputStream inStream = null;

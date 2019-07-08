@@ -142,8 +142,8 @@ public class DemoFormController extends WebController {
      */
     @GetMapping("/userModel")
     @ResponseBody
-    public ApiResponses<Map<String,Object>> userModel() {
-        return success(Maps.<String,Object>builder().put("value", users).build());
+    public ApiResponses<Map<String, Object>> userModel() {
+        return success(Maps.<String, Object>builder().put("value", users).build());
     }
 
     /**
@@ -151,9 +151,9 @@ public class DemoFormController extends WebController {
      */
     @GetMapping("/collection")
     @ResponseBody
-    public ApiResponses<Map<String,Object>> collection() {
+    public ApiResponses<Map<String, Object>> collection() {
         String[] array = {"Crown 1", "Crown 2", "Crown 3", "Crown 4", "Crown 5"};
-        return success(Maps.<String,Object>builder().put("value", array).build());
+        return success(Maps.<String, Object>builder().put("value", array).build());
     }
 }
 

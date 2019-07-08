@@ -212,7 +212,7 @@ public class ShiroConfig {
      * UserFilter
      */
     public UserFilter userFilter() {
-        return  new UserFilter();
+        return new UserFilter();
     }
 
     /**

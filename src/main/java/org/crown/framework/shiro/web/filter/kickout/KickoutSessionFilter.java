@@ -140,7 +140,7 @@ public class KickoutSessionFilter extends AccessControlFilter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         if (RequestUtils.isAjaxRequest(req)) {
-            ResponseUtils.sendFail(req,res, ErrorCodeEnum.USER_ELSEWHERE_LOGIN);
+            ResponseUtils.sendFail(req, res, ErrorCodeEnum.USER_ELSEWHERE_LOGIN);
         } else {
             WebUtils.issueRedirect(request, response, kickoutUrl);
         }

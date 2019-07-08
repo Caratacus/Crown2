@@ -45,10 +45,10 @@ public class UserFilter extends org.apache.shiro.web.filter.authc.UserFilter {
     protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
         HttpServletResponse httpResponse = WebUtils.toHttp(response);
-        if (RequestUtils.isAjaxRequest(httpRequest)){
+        if (RequestUtils.isAjaxRequest(httpRequest)) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            ResponseUtils.sendFail(httpRequest,httpResponse, ErrorCodeEnum.UNAUTHORIZED);
-        }else{
+            ResponseUtils.sendFail(httpRequest, httpResponse, ErrorCodeEnum.UNAUTHORIZED);
+        } else {
             String loginUrl = getLoginUrl();
             WebUtils.issueRedirect(request, response, loginUrl);
         }
