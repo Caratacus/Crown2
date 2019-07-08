@@ -7,11 +7,13 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.crown.common.exception.BusinessException;
+import javax.servlet.http.HttpServletResponse;
+
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.aspectj.lang.annotation.DataScope;
+import org.crown.framework.exception.MsgException;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.system.role.domain.Role;
 import org.crown.project.system.role.domain.RoleDept;
@@ -90,7 +92,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         for (Long roleId : roleIds) {
             Role role = getById(roleId);
             if (userRoleService.query().eq(UserRole::getRoleId, roleId).exist()) {
-                throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
+                throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, role.getRoleName()+"已分配，不能删除");
             }
         }
         return delete().inOrThrow(Role::getRoleId, roleIds).execute();

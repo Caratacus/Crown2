@@ -18,29 +18,41 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.common.exception;
+package org.crown.framework.exception;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.model.ErrorCode;
+
+import com.google.common.base.Throwables;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
- * Crown2异常类
+ * MSG 消息异常类
  * </p>
  *
  * @author Caratacus
  */
-public class Crown2Exception extends RuntimeException {
+@Slf4j
+public class MsgException extends ApiException {
 
     private static final long serialVersionUID = 1L;
 
-    public Crown2Exception(String message) {
-        super(message);
+    public MsgException(int httpCode, String msg, Exception ex) {
+        this(httpCode, msg);
+        if (httpCode < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
+            log.info("Info: MsgException Info {}", ex.getMessage());
+        } else {
+            log.warn("Warn: MsgException Warn {}", Throwables.getStackTraceAsString(ex));
+        }
+
     }
 
-    public Crown2Exception(Throwable throwable) {
-        super(throwable);
-    }
-
-    public Crown2Exception(String message, Throwable throwable) {
-        super(message, throwable);
+    public MsgException(int httpCode, String msg) {
+        super(ErrorCode.builder().error(ErrorCodeEnum.MSG_EXCEPTION.name()).httpCode(httpCode).msg(msg).build());
     }
 
 }

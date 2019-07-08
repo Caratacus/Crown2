@@ -4,18 +4,18 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.crown.common.exception.Crown2Exception;
-import org.crown.common.exception.file.FileNameLengthLimitExceededException;
-import org.crown.common.exception.file.FileSizeLimitExceededException;
-import org.crown.common.exception.file.InvalidExtensionException;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.Md5Utils;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.config.RuoYiConfig;
+import org.crown.framework.exception.MsgException;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -91,17 +91,14 @@ public class FileUploadUtils {
      * @param file             上传的文件
      * @param allowedExtension 上传文件类型
      * @return 返回上传成功的文件名
-     * @throws FileSizeLimitExceededException       如果超出最大大小
-     * @throws FileNameLengthLimitExceededException 文件名太长
-     * @throws IOException                          比如读写文件出错时
-     * @throws InvalidExtensionException            文件校验异常
+     * @throws IOException               比如读写文件出错时
+     * @throws InvalidExtensionException 文件校验异常
      */
     public static String upload(String baseDir, MultipartFile file, String[] allowedExtension)
-            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
-            InvalidExtensionException {
+            throws IOException {
         int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
-            throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "文件名过长，文件名最大长度为：" + DEFAULT_FILE_NAME_LENGTH);
         }
 
         assertAllowed(file, allowedExtension);
@@ -113,8 +110,7 @@ public class FileUploadUtils {
             stream = new BufferedOutputStream(new FileOutputStream(desc));
             stream.write(bytes);
         } catch (Exception e) {
-            log.error("上传文件出现错误:{}", e.getMessage());
-            throw new Crown2Exception("上传文件出现错误");
+            throw new MsgException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "上传文件出现错误！", e);
         } finally {
             IOUtils.closeQuietly(stream);
         }
@@ -159,31 +155,17 @@ public class FileUploadUtils {
      *
      * @param file 上传的文件
      * @return
-     * @throws FileSizeLimitExceededException 如果超出最大大小
      * @throws InvalidExtensionException
      */
-    public static void assertAllowed(MultipartFile file, String[] allowedExtension)
-            throws FileSizeLimitExceededException, InvalidExtensionException {
+    public static void assertAllowed(MultipartFile file, String[] allowedExtension) {
         long size = file.getSize();
         if (size > DEFAULT_MAX_SIZE) {
-            throw new FileSizeLimitExceededException(DEFAULT_MAX_SIZE / 1024 / 1024);
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "上传的文件大小超出限制的文件大小！允许的文件最大大小是：" + DEFAULT_MAX_SIZE / 1024 / 1024 + "MB！");
         }
 
-        String filename = file.getOriginalFilename();
         String extension = getExtension(file);
         if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
-            if (allowedExtension == MimeTypeUtils.IMAGE_EXTENSION) {
-                throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
-                        filename);
-            } else if (allowedExtension == MimeTypeUtils.FLASH_EXTENSION) {
-                throw new InvalidExtensionException.InvalidFlashExtensionException(allowedExtension, extension,
-                        filename);
-            } else if (allowedExtension == MimeTypeUtils.MEDIA_EXTENSION) {
-                throw new InvalidExtensionException.InvalidMediaExtensionException(allowedExtension, extension,
-                        filename);
-            } else {
-                throw new InvalidExtensionException(allowedExtension, extension, filename);
-            }
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "不支持该类型文件上传，当前文件类型为：[" + extension + "]！允许的文件类型为：" + Arrays.toString(allowedExtension));
         }
 
     }

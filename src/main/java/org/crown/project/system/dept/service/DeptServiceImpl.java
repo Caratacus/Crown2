@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.crown.common.constant.UserConstants;
-import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.aspectj.lang.annotation.DataScope;
+import org.crown.framework.exception.MsgException;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.web.domain.Ztree;
 import org.crown.project.system.dept.domain.Dept;
@@ -97,7 +99,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
         Dept info = baseMapper.selectDeptById(dept.getParentId());
         // 如果父节点不为"正常"状态,则不允许新增子节点
         if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
-            throw new BusinessException("部门停用，不允许新增");
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         return save(dept);

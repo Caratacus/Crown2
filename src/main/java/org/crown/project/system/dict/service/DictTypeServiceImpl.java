@@ -3,9 +3,11 @@ package org.crown.project.system.dict.service;
 import java.util.List;
 import java.util.Objects;
 
-import org.crown.common.exception.BusinessException;
+import javax.servlet.http.HttpServletResponse;
+
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
+import org.crown.framework.exception.MsgException;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.system.dict.domain.DictType;
 import org.crown.project.system.dict.mapper.DictTypeMapper;
@@ -40,7 +42,7 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
         for (Long dictId : dictIds) {
             DictType dictType = getById(dictId);
             if (query().eq(DictType::getDictType, dictType.getDictType()).exist()) {
-                throw new BusinessException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
+               throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, dictType.getDictName()+"已分配，不能删除");
             }
         }
         return delete().inOrThrow(DictType::getDictId, dictIds).execute();
@@ -62,4 +64,5 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
         DictType info = query().eq(DictType::getDictType, dict.getDictType()).getOne();
         return Objects.isNull(info) || info.getDictId().equals(dictId);
     }
+
 }

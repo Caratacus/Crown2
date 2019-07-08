@@ -8,29 +8,9 @@ package org.crown.common.constant;
 public interface ShiroConstants {
 
     /**
-     * 当前登录的用户
-     */
-    String CURRENT_USER = "currentUser";
-
-    /**
      * 用户名
      */
     String CURRENT_USERNAME = "username";
-
-    /**
-     * 消息key
-     */
-    String MESSAGE = "message";
-
-    /**
-     * 错误key
-     */
-    String ERROR = "errorMsg";
-
-    /**
-     * 编码格式
-     */
-    String ENCODING = "UTF-8";
 
     /**
      * 当前在线会话

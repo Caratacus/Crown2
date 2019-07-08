@@ -8,26 +8,6 @@ package org.crown.common.constant;
 public class UserConstants {
 
     /**
-     * 正常状态
-     */
-    public static final String NORMAL = "0";
-
-    /**
-     * 异常状态
-     */
-    public static final String EXCEPTION = "1";
-
-    /**
-     * 用户封禁状态
-     */
-    public static final String USER_BLOCKED = "1";
-
-    /**
-     * 角色封禁状态
-     */
-    public static final String ROLE_BLOCKED = "1";
-
-    /**
      * 部门正常状态
      */
     public static final String DEPT_NORMAL = "0";

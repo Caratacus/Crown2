@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.crown.common.exception.BusinessException;
+import javax.servlet.http.HttpServletResponse;
+
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.aspectj.lang.annotation.DataScope;
+import org.crown.framework.enums.ErrorCodeEnum;
+import org.crown.framework.exception.MsgException;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.shiro.service.PasswordService;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.project.system.config.service.IConfigService;
 import org.crown.project.system.post.domain.Post;
 import org.crown.project.system.post.service.IPostService;
@@ -108,9 +112,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     public boolean deleteUserByIds(String ids) {
         List<Long> userIds = StringUtils.split2List(ids, TypeUtils::castToLong);
         for (Long userId : userIds) {
-            if (User.isAdmin(userId)) {
-                throw new BusinessException("不允许删除超级管理员用户");
-            }
+            ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN,User.isAdmin(userId));
         }
         return delete().inOrThrow(User::getUserId, userIds).execute();
     }
@@ -232,7 +234,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public String importUser(List<User> userList, Boolean isUpdateSupport) {
         if (StringUtils.isNull(userList) || userList.size() == 0) {
-            throw new BusinessException("导入用户数据不能为空！");
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
         }
         int successNum = 0;
         int failureNum = 0;
@@ -268,18 +270,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         }
         if (failureNum > 0) {
             failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-            throw new BusinessException(failureMsg.toString());
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST,failureMsg.toString());
         } else {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
     }
-
     @Override
     public boolean changeStatus(User user) {
-        if (User.isAdmin(user.getUserId())) {
-            throw new BusinessException("不允许修改超级管理员用户");
-        }
+        ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN,User.isAdmin(user.getUserId()));
         return updateById(user);
     }
 }
