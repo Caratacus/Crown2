@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.crown.common.constant.UserConstants;
 import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;

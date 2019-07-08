@@ -182,7 +182,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
     @Override
     public boolean checkMenuNameUnique(Menu menu) {
-        Long menuId =  menu.getMenuId();
+        Long menuId = menu.getMenuId();
         Menu info = query().eq(Menu::getMenuName, menu.getMenuName()).eq(Menu::getParentId, menu.getParentId()).getOne();
         return Objects.isNull(info) || info.getMenuId().equals(menuId);
     }
