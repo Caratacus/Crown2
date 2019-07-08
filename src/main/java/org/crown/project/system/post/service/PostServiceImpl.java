@@ -61,7 +61,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         for (Long postId : postIds) {
             Post post = getById(postId);
             if (userPostService.query().eq(UserPost::getPostId, postId).exist()) {
-                throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, post.getPostName()+"已分配，不能删除");
+                throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, post.getPostName() + "已分配，不能删除");
             }
         }
         return delete().inOrThrow(Post::getPostId, postIds).execute();

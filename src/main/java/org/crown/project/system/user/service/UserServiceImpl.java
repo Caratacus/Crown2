@@ -112,7 +112,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     public boolean deleteUserByIds(String ids) {
         List<Long> userIds = StringUtils.split2List(ids, TypeUtils::castToLong);
         for (Long userId : userIds) {
-            ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN,User.isAdmin(userId));
+            ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(userId));
         }
         return delete().inOrThrow(User::getUserId, userIds).execute();
     }
@@ -270,15 +270,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         }
         if (failureNum > 0) {
             failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST,failureMsg.toString());
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, failureMsg.toString());
         } else {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
     }
+
     @Override
     public boolean changeStatus(User user) {
-        ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN,User.isAdmin(user.getUserId()));
+        ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
         return updateById(user);
     }
 }

@@ -92,7 +92,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         for (Long roleId : roleIds) {
             Role role = getById(roleId);
             if (userRoleService.query().eq(UserRole::getRoleId, roleId).exist()) {
-                throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, role.getRoleName()+"已分配，不能删除");
+                throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, role.getRoleName() + "已分配，不能删除");
             }
         }
         return delete().inOrThrow(Role::getRoleId, roleIds).execute();
