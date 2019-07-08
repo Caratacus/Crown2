@@ -51,7 +51,7 @@ public interface IPostService extends BaseService<Post> {
      * @param post 岗位信息
      * @return 结果
      */
-    String checkPostNameUnique(Post post);
+    boolean checkPostNameUnique(Post post);
 
     /**
      * 校验岗位编码
@@ -59,5 +59,5 @@ public interface IPostService extends BaseService<Post> {
      * @param post 岗位信息
      * @return 结果
      */
-    String checkPostCodeUnique(Post post);
+    boolean checkPostCodeUnique(Post post);
 }

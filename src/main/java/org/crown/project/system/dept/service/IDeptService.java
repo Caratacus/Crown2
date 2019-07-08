@@ -76,5 +76,5 @@ public interface IDeptService extends BaseService<Dept> {
      * @param dept 部门信息
      * @return 结果
      */
-    String checkDeptNameUnique(Dept dept);
+    boolean checkDeptNameUnique(Dept dept);
 }

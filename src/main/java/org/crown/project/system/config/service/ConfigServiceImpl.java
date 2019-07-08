@@ -3,7 +3,6 @@ package org.crown.project.system.config.service;
 import java.util.List;
 import java.util.Objects;
 
-import org.crown.common.constant.UserConstants;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
@@ -37,13 +36,10 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper, Config> imp
     }
 
     @Override
-    public String checkConfigKeyUnique(Config config) {
-        Long configId = Objects.isNull(config.getConfigId()) ? -1L : config.getConfigId();
+    public boolean checkConfigKeyUnique(Config config) {
+        Long configId = config.getConfigId();
         Config info = selectConfigByKey(config.getConfigKey());
-        if (Objects.nonNull(info) && info.getConfigId().longValue() != configId.longValue()) {
-            return UserConstants.CONFIG_KEY_NOT_UNIQUE;
-        }
-        return UserConstants.CONFIG_KEY_UNIQUE;
+        return Objects.isNull(info) || info.getConfigId().equals(configId);
     }
 
     @Override

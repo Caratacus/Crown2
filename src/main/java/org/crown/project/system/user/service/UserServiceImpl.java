@@ -2,9 +2,9 @@ package org.crown.project.system.user.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.crown.common.constant.UserConstants;
 import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
@@ -186,27 +186,21 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public boolean checkLoginNameUnique(String loginName) {
-        return query().eq(User::getLoginName, loginName).exist();
+        return query().eq(User::getLoginName, loginName).nonExist();
     }
 
     @Override
-    public String checkPhoneUnique(User user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+    public boolean checkPhoneUnique(User user) {
+        Long userId = user.getUserId();
         User info = query().select(User::getUserId, User::getPhonenumber).eq(User::getPhonenumber, user.getPhonenumber()).getOne();
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
-            return UserConstants.USER_PHONE_NOT_UNIQUE;
-        }
-        return UserConstants.USER_PHONE_UNIQUE;
+        return Objects.isNull(info) || info.getUserId().equals(userId);
     }
 
     @Override
-    public String checkEmailUnique(User user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+    public boolean checkEmailUnique(User user) {
+        Long userId = user.getUserId();
         User info = query().select(User::getUserId, User::getEmail).eq(User::getEmail, user.getEmail()).getOne();
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
-            return UserConstants.USER_EMAIL_NOT_UNIQUE;
-        }
-        return UserConstants.USER_EMAIL_UNIQUE;
+        return Objects.isNull(info) || info.getUserId().equals(userId);
     }
 
     @Override

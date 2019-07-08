@@ -1,8 +1,8 @@
 package org.crown.project.system.dict.service;
 
 import java.util.List;
+import java.util.Objects;
 
-import org.crown.common.constant.UserConstants;
 import org.crown.common.exception.BusinessException;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
@@ -57,12 +57,9 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
     }
 
     @Override
-    public String checkDictTypeUnique(DictType dict) {
-        Long dictId = StringUtils.isNull(dict.getDictId()) ? -1L : dict.getDictId();
-        DictType dictType = query().eq(DictType::getDictType, dict.getDictType()).getOne();
-        if (StringUtils.isNotNull(dictType) && dictType.getDictId().longValue() != dictId.longValue()) {
-            return UserConstants.DICT_TYPE_NOT_UNIQUE;
-        }
-        return UserConstants.DICT_TYPE_UNIQUE;
+    public boolean checkDictTypeUnique(DictType dict) {
+        Long dictId = dict.getDictId();
+        DictType info = query().eq(DictType::getDictType, dict.getDictType()).getOne();
+        return Objects.isNull(info) || info.getDictId().equals(dictId);
     }
 }

@@ -34,7 +34,7 @@ public interface IConfigService extends BaseService<Config> {
      * @param config 参数信息
      * @return 结果
      */
-    String checkConfigKeyUnique(Config config);
+    boolean checkConfigKeyUnique(Config config);
 
     /**
      * 根据config key 获取 value

@@ -125,8 +125,8 @@ public class DeptController extends WebController {
      */
     @PostMapping("/checkDeptNameUnique")
     @ResponseBody
-    public String checkDeptNameUnique(Dept dept) {
-        return deptService.checkDeptNameUnique(dept);
+    public ApiResponses<Boolean> checkDeptNameUnique(Dept dept) {
+        return success(deptService.checkDeptNameUnique(dept));
     }
 
     /**

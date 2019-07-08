@@ -1051,12 +1051,10 @@
         },
         // 校验封装处理
         validate: {
-        	// 判断返回标识是否唯一 false 不存在 true 存在
+        	// 判断返回标识是否唯一 false 不唯一 true 唯一
         	unique: function (value) {
-            	if (value == "0") {
-                    return true;
-                }
-                return false;
+				var data = JSON.parse(value);
+                return data.result;
             },
             // 表单验证
             form: function (formId) {

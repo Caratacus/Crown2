@@ -115,7 +115,7 @@ public interface IUserService extends BaseService<User> {
      * @param user 用户信息
      * @return 结果
      */
-    String checkPhoneUnique(User user);
+    boolean checkPhoneUnique(User user);
 
     /**
      * 校验email是否唯一
@@ -123,7 +123,7 @@ public interface IUserService extends BaseService<User> {
      * @param user 用户信息
      * @return 结果
      */
-    String checkEmailUnique(User user);
+    boolean checkEmailUnique(User user);
 
     /**
      * 根据用户ID查询用户所属角色组

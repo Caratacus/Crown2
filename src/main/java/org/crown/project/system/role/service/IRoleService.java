@@ -92,7 +92,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param role 角色信息
      * @return 结果
      */
-    String checkRoleNameUnique(Role role);
+    boolean checkRoleNameUnique(Role role);
 
     /**
      * 校验角色权限是否唯一
@@ -100,7 +100,7 @@ public interface IRoleService extends BaseService<Role> {
      * @param role 角色信息
      * @return 结果
      */
-    String checkRoleKeyUnique(Role role);
+    boolean checkRoleKeyUnique(Role role);
 
     /**
      * 角色状态修改

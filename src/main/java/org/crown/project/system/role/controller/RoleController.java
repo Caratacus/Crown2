@@ -147,8 +147,8 @@ public class RoleController extends WebController {
      */
     @PostMapping("/checkRoleNameUnique")
     @ResponseBody
-    public String checkRoleNameUnique(Role role) {
-        return roleService.checkRoleNameUnique(role);
+    public ApiResponses<Boolean> checkRoleNameUnique(Role role) {
+        return success(roleService.checkRoleNameUnique(role));
     }
 
     /**
@@ -156,8 +156,8 @@ public class RoleController extends WebController {
      */
     @PostMapping("/checkRoleKeyUnique")
     @ResponseBody
-    public String checkRoleKeyUnique(Role role) {
-        return roleService.checkRoleKeyUnique(role);
+    public ApiResponses<Boolean> checkRoleKeyUnique(Role role) {
+        return success(roleService.checkRoleKeyUnique(role));
     }
 
     /**

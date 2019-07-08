@@ -3,6 +3,7 @@ package org.crown.project.system.role.service;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -162,23 +163,17 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     }
 
     @Override
-    public String checkRoleNameUnique(Role role) {
-        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
+    public boolean checkRoleNameUnique(Role role) {
+        Long roleId = role.getRoleId();
         Role info = query().eq(Role::getRoleName, role.getRoleName()).getOne();
-        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
-            return UserConstants.ROLE_NAME_NOT_UNIQUE;
-        }
-        return UserConstants.ROLE_NAME_UNIQUE;
+        return Objects.isNull(info) || info.getRoleId().equals(roleId);
     }
 
     @Override
-    public String checkRoleKeyUnique(Role role) {
-        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
+    public boolean checkRoleKeyUnique(Role role) {
+        Long roleId = role.getRoleId();
         Role info = query().eq(Role::getRoleKey, role.getRoleKey()).getOne();
-        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
-            return UserConstants.ROLE_KEY_NOT_UNIQUE;
-        }
-        return UserConstants.ROLE_KEY_UNIQUE;
+        return Objects.isNull(info) || info.getRoleId().equals(roleId);
     }
 
     @Override

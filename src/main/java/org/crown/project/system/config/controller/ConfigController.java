@@ -130,7 +130,7 @@ public class ConfigController extends WebController {
      */
     @PostMapping("/checkConfigKeyUnique")
     @ResponseBody
-    public String checkConfigKeyUnique(Config config) {
-        return configService.checkConfigKeyUnique(config);
+    public ApiResponses<Boolean> checkConfigKeyUnique(Config config) {
+        return success(configService.checkConfigKeyUnique(config));
     }
 }

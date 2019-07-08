@@ -2,6 +2,7 @@ package org.crown.project.system.dept.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.crown.common.constant.UserConstants;
 import org.crown.common.exception.BusinessException;
@@ -174,12 +175,9 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
     }
 
     @Override
-    public String checkDeptNameUnique(Dept dept) {
-        Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
+    public boolean checkDeptNameUnique(Dept dept) {
+        Long deptId = dept.getDeptId();
         Dept info = query().eq(Dept::getDeptName, dept.getDeptName()).eq(Dept::getParentId, dept.getParentId()).getOne();
-        if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue()) {
-            return UserConstants.DEPT_NAME_NOT_UNIQUE;
-        }
-        return UserConstants.DEPT_NAME_UNIQUE;
+        return Objects.isNull(info) || info.getDeptId().equals(deptId);
     }
 }

@@ -101,5 +101,5 @@ public interface IMenuService extends BaseService<Menu> {
      * @param menu 菜单信息
      * @return 结果
      */
-    String checkMenuNameUnique(Menu menu);
+    boolean checkMenuNameUnique(Menu menu);
 }

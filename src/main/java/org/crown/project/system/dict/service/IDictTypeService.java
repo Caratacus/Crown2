@@ -43,5 +43,5 @@ public interface IDictTypeService extends BaseService<DictType> {
      * @param dictType 字典类型
      * @return 结果
      */
-    String checkDictTypeUnique(DictType dictType);
+    boolean checkDictTypeUnique(DictType dictType);
 }

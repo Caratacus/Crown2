@@ -4,10 +4,10 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.crown.common.constant.UserConstants;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TreeUtils;
 import org.crown.common.utils.security.ShiroUtils;
@@ -181,13 +181,10 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     }
 
     @Override
-    public String checkMenuNameUnique(Menu menu) {
-        Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
+    public boolean checkMenuNameUnique(Menu menu) {
+        Long menuId =  menu.getMenuId();
         Menu info = query().eq(Menu::getMenuName, menu.getMenuName()).eq(Menu::getParentId, menu.getParentId()).getOne();
-        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
-            return UserConstants.MENU_NAME_NOT_UNIQUE;
-        }
-        return UserConstants.MENU_NAME_UNIQUE;
+        return Objects.isNull(info) || info.getMenuId().equals(menuId);
     }
 
 }

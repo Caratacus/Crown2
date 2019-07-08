@@ -109,7 +109,9 @@ public class UserController extends WebController {
     @ResponseBody
     public ApiResponses<Void> addSave(User user) {
         ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
-        ApiAssert.isFalse(ErrorCodeEnum.USER_ACCOUNT_EXIST.overrideMsg(String.format("登录账号%s已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_ACCOUNT_EXIST.overrideMsg(String.format("登录账号[%s]已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_PHONE_EXIST.overrideMsg(String.format("手机号[%s]已存在", user.getPhonenumber())), userService.checkPhoneUnique(user));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_EMAIL_EXIST.overrideMsg(String.format("邮箱[%s]已存在", user.getEmail())), userService.checkEmailUnique(user));
         userService.insertUser(user);
         return success();
 
@@ -135,6 +137,9 @@ public class UserController extends WebController {
     @ResponseBody
     public ApiResponses<Void> editSave(User user) {
         ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_ACCOUNT_EXIST.overrideMsg(String.format("登录账号[%s]已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_PHONE_EXIST.overrideMsg(String.format("手机号[%s]已存在", user.getPhonenumber())), userService.checkPhoneUnique(user));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_EMAIL_EXIST.overrideMsg(String.format("邮箱[%s]已存在", user.getEmail())), userService.checkEmailUnique(user));
         userService.updateUser(user);
         return success();
 
@@ -173,8 +178,8 @@ public class UserController extends WebController {
      */
     @PostMapping("/checkLoginNameUnique")
     @ResponseBody
-    public String checkLoginNameUnique(User user) {
-        return userService.checkLoginNameUnique(user.getLoginName()) ? "1" : "0";
+    public ApiResponses<Boolean> checkLoginNameUnique(User user) {
+        return success(userService.checkLoginNameUnique(user.getLoginName()));
     }
 
     /**
@@ -182,8 +187,8 @@ public class UserController extends WebController {
      */
     @PostMapping("/checkPhoneUnique")
     @ResponseBody
-    public String checkPhoneUnique(User user) {
-        return userService.checkPhoneUnique(user);
+    public ApiResponses<Boolean> checkPhoneUnique(User user) {
+        return success(userService.checkPhoneUnique(user));
     }
 
     /**
@@ -191,8 +196,8 @@ public class UserController extends WebController {
      */
     @PostMapping("/checkEmailUnique")
     @ResponseBody
-    public String checkEmailUnique(User user) {
-        return userService.checkEmailUnique(user);
+    public ApiResponses<Boolean> checkEmailUnique(User user) {
+        return success(userService.checkEmailUnique(user));
     }
 
     /**

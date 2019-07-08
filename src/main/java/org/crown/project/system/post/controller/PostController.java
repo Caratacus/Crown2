@@ -119,8 +119,8 @@ public class PostController extends WebController {
      */
     @PostMapping("/checkPostNameUnique")
     @ResponseBody
-    public String checkPostNameUnique(Post post) {
-        return postService.checkPostNameUnique(post);
+    public ApiResponses<Boolean> checkPostNameUnique(Post post) {
+        return success(postService.checkPostNameUnique(post));
     }
 
     /**
@@ -128,7 +128,7 @@ public class PostController extends WebController {
      */
     @PostMapping("/checkPostCodeUnique")
     @ResponseBody
-    public String checkPostCodeUnique(Post post) {
-        return postService.checkPostCodeUnique(post);
+    public ApiResponses<Boolean> checkPostCodeUnique(Post post) {
+        return success(postService.checkPostCodeUnique(post));
     }
 }

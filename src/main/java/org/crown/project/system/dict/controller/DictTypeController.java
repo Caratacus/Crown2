@@ -131,7 +131,7 @@ public class DictTypeController extends WebController {
      */
     @PostMapping("/checkDictTypeUnique")
     @ResponseBody
-    public String checkDictTypeUnique(DictType dictType) {
-        return dictTypeService.checkDictTypeUnique(dictType);
+    public ApiResponses<Boolean> checkDictTypeUnique(DictType dictType) {
+        return success(dictTypeService.checkDictTypeUnique(dictType));
     }
 }

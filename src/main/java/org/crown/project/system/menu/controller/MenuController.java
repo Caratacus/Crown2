@@ -135,8 +135,8 @@ public class MenuController extends WebController {
      */
     @PostMapping("/checkMenuNameUnique")
     @ResponseBody
-    public String checkMenuNameUnique(Menu menu) {
-        return menuService.checkMenuNameUnique(menu);
+    public ApiResponses<Boolean> checkMenuNameUnique(Menu menu) {
+        return success(menuService.checkMenuNameUnique(menu));
     }
 
     /**

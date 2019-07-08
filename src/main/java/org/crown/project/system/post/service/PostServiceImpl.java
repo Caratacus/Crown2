@@ -1,6 +1,7 @@
 package org.crown.project.system.post.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.crown.common.constant.UserConstants;
 import org.crown.common.exception.BusinessException;
@@ -66,22 +67,17 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     }
 
     @Override
-    public String checkPostNameUnique(Post post) {
-        Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
+    public boolean checkPostNameUnique(Post post) {
+        Long postId = post.getPostId();
         Post info = query().eq(Post::getPostName, post.getPostName()).getOne();
-        if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
-            return UserConstants.POST_NAME_NOT_UNIQUE;
-        }
-        return UserConstants.POST_NAME_UNIQUE;
+        return Objects.isNull(info) || info.getPostId().equals(postId);
     }
 
     @Override
-    public String checkPostCodeUnique(Post post) {
-        Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
+    public boolean checkPostCodeUnique(Post post) {
+        Long postId = post.getPostId();
         Post info = query().eq(Post::getPostCode, post.getPostCode()).getOne();
-        if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
-            return UserConstants.POST_CODE_NOT_UNIQUE;
-        }
-        return UserConstants.POST_CODE_UNIQUE;
+        return Objects.isNull(info) || info.getPostId().equals(postId);
+
     }
 }

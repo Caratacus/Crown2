@@ -120,6 +120,8 @@ public enum ErrorCodeEnum {
     USER_AVATAR_UPLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "用户头像上传失败"),
     USER_CANNOT_UPDATE_SUPER_ADMIN(HttpServletResponse.SC_BAD_REQUEST, true, "不可以修改超级管理员"),
     USER_ACCOUNT_EXIST(HttpServletResponse.SC_BAD_REQUEST, true, "账号已存在"),
+    USER_PHONE_EXIST(HttpServletResponse.SC_BAD_REQUEST, true, "手机号已存在"),
+    USER_EMAIL_EXIST(HttpServletResponse.SC_BAD_REQUEST, true, "Email已存在"),
     USER_NOT_ONLINE(HttpServletResponse.SC_BAD_REQUEST, true, "用户已下线"),
     USER_CANNOT_RETREAT_CURRENT_ACCOUNT(HttpServletResponse.SC_BAD_REQUEST, true, "当前登陆用户无法强退"),
     USER_ELSEWHERE_LOGIN(HttpServletResponse.SC_UNAUTHORIZED, true, "您已在别处登录，请您修改密码或重新登录"),
