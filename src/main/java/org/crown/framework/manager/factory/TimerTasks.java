@@ -1,5 +1,6 @@
 package org.crown.framework.manager.factory;
 
+import java.util.Date;
 import java.util.TimerTask;
 
 import org.crown.common.constant.Constants;
@@ -67,6 +68,7 @@ public class TimerTasks {
             public void run() {
                 // 远程查询操作地点
                 operLog.setOperLocation(IpUtils.getRealAddress(operLog.getOperIp()));
+                operLog.setOperTime(new Date());
                 SpringUtils.getBean(IOperLogService.class).save(operLog);
             }
         };
@@ -114,6 +116,7 @@ public class TimerTasks {
                 } else if (Constants.LOGIN_FAIL.equals(status)) {
                     logininfor.setStatus(Constants.FAIL);
                 }
+                logininfor.setLoginTime(new Date());
                 // 插入数据
                 SpringUtils.getBean(ILogininforService.class).save(logininfor);
             }
