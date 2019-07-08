@@ -24,7 +24,10 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -33,13 +36,24 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  *
  * @author Caratacus
  */
-public class ApplicationUtils {
+@Component
+public final class ApplicationUtils implements BeanFactoryPostProcessor {
+
+    /**
+     * Spring应用上下文环境
+     */
+    private static ConfigurableListableBeanFactory beanFactory;
+
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        ApplicationUtils.beanFactory = beanFactory;
+    }
 
     /**
      * 获取ApplicationContext
      */
-    private static ApplicationContext getContext() {
-        return ApplicationContextRegister.getApplicationContext();
+    private static ConfigurableListableBeanFactory getContext() {
+        return beanFactory;
     }
 
     /**
