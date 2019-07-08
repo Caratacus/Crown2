@@ -41,10 +41,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.crown.common.enums.HTTPMethod;
 import org.crown.common.utils.JacksonUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.file.FileUtils;
-import org.crown.common.enums.HTTPMethod;
 import org.crown.framework.exception.CrownException;
 import org.springframework.util.StreamUtils;
 

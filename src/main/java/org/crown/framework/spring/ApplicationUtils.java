@@ -35,7 +35,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class ApplicationUtils {
 
-
     /**
      * 获取ApplicationContext
      */
