@@ -47,7 +47,7 @@ public enum ErrorCodeEnum {
     /**
      * 403
      */
-    FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, "无权查看"),
+    FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, "暂无权操作，如需授权，请联系管理员"),
     /**
      * 404
      */

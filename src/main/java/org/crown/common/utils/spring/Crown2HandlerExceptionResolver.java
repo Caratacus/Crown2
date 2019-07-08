@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.crown.common.utils.security.PermissionUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.exception.ApiException;
 import org.crown.framework.utils.RequestUtils;
@@ -107,6 +107,8 @@ public class Crown2HandlerExceptionResolver extends AbstractHandlerExceptionReso
         try {
             if (ex instanceof ApiException) {
                 handleApi((ApiException) ex, request, response);
+            } else if (ex instanceof AuthenticationException) {
+                handleAuthenticationException((AuthenticationException) ex, request, response);
             } else if (ex instanceof UnauthorizedException) {
                 handleUnauthorizedException((UnauthorizedException) ex, request, response);
             } else if (ex instanceof AuthorizationException) {
@@ -161,8 +163,18 @@ public class Crown2HandlerExceptionResolver extends AbstractHandlerExceptionReso
         return MODEL_VIEW_INSTANCE;
     }
 
+    private void handleAuthenticationException(AuthenticationException ex, HttpServletRequest request, HttpServletResponse response) {
+        Throwable throwable = ex.getCause();
+        if (throwable instanceof ApiException) {
+            ApiException cause = (ApiException) throwable;
+            ResponseUtils.sendFail(request, response, cause.getErrorCode(), ex);
+        } else {
+            ResponseUtils.sendFail(request, response, ErrorCodeEnum.FORBIDDEN, ex);
+        }
+    }
+
     protected void handleAuthorizationException(AuthorizationException ex, HttpServletRequest request, HttpServletResponse response) {
-        ResponseUtils.sendFail(request, response, ErrorCodeEnum.FORBIDDEN.overrideMsg(PermissionUtils.getMsg(ex.getMessage())), ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.FORBIDDEN, ex);
     }
 
     /**

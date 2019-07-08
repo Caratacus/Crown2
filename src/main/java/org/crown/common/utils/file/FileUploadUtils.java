@@ -91,7 +91,7 @@ public class FileUploadUtils {
      * @param file             上传的文件
      * @param allowedExtension 上传文件类型
      * @return 返回上传成功的文件名
-     * @throws IOException               比如读写文件出错时
+     * @throws IOException 比如读写文件出错时
      */
     public static String upload(String baseDir, MultipartFile file, String[] allowedExtension)
             throws IOException {

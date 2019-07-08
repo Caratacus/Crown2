@@ -3,15 +3,15 @@ package org.crown.framework.shiro.service;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.crown.common.constant.Constants;
 import org.crown.common.constant.ShiroConstants;
-import org.crown.common.exception.user.UserPasswordNotMatchException;
-import org.crown.common.exception.user.UserPasswordRetryLimitExceedException;
 import org.crown.common.utils.MessageUtils;
+import org.crown.framework.exception.MsgException;
 import org.crown.framework.manager.ThreadExecutors;
 import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.project.system.user.domain.User;
@@ -51,13 +51,14 @@ public class PasswordService {
         }
         if (retryCount.incrementAndGet() > Integer.valueOf(maxRetryCount)) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGIN_FAIL, MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount)));
-            throw new UserPasswordRetryLimitExceedException(Integer.valueOf(maxRetryCount));
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "密码输入错误" + maxRetryCount + "次，帐户锁定10分钟");
         }
 
         if (!matches(user, password)) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGIN_FAIL, MessageUtils.message("user.password.retry.limit.count", retryCount)));
             loginRecordCache.put(loginName, retryCount);
-            throw new UserPasswordNotMatchException();
+            throw new MsgException(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
+
         } else {
             clearLoginRecordCache(loginName);
         }
