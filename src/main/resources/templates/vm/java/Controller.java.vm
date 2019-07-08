@@ -16,7 +16,7 @@ import ${package}.service.I${className}Service;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.framework.web.domain.AjaxResult;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 
 /**
  * ${tableComment}信息操作处理
@@ -63,7 +63,7 @@ public class ${className}Controller extends WebController
     public AjaxResult export(${className} ${classname})
     {
     	List<${className}> list = ${classname}Service.select${className}List(${classname});
-        ExcelUtil<${className}> util = new ExcelUtil<${className}>(${className}.class);
+        ExcelUtils<${className}> util = new ExcelUtils<${className}>(${className}.class);
         return util.exportExcel(list, "${classname}");
     }
 	

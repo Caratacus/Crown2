@@ -3,7 +3,7 @@ package org.crown.project.system.post.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
@@ -56,7 +56,7 @@ public class PostController extends WebController {
     @ResponseBody
     public ApiResponses<ExcelDTO> export(Post post) {
         List<Post> list = postService.selectPostList(post);
-        ExcelUtil<Post> util = new ExcelUtil<>(Post.class);
+        ExcelUtils<Post> util = new ExcelUtils<>(Post.class);
         return success(new ExcelDTO(util.exportExcel(list, "岗位数据")));
 
     }

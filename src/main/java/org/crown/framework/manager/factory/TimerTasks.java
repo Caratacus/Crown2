@@ -7,7 +7,7 @@ import org.crown.common.constant.Constants;
 import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.ServletUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.common.utils.spring.SpringUtils;
+import org.crown.common.utils.spring.ApplicationUtils;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
 import org.crown.project.monitor.logininfor.service.ILogininforService;
 import org.crown.project.monitor.online.domain.OnlineSession;
@@ -50,7 +50,7 @@ public class TimerTasks {
                 online.setOs(session.getOs());
                 online.setStatus(session.getStatus());
                 online.setSession(session);
-                SpringUtils.getBean(IUserOnlineService.class).saveOrUpdate(online);
+                ApplicationUtils.getBean(IUserOnlineService.class).saveOrUpdate(online);
 
             }
         };
@@ -69,7 +69,7 @@ public class TimerTasks {
                 // 远程查询操作地点
                 operLog.setOperLocation(IpUtils.getRealAddress(operLog.getOperIp()));
                 operLog.setOperTime(new Date());
-                SpringUtils.getBean(IOperLogService.class).save(operLog);
+                ApplicationUtils.getBean(IOperLogService.class).save(operLog);
             }
         };
     }
@@ -118,7 +118,7 @@ public class TimerTasks {
                 }
                 logininfor.setLoginTime(new Date());
                 // 插入数据
-                SpringUtils.getBean(ILogininforService.class).save(logininfor);
+                ApplicationUtils.getBean(ILogininforService.class).save(logininfor);
             }
         };
     }

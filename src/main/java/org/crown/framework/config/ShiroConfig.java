@@ -20,7 +20,7 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.spring.SpringUtils;
+import org.crown.common.utils.spring.ApplicationUtils;
 import org.crown.framework.shiro.realm.UserRealm;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
 import org.crown.framework.shiro.session.OnlineSessionFactory;
@@ -171,7 +171,7 @@ public class ShiroConfig {
         // 去掉 JSESSIONID
         manager.setSessionIdUrlRewritingEnabled(false);
         // 定义要使用的无效的Session定时调度器
-        manager.setSessionValidationScheduler(SpringUtils.getBean(SpringSessionValidationScheduler.class));
+        manager.setSessionValidationScheduler(ApplicationUtils.getBean(SpringSessionValidationScheduler.class));
         // 是否定时检查session
         manager.setSessionValidationSchedulerEnabled(true);
         // 自定义SessionDao
@@ -246,7 +246,7 @@ public class ShiroConfig {
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         // 系统权限列表
-        // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
+        // filterChainDefinitionMap.putAll(ApplicationUtils.getBean(IMenuService.class).selectPermsAll());
 
         Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("onlineSession", onlineSessionFilter());

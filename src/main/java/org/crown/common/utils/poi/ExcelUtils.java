@@ -58,9 +58,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author ruoyi
  */
-public class ExcelUtil<T> {
+public class ExcelUtils<T> {
 
-    private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(ExcelUtils.class);
 
     /**
      * Excel sheet最大行数，默认65536
@@ -102,7 +102,7 @@ public class ExcelUtil<T> {
      */
     public final Class<T> clazz;
 
-    public ExcelUtil(Class<T> clazz) {
+    public ExcelUtils(Class<T> clazz) {
         this.clazz = clazz;
     }
 

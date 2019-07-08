@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.common.utils.text.Convert;
 import org.crown.framework.exception.MsgException;
 import org.crown.framework.model.ExcelDTO;
@@ -164,7 +164,7 @@ public class DemoOperateController extends WebController {
     @ResponseBody
     public ApiResponses<ExcelDTO> export(UserOperateModel user) {
         List<UserOperateModel> list = new ArrayList<>(users.values());
-        ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
+        ExcelUtils<UserOperateModel> util = new ExcelUtils<>(UserOperateModel.class);
         return success(new ExcelDTO(util.exportExcel(list, "用户数据")));
     }
 
@@ -174,7 +174,7 @@ public class DemoOperateController extends WebController {
     @GetMapping("/importTemplate")
     @ResponseBody
     public ApiResponses<ExcelDTO> importTemplate() {
-        ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
+        ExcelUtils<UserOperateModel> util = new ExcelUtils<>(UserOperateModel.class);
         return success(new ExcelDTO(util.importTemplateExcel("用户数据")));
     }
 
@@ -184,7 +184,7 @@ public class DemoOperateController extends WebController {
     @PostMapping("/importData")
     @ResponseBody
     public ApiResponses<Void> importData(MultipartFile file, boolean updateSupport) throws Exception {
-        ExcelUtil<UserOperateModel> util = new ExcelUtil<>(UserOperateModel.class);
+        ExcelUtils<UserOperateModel> util = new ExcelUtils<>(UserOperateModel.class);
         List<UserOperateModel> userList = util.importExcel(file.getInputStream());
         String message = importUser(userList, updateSupport);
         return success().setMsg(message);

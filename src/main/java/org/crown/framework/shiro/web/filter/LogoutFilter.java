@@ -12,7 +12,6 @@ import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 import org.crown.common.constant.Constants;
 import org.crown.common.constant.ShiroConstants;
-import org.crown.common.utils.MessageUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.manager.ThreadExecutors;
@@ -55,7 +54,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
                 if (StringUtils.isNotNull(user)) {
                     String loginName = user.getLoginName();
                     // 记录用户退出日志
-                    ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success")));
+                    ThreadExecutors.execute(TimerTasks.recordLogininfor(loginName, Constants.LOGOUT, "退出成功"));
                     // 清理缓存
                     cache.remove(loginName);
                 }

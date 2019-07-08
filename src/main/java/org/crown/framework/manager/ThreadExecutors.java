@@ -5,7 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.crown.common.utils.Threads;
-import org.crown.common.utils.spring.SpringUtils;
+import org.crown.common.utils.spring.ApplicationUtils;
 
 /**
  * 线程异步执行工具类
@@ -25,13 +25,13 @@ public abstract class ThreadExecutors {
      * @param task 任务
      */
     public static void execute(TimerTask task) {
-        SpringUtils.getBean(ScheduledExecutorService.class).schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
+        ApplicationUtils.getBean(ScheduledExecutorService.class).schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
 
     /**
      * 停止任务线程池
      */
     public static void shutdown() {
-        Threads.shutdownAndAwaitTermination(SpringUtils.getBean(ScheduledExecutorService.class));
+        Threads.shutdownAndAwaitTermination(ApplicationUtils.getBean(ScheduledExecutorService.class));
     }
 }

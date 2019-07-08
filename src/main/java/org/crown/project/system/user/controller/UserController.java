@@ -3,7 +3,7 @@ package org.crown.project.system.user.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.enums.ErrorCodeEnum;
@@ -67,7 +67,7 @@ public class UserController extends WebController {
     @ResponseBody
     public ApiResponses<ExcelDTO> export(User user) {
         List<User> list = userService.selectUserList(user);
-        ExcelUtil<User> util = new ExcelUtil<>(User.class);
+        ExcelUtils<User> util = new ExcelUtils<>(User.class);
         return success(new ExcelDTO(util.exportExcel(list, "用户数据")));
     }
 
@@ -76,7 +76,7 @@ public class UserController extends WebController {
     @PostMapping("/importData")
     @ResponseBody
     public ApiResponses<Void> importData(MultipartFile file, boolean updateSupport) throws Exception {
-        ExcelUtil<User> util = new ExcelUtil<>(User.class);
+        ExcelUtils<User> util = new ExcelUtils<>(User.class);
         List<User> userList = util.importExcel(file.getInputStream());
         String message = userService.importUser(userList, updateSupport);
         return success().setMsg(message);
@@ -86,7 +86,7 @@ public class UserController extends WebController {
     @GetMapping("/importTemplate")
     @ResponseBody
     public ApiResponses<ExcelDTO> importTemplate() {
-        ExcelUtil<User> util = new ExcelUtil<>(User.class);
+        ExcelUtils<User> util = new ExcelUtils<>(User.class);
         return success(new ExcelDTO(util.importTemplateExcel("用户数据")));
     }
 

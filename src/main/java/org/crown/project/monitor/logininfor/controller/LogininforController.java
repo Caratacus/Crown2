@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
@@ -57,7 +57,7 @@ public class LogininforController extends WebController {
     @ResponseBody
     public ApiResponses<ExcelDTO> export(Logininfor logininfor) {
         List<Logininfor> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil<Logininfor> util = new ExcelUtil<>(Logininfor.class);
+        ExcelUtils<Logininfor> util = new ExcelUtils<>(Logininfor.class);
         return success(new ExcelDTO(util.exportExcel(list, "登陆日志")));
 
     }

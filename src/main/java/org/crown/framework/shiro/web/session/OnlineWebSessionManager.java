@@ -13,7 +13,7 @@ import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crown.common.constant.ShiroConstants;
-import org.crown.common.utils.spring.SpringUtils;
+import org.crown.common.utils.spring.ApplicationUtils;
 import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.monitor.online.domain.UserOnline;
 import org.crown.project.monitor.online.service.UserOnlineServiceImpl;
@@ -79,7 +79,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager {
 
         int timeout = (int) this.getGlobalSessionTimeout();
         Date expiredDate = DateUtils.addMilliseconds(new Date(), 0 - timeout);
-        UserOnlineServiceImpl userOnlineService = SpringUtils.getBean(UserOnlineServiceImpl.class);
+        UserOnlineServiceImpl userOnlineService = ApplicationUtils.getBean(UserOnlineServiceImpl.class);
         List<UserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
         // 批量过期删除
         List<String> needOfflineIdList = new ArrayList<>();

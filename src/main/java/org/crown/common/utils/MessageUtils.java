@@ -1,6 +1,6 @@
 package org.crown.common.utils;
 
-import org.crown.common.utils.spring.SpringUtils;
+import org.crown.common.utils.spring.ApplicationUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -19,7 +19,7 @@ public class MessageUtils {
      * @return 获取国际化翻译值
      */
     public static String message(String code, Object... args) {
-        MessageSource messageSource = SpringUtils.getBean(MessageSource.class);
+        MessageSource messageSource = ApplicationUtils.getBean(MessageSource.class);
         return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

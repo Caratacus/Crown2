@@ -3,7 +3,7 @@ package org.crown.project.system.role.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
@@ -62,7 +62,7 @@ public class RoleController extends WebController {
     @ResponseBody
     public ApiResponses<ExcelDTO> export(Role role) {
         List<Role> list = roleService.selectRoleList(role);
-        ExcelUtil<Role> util = new ExcelUtil<>(Role.class);
+        ExcelUtils<Role> util = new ExcelUtils<>(Role.class);
         return success(new ExcelDTO(util.exportExcel(list, "角色数据")));
 
     }

@@ -20,18 +20,18 @@ public class I18nConfig implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
         // 默认语言
-        slr.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
-        return slr;
+        resolver.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+        return resolver;
     }
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         // 参数名
-        lci.setParamName("lang");
-        return lci;
+        interceptor.setParamName("lang");
+        return interceptor;
     }
 
     @Override

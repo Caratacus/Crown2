@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
@@ -62,7 +62,7 @@ public class ConfigController extends WebController {
     @ResponseBody
     public ApiResponses<ExcelDTO> export(Config config) {
         List<Config> list = configService.selectConfigList(config);
-        ExcelUtil<Config> util = new ExcelUtil<>(Config.class);
+        ExcelUtils<Config> util = new ExcelUtils<>(Config.class);
         return success(new ExcelDTO(util.exportExcel(list, "参数数据")));
     }
 

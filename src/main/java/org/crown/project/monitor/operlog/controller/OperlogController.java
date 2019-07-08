@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
@@ -59,7 +59,7 @@ public class OperlogController extends WebController {
     @ResponseBody
     public ApiResponses<ExcelDTO> export(OperLog operLog) {
         List<OperLog> list = operLogService.selectOperLogList(operLog);
-        ExcelUtil<OperLog> util = new ExcelUtil<>(OperLog.class);
+        ExcelUtils<OperLog> util = new ExcelUtils<>(OperLog.class);
         return success(new ExcelDTO(util.exportExcel(list, "操作日志")));
 
     }

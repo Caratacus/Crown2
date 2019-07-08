@@ -3,7 +3,7 @@ package org.crown.project.system.dict.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.crown.common.utils.poi.ExcelUtil;
+import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.aspectj.lang.annotation.Log;
 import org.crown.framework.aspectj.lang.enums.BusinessType;
 import org.crown.framework.model.ExcelDTO;
@@ -57,7 +57,7 @@ public class DictTypeController extends WebController {
     public ApiResponses<ExcelDTO> export(DictType dictType) {
 
         List<DictType> list = dictTypeService.selectDictTypeList(dictType);
-        ExcelUtil<DictType> util = new ExcelUtil<>(DictType.class);
+        ExcelUtils<DictType> util = new ExcelUtils<>(DictType.class);
         return success(new ExcelDTO(util.exportExcel(list, "字典类型")));
 
     }
