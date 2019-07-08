@@ -44,13 +44,13 @@ public abstract class LogUtils {
      * @param parameterMap
      * @param requestBody
      * @param url
-     * @param mapping
+     * @param actionMethod
      * @param method
      * @param ip
      * @param object
      * @return
      */
-    public static void printLog(Long beiginTime, String uid, Map<String, String[]> parameterMap, String requestBody, String url, String mapping, String method, String ip, Object object) {
+    public static void printLog(Long beiginTime, String uid, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
         Log logInfo = Log.builder()
                 //查询参数
                 .parameterMap(parameterMap)
@@ -59,8 +59,8 @@ public abstract class LogUtils {
                 .requestBody(Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody))
                 //请求路径
                 .url(url)
-                //请求mapping
-                .mapping(mapping)
+                //控制器方法
+                .actionMethod(actionMethod)
                 //请求方法
                 .method(method)
                 .runTime((beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms")

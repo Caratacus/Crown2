@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.crown.common.annotation.Log;
+import org.crown.common.cons.APICons;
 import org.crown.common.enums.BusinessStatus;
 import org.crown.common.utils.JacksonUtils;
 import org.crown.common.utils.StringUtils;
@@ -18,11 +19,12 @@ import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.manager.ThreadExecutors;
 import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.framework.spring.ApplicationUtils;
+import org.crown.framework.utils.LogUtils;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.system.user.domain.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 操作日志记录处理
@@ -31,12 +33,11 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Slf4j
 public class LogAspect {
 
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
-
     // 配置织入点
-    @Pointcut("@annotation(org.crown.common.annotation.Log)")
+    @Pointcut("execution(public * org.crown.project..*.*Controller.*(..))")
     public void logPointCut() {
     }
 
@@ -44,10 +45,11 @@ public class LogAspect {
      * 处理完请求后执行
      *
      * @param joinPoint 切点
+     * @param ret       返回值
      */
-    @AfterReturning(pointcut = "logPointCut()")
-    public void doAfterReturning(JoinPoint joinPoint) {
-        handleLog(joinPoint, null);
+    @AfterReturning(returning = "ret", pointcut = "logPointCut()")
+    public void doAfterReturning(JoinPoint joinPoint, Object ret) {
+        handleLog(joinPoint, ret, null);
     }
 
     /**
@@ -58,13 +60,21 @@ public class LogAspect {
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-        handleLog(joinPoint, e);
+        handleLog(joinPoint, null, e);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, final Exception e) {
+    protected void handleLog(final JoinPoint joinPoint, final Object ret, final Exception e) {
         try {
+            // 设置方法名称
+            String className = joinPoint.getTarget().getClass().getName();
+            String methodName = joinPoint.getSignature().getName();
+            String actionMethod = className + "." + methodName + "()";
+            ApplicationUtils.getRequest().setAttribute(APICons.API_ACTION_METHOD, actionMethod);
+            String requestURI = (String) ApplicationUtils.getRequest().getAttribute(APICons.API_REQURL);
+            LogUtils.doAfterReturning(ret);
             // 获得注解
-            Log controllerLog = getAnnotationLog(joinPoint);
+            Method method = getMethod(joinPoint);
+            Log controllerLog = getAnnotationLog(method);
             if (controllerLog == null) {
                 return;
             }
@@ -78,7 +88,7 @@ public class LogAspect {
             // 请求的地址
             String ip = ShiroUtils.getIp();
             operLog.setOperIp(ip);
-            operLog.setOperUrl(ApplicationUtils.getRequest().getRequestURI());
+            operLog.setOperUrl(requestURI);
             if (currentUser != null) {
                 operLog.setOperName(currentUser.getLoginName());
                 if (StringUtils.isNotNull(currentUser.getDept())
@@ -91,10 +101,8 @@ public class LogAspect {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
-            // 设置方法名称
-            String className = joinPoint.getTarget().getClass().getName();
-            String methodName = joinPoint.getSignature().getName();
-            operLog.setMethod(className + "." + methodName + "()");
+
+            operLog.setMethod(actionMethod);
             // 处理设置注解上的参数
             getControllerMethodDescription(controllerLog, operLog);
             // 保存数据库
@@ -141,14 +149,22 @@ public class LogAspect {
     /**
      * 是否存在注解，如果存在就获取
      */
-    private Log getAnnotationLog(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-
+    private Log getAnnotationLog(Method method) {
         if (method != null) {
             return method.getAnnotation(Log.class);
         }
         return null;
+    }
+
+    /**
+     * 获取Method
+     *
+     * @param joinPoint
+     * @return
+     */
+    private Method getMethod(JoinPoint joinPoint) {
+        Signature signature = joinPoint.getSignature();
+        MethodSignature methodSignature = (MethodSignature) signature;
+        return methodSignature.getMethod();
     }
 }

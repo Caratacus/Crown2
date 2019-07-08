@@ -16,7 +16,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.crown.common.cons.APICons;
 import org.crown.common.utils.StringUtils;
+import org.springframework.web.util.UrlPathHelper;
 
 /**
  * 防止XSS攻击的过滤器
@@ -29,6 +31,7 @@ public class XssFilter implements Filter {
      * 排除链接
      */
     public final List<String> excludes = new ArrayList<>();
+    private final UrlPathHelper urlPathHelper = new UrlPathHelper();
 
     /**
      * xss过滤开关
@@ -53,6 +56,10 @@ public class XssFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
+        request.setAttribute(APICons.API_BEGIN_TIME, System.currentTimeMillis());
+        String requestUri = urlPathHelper.getOriginatingRequestUri(req);
+        request.setAttribute(APICons.API_REQURL, requestUri);
+
         if (handleExcludeURL(req, resp)) {
             chain.doFilter(request, response);
             return;

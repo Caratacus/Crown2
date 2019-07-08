@@ -31,6 +31,7 @@ import javax.validation.ConstraintViolationException;
 import org.crown.common.cons.APICons;
 import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.TypeUtils;
+import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.responses.ApiResponses;
@@ -64,13 +65,18 @@ public abstract class ResponseUtils {
      * @param obj      需要转换JSON的对象
      */
     public static void writeValAsJson(HttpServletRequest request, ResponseWrapper response, Object obj) {
+        String userId = null;
+        try {
+            userId = TypeUtils.castToString(ShiroUtils.getUserId());
+        } catch (Exception ignored) {
+        }
         LogUtils.printLog((Long) request.getAttribute(APICons.API_BEGIN_TIME),
-                TypeUtils.castToString(request.getAttribute(APICons.API_UID)),
+                userId,
                 request.getParameterMap(),
                 RequestUtils.getRequestBody(request),
                 (String) request.getAttribute(APICons.API_REQURL),
-                (String) request.getAttribute(APICons.API_MAPPING),
-                (String) request.getAttribute(APICons.API_METHOD),
+                (String) request.getAttribute(APICons.API_ACTION_METHOD),
+                request.getMethod(),
                 IpUtils.getIpAddr(request),
                 obj);
         if (ObjectUtils.isNotNull(response, obj)) {
