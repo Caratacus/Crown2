@@ -6,6 +6,15 @@ $(function() {
 		var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
 		$(".imgcode").attr("src", url);
 	});
+    $('#captchaSp').sliderCaptcha({
+        repeatIcon: 'fa fa-redo',
+        setSrc: function () {
+            return 'http://images.sdgxgz.com/Pic' + Math.round(Math.random() * 136) + '.jpg';
+        },
+        onSuccess: function () {
+            login();
+        }
+    });
 });
 
 $.validator.setDefaults({
@@ -15,7 +24,7 @@ $.validator.setDefaults({
 });
 
 function login() {
-	$.modal.loading($("#btnSubmit").data("loading"));
+	$.modal.loading("正在验证登录，请稍后...");
 	var username = $.common.trim($("input[name='username']").val());
     var password = $.common.trim($("input[name='password']").val());
     var validateCode = $("input[name='validateCode']").val();
