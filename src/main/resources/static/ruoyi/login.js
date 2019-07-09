@@ -1,15 +1,13 @@
-
-$(function() {
-	validateKickout();
-    validateRule();
-	$('.imgcode').click(function() {
-		var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
-		$(".imgcode").attr("src", url);
-	});
+$(function () {
+    validateKickout();
+    $('.imgcode').click(function () {
+        var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
+        $(".imgcode").attr("src", url);
+    });
     $('#captchaSp').sliderCaptcha({
         repeatIcon: 'fa fa-redo',
         setSrc: function () {
-            return 'http://images.sdgxgz.com/Pic' + Math.round(Math.random() * 136) + '.jpg';
+            return ctx + "img/slidercaptcha.jpg";
         },
         onSuccess: function () {
             login();
@@ -17,28 +15,32 @@ $(function() {
     });
 });
 
-$.validator.setDefaults({
-    submitHandler: function() {
-		login();
-    }
-});
-
 function login() {
-	$.modal.loading("正在验证登录，请稍后...");
-	var username = $.common.trim($("input[name='username']").val());
+    var username = $.common.trim($("input[name='username']").val());
     var password = $.common.trim($("input[name='password']").val());
     var validateCode = $("input[name='validateCode']").val();
     var rememberMe = $("input[name='rememberme']").is(':checked');
+    if (username==null || username==''){
+        $.modal.msg("请输入您的用户名");
+        $('#captchaSp').sliderCaptcha('reset');
+        return;
+    }
+    if (password==null || password==''){
+        $.modal.msg("请输入您的密码");
+        $('#captchaSp').sliderCaptcha('reset');
+        return;
+    }
+    $.modal.loading("正在验证登录，请稍后...");
     $.ajax({
         type: "post",
         url: ctx + "login",
         data: {
             "username": username,
             "password": password,
-            "validateCode" : validateCode,
+            "validateCode": validateCode,
             "rememberMe": rememberMe
         },
-        success: function(result) {
+        success: function (result) {
             var status = result.status;
             if (status >= 200 && status <= 299) {
                 location.href = ctx + 'index';
@@ -52,49 +54,27 @@ function login() {
     });
 }
 
-function validateRule() {
-    var icon = "<i class='fa fa-times-circle'></i> ";
-    $("#signupForm").validate({
-        rules: {
-            username: {
-                required: true
-            },
-            password: {
-                required: true
-            }
-        },
-        messages: {
-            username: {
-                required: icon + "请输入您的用户名",
-            },
-            password: {
-                required: icon + "请输入您的密码",
-            }
-        }
-    })
-}
-
 function validateKickout() {
-	if (getParam("kickout") == 1) {
-	    layer.alert("<font color='red'>您已在别处登录，请您修改密码或重新登录</font>", {
-	        icon: 0,
-	        title: "系统提示"
-	    },
-	    function(index) {
-	        //关闭弹窗
-	        layer.close(index);
-	        if (top != self) {
-	            top.location = self.location;
-	        } else {
-	            var url  =  location.search;
-	            if (url) {
-	                var oldUrl  = window.location.href;
-	                var newUrl  = oldUrl.substring(0,  oldUrl.indexOf('?'));
-	                self.location  = newUrl;
-	            }
-	        }
-	    });
-	}
+    if (getParam("kickout") == 1) {
+        layer.alert("<font color='red'>您已在别处登录，请您修改密码或重新登录</font>", {
+                icon: 0,
+                title: "系统提示"
+            },
+            function (index) {
+                //关闭弹窗
+                layer.close(index);
+                if (top != self) {
+                    top.location = self.location;
+                } else {
+                    var url = location.search;
+                    if (url) {
+                        var oldUrl = window.location.href;
+                        var newUrl = oldUrl.substring(0, oldUrl.indexOf('?'));
+                        self.location = newUrl;
+                    }
+                }
+            });
+    }
 }
 
 function getParam(paramName) {

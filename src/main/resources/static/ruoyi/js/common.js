@@ -238,11 +238,7 @@ $.ajaxSetup({
             $.modal.alertWarning("登录超时，请重新登录");
             $.modal.enable();
             $.modal.closeLoading();
-            if (ctx === "/") {
-                location.href = '/login';
-            } else {
-                location.href = ctx + '/login';
-            }
+			location.href = ctx + 'login';
 		}else if (textStatus == 'timeout') {
         	$.modal.alertWarning("服务器超时，请稍后再试！");
         	$.modal.enable();
