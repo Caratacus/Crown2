@@ -1,7 +1,11 @@
 package org.crown.project.monitor.quartz.domain;
 
+import java.util.Date;
+
 import org.crown.common.annotation.Excel;
+import org.crown.common.utils.StringUtils;
 import org.crown.framework.web.domain.BaseEntity;
+import org.crown.project.monitor.quartz.common.CronUtils;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -74,4 +78,17 @@ public class Job extends BaseEntity {
     @TableField(fill = FieldFill.INSERT)
     private String delFlag;
 
+    /**
+     * 获取下次执行时间
+     * @return
+     */
+    public Date getNextValidTime()
+    {
+        String cron = getCron();
+        if (StringUtils.isNotEmpty(cron))
+        {
+            return CronUtils.getNextExecution(cron);
+        }
+        return null;
+    }
 }

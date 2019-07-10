@@ -57,7 +57,7 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        //setInsertFieldValByName(delFlag, "0", metaObject);
+        setInsertFieldValByName(delFlag, "0", metaObject);
         setInsertFieldValByName(createTime, new Date(), metaObject);
         setInsertFieldValByName(createBy, currentLoginName(), metaObject);
         setInsertFieldValByName(updateTime, new Date(), metaObject);
