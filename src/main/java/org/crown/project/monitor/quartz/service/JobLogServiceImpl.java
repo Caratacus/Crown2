@@ -5,7 +5,6 @@ import org.crown.project.monitor.quartz.domain.JobLog;
 import org.crown.project.monitor.quartz.mapper.JobLogMapper;
 import org.springframework.stereotype.Service;
 
-
 /**
  * <p>
  * 定时任务日志 服务实现类

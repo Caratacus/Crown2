@@ -56,7 +56,7 @@ public class JobRestController extends WebController {
     public ApiResponses<BaseModel> create() {
        /* Job job = jobService.create(jobPARM.convert(Job.class));
         return success(job.convert(BaseModel.class));*/
-       return success(new BaseModel());
+        return success(new BaseModel());
     }
 
     @ApiOperation(value = "修改定时任务", notes = "修改定时任务")
@@ -77,9 +77,9 @@ public class JobRestController extends WebController {
     })
     @PutMapping(value = "/{id}/paused")
     public ApiResponses<Void> updatePaused(@PathVariable("id") Long id) {
-     //   Job job = jobService.selectById(id);
-    //    ApiAssert.notNull(ErrorCode.x100019, job);
-       // jobService.updatePaused(job);
+        //   Job job = jobService.selectById(id);
+        //    ApiAssert.notNull(ErrorCode.x100019, job);
+        // jobService.updatePaused(job);
         return success();
     }
 
@@ -89,9 +89,9 @@ public class JobRestController extends WebController {
     })
     @PutMapping(value = "/{id}/run")
     public ApiResponses<Void> execution(@PathVariable("id") Long id) {
-      //  Job job = jobService.selectById(id);
-    //    ApiAssert.notNull(ErrorCode.x100019, job);
-     //   jobService.execute(job);
+        //  Job job = jobService.selectById(id);
+        //    ApiAssert.notNull(ErrorCode.x100019, job);
+        //   jobService.execute(job);
         return success();
     }
 
@@ -101,9 +101,9 @@ public class JobRestController extends WebController {
     })
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Long id) {
-       // Job job = jobService.selectById(id);
-   //     ApiAssert.notNull(ErrorCode.x100019, job);
-       // jobService.delete(job);
+        // Job job = jobService.selectById(id);
+        //     ApiAssert.notNull(ErrorCode.x100019, job);
+        // jobService.delete(job);
         return success();
     }
 

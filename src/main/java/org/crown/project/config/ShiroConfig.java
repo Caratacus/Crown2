@@ -263,7 +263,6 @@ public class ShiroConfig {
         return new SyncOnlineSessionFilter();
     }
 
-
     /**
      * 同一个用户多设备登录限制
      */
