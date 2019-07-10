@@ -50,17 +50,16 @@ import org.crown.common.utils.converter.Convert;
 import org.crown.common.utils.reflect.ReflectUtils;
 import org.crown.framework.exception.Crown2Exception;
 import org.crown.project.config.RuoYiConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Excel相关处理
  *
  * @author ruoyi
  */
+@Slf4j
 public class ExcelUtils<T> {
-
-    private static final Logger log = LoggerFactory.getLogger(ExcelUtils.class);
 
     /**
      * Excel sheet最大行数，默认65536
@@ -95,12 +94,12 @@ public class ExcelUtils<T> {
     /**
      * 注解列表
      */
-    private List<Field> fields;
+    private List<Object[]> fields;
 
     /**
      * 实体对象
      */
-    public final Class<T> clazz;
+    public Class<T> clazz;
 
     public ExcelUtils(Class<T> clazz) {
         this.clazz = clazz;
@@ -267,24 +266,14 @@ public class ExcelUtils<T> {
 
                 // 产生一行
                 Row row = sheet.createRow(0);
-                int excelsNo = 0;
+                int column = 0;
                 // 写入各个字段的列头名称
-                for (int column = 0; column < fields.size(); column++) {
-                    Field field = fields.get(column);
-                    if (field.isAnnotationPresent(Excel.class)) {
-                        Excel excel = field.getAnnotation(Excel.class);
-                        createCell(excel, row, column);
-                    }
-                    if (field.isAnnotationPresent(Excels.class)) {
-                        Excels attrs = field.getAnnotation(Excels.class);
-                        Excel[] excels = attrs.value();
-                        // 写入列名
-                        Excel excel = excels[excelsNo++];
-                        createCell(excel, row, column);
-                    }
+                for (Object[] os : fields) {
+                    Excel excel = (Excel) os[1];
+                    this.createCell(excel, row, column++);
                 }
                 if (Type.EXPORT.equals(type)) {
-                    fillExcelData(index, row);
+                    fillExcelData(index);
                 }
             }
             String filename = encodingFilename(sheetName);
@@ -300,11 +289,10 @@ public class ExcelUtils<T> {
 
     /**
      * 填充excel数据
+     *  @param index 序号
      *
-     * @param index 序号
-     * @param row   单元格行
      */
-    public void fillExcelData(int index, Row row) {
+    public void fillExcelData(int index) {
         int startNo = index * sheetSize;
         int endNo = Math.min(startNo + sheetSize, list.size());
         // 写入各条记录,每条记录对应excel表中的一行
@@ -312,24 +300,16 @@ public class ExcelUtils<T> {
         cs.setAlignment(HorizontalAlignment.CENTER);
         cs.setVerticalAlignment(VerticalAlignment.CENTER);
         for (int i = startNo; i < endNo; i++) {
-            row = sheet.createRow(i + 1 - startNo);
+            Row row = sheet.createRow(i + 1 - startNo);
             // 得到导出对象.
             T vo = list.get(i);
-            int excelsNo = 0;
-            for (int column = 0; column < fields.size(); column++) {
-                // 获得field.
-                Field field = fields.get(column);
+            int column = 0;
+            for (Object[] os : fields) {
+                Field field = (Field) os[0];
+                Excel excel = (Excel) os[1];
                 // 设置实体类私有属性可访问
                 field.setAccessible(true);
-                if (field.isAnnotationPresent(Excel.class)) {
-                    addCell(field.getAnnotation(Excel.class), row, vo, field, column, cs);
-                }
-                if (field.isAnnotationPresent(Excels.class)) {
-                    Excels attrs = field.getAnnotation(Excels.class);
-                    Excel[] excels = attrs.value();
-                    Excel excel = excels[excelsNo++];
-                    addCell(excel, row, vo, field, column, cs);
-                }
+                this.addCell(excel, row, vo, field, column++, cs);
             }
         }
     }
@@ -414,7 +394,7 @@ public class ExcelUtils<T> {
                 }
             }
         } catch (Exception e) {
-            log.error("导出Excel添加单元格失败:{}", e.getMessage());
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "导出Excel添加单元格失败", e);
         }
         return cell;
     }
@@ -602,7 +582,7 @@ public class ExcelUtils<T> {
      */
     private void putToField(Field field, Excel attr) {
         if (attr != null && (attr.type() == Type.ALL || attr.type() == type)) {
-            this.fields.add(field);
+            this.fields.add(new Object[]{field, attr});
         }
     }
 
@@ -617,7 +597,7 @@ public class ExcelUtils<T> {
      * 创建工作表
      *
      * @param sheetNo sheet数量
-     * @param index   序号
+     * @param index    序号
      */
     public void createSheet(double sheetNo, int index) {
         this.sheet = wb.createSheet();

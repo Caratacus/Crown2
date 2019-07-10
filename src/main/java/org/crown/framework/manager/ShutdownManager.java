@@ -32,7 +32,8 @@ public class ShutdownManager {
     private void shutdownSpringSessionValidationScheduler() {
         if (springSessionValidationScheduler != null && springSessionValidationScheduler.isEnabled()) {
             try {
-                log.info("====关闭会话验证任务====");
+
+                log.info("=============关闭会话验证任务=============");
                 springSessionValidationScheduler.disableSessionValidation();
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -45,7 +46,7 @@ public class ShutdownManager {
      */
     private void shutdownAsyncManager() {
         try {
-            log.info("====关闭后台任务任务线程池====");
+            log.info("============关闭后台任务线程池============");
             ThreadExecutors.shutdown();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
