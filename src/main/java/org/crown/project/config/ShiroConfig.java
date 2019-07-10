@@ -24,7 +24,6 @@ import org.crown.framework.shiro.realm.UserRealm;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
 import org.crown.framework.shiro.session.OnlineSessionFactory;
 import org.crown.framework.shiro.web.filter.LogoutFilter;
-import org.crown.framework.shiro.web.filter.captcha.CaptchaValidateFilter;
 import org.crown.framework.shiro.web.filter.kickout.KickoutSessionFilter;
 import org.crown.framework.shiro.web.filter.online.OnlineSessionFilter;
 import org.crown.framework.shiro.web.filter.sync.SyncOnlineSessionFilter;
@@ -46,8 +45,6 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 @Configuration
 public class ShiroConfig {
 
-    public static final String PREMISSION_STRING = "perms[\"{0}\"]";
-
     // Session超时时间，单位为毫秒（默认30分钟）
     @Value("${shiro.session.expireTime}")
     private int expireTime;
@@ -63,14 +60,6 @@ public class ShiroConfig {
     // 踢出之前登录的/之后登录的用户，默认踢出之前登录的用户
     @Value("${shiro.session.kickoutAfter}")
     private boolean kickoutAfter;
-
-    // 验证码开关
-    @Value("${shiro.user.captchaEnabled}")
-    private boolean captchaEnabled;
-
-    // 验证码类型
-    @Value("${shiro.user.captchaType}")
-    private String captchaType;
 
     // 设置Cookie的域名
     @Value("${shiro.cookie.domain}")
@@ -231,7 +220,6 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 对静态资源设置匿名访问
         filterChainDefinitionMap.put("/favicon.ico**", "anon");
-        filterChainDefinitionMap.put("/ruoyi.png**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/docs/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
@@ -239,19 +227,16 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/ajax/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/ruoyi/**", "anon");
-        filterChainDefinitionMap.put("/druid/**", "anon");
-        filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
-        filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/login", "anon");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(ApplicationUtils.getBean(IMenuService.class).selectPermsAll());
 
         Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("onlineSession", onlineSessionFilter());
         filters.put("syncOnlineSession", syncOnlineSessionFilter());
-        filters.put("captchaValidate", captchaValidateFilter());
         filters.put("kickout", kickoutSessionFilter());
         // 注销成功，则跳转到指定页面
         filters.put("logout", logoutFilter());
@@ -283,16 +268,6 @@ public class ShiroConfig {
         return new SyncOnlineSessionFilter();
     }
 
-    /**
-     * 自定义验证码过滤器
-     */
-    @Bean
-    public CaptchaValidateFilter captchaValidateFilter() {
-        CaptchaValidateFilter captchaValidateFilter = new CaptchaValidateFilter();
-        captchaValidateFilter.setCaptchaEnabled(captchaEnabled);
-        captchaValidateFilter.setCaptchaType(captchaType);
-        return captchaValidateFilter;
-    }
 
     /**
      * cookie 属性设置
