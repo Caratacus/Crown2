@@ -1,5 +1,7 @@
 package org.crown.project.monitor.quartz.service;
 
+import java.util.List;
+
 import org.crown.framework.service.BaseService;
 import org.crown.project.monitor.quartz.domain.Job;
 
@@ -49,4 +51,6 @@ public interface IJobService extends BaseService<Job> {
      * @param quartzJob
      */
     void execute(Job quartzJob);
+
+    List<Job> selectJobList(Job job);
 }

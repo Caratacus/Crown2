@@ -1,5 +1,7 @@
 package org.crown.project.monitor.quartz.service;
 
+import java.util.List;
+
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.monitor.quartz.common.QuartzManage;
 import org.crown.project.monitor.quartz.domain.Job;
@@ -53,6 +55,11 @@ public class JobServiceImpl extends BaseServiceImpl<JobMapper, Job> implements I
     @Override
     public void execute(Job quartzJob) {
         quartzManage.runAJobNow(quartzJob);
+    }
+
+    @Override
+    public List<Job> selectJobList(Job job) {
+        return list();
     }
 
     @Override
