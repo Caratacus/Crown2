@@ -11,44 +11,5 @@ import java.util.List;
  */
 public interface I${className}Service 
 {
-	/**
-     * 查询${tableComment}信息
-     * 
-     * @param ${primaryKey.attrname} ${tableComment}ID
-     * @return ${tableComment}信息
-     */
-        ${className} select${className}ById(${primaryKey.attrType} ${primaryKey.attrname});
-	
-	/**
-     * 查询${tableComment}列表
-     * 
-     * @param ${classname} ${tableComment}信息
-     * @return ${tableComment}集合
-     */
-    List<${className}> select${className}List(${className} ${classname});
-	
-	/**
-     * 新增${tableComment}
-     * 
-     * @param ${classname} ${tableComment}信息
-     * @return 结果
-     */
-    int insert${className}(${className} ${classname});
-	
-	/**
-     * 修改${tableComment}
-     * 
-     * @param ${classname} ${tableComment}信息
-     * @return 结果
-     */
-    int update${className}(${className} ${classname});
-		
-	/**
-     * 删除${tableComment}信息
-     * 
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    int delete${className}ByIds(String ids);
-	
+
 }
