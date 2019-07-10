@@ -6,7 +6,6 @@ import javax.validation.ConstraintValidatorContext;
 import org.crown.common.utils.StringUtils;
 import org.crown.project.monitor.quartz.common.CronUtils;
 
-
 /**
  * <p>
  * Cron校验
