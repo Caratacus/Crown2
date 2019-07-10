@@ -1,9 +1,11 @@
 package org.crown.framework.web.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Map;
 
 import org.crown.common.utils.JacksonUtils;
+import org.crown.common.utils.TypeUtils;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.google.common.collect.Maps;
@@ -39,6 +41,14 @@ public class BaseQueryParams implements Serializable {
             params = Maps.newHashMap();
         }
         return params;
+    }
+
+    public Date getBeginTime() {
+        return TypeUtils.castToDate(getParams().get("beginTime"));
+    }
+
+    public Date getEndTime() {
+        return TypeUtils.castToDate(getParams().get("endTime"));
     }
 
     @Override

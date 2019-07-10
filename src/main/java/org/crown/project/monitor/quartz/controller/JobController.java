@@ -51,8 +51,7 @@ public class JobController extends WebController {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Job job)
-    {
+    public TableDataInfo list(Job job) {
         startPage();
         List<Job> list = jobService.selectJobList(job);
         return getDataTable(list);

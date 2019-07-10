@@ -1,8 +1,10 @@
 package org.crown.project.monitor.quartz.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-import org.crown.common.utils.TypeUtils;
+import org.crown.common.utils.StringUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.monitor.quartz.domain.JobLog;
 import org.crown.project.monitor.quartz.mapper.JobLogMapper;
@@ -21,17 +23,14 @@ public class JobLogServiceImpl extends BaseServiceImpl<JobLogMapper, JobLog> imp
 
     @Override
     public List<JobLog> selectJobLogList(JobLog jobLog) {
-
-        String beginTime = TypeUtils.castToString(jobLog.getParams().get("beginTime"));
-        String endTime = TypeUtils.castToString(jobLog.getParams().get("endTime"));
-     /*   return query().like(StringUtils.isNotEmpty(jobLog.getTitle()), OperLog::getTitle, operLog.getTitle())
-                .eq(Objects.nonNull(jobLog.getBusinessType()), OperLog::getBusinessType, operLog.getBusinessType())
-                .in(CollectionUtils.isNotEmpty(jobLog.getBusinessTypes()), OperLog::getBusinessType, operLog.getBusinessTypes())
-                .eq(Objects.nonNull(jobLog.getStatus()), OperLog::getStatus, operLog.getStatus())
-                .like(StringUtils.isNotEmpty(jobLog.getOperName()), OperLog::getOperName, operLog.getOperName())
-                .gt(StringUtils.isNotEmpty(beginTime), OperLog::getOperTime, beginTime)
-                .lt(StringUtils.isNotEmpty(endTime), OperLog::getOperTime, endTime)
-                .list();*/
-        return list();
+        Date beginTime = jobLog.getBeginTime();
+        Date endTime = jobLog.getEndTime();
+        return query()
+                .like(StringUtils.isNotEmpty(jobLog.getJobName()), JobLog::getJobName, jobLog.getJobName())
+                .like(StringUtils.isNotEmpty(jobLog.getClassName()), JobLog::getClassName, jobLog.getClassName())
+                .eq(Objects.nonNull(jobLog.getStatus()), JobLog::getStatus, jobLog.getStatus())
+                .gt(Objects.nonNull(beginTime), JobLog::getCreateTime, beginTime)
+                .lt(Objects.nonNull(endTime), JobLog::getCreateTime, endTime)
+                .list();
     }
 }

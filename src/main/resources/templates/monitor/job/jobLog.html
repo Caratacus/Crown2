@@ -15,7 +15,7 @@
 								<label>任务名称：</label><input type="text" name="jobName"/>
 							</li>
 							<li>
-								<label>方法名称：</label><input type="text" name="methodName"/>
+								<label>执行类名：</label><input type="text" name="className"/>
 							</li>
 							<li>
 								<label>执行状态：</label><select name="status" th:with="type=${@dict.getType('sys_common_status')}">
@@ -73,32 +73,32 @@
 		        modalName: "调度日志",
 		        columns: [{
 		            checkbox: true
-		        },
-		        {
-		            field: 'jobLogId',
-		            title: '日志编号'
-		        },
+				},
+				{
+						field: 'jobLogId',
+						title: '日志编号'
+				},
 		        {
 		            field: 'jobName',
 		            title: '任务名称',
 		            sortable: true
 		        },
 		        {
-		            field: 'jobGroup',
-		            title: '任务组名',
+		            field: 'className',
+		            title: '执行类名',
 		            sortable: true
 		        },
 		        {
-		            field: 'methodName',
-		            title: '方法名称'
+		            field: 'cron',
+		            title: 'Cron表达式'
 		        },
 		        {
-		            field: 'methodParams',
-		            title: '方法参数'
+		            field: 'jobParams',
+		            title: '参数'
 		        },
 		        {
-		            field: 'jobMessage',
-		            title: '日志信息'
+		            field: 'runTime',
+		            title: '运行时长'
 		        },
 		        {
 		            field: 'status',

@@ -1,5 +1,6 @@
 package org.crown.project.system.dict.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,13 +27,13 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
 
     @Override
     public List<DictType> selectDictTypeList(DictType dictType) {
-        String beginTime = TypeUtils.castToString(dictType.getParams().get("beginTime"));
-        String endTime = TypeUtils.castToString(dictType.getParams().get("endTime"));
+        Date beginTime = dictType.getBeginTime();
+        Date endTime = dictType.getEndTime();
         return query().like(StringUtils.isNotEmpty(dictType.getDictName()), DictType::getDictName, dictType.getDictName())
                 .eq(StringUtils.isNotEmpty(dictType.getStatus()), DictType::getStatus, dictType.getStatus())
                 .like(StringUtils.isNotEmpty(dictType.getDictType()), DictType::getDictType, dictType.getDictType())
-                .gt(StringUtils.isNotEmpty(beginTime), DictType::getCreateTime, beginTime)
-                .lt(StringUtils.isNotEmpty(endTime), DictType::getCreateTime, endTime)
+                .gt(Objects.nonNull(beginTime), DictType::getCreateTime, beginTime)
+                .lt(Objects.nonNull(endTime), DictType::getCreateTime, endTime)
                 .list();
     }
 

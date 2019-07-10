@@ -37,8 +37,8 @@ public class Logininfor extends BaseQueryParams {
     /**
      * 登录状态 0成功 1失败
      */
-    @Excel(name = "登录状态", readConverterExp = "0=成功,1=失败")
-    private String status;
+    @Excel(name = "登录状态", readConverterExp = "1=成功,0=失败")
+    private Integer status;
 
     /**
      * 登录IP地址

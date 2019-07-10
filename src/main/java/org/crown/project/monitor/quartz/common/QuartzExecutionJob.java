@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.crown.common.cons.Constants;
 import org.crown.common.cons.QuartzCons;
 import org.crown.common.utils.JacksonUtils;
 import org.crown.framework.spring.ApplicationUtils;
@@ -59,13 +60,13 @@ public class QuartzExecutionJob extends QuartzJobBean {
             String runTime = System.currentTimeMillis() - startTime + "ms";
             log.setRunTime(runTime);
             // 任务状态
-            log.setSuccessed(true);
+            log.setStatus(Constants.SUCCESS);
             logger.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", quartzJob.getJobName(), runTime);
         } catch (Exception e) {
             logger.error("任务执行失败，任务名称：{}" + quartzJob.getJobName(), e);
             log.setRunTime(System.currentTimeMillis() - startTime + "ms");
             // 任务状态 0：成功 1：失败
-            log.setSuccessed(false);
+            log.setStatus(Constants.FAIL);
             log.setException(Throwables.getStackTraceAsString(e));
             //出错就暂停任务
             quartzManage.pauseJob(quartzJob);

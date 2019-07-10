@@ -1,7 +1,9 @@
 package org.crown.project.monitor.quartz.service;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.crown.common.utils.StringUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.monitor.quartz.common.QuartzManage;
 import org.crown.project.monitor.quartz.domain.Job;
@@ -59,7 +61,11 @@ public class JobServiceImpl extends BaseServiceImpl<JobMapper, Job> implements I
 
     @Override
     public List<Job> selectJobList(Job job) {
-        return list();
+        return query()
+                .like(StringUtils.isNotEmpty(job.getJobName()), Job::getJobName, job.getJobName())
+                .eq(Objects.nonNull(job.getPaused()), Job::getPaused, job.getPaused())
+                .like(StringUtils.isNotEmpty(job.getClassName()), Job::getClassName, job.getClassName())
+                .list();
     }
 
     @Override

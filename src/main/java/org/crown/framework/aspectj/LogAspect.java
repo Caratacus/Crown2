@@ -12,7 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.crown.common.annotation.Log;
 import org.crown.common.cons.APICons;
-import org.crown.common.enums.BusinessStatus;
+import org.crown.common.cons.Constants;
 import org.crown.common.utils.JacksonUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
@@ -84,7 +84,7 @@ public class LogAspect {
 
             // *========数据库日志=========*//
             OperLog operLog = new OperLog();
-            operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
+            operLog.setStatus(Constants.SUCCESS);
             // 请求的地址
             String ip = ShiroUtils.getIp();
             operLog.setOperIp(ip);
@@ -98,7 +98,7 @@ public class LogAspect {
             }
 
             if (e != null) {
-                operLog.setStatus(BusinessStatus.FAIL.ordinal());
+                operLog.setStatus(Constants.FAIL);
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
 

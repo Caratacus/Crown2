@@ -17,7 +17,7 @@
 								执行类名：<input type="text" name="className"/>
 							</li>
 							<li>
-								任务状态：<select name="status" th:with="type=${@dict.getType('sys_job_paused')}">
+								任务状态：<select name="paused" th:with="type=${@dict.getType('sys_job_paused')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>

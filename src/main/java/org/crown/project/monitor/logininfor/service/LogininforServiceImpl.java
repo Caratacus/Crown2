@@ -1,8 +1,9 @@
 package org.crown.project.monitor.logininfor.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-import org.crown.common.utils.TypeUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
 import org.crown.project.monitor.logininfor.mapper.LogininforMapper;
@@ -20,14 +21,14 @@ public class LogininforServiceImpl extends BaseServiceImpl<LogininforMapper, Log
 
     @Override
     public List<Logininfor> selectLogininforList(Logininfor logininfor) {
-        String beginTime = TypeUtils.castToString(logininfor.getParams().get("beginTime"));
-        String endTime = TypeUtils.castToString(logininfor.getParams().get("endTime"));
+        Date beginTime = logininfor.getBeginTime();
+        Date endTime = logininfor.getEndTime();
         return query().select()
                 .like(StringUtils.isNotEmpty(logininfor.getIpaddr()), Logininfor::getIpaddr, logininfor.getIpaddr())
-                .eq(StringUtils.isNotEmpty(logininfor.getStatus()), Logininfor::getStatus, logininfor.getStatus())
+                .eq(Objects.nonNull(logininfor.getStatus()), Logininfor::getStatus, logininfor.getStatus())
                 .like(StringUtils.isNotEmpty(logininfor.getLoginName()), Logininfor::getLoginName, logininfor.getLoginName())
-                .ge(StringUtils.isNotEmpty(beginTime), Logininfor::getLoginTime, beginTime)
-                .le(StringUtils.isNotEmpty(endTime), Logininfor::getLoginTime, logininfor.getParams().get("endTime"))
+                .ge(Objects.nonNull(beginTime), Logininfor::getLoginTime, beginTime)
+                .le(Objects.nonNull(endTime), Logininfor::getLoginTime, endTime)
                 .list();
     }
 

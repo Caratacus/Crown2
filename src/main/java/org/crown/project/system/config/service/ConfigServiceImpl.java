@@ -1,10 +1,10 @@
 package org.crown.project.system.config.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.TypeUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.system.config.domain.Config;
 import org.crown.project.system.config.mapper.ConfigMapper;
@@ -25,13 +25,13 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper, Config> imp
 
     @Override
     public List<Config> selectConfigList(Config config) {
-        String beginTime = TypeUtils.castToString(config.getParams().get("beginTime"));
-        String endTime = TypeUtils.castToString(config.getParams().get("endTime"));
+        Date beginTime = config.getBeginTime();
+        Date endTime = config.getEndTime();
         return query().like(StringUtils.isNotEmpty(config.getConfigName()), Config::getConfigName, config.getConfigName())
                 .eq(StringUtils.isNotEmpty(config.getConfigType()), Config::getConfigType, config.getConfigType())
                 .like(StringUtils.isNotEmpty(config.getConfigKey()), Config::getConfigKey, config.getConfigKey())
-                .gt(StringUtils.isNotEmpty(beginTime), Config::getCreateTime, beginTime)
-                .lt(StringUtils.isNotEmpty(endTime), Config::getCreateTime, endTime)
+                .gt(Objects.nonNull(beginTime), Config::getCreateTime, beginTime)
+                .lt(Objects.nonNull(endTime), Config::getCreateTime, endTime)
                 .list();
     }
 

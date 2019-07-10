@@ -88,7 +88,7 @@ public class JobLogController extends WebController {
     @PostMapping("/clean")
     @ResponseBody
     public ApiResponses<Void> clean() {
-        jobLogService.delete();
+        jobLogService.remove();
         return success();
     }
 }

@@ -1,9 +1,9 @@
 package org.crown.project.monitor.operlog.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.crown.common.utils.TypeUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.monitor.operlog.mapper.OperLogMapper;
@@ -22,15 +22,15 @@ public class OperLogServiceImpl extends BaseServiceImpl<OperLogMapper, OperLog> 
 
     @Override
     public List<OperLog> selectOperLogList(OperLog operLog) {
-        String beginTime = TypeUtils.castToString(operLog.getParams().get("beginTime"));
-        String endTime = TypeUtils.castToString(operLog.getParams().get("endTime"));
+        Date beginTime = operLog.getBeginTime();
+        Date endTime = operLog.getEndTime();
         return query().like(StringUtils.isNotEmpty(operLog.getTitle()), OperLog::getTitle, operLog.getTitle())
                 .eq(Objects.nonNull(operLog.getBusinessType()), OperLog::getBusinessType, operLog.getBusinessType())
                 .in(CollectionUtils.isNotEmpty(operLog.getBusinessTypes()), OperLog::getBusinessType, operLog.getBusinessTypes())
                 .eq(Objects.nonNull(operLog.getStatus()), OperLog::getStatus, operLog.getStatus())
                 .like(StringUtils.isNotEmpty(operLog.getOperName()), OperLog::getOperName, operLog.getOperName())
-                .gt(StringUtils.isNotEmpty(beginTime), OperLog::getOperTime, beginTime)
-                .lt(StringUtils.isNotEmpty(endTime), OperLog::getOperTime, endTime)
+                .gt(Objects.nonNull(beginTime), OperLog::getOperTime, beginTime)
+                .lt(Objects.nonNull(endTime), OperLog::getOperTime, endTime)
                 .list();
     }
 

@@ -99,7 +99,7 @@ public class OperLog extends BaseQueryParams {
     /**
      * 状态0正常 1异常
      */
-    @Excel(name = "状态", readConverterExp = "0=正常,1=异常")
+    @Excel(name = "状态", readConverterExp = "1=正常,0=异常")
     private Integer status;
 
     /**

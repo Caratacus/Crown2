@@ -1,5 +1,6 @@
 package org.crown.project.monitor.quartz.domain;
 
+import org.crown.common.annotation.Excel;
 import org.crown.framework.web.domain.BaseEntity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -25,18 +26,46 @@ public class Job extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 任务ID
+     */
+    @Excel(name = "任务序号")
     @TableId
     private Long jobId;
+    /**
+     * 任务名称
+     */
+    @Excel(name = "任务名称")
     @ApiModelProperty(notes = "任务名称")
     private String jobName;
-    @ApiModelProperty(notes = "Class名称")
+    /**
+     * 执行类名
+     */
+    @Excel(name = "执行类名")
+    @ApiModelProperty(notes = "执行类名")
     private String className;
+    /**
+     * 参数
+     */
+    @Excel(name = "参数")
     @ApiModelProperty(notes = "参数")
     private String jobParams;
-    @ApiModelProperty(notes = "cron表达式")
+    /**
+     * Cron表达式
+     */
+    @Excel(name = "Cron表达式")
+    @ApiModelProperty(notes = "Cron表达式")
     private String cron;
-    @ApiModelProperty(notes = "是否暂停")
+    /**
+     * 任务状态
+     */
+    @Excel(name = "任务状态", readConverterExp = "true=暂停,false=运行中")
+    @ApiModelProperty(notes = "任务状态")
     private Boolean paused;
+    /**
+     * 备注
+     */
+    @Excel(name = "备注")
     @ApiModelProperty(notes = "备注")
     private String description;
     /**
