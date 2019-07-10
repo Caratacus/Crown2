@@ -33,6 +33,8 @@ import org.crown.framework.exception.Crown2Exception;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
@@ -221,6 +223,24 @@ public abstract class JacksonUtils {
         } catch (Exception ignored) {
         }
         return t;
+    }
+
+    public static <T> T parseObject(byte[] input, Class<T> clazz) {
+        T t = null;
+        try {
+            t = JSON.parseObject(input, clazz);
+        } catch (Exception ignored) {
+        }
+        return t;
+    }
+
+    public static JSONObject parseObject(String json) {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = JSON.parseObject(json);
+        } catch (Exception ignored) {
+        }
+        return jsonObject;
     }
 
 }
