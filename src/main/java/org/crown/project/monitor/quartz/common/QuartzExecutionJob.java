@@ -43,7 +43,7 @@ public class QuartzExecutionJob extends QuartzJobBean {
 
         String jobParams = quartzJob.getJobParams();
         JobLog log = new JobLog();
-        log.setTaskName(quartzJob.getTaskName());
+        log.setJobName(quartzJob.getJobName());
         log.setClassName(quartzJob.getClassName());
         log.setJobParams(jobParams);
         long startTime = System.currentTimeMillis();
@@ -51,8 +51,8 @@ public class QuartzExecutionJob extends QuartzJobBean {
         try {
             JSONObject jsonObject = JacksonUtils.parseObject(jobParams);
             // 执行任务
-            logger.info("任务准备执行，任务名称：{}", quartzJob.getTaskName());
-            QuartzRunnable task = new QuartzRunnable(quartzJob.getClassName(), quartzJob.getId(),
+            logger.info("任务准备执行，任务名称：{}", quartzJob.getJobName());
+            QuartzRunnable task = new QuartzRunnable(quartzJob.getClassName(), quartzJob.getJobId(),
                     jsonObject);
             Future<?> future = executorService.submit(task);
             future.get();
@@ -60,9 +60,9 @@ public class QuartzExecutionJob extends QuartzJobBean {
             log.setRunTime(runTime);
             // 任务状态
             log.setSuccessed(true);
-            logger.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", quartzJob.getTaskName(), runTime);
+            logger.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", quartzJob.getJobName(), runTime);
         } catch (Exception e) {
-            logger.error("任务执行失败，任务名称：{}" + quartzJob.getTaskName(), e);
+            logger.error("任务执行失败，任务名称：{}" + quartzJob.getJobName(), e);
             log.setRunTime(System.currentTimeMillis() - startTime + "ms");
             // 任务状态 0：成功 1：失败
             log.setSuccessed(false);

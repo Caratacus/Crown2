@@ -40,11 +40,11 @@ public class QuartzManage {
         try {
             // 构建job信息
             JobDetail jobDetail = JobBuilder.newJob(QuartzExecutionJob.class).
-                    withIdentity(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId()).build();
+                    withIdentity(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId()).build();
 
             //通过触发器名和cron 表达式创建 Trigger
             Trigger cronTrigger = newTrigger()
-                    .withIdentity(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId())
+                    .withIdentity(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId())
                     .startNow()
                     .withSchedule(CronScheduleBuilder.cronSchedule(quartzJob.getCron()))
                     .build();
@@ -74,7 +74,7 @@ public class QuartzManage {
      */
     public void updateJobCron(Job quartzJob) {
         try {
-            TriggerKey triggerKey = TriggerKey.triggerKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId());
+            TriggerKey triggerKey = TriggerKey.triggerKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId());
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
             // 如果不存在则创建一个定时任务
             if (trigger == null) {
@@ -107,7 +107,7 @@ public class QuartzManage {
      */
     public void deleteJob(Job quartzJob) {
         try {
-            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId());
+            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId());
             scheduler.deleteJob(jobKey);
         } catch (Exception e) {
             throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "删除定时任务失败", e);
@@ -123,12 +123,12 @@ public class QuartzManage {
      */
     public void resumeJob(Job quartzJob) {
         try {
-            TriggerKey triggerKey = TriggerKey.triggerKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId());
+            TriggerKey triggerKey = TriggerKey.triggerKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId());
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
             // 如果不存在则创建一个定时任务
             if (trigger == null)
                 addJob(quartzJob);
-            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId());
+            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId());
             scheduler.resumeJob(jobKey);
         } catch (Exception e) {
             throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "恢复定时任务失败", e);
@@ -143,14 +143,15 @@ public class QuartzManage {
      */
     public void runAJobNow(Job quartzJob) {
         try {
-            TriggerKey triggerKey = TriggerKey.triggerKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId());
+            TriggerKey triggerKey = TriggerKey.triggerKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId());
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
             // 如果不存在则创建一个定时任务
-            if (trigger == null)
+            if (trigger == null) {
                 addJob(quartzJob);
+            }
             JobDataMap dataMap = new JobDataMap();
             dataMap.put(QuartzCons.JOB_KEY_PREFIX, quartzJob);
-            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId());
+            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId());
             scheduler.triggerJob(jobKey, dataMap);
         } catch (Exception e) {
             throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "定时任务执行失败", e);
@@ -165,7 +166,7 @@ public class QuartzManage {
      */
     public void pauseJob(Job quartzJob) {
         try {
-            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getId());
+            JobKey jobKey = JobKey.jobKey(QuartzCons.JOB_NAME_PREFIX + quartzJob.getJobId());
             scheduler.pauseJob(jobKey);
         } catch (Exception e) {
             throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "定时任务暂停失败", e);

@@ -26,7 +26,7 @@ public class JobLog extends BaseQueryParams {
 
     private static final long serialVersionUID = 1L;
     @TableId
-    private Long id;
+    private Long jobLogId;
     @ApiModelProperty(notes = "Class名称")
     private String className;
     @ApiModelProperty(notes = "创建时间")
@@ -39,7 +39,7 @@ public class JobLog extends BaseQueryParams {
     @ApiModelProperty(notes = "是否成功")
     private Boolean successed;
     @ApiModelProperty(notes = "任务名称")
-    private String taskName;
+    private String jobName;
     @ApiModelProperty(notes = "参数")
     private String jobParams;
     @ApiModelProperty(notes = "运行时间")

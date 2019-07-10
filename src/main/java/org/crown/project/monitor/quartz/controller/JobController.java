@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * </p>
  *
  * @author Mybatis Plus
- * @since 2019-05-29
+ * @since 2019-07-10
  */
 @Controller
 @RequestMapping("/monitor/job")
@@ -51,7 +51,8 @@ public class JobController extends WebController {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Job job) {
+    public TableDataInfo list(Job job)
+    {
         startPage();
         List<Job> list = jobService.selectJobList(job);
         return getDataTable(list);
@@ -72,14 +73,12 @@ public class JobController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
-
         List<String> idVals = StringUtils.split2List(ids);
         idVals.forEach(id -> {
             Job job = jobService.getById(id);
             ApiAssert.notNull(ErrorCodeEnum.JOB_NOT_FOUND.overrideMsg("未找到ID为[" + id + "]的定时任务"), job);
             jobService.delete(job);
         });
-
         return success();
     }
 
@@ -99,7 +98,9 @@ public class JobController extends WebController {
     @PostMapping("/changeStatus")
     @ResponseBody
     public ApiResponses<Void> changeStatus(Job job) {
-        jobService.updatePaused(job);
+        Job newJob = jobService.getById(job.getJobId());
+        ApiAssert.notNull(ErrorCodeEnum.JOB_NOT_FOUND.overrideMsg("未找到ID为[" + job.getJobId() + "]的定时任务"), job);
+        jobService.updatePaused(newJob);
         return success();
     }
 
@@ -111,8 +112,9 @@ public class JobController extends WebController {
     @PostMapping("/run")
     @ResponseBody
     public ApiResponses<Void> run(Job job) {
-
-        jobService.execute(job);
+        Job newJob = jobService.getById(job.getJobId());
+        ApiAssert.notNull(ErrorCodeEnum.JOB_NOT_FOUND.overrideMsg("未找到ID为[" + job.getJobId() + "]的定时任务"), job);
+        jobService.execute(newJob);
         return success();
     }
 
@@ -165,5 +167,4 @@ public class JobController extends WebController {
     public boolean checkCronExpressionIsValid(Job job) {
         return CronUtils.isValid(job.getCron());
     }
-
 }

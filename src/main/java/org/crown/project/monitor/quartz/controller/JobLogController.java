@@ -71,7 +71,7 @@ public class JobLogController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
-        jobLogService.remove(Wrappers.<JobLog>lambdaQuery().inOrThrow(JobLog::getId, StringUtils.split2List(ids)));
+        jobLogService.remove(Wrappers.<JobLog>lambdaQuery().inOrThrow(JobLog::getJobLogId, StringUtils.split2List(ids)));
         return success();
     }
 

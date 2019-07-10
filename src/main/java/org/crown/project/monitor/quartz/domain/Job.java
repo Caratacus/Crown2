@@ -26,9 +26,9 @@ public class Job extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @TableId
-    private Long id;
+    private Long jobId;
     @ApiModelProperty(notes = "任务名称")
-    private String taskName;
+    private String jobName;
     @ApiModelProperty(notes = "Class名称")
     private String className;
     @ApiModelProperty(notes = "参数")
