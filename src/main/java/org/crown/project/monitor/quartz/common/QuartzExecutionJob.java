@@ -24,13 +24,13 @@ import com.google.common.base.Throwables;
 /**
  * 参考人人开源，https://gitee.com/renrenio/renren-security
  *
- * @author
+ * @author Caratacus
  * @date 2019-01-07
  */
 @Async
 public class QuartzExecutionJob extends QuartzJobBean {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 

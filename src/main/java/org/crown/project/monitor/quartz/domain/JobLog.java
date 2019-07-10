@@ -18,8 +18,7 @@ import lombok.Setter;
  * 定时任务日志
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-29
+ * @author Caratacus
  */
 @Setter
 @Getter

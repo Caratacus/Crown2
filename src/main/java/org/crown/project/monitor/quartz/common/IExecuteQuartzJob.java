@@ -7,8 +7,7 @@ import com.alibaba.fastjson.JSONObject;
  * 定时任务执行接口
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-30
+ * @author Caratacus
  */
 public interface IExecuteQuartzJob {
 

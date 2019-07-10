@@ -17,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 定时任务 服务实现类
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-29
+ * @author Caratacus
  */
 @Service
 public class JobServiceImpl extends BaseServiceImpl<JobMapper, Job> implements IJobService {

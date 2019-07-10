@@ -29,8 +29,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  * 定时任务日志 前端控制器
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-29
+ * @author Caratacus
  */
 @Controller
 @RequestMapping("/monitor/jobLog")

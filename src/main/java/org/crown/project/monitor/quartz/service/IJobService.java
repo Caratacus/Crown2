@@ -10,8 +10,7 @@ import org.crown.project.monitor.quartz.domain.Job;
  * 定时任务 服务类
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-29
+ * @author Caratacus
  */
 public interface IJobService extends BaseService<Job> {
 
@@ -52,5 +51,11 @@ public interface IJobService extends BaseService<Job> {
      */
     void execute(Job quartzJob);
 
+    /**
+     * 查询定时任务列表
+     *
+     * @param job
+     * @return
+     */
     List<Job> selectJobList(Job job);
 }

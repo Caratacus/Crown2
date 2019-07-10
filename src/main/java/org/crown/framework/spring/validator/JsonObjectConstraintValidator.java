@@ -14,7 +14,6 @@ import org.crown.common.utils.StringUtils;
  * </p>
  *
  * @author Caratacus
- * @since 2019-05-31
  */
 public class JsonObjectConstraintValidator implements ConstraintValidator<JsonObject, String> {
 

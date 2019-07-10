@@ -10,10 +10,15 @@ import org.crown.project.monitor.quartz.domain.JobLog;
  * 定时任务日志 服务类
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-29
+ * @author Caratacus
  */
 public interface IJobLogService extends BaseService<JobLog> {
 
+    /**
+     * 查询定时任务日志列表
+     *
+     * @param jobLog
+     * @return
+     */
     List<JobLog> selectJobLogList(JobLog jobLog);
 }

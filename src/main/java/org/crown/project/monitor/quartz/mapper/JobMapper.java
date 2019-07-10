@@ -9,8 +9,7 @@ import org.crown.project.monitor.quartz.domain.Job;
  * 定时任务 Mapper 接口
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-29
+ * @author Caratacus
  */
 @Mapper
 public interface JobMapper extends BaseMapper<Job> {

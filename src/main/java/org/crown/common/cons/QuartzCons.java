@@ -6,7 +6,6 @@ package org.crown.common.cons;
  * </p>
  *
  * @author Caratacus
- * @since 2017-09-18
  */
 public interface QuartzCons {
 

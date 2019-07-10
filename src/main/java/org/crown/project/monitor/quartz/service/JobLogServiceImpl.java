@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
  * 定时任务日志 服务实现类
  * </p>
  *
- * @author Mybatis Plus
- * @since 2019-05-29
+ * @author Caratacus
  */
 @Service
 public class JobLogServiceImpl extends BaseServiceImpl<JobLogMapper, JobLog> implements IJobLogService {

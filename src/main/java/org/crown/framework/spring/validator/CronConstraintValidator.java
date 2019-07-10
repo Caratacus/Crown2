@@ -12,7 +12,6 @@ import org.crown.project.monitor.quartz.common.CronUtils;
  * </p>
  *
  * @author Caratacus
- * @since 2019-05-30
  */
 public class CronConstraintValidator implements ConstraintValidator<Cron, String> {
 

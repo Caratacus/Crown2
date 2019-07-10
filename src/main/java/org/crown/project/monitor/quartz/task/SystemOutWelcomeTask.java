@@ -8,7 +8,9 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 定时删除过期未支付订单
+ * 定时任务 Demo
+ *
+ * @author Caratacus
  */
 @Slf4j
 @Component

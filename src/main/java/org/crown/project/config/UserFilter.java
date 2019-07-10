@@ -37,7 +37,7 @@ import org.crown.framework.utils.ResponseUtils;
  * <p/>
  * If the accessor is not a known user, then they will be redirected to the {@link #setLoginUrl(String) loginUrl}</p>
  *
- * @since 0.9
+ * @author Caratacus
  */
 public class UserFilter extends org.apache.shiro.web.filter.authc.UserFilter {
 

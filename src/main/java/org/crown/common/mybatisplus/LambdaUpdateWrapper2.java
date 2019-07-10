@@ -34,7 +34,6 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
  * </p>
  *
  * @author hubin miemie HCL
- * @since 2018-05-30
  */
 @SuppressWarnings("serial")
 public class LambdaUpdateWrapper2<T> extends AbstractLambdaWrapper<T, LambdaUpdateWrapper2<T>>

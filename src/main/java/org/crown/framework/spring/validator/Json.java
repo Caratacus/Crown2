@@ -14,7 +14,6 @@ import javax.validation.Payload;
  * </p>
  *
  * @author Caratacus
- * @since 2019-05-30
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

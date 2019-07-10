@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 执行定时任务
  *
- * @author
+ * @author Caratacus
  */
 @Slf4j
 public class QuartzRunnable implements Runnable {
