@@ -10,15 +10,12 @@ import javax.servlet.Filter;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.codec.Base64;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.shiro.realm.UserRealm;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
@@ -178,8 +175,6 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
         securityManager.setRealm(userRealm);
-        // 记住我
-        securityManager.setRememberMeManager(rememberMeManager());
         // 注入缓存管理器;
         securityManager.setCacheManager(getEhCacheManager());
         // session管理器
@@ -268,28 +263,6 @@ public class ShiroConfig {
         return new SyncOnlineSessionFilter();
     }
 
-
-    /**
-     * cookie 属性设置
-     */
-    public SimpleCookie rememberMeCookie() {
-        SimpleCookie cookie = new SimpleCookie("rememberMe");
-        cookie.setDomain(domain);
-        cookie.setPath(path);
-        cookie.setHttpOnly(httpOnly);
-        cookie.setMaxAge(maxAge * 24 * 60 * 60);
-        return cookie;
-    }
-
-    /**
-     * 记住我
-     */
-    public CookieRememberMeManager rememberMeManager() {
-        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-        cookieRememberMeManager.setCookie(rememberMeCookie());
-        cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));
-        return cookieRememberMeManager;
-    }
 
     /**
      * 同一个用户多设备登录限制

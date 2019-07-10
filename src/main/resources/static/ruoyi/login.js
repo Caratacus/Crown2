@@ -14,7 +14,6 @@ $(function () {
 function login() {
     var username = $.common.trim($("input[name='username']").val());
     var password = $.common.trim($("input[name='password']").val());
-    var rememberMe = $("input[name='rememberme']").is(':checked');
     if (username==null || username==''){
         $.modal.msg("请输入您的用户名");
         $('#captchaSp').sliderCaptcha('reset');
@@ -31,8 +30,7 @@ function login() {
         url: ctx + "login",
         data: {
             "username": username,
-            "password": password,
-            "rememberMe": rememberMe
+            "password": password
         },
         success: function (result) {
             var status = result.status;
