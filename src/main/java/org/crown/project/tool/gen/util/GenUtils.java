@@ -27,7 +27,7 @@ public class GenUtils {
     /**
      * mybatis空间路径
      */
-    private static final String MYBATIS_PATH = "main/resources/mybatis";
+    private static final String MYBATIS_PATH = "main/resources/mapper";
 
     /**
      * html空间路径
