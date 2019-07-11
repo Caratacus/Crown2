@@ -1,6 +1,7 @@
 package org.crown.project.system.dict.domain;
 
 import org.crown.common.annotation.Excel;
+import org.crown.common.cons.UserConstants;
 import org.crown.framework.web.domain.BaseEntity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -78,4 +79,8 @@ public class DictData extends BaseEntity {
      */
     private String remark;
 
+    public boolean getDefault()
+    {
+        return UserConstants.YES.equals(this.isDefault);
+    }
 }
