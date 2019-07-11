@@ -1,126 +1,125 @@
 package ${package}.controller;
 
 import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.common.annotation.Log;
+import org.crown.common.enums.BusinessType;
+import org.crown.common.utils.StringUtils;
+import org.crown.common.utils.poi.ExcelUtils;
+import org.crown.framework.model.ExcelDTO;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.page.TableDataInfo;
+import org.crown.project.${moduleName}.${classname}.domain.${className};
+import org.crown.project.${moduleName}.${classname}.service.I${className}Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.crown.common.annotation.Log;
-import org.crown.common.enums.BusinessType;
-import ${package}.domain.${className};
-import ${package}.service.I${className}Service;
-import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.framework.web.domain.AjaxResult;
-import org.crown.common.utils.poi.ExcelUtils;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * ${tableComment}信息操作处理
- * 
+ *
  * @author ${author}
- * @date ${datetime}
  */
 @Controller
 @RequestMapping("/${moduleName}/${classname}")
-public class ${className}Controller extends WebController
-{
-    private String prefix = "${moduleName}/${classname}";
-	
+public class ${className}Controller extends WebController {
+
+	private final String prefix = "${moduleName}/${classname}";
+
 	@Autowired
 	private I${className}Service ${classname}Service;
-	
+
 	@RequiresPermissions("${moduleName}:${classname}:view")
-	@GetMapping()
-	public String ${classname}()
-	{
-	    return prefix + "/${classname}";
+	@GetMapping
+	public String ${classname}() {
+		return prefix + "/${classname}";
 	}
-	
+
 	/**
-	 * 查询${tableComment}列表
-	 */
+     * 查询${tableComment}列表
+     */
 	@RequiresPermissions("${moduleName}:${classname}:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(${className} ${classname})
-	{
+	public TableDataInfo list(${className} ${classname}) {
 		startPage();
-        List<${className}> list = ${classname}Service.select${className}List(${classname});
+		List<${className}> list = ${classname}Service.list(Wrappers.<${className}>lambdaQuery(${classname}));
 		return getDataTable(list);
 	}
-	
-	
+
 	/**
-	 * 导出${tableComment}列表
-	 */
+     * 导出${tableComment}列表
+     */
 	@RequiresPermissions("${moduleName}:${classname}:export")
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(${className} ${classname})
-    {
-    	List<${className}> list = ${classname}Service.select${className}List(${classname});
-        ExcelUtils<${className}> util = new ExcelUtils<${className}>(${className}.class);
-        return util.exportExcel(list, "${classname}");
-    }
-	
-	/**
-	 * 新增${tableComment}
-	 */
-	@GetMapping("/add")
-	public String add()
-	{
-	    return prefix + "/add";
+	@PostMapping("/export")
+	@ResponseBody
+	public ApiResponses<ExcelDTO> export(${className} ${classname}) {
+		List<${className}> list = ${classname}Service.list(Wrappers.<${className}>lambdaQuery(${classname}));
+		ExcelUtils<${className}> util = new ExcelUtils<>(${className}.class);
+		return success(new ExcelDTO(util.exportExcel(list, "${classname}")));
 	}
-	
+
 	/**
-	 * 新增保存${tableComment}
-	 */
+     * 新增${tableComment}
+     */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
+
+	/**
+     * 新增保存${tableComment}
+     */
 	@RequiresPermissions("${moduleName}:${classname}:add")
 	@Log(title = "${tableComment}", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(${className} ${classname})
-	{		
-		return toAjax(${classname}Service.insert${className}(${classname}));
+	public ApiResponses<Void> addSave(${className} ${classname}) {
+		${classname}Service.save(${classname});
+		return success();
 	}
 
 	/**
-	 * 修改${tableComment}
-	 */
+     * 修改${tableComment}
+     */
 	@GetMapping("/edit/{${primaryKey.attrname}}")
-	public String edit(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}, ModelMap mmap)
-	{
-		${className} ${classname} = ${classname}Service.select${className}ById(${primaryKey.attrname});
+	public String edit(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}, ModelMap mmap) {
+		${className} ${classname} = ${classname}Service.getById(${primaryKey.attrname});
 		mmap.put("${classname}", ${classname});
-	    return prefix + "/edit";
+		return prefix + "/edit";
 	}
-	
+
 	/**
-	 * 修改保存${tableComment}
-	 */
+     * 修改保存${tableComment}
+     */
 	@RequiresPermissions("${moduleName}:${classname}:edit")
 	@Log(title = "${tableComment}", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(${className} ${classname})
-	{		
-		return toAjax(${classname}Service.update${className}(${classname}));
+	public ApiResponses<Void> editSave(${className} ${classname}) {
+		${classname}Service.updateById(${classname});
+		return success();
 	}
-	
+
 	/**
-	 * 删除${tableComment}
-	 */
+     * 删除${tableComment}
+     */
 	@RequiresPermissions("${moduleName}:${classname}:remove")
 	@Log(title = "${tableComment}", businessType = BusinessType.DELETE)
-	@PostMapping( "/remove")
+	@PostMapping("/remove")
 	@ResponseBody
-	public AjaxResult remove(String ids)
-	{		
-		return toAjax(${classname}Service.delete${className}ByIds(ids));
+	public ApiResponses<Void> remove(String ids) {
+		${classname}Service.remove(Wrappers.<${className}>lambdaQuery().inOrThrow(${className}::getId, StringUtils.split2List(ids)));
+		return success();
 	}
-	
+
 }

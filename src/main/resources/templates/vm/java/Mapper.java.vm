@@ -1,15 +1,15 @@
 package ${package}.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.crown.framework.mapper.BaseMapper;
 import ${package}.domain.${className};
-import java.util.List;	
 
 /**
  * ${tableComment} 数据层
- * 
+ *
  * @author ${author}
- * @date ${datetime}
  */
-public interface ${className}Mapper 
-{
+@Mapper
+public interface ${className}Mapper extends BaseMapper<${className}> {
 
 }

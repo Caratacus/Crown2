@@ -1,15 +1,13 @@
 package ${package}.service;
 
-import ${package}.domain.${className};
-import java.util.List;
+import org.crown.framework.service.BaseService;
+import org.crown.project.system.resource.domain.${className};
 
 /**
  * ${tableComment} 服务层
- * 
+ *
  * @author ${author}
- * @date ${datetime}
  */
-public interface I${className}Service 
-{
+public interface I${className}Service extends BaseService<${className}> {
 
 }

@@ -1,21 +1,16 @@
 package ${package}.service;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import ${package}.mapper.${className}Mapper;
+import org.crown.framework.service.impl.BaseServiceImpl;
 import ${package}.domain.${className};
-import ${package}.service.I${className}Service;
-import org.crown.common.utils.converter.Convert;
+import ${package}.mapper.${className}Mapper;
+import org.springframework.stereotype.Service;
 
 /**
  * ${tableComment} 服务层实现
- * 
+ *
  * @author ${author}
- * @date ${datetime}
  */
 @Service
-public class ${className}ServiceImpl implements I${className}Service 
-{
+public class ${className}ServiceImpl extends BaseServiceImpl<${className}Mapper, ${className}> implements I${className}Service {
 
 }
