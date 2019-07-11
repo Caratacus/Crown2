@@ -10,6 +10,7 @@ package ${package}.domain;
 	#break
 #end
 #end
+import org.crown.framework.web.domain.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;

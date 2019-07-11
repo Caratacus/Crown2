@@ -118,7 +118,7 @@ public class ${className}Controller extends WebController {
 	@PostMapping("/remove")
 	@ResponseBody
 	public ApiResponses<Void> remove(String ids) {
-		${classname}Service.remove(Wrappers.<${className}>lambdaQuery().inOrThrow(${className}::getId, StringUtils.split2List(ids)));
+		${classname}Service.remove(Wrappers.<${className}>lambdaQuery().inOrThrow(${className}::get${primaryKey.columnName}, StringUtils.split2List(ids)));
 		return success();
 	}
 
