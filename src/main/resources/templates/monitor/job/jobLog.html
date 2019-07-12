@@ -83,11 +83,14 @@
 		            title: '任务名称',
 		            sortable: true
 		        },
-		        {
-		            field: 'className',
-		            title: '执行类名',
-		            sortable: true
-		        },
+				{
+					field: 'className',
+					title: '执行类名',
+					align: 'center',
+					formatter: function(value, row, index) {
+						return $.table.tooltip(value);
+					}
+				},
 		        {
 		            field: 'cron',
 		            title: 'Cron表达式'
