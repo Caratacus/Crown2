@@ -70,7 +70,7 @@ public class Job extends BaseEntity {
      */
     @Excel(name = "备注")
     @ApiModelProperty(notes = "备注")
-    private String description;
+    private String remark;
     /**
      * 删除标志（0代表存在 2代表删除）
      */
