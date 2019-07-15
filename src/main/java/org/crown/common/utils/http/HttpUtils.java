@@ -57,7 +57,6 @@ import lombok.extern.slf4j.Slf4j;
  * Http 请求工具类
  *
  * @author Caratacus
- * @data 2016-07-04
  */
 @SuppressWarnings("ALL")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

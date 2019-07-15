@@ -25,7 +25,6 @@ import com.google.common.base.Throwables;
  * 参考人人开源，https://gitee.com/renrenio/renren-security
  *
  * @author Caratacus
- * @date 2019-01-07
  */
 @Async
 public class QuartzExecutionJob extends QuartzJobBean {

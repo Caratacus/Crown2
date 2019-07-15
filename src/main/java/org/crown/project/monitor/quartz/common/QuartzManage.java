@@ -29,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
  * Quartz管理工具类
  *
  * @author Caratacus
- * @date 2019-01-07
  */
 @Slf4j
 @Component

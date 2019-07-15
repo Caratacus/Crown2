@@ -10,10 +10,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * ClassUtils
+ * <p>Crowns</p>
+ * <p>Crown项目配置工具类</p>
  *
  * @author Caratacus
- * @date 2017/07/08
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class Crowns {

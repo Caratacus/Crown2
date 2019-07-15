@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
  * ClassUtils
  *
  * @author Caratacus
- * @date 2017/07/08
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class ClassUtils {

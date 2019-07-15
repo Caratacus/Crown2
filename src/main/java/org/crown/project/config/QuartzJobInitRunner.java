@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author jie
- * @date 2019-01-07
+ * 定时任务初始化
+ *
+ * @author Caratacus
  */
 @Component
 @Slf4j
