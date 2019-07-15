@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
+import org.crown.common.utils.Crowns;
 import org.crown.common.utils.file.FileUploadUtils;
 import org.crown.common.utils.file.MimeTypes;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.shiro.service.PasswordService;
-import org.crown.framework.springboot.properties.CrownProperties;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.project.system.user.domain.User;
@@ -40,9 +40,6 @@ public class ProfileController extends WebController {
 
     @Autowired
     private PasswordService passwordService;
-
-    @Autowired
-    private CrownProperties crownProperties;
 
     /**
      * 个人信息
@@ -131,7 +128,7 @@ public class ProfileController extends WebController {
         ApiAssert.isFalse(ErrorCodeEnum.USER_AVATAR_NOT_EMPTY, file.isEmpty());
         String avatar = null;
         try {
-            avatar = FileUploadUtils.upload(crownProperties.getPath().getFilePath() + crownProperties.getPath().getPrefix().getAvatar(), file, MimeTypes.IMAGE_EXTENSION);
+            avatar = FileUploadUtils.upload(Crowns.getAvatarUploadPath(), file, MimeTypes.IMAGE_EXTENSION);
         } catch (IOException e) {
             ApiAssert.failure(ErrorCodeEnum.USER_AVATAR_UPLOAD_FAIL);
         }

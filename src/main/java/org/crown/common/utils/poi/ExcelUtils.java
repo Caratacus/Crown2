@@ -44,13 +44,12 @@ import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import org.crown.common.annotation.Excel;
 import org.crown.common.annotation.Excel.Type;
 import org.crown.common.annotation.Excels;
+import org.crown.common.utils.Crowns;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.converter.Convert;
 import org.crown.common.utils.reflect.ReflectUtils;
 import org.crown.framework.exception.Crown2Exception;
-import org.crown.framework.spring.ApplicationUtils;
-import org.crown.framework.springboot.properties.CrownProperties;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -501,8 +500,7 @@ public class ExcelUtils<T> {
      * @param filename 文件名称
      */
     public String getAbsoluteFile(String filename) {
-        CrownProperties property = ApplicationUtils.getBean(CrownProperties.class);
-        String downloadPath = property.getPath().getFilePath() + property.getPath().getPrefix().getDownload() + filename;
+        String downloadPath = Crowns.getDownloadPath(filename);
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists()) {
             //noinspection ResultOfMethodCallIgnored

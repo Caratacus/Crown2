@@ -19,11 +19,6 @@ public class CrownProperties {
     public static final String CROWN_PREFIX = "crown";
 
     /**
-     * 版本
-     */
-    private String version;
-
-    /**
      * 实例演示开关
      */
     @NestedConfigurationProperty

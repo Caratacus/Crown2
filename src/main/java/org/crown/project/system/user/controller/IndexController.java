@@ -43,8 +43,7 @@ public class IndexController extends WebController {
 
     // 系统介绍
     @GetMapping("/system/main")
-    public String main(ModelMap mmap) {
-        mmap.put("version", crownConfig.getVersion());
+    public String main() {
         return "main";
     }
 }

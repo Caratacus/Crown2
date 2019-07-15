@@ -14,6 +14,14 @@ public class Path {
      */
     private String filePath;
     /**
+     * 资源Handler
+     */
+    private String resourceHandler;
+    /**
+     * 资源路径
+     */
+    private String resourcePath;
+    /**
      * 前缀对象
      */
     @NestedConfigurationProperty

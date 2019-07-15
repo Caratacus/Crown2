@@ -113,8 +113,6 @@ pagehelper:
   params: count=countSql
 # 项目相关配置
 crown:
-  # 版本
-  version: 2.0
   # 实例演示开关
   demo:
     enabled: false
@@ -123,6 +121,8 @@ crown:
     enabled: true
   path:
     file-path: /develop/crown/filepath/
+    resource-handler: /profile/**
+    resource-path: /profile
     prefix:
       avatar: avatar/
       download: download/
