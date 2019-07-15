@@ -80,13 +80,12 @@ public class Job extends BaseEntity {
 
     /**
      * 获取下次执行时间
+     *
      * @return
      */
-    public Date getNextValidTime()
-    {
+    public Date getNextValidTime() {
         String cron = getCron();
-        if (StringUtils.isNotEmpty(cron))
-        {
+        if (StringUtils.isNotEmpty(cron)) {
             return CronUtils.getNextExecution(cron);
         }
         return null;

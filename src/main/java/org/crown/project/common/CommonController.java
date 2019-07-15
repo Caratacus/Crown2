@@ -4,13 +4,15 @@ import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.file.FileUploadUtils;
 import org.crown.common.utils.file.FileUtils;
+import org.crown.common.utils.file.MimeTypes;
 import org.crown.common.utils.http.HttpUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.UploadDTO;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.springboot.properties.CrownProperties;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.project.config.RuoYiConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommonController extends WebController {
 
+    @Autowired
+    private CrownProperties crownProperties;
+
     /**
      * 文件上传路径
      */
@@ -48,7 +53,7 @@ public class CommonController extends WebController {
             ApiAssert.isTrue(ErrorCodeEnum.FILE_ILLEGAL_FILENAME.overrideMsg(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName)), FileUtils.isValidFilename(fileName));
             String filePrefix = FileUtils.getFilePrefix(fileName);
             String realFileName = fileName.split("_")[0] + "_" + DateUtils.dateTimeNow() + "." + filePrefix;
-            String filePath = RuoYiConfig.getDownloadPath() + fileName;
+            String filePath = crownProperties.getPath().getFilePath() + crownProperties.getPath().getPrefix().getDownload() + fileName;
 
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
@@ -73,9 +78,9 @@ public class CommonController extends WebController {
     public ApiResponses<UploadDTO> uploadFile(MultipartFile file) {
         try {
             // 上传文件路径
-            String filePath = RuoYiConfig.getUploadPath();
+            String filePath = crownProperties.getPath().getFilePath() + crownProperties.getPath().getPrefix().getUpload();
             // 上传并返回新文件名称
-            String fileName = FileUploadUtils.upload(filePath, file);
+            String fileName = FileUploadUtils.upload(filePath, file, MimeTypes.DEFAULT_ALLOWED_EXTENSION);
             String url = HttpUtils.getDomain(request) + UPLOAD_PATH + fileName;
             return success(new UploadDTO(url, fileName));
         } catch (Exception e) {

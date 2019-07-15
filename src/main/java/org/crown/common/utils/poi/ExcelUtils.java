@@ -49,7 +49,8 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.converter.Convert;
 import org.crown.common.utils.reflect.ReflectUtils;
 import org.crown.framework.exception.Crown2Exception;
-import org.crown.project.config.RuoYiConfig;
+import org.crown.framework.spring.ApplicationUtils;
+import org.crown.framework.springboot.properties.CrownProperties;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -289,8 +290,8 @@ public class ExcelUtils<T> {
 
     /**
      * 填充excel数据
-     *  @param index 序号
      *
+     * @param index 序号
      */
     public void fillExcelData(int index) {
         int startNo = index * sheetSize;
@@ -500,7 +501,8 @@ public class ExcelUtils<T> {
      * @param filename 文件名称
      */
     public String getAbsoluteFile(String filename) {
-        String downloadPath = RuoYiConfig.getDownloadPath() + filename;
+        CrownProperties property = ApplicationUtils.getBean(CrownProperties.class);
+        String downloadPath = property.getPath().getFilePath() + property.getPath().getPrefix().getDownload() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists()) {
             //noinspection ResultOfMethodCallIgnored
@@ -597,7 +599,7 @@ public class ExcelUtils<T> {
      * 创建工作表
      *
      * @param sheetNo sheet数量
-     * @param index    序号
+     * @param index   序号
      */
     public void createSheet(double sheetNo, int index) {
         this.sheet = wb.createSheet();

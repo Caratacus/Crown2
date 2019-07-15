@@ -15,7 +15,6 @@ import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.Md5Utils;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.exception.Crown2Exception;
-import org.crown.project.config.RuoYiConfig;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,51 +37,7 @@ public class FileUploadUtils {
      */
     public static final int DEFAULT_FILE_NAME_LENGTH = 100;
 
-    /**
-     * 默认上传的地址
-     */
-    private static String defaultBaseDir = RuoYiConfig.getProfile();
-
     private static int counter = 0;
-
-    public static void setDefaultBaseDir(String defaultBaseDir) {
-        FileUploadUtils.defaultBaseDir = defaultBaseDir;
-    }
-
-    public static String getDefaultBaseDir() {
-        return defaultBaseDir;
-    }
-
-    /**
-     * 以默认配置进行文件上传
-     *
-     * @param file 上传的文件
-     * @return 文件名称
-     * @throws Exception
-     */
-    public static String upload(MultipartFile file) throws IOException {
-        try {
-            return upload(getDefaultBaseDir(), file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
-        } catch (Exception e) {
-            throw new IOException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * 根据文件路径上传
-     *
-     * @param baseDir 相对应用的基目录
-     * @param file    上传的文件
-     * @return 文件名称
-     * @throws IOException
-     */
-    public static String upload(String baseDir, MultipartFile file) throws IOException {
-        try {
-            return upload(baseDir, file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
-        } catch (Exception e) {
-            throw new IOException(e.getMessage(), e);
-        }
-    }
 
     /**
      * 文件上传
@@ -93,8 +48,7 @@ public class FileUploadUtils {
      * @return 返回上传成功的文件名
      * @throws IOException 比如读写文件出错时
      */
-    public static String upload(String baseDir, MultipartFile file, String[] allowedExtension)
-            throws IOException {
+    public static String upload(String baseDir, MultipartFile file, String[] allowedExtension) throws IOException {
         int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
             throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "文件名过长，文件名最大长度为：" + DEFAULT_FILE_NAME_LENGTH);
@@ -193,7 +147,7 @@ public class FileUploadUtils {
     public static String getExtension(MultipartFile file) {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (StringUtils.isEmpty(extension)) {
-            extension = MimeTypeUtils.getExtension(Objects.requireNonNull(file.getContentType()));
+            extension = MimeTypes.getExtension(Objects.requireNonNull(file.getContentType()));
         }
         return extension;
     }

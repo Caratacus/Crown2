@@ -3,8 +3,8 @@ package org.crown.project.system.user.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.crown.framework.springboot.properties.CrownProperties;
 import org.crown.framework.web.controller.WebController;
-import org.crown.project.config.RuoYiConfig;
 import org.crown.project.system.menu.domain.Menu;
 import org.crown.project.system.menu.service.IMenuService;
 import org.crown.project.system.user.domain.User;
@@ -25,7 +25,7 @@ public class IndexController extends WebController {
     private IMenuService menuService;
 
     @Autowired
-    private RuoYiConfig ruoYiConfig;
+    private CrownProperties crownConfig;
 
     // 系统首页
     @GetMapping("/index")
@@ -37,14 +37,14 @@ public class IndexController extends WebController {
         mmap.put("menus", menus);
         mmap.put("user", user);
         mmap.put("copyRightYear", LocalDate.now().getYear());
-        mmap.put("demoEnabled", ruoYiConfig.isDemoEnabled());
+        mmap.put("demoEnabled", crownConfig.getDemo().isEnabled());
         return "index";
     }
 
     // 系统介绍
     @GetMapping("/system/main")
     public String main(ModelMap mmap) {
-        mmap.put("version", ruoYiConfig.getVersion());
+        mmap.put("version", crownConfig.getVersion());
         return "main";
     }
 }

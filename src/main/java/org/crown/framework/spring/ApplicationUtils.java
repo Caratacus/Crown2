@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -37,12 +39,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author Caratacus
  */
 @Component
-public final class ApplicationUtils implements BeanFactoryPostProcessor {
+public final class ApplicationUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
 
     /**
      * Spring应用上下文环境
      */
     private static ConfigurableListableBeanFactory beanFactory;
+    private static ApplicationContext applicationContext;
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
@@ -52,8 +55,15 @@ public final class ApplicationUtils implements BeanFactoryPostProcessor {
     /**
      * 获取ApplicationContext
      */
-    private static ConfigurableListableBeanFactory getContext() {
+    public static ConfigurableListableBeanFactory getBeanFactory() {
         return beanFactory;
+    }
+
+    /**
+     * 获取ApplicationContext
+     */
+    public static ApplicationContext getContext() {
+        return applicationContext;
     }
 
     /**
@@ -66,7 +76,7 @@ public final class ApplicationUtils implements BeanFactoryPostProcessor {
      */
     public static <T> T getBean(String beanName, Class<T> requiredType) {
         if (containsBean(beanName)) {
-            return getContext().getBean(beanName, requiredType);
+            return getBeanFactory().getBean(beanName, requiredType);
         }
         return null;
     }
@@ -79,7 +89,7 @@ public final class ApplicationUtils implements BeanFactoryPostProcessor {
      * @return
      */
     public static <T> T getBean(Class<T> requiredType) {
-        return getContext().getBean(requiredType);
+        return getBeanFactory().getBean(requiredType);
     }
 
     /**
@@ -92,7 +102,7 @@ public final class ApplicationUtils implements BeanFactoryPostProcessor {
     public static <T> T getBean(String beanName) {
         if (containsBean(beanName)) {
             Class<T> type = getType(beanName);
-            return getContext().getBean(beanName, type);
+            return getBeanFactory().getBean(beanName, type);
         }
         return null;
     }
@@ -121,7 +131,7 @@ public final class ApplicationUtils implements BeanFactoryPostProcessor {
      * @return
      */
     public static boolean containsBean(String name) {
-        return getContext().containsBean(name);
+        return getBeanFactory().containsBean(name);
     }
 
     /**
@@ -131,7 +141,7 @@ public final class ApplicationUtils implements BeanFactoryPostProcessor {
      * @return
      */
     public static boolean isSingleton(String name) {
-        return getContext().isSingleton(name);
+        return getBeanFactory().isSingleton(name);
     }
 
     /**
@@ -141,7 +151,12 @@ public final class ApplicationUtils implements BeanFactoryPostProcessor {
      * @return
      */
     public static <T> Class<T> getType(String name) {
-        return (Class<T>) getContext().getType(name);
+        return (Class<T>) getBeanFactory().getType(name);
     }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ApplicationUtils.applicationContext = applicationContext;
+
+    }
 }

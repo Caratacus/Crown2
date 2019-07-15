@@ -79,8 +79,7 @@ public class DictData extends BaseEntity {
      */
     private String remark;
 
-    public boolean getDefault()
-    {
+    public boolean getDefault() {
         return UserConstants.YES.equals(this.isDefault);
     }
 }

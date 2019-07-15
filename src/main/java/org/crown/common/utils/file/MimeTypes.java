@@ -5,7 +5,7 @@ package org.crown.common.utils.file;
  *
  * @author ruoyi
  */
-public class MimeTypeUtils {
+public class MimeTypes {
 
     public static final String IMAGE_PNG = "image/png";
 

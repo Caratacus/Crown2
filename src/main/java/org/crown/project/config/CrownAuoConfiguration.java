@@ -1,18 +1,30 @@
 package org.crown.project.config;
 
+import org.crown.framework.springboot.properties.CrownProperties;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * 通用配置
+ * <p>
+ * Crown项目SpringBoot相关配置
+ * </p>
  *
- * @author ruoyi
+ * @author Caratacus
+ * @since 2017-09-21
  */
 @Configuration
-public class ResourcesConfig implements WebMvcConfigurer {
+@EnableConfigurationProperties({CrownProperties.class})
+public class CrownAuoConfiguration implements WebMvcConfigurer {
+
+    private final CrownProperties properties;
+
+    public CrownAuoConfiguration(CrownProperties properties) {
+        this.properties = properties;
+    }
 
     /**
      * 首页地址
@@ -31,7 +43,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 文件上传路径 */
-        registry.addResourceHandler("/profile/**").addResourceLocations("file:" + RuoYiConfig.getProfile());
+        registry.addResourceHandler("/profile/**").addResourceLocations("file:" + properties.getPath().getFilePath());
 
         /** swagger配置 */
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
