@@ -6,6 +6,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.poi.ExcelUtils;
+import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
@@ -47,7 +48,7 @@ public class UserController extends WebController {
     private IPostService postService;
 
     @RequiresPermissions("system:user:view")
-    @GetMapping()
+    @GetMapping
     public String user() {
         return prefix + "/user";
     }
@@ -158,9 +159,12 @@ public class UserController extends WebController {
     @PostMapping("/resetPwd")
     @ResponseBody
     public ApiResponses<Void> resetPwd(User user) {
-        userService.resetUserPwd(user);
+        if (userService.resetUserPwd(user)) {
+            if (ShiroUtils.getUserId().equals(user.getUserId())) {
+                ShiroUtils.setSysUser(userService.selectUserById(user.getUserId()));
+            }
+        }
         return success();
-
     }
 
     @RequiresPermissions("system:user:remove")
