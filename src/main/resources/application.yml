@@ -105,6 +105,7 @@ mybatis-plus:
     super-mapper-class: org.crown.framework.mapper.BaseMapper
   type-enums-package: org.crown.common.enums,org.crown.framework.enums
   type-aliases-package: org.crown.project
+  type-handlers-package: org.crown.framework.mybatisplus.typehandler
 # PageHelper分页插件
 pagehelper:
   helperDialect: mysql
