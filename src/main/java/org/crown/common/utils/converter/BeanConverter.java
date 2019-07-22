@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.crown.framework.modelmapper.jdk8.Jdk8Module;
+import org.crown.framework.modelmapper.json.FastJsonModule;
 import org.crown.framework.modelmapper.jsr310.Jsr310Module;
 import org.crown.framework.modelmapper.jsr310.Jsr310ModuleConfig;
 import org.modelmapper.ModelMapper;
@@ -54,7 +55,9 @@ public class BeanConverter {
                 .datePattern("yyyy-MM-dd") // default is yyyy-MM-dd
                 .zoneId(ZoneOffset.UTC) // default is ZoneId.systemDefault()
                 .build();
-        modelMapper.registerModule(new Jsr310Module(config)).registerModule(new Jdk8Module());
+        modelMapper.registerModule(new Jsr310Module(config))
+                .registerModule(new Jdk8Module())
+                .registerModule(new FastJsonModule());
         modelMapper.getConfiguration().setFullTypeMatchingRequired(true);
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
