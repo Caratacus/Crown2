@@ -9,7 +9,6 @@ import java.util.Objects;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
-import org.apache.ibatis.type.TypeHandler;
 import org.crown.common.utils.StringUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -23,10 +22,10 @@ import com.alibaba.fastjson.JSONArray;
  */
 @MappedTypes({JSONArray.class})
 @MappedJdbcTypes({JdbcType.VARCHAR})
-public class JSONArrayTypeHandler implements TypeHandler<JSONArray> {
+public class JSONArrayTypeHandler extends MyBatisTypeHandler<JSONArray> {
 
     @Override
-    public void setParameter(PreparedStatement ps, int i, JSONArray parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, JSONArray parameter, JdbcType jdbcType) throws SQLException {
         if (Objects.nonNull(parameter)) {
             ps.setString(i, parameter.toJSONString());
         } else {
@@ -35,22 +34,21 @@ public class JSONArrayTypeHandler implements TypeHandler<JSONArray> {
     }
 
     @Override
-    public JSONArray getResult(ResultSet rs, String s) throws SQLException {
-        String columnValue = rs.getString(s);
+    public JSONArray getNullableResult(ResultSet rs, String columnName) throws SQLException {
+        String columnValue = rs.getString(columnName);
         return parseArray(columnValue);
     }
 
     @Override
-    public JSONArray getResult(ResultSet rs, int columnIndex) throws SQLException {
+    public JSONArray getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String columnValue = rs.getString(columnIndex);
         return parseArray(columnValue);
     }
 
     @Override
-    public JSONArray getResult(CallableStatement cs, int i) throws SQLException {
-        String columnValue = cs.getString(i);
+    public JSONArray getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+        String columnValue = cs.getString(columnIndex);
         return parseArray(columnValue);
-
     }
 
     private JSONArray parseArray(String text) {

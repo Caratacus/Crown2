@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
@@ -23,7 +22,7 @@ import com.alibaba.fastjson.JSONObject;
  */
 @MappedTypes({JSONObject.class})
 @MappedJdbcTypes({JdbcType.VARCHAR})
-public class JSONObjectTypeHandler extends BaseTypeHandler<JSONObject> {
+public class JSONObjectTypeHandler extends MyBatisTypeHandler<JSONObject> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, JSONObject parameter, JdbcType jdbcType) throws SQLException {
@@ -35,20 +34,21 @@ public class JSONObjectTypeHandler extends BaseTypeHandler<JSONObject> {
     }
 
     @Override
-    public JSONObject getNullableResult(ResultSet rs, String columnName)
-            throws SQLException {
-        return parseObject(rs.getString(columnName));
+    public JSONObject getNullableResult(ResultSet rs, String columnName) throws SQLException {
+        String columnValue = rs.getString(columnName);
+        return parseObject(columnValue);
     }
 
     @Override
     public JSONObject getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        return parseObject(rs.getString(columnIndex));
+        String columnValue = rs.getString(columnIndex);
+        return parseObject(columnValue);
     }
 
     @Override
-    public JSONObject getNullableResult(CallableStatement cs, int columnIndex)
-            throws SQLException {
-        return parseObject(cs.getString(columnIndex));
+    public JSONObject getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+        String columnValue = cs.getString(columnIndex);
+        return parseObject(columnValue);
     }
 
     private JSONObject parseObject(String text) {
