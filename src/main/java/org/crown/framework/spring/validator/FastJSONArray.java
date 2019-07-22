@@ -10,20 +10,20 @@ import javax.validation.Payload;
 
 /**
  * <p>
- * Json校验注解
+ * FastJson JSONArray校验注解
  * </p>
  *
  * @author Caratacus
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = JsonConstraintValidator.class)
-public @interface Json {
+@Constraint(validatedBy = FastJSONArrayConstraintValidator.class)
+public @interface FastJSONArray {
 
     /**
      * @Description: 错误提示
      */
-    String message() default "请输入正确的Json格式";
+    String message() default "请输入正确的JSONArray格式";
 
     Class<?>[] groups() default {};
 

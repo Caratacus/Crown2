@@ -10,20 +10,20 @@ import javax.validation.Payload;
 
 /**
  * <p>
- * JsonObject校验注解
+ * FastJson JSONObject校验注解
  * </p>
  *
  * @author Caratacus
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = JsonObjectConstraintValidator.class)
-public @interface JsonObject {
+@Constraint(validatedBy = FastJSONObjectConstraintValidator.class)
+public @interface FastJSONObject {
 
     /**
      * @Description: 错误提示
      */
-    String message() default "请输入正确的JsonObject格式";
+    String message() default "请输入正确的JSONObject格式";
 
     Class<?>[] groups() default {};
 
