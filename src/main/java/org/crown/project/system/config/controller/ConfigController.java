@@ -7,8 +7,10 @@ import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.config.domain.Config;
@@ -82,6 +84,7 @@ public class ConfigController extends WebController {
     @PostMapping("/add")
     @ResponseBody
     public ApiResponses<Void> addSave(Config config) {
+        ApiAssert.isTrue(ErrorCodeEnum.CONFIG_KEY_EXIST.overrideMsg("参数键名" + config.getConfigName() + "已存在"), configService.checkConfigKeyUnique(config));
         configService.save(config);
         return success();
     }
@@ -103,6 +106,7 @@ public class ConfigController extends WebController {
     @PostMapping("/edit")
     @ResponseBody
     public ApiResponses<Void> editSave(Config config) {
+        ApiAssert.isTrue(ErrorCodeEnum.CONFIG_KEY_EXIST.overrideMsg("参数键名" + config.getConfigName() + "已存在"), configService.checkConfigKeyUnique(config));
         configService.updateById(config);
         return success();
 

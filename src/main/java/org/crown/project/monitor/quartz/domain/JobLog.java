@@ -5,6 +5,7 @@ import java.util.Date;
 import org.crown.common.annotation.Excel;
 import org.crown.framework.web.domain.BaseQueryParams;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -70,7 +71,7 @@ public class JobLog extends BaseQueryParams {
      */
     @Excel(name = "参数")
     @ApiModelProperty(notes = "参数")
-    private String jobParams;
+    private JSONObject jobParams;
     /**
      * 运行时长
      */

@@ -118,6 +118,8 @@ public enum ErrorCodeEnum {
     //DEPT
     DEPT_EXISTING_LOWER_LEVEL_DEPT(HttpServletResponse.SC_BAD_REQUEST, "当前部门存在下属部门，不允许删除"),
     DEPT_EXISTING_USER(HttpServletResponse.SC_BAD_REQUEST, "当前部门还存在用户，不允许删除"),
+    DEPT_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "部门名称已经存在"),
+    DEPT_PARENT_DEPT_CANNOT_MYSELF(HttpServletResponse.SC_BAD_REQUEST, "上级部门不能是当前部门"),
     //USER
     USER_OLD_PASSWORD_ERROR(HttpServletResponse.SC_BAD_REQUEST, "修改密码失败，旧密码错误"),
     USER_AVATAR_NOT_EMPTY(HttpServletResponse.SC_BAD_REQUEST, "用户头像不能为空"),
@@ -140,6 +142,8 @@ public enum ErrorCodeEnum {
     FILE_ILLEGAL_FILENAME(HttpServletResponse.SC_BAD_REQUEST, "文件名称非法，不允许下载"),
     //Job
     JOB_NOT_FOUND(HttpServletResponse.SC_BAD_REQUEST, "未找到该定时任务"),
+    //config
+    CONFIG_KEY_EXIST(HttpServletResponse.SC_BAD_REQUEST, "参数键名已存在"),
     ;
 
     private final int httpCode;

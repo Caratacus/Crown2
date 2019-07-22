@@ -6,7 +6,6 @@ import java.util.concurrent.Future;
 
 import org.crown.common.cons.Constants;
 import org.crown.common.cons.QuartzCons;
-import org.crown.common.utils.JacksonUtils;
 import org.crown.framework.spring.ApplicationUtils;
 import org.crown.project.monitor.quartz.domain.Job;
 import org.crown.project.monitor.quartz.domain.JobLog;
@@ -41,7 +40,7 @@ public class QuartzExecutionJob extends QuartzJobBean {
         IJobLogService jobLogService = ApplicationUtils.getBean(IJobLogService.class);
         QuartzManage quartzManage = ApplicationUtils.getBean(QuartzManage.class);
 
-        String jobParams = quartzJob.getJobParams();
+        JSONObject jobParams = quartzJob.getJobParams();
         JobLog log = new JobLog();
         log.setJobName(quartzJob.getJobName());
         log.setClassName(quartzJob.getClassName());
@@ -49,11 +48,10 @@ public class QuartzExecutionJob extends QuartzJobBean {
         long startTime = System.currentTimeMillis();
         log.setCron(quartzJob.getCron());
         try {
-            JSONObject jsonObject = JacksonUtils.parseObject(jobParams);
             // 执行任务
             logger.info("任务准备执行，任务名称：{}", quartzJob.getJobName());
             QuartzRunnable task = new QuartzRunnable(quartzJob.getClassName(), quartzJob.getJobId(),
-                    jsonObject);
+                    jobParams);
             Future<?> future = executorService.submit(task);
             future.get();
             String runTime = System.currentTimeMillis() - startTime + "ms";

@@ -7,6 +7,7 @@ import org.crown.common.utils.StringUtils;
 import org.crown.framework.web.domain.BaseEntity;
 import org.crown.project.monitor.quartz.common.CronUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -52,7 +53,7 @@ public class Job extends BaseEntity {
      */
     @Excel(name = "参数")
     @ApiModelProperty(notes = "参数")
-    private String jobParams;
+    private JSONObject jobParams;
     /**
      * Cron表达式
      */

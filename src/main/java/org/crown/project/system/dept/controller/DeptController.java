@@ -69,6 +69,7 @@ public class DeptController extends WebController {
     @PostMapping("/add")
     @ResponseBody
     public ApiResponses<Void> addSave(Dept dept) {
+        ApiAssert.isTrue(ErrorCodeEnum.DEPT_NAME_EXIST.overrideMsg("部门名称[" + dept.getDeptName() + "]已经存在"), deptService.checkDeptNameUnique(dept));
         deptService.insertDept(dept);
         return success();
 
@@ -95,6 +96,8 @@ public class DeptController extends WebController {
     @PostMapping("/edit")
     @ResponseBody
     public ApiResponses<Void> editSave(Dept dept) {
+        ApiAssert.isTrue(ErrorCodeEnum.DEPT_NAME_EXIST.overrideMsg("部门名称[" + dept.getDeptName() + "]已经存在"), deptService.checkDeptNameUnique(dept));
+        ApiAssert.isFalse(ErrorCodeEnum.DEPT_PARENT_DEPT_CANNOT_MYSELF, dept.getParentId().equals(dept.getDeptId()));
         deptService.updateDept(dept);
         return success();
 
@@ -108,15 +111,8 @@ public class DeptController extends WebController {
     @GetMapping("/remove/{deptId}")
     @ResponseBody
     public ApiResponses<Void> remove(@PathVariable("deptId") Long deptId) {
-        /*if (deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)) > 0) {
-            return AjaxResult.warn("存在下级部门,不允许删除");
-        }*/
-
         ApiAssert.isFalse(ErrorCodeEnum.DEPT_EXISTING_LOWER_LEVEL_DEPT, deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)));
         ApiAssert.isFalse(ErrorCodeEnum.DEPT_EXISTING_USER, deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)));
-       /* if (deptService.checkDeptExistUser(deptId)) {
-            return AjaxResult.warn("部门存在用户,不允许删除");
-        }*/
         return success();
     }
 
