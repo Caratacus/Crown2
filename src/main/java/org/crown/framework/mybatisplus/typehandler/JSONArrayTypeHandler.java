@@ -57,6 +57,6 @@ public class JSONArrayTypeHandler implements TypeHandler<JSONArray> {
             return JSON.parseArray(text);
         } catch (Exception ignored) {
         }
-        return null;
+        return new JSONArray();
     }
 }

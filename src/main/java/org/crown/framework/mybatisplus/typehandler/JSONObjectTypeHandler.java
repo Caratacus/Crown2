@@ -55,7 +55,7 @@ public class JSONObjectTypeHandler extends BaseTypeHandler<JSONObject> {
             return JSON.parseObject(text);
         } catch (Exception ignored) {
         }
-        return null;
+        return new JSONObject();
     }
 
 }
