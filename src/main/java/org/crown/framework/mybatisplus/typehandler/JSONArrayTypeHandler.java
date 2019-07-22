@@ -14,6 +14,12 @@ import org.apache.ibatis.type.TypeHandler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 
+/**
+ * fastjson JSONArray与mybatis数据转换
+ *
+ * @author Caratacus
+ * @see JSONArray
+ */
 @MappedTypes({JSONArray.class})
 @MappedJdbcTypes({JdbcType.VARCHAR})
 public class JSONArrayTypeHandler implements TypeHandler<JSONArray> {

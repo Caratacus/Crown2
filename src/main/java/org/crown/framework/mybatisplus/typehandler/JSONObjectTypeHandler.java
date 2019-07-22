@@ -14,6 +14,12 @@ import org.apache.ibatis.type.MappedTypes;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * fastjson JSONObject与mybatis数据转换
+ *
+ * @author Caratacus
+ * @see JSONObject
+ */
 @MappedTypes({JSONObject.class})
 @MappedJdbcTypes({JdbcType.VARCHAR})
 public class JSONObjectTypeHandler extends BaseTypeHandler<JSONObject> {
