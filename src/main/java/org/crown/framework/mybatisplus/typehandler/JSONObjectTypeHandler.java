@@ -10,6 +10,7 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
+import org.crown.common.utils.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -51,9 +52,11 @@ public class JSONObjectTypeHandler extends BaseTypeHandler<JSONObject> {
     }
 
     private JSONObject parseObject(String text) {
-        try {
-            return JSON.parseObject(text);
-        } catch (Exception ignored) {
+        if (StringUtils.isNotBlank(text)) {
+            try {
+                return JSON.parseObject(text);
+            } catch (Exception ignored) {
+            }
         }
         return new JSONObject();
     }
