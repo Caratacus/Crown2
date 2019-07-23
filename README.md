@@ -16,13 +16,13 @@
         <br>
         <br>
         <a href="https://spring.io/projects/spring-boot">
-        <img src="https://img.shields.io/badge/spring--boot-2.1.1.RELEASE-blue.svg" alt="spring-boot"></a>
+        <img src="https://img.shields.io/badge/spring--boot-2.1.1.RELEASE-blue.svg" alt="spring-boot" title="spring-boot"></a>
 		<a href="https://github.com/Caratacus/Crown2">
-        <img src="https://tokei.rs/b1/github/Caratacus/Crown2?category=lines"></a>
+        <img src="https://tokei.rs/b1/github/Caratacus/Crown2?category=lines" alt="lines" title="lines"></a>
 		<a href="https://github.com/Caratacus/Crown2">
 		<img src="https://img.shields.io/badge/JDK-1.8-green.svg" alt="JDK 1.8" title="JDK 1.8"></a>
 		<a href="https://mit-license.org">
-        <img src="https://img.shields.io/cocoapods/l/Alamofire.svg?style=flat"></a>
+        <img src="https://img.shields.io/cocoapods/l/Alamofire.svg?style=flat" alt="mit" title="mit"></a>
     </p>
 </p>
 
