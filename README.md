@@ -61,7 +61,7 @@
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
 
-##### Function :microscope:
+##### Function :neckbeard:
 <sup>
 <sup>1</sup> 用户管理：用户是系统操作者，该功能主要完成系统用户配置 <br/>
 <sup>2</sup> 部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限 <br/>
@@ -101,7 +101,9 @@
 -----------------------------------------------------------------------------------------------
 ##### Show :palm_tree:
 
-![login.jpg](https://images.gitee.com/uploads/images/2019/0723/184701_e503cdb9_620321.png)
+![login.png](https://images.gitee.com/uploads/images/2019/0723/184701_e503cdb9_620321.png)
+<br>
+![index.png](https://images.gitee.com/uploads/images/2019/0723/192727_98f03ef7_620321.png)
 <br>
 
 -----------------------------------------------------------------------------------------------
