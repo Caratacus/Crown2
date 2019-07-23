@@ -20,7 +20,8 @@ CREATE TABLE `sys_config` (
 --  Records of `sys_config`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_config` VALUES ('1', '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-purple', 'Y', 'crown', '2018-03-16 11:33:00', 'crown', '2019-07-03 14:16:38', '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow'), ('2', '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00', '初始化密码 123456');
+INSERT INTO `sys_config`(`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-random', 'Y', 'crown', '2018-03-16 11:33:00', NULL, '2019-07-23 17:35:13', '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow、随机 skin-random');
+INSERT INTO `sys_config`(`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00', '初始化密码 123456');
 COMMIT;
 
 -- ----------------------------

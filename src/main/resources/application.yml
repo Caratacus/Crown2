@@ -122,7 +122,7 @@ crown:
     table-prefix: sys_
   # 实例演示开关
   demo:
-    enabled: true
+    enabled: false
     # 获取ip地址开关
   address:
     enabled: true
