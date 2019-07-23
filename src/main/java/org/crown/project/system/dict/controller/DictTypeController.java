@@ -39,7 +39,7 @@ public class DictTypeController extends WebController {
     private IDictTypeService dictTypeService;
 
     @RequiresPermissions("system:dict:view")
-    @GetMapping()
+    @GetMapping
     public String dictType() {
         return prefix + "/type";
     }

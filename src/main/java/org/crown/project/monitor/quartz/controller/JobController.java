@@ -43,7 +43,7 @@ public class JobController extends WebController {
     private IJobService jobService;
 
     @RequiresPermissions("monitor:job:view")
-    @GetMapping()
+    @GetMapping
     public String job() {
         return prefix + "/job";
     }

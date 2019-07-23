@@ -39,7 +39,7 @@ public class OperlogController extends WebController {
     private IOperLogService operLogService;
 
     @RequiresPermissions("monitor:operlog:view")
-    @GetMapping()
+    @GetMapping
     public String operlog() {
         return prefix + "/operlog";
     }

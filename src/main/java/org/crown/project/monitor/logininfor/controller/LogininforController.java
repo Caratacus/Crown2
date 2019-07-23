@@ -37,7 +37,7 @@ public class LogininforController extends WebController {
     private ILogininforService logininforService;
 
     @RequiresPermissions("monitor:logininfor:view")
-    @GetMapping()
+    @GetMapping
     public String logininfor() {
         return prefix + "/logininfor";
     }

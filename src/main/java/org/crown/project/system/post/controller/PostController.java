@@ -39,7 +39,7 @@ public class PostController extends WebController {
     private IPostService postService;
 
     @RequiresPermissions("system:post:view")
-    @GetMapping()
+    @GetMapping
     public String operlog() {
         return prefix + "/post";
     }

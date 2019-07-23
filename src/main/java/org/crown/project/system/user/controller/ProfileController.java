@@ -44,7 +44,7 @@ public class ProfileController extends WebController {
     /**
      * 个人信息
      */
-    @GetMapping()
+    @GetMapping
     public String profile(ModelMap mmap) {
         User user = getSysUser();
         mmap.put("user", user);

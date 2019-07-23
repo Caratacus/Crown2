@@ -40,7 +40,7 @@ public class DictDataController extends WebController {
     private IDictDataService dictDataService;
 
     @RequiresPermissions("system:dict:view")
-    @GetMapping()
+    @GetMapping
     public String dictData() {
         return prefix + "/data";
     }

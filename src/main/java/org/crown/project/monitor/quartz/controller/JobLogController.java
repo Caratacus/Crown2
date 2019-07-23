@@ -41,7 +41,7 @@ public class JobLogController extends WebController {
     private IJobLogService jobLogService;
 
     @RequiresPermissions("monitor:job:view")
-    @GetMapping()
+    @GetMapping
     public String jobLog() {
         return prefix + "/jobLog";
     }

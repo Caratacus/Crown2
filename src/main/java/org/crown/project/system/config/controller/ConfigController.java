@@ -42,7 +42,7 @@ public class ConfigController extends WebController {
     private IConfigService configService;
 
     @RequiresPermissions("system:config:view")
-    @GetMapping()
+    @GetMapping
     public String config() {
         return prefix + "/config";
     }

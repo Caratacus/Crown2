@@ -45,7 +45,7 @@ public class RoleController extends WebController {
     private IUserService userService;
 
     @RequiresPermissions("system:role:view")
-    @GetMapping()
+    @GetMapping
     public String role() {
         return prefix + "/role";
     }

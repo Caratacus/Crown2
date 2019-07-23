@@ -851,11 +851,11 @@
             	var url = $.common.isEmpty(id) ? $.table._option.createUrl : $.table._option.createUrl.replace("{id}", id);
                 $.modal.openFull("添加" + $.table._option.modalName, url);
             },
-            // 添加访问地址
-            addUrl: function(id) {
+			// 添加访问地址
+			addUrl: function(id) {
 				var url = $.common.isEmpty(id) ? $.table._option.createUrl : $.table._option.createUrl.replace("{id}", id);
-                return url;
-            },
+				return url;
+			},
             // 修改信息
             edit: function(id) {
             	if($.common.isEmpty(id) && $.table._option.type == table_type.bootstrapTreeTable) {

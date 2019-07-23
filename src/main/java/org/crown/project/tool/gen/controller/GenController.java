@@ -37,7 +37,7 @@ public class GenController extends WebController {
     private IGenService genService;
 
     @RequiresPermissions("tool:gen:view")
-    @GetMapping()
+    @GetMapping
     public String gen() {
         return prefix + "/gen";
     }

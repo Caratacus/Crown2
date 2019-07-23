@@ -42,7 +42,7 @@ public class UserOnlineController extends WebController {
     private OnlineSessionDAO onlineSessionDAO;
 
     @RequiresPermissions("monitor:online:view")
-    @GetMapping()
+    @GetMapping
     public String online() {
         return prefix + "/online";
     }

@@ -41,13 +41,13 @@ public class DeptController extends WebController {
     private IDeptService deptService;
 
     @RequiresPermissions("system:dept:view")
-    @GetMapping()
+    @GetMapping
     public String dept() {
         return prefix + "/dept";
     }
 
     @RequiresPermissions("system:dept:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public List<Dept> list(Dept dept) {
         return deptService.selectDeptList(dept);

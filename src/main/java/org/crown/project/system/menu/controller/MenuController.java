@@ -44,13 +44,13 @@ public class MenuController extends WebController {
     private IRoleMenuService roleMenuService;
 
     @RequiresPermissions("system:menu:view")
-    @GetMapping()
+    @GetMapping
     public String menu() {
         return prefix + "/menu";
     }
 
     @RequiresPermissions("system:menu:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public List<Menu> list(Menu menu) {
         return menuService.selectMenuList(menu);

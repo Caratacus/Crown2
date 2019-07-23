@@ -38,7 +38,7 @@ public class NoticeController extends WebController {
     private INoticeService noticeService;
 
     @RequiresPermissions("system:notice:view")
-    @GetMapping()
+    @GetMapping
     public String notice() {
         return prefix + "/notice";
     }

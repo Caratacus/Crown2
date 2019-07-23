@@ -18,7 +18,7 @@ public class BuildController extends WebController {
     private final String prefix = "tool/build";
 
     @RequiresPermissions("tool:build:view")
-    @GetMapping()
+    @GetMapping
     public String build() {
         return prefix + "/build";
     }

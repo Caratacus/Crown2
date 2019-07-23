@@ -20,7 +20,7 @@ public class ServerController extends WebController {
     private final String prefix = "monitor/server";
 
     @RequiresPermissions("monitor:server:view")
-    @GetMapping()
+    @GetMapping
     public String server(ModelMap mmap) {
         Server server = new Server();
         server.copyTo();
