@@ -8,7 +8,7 @@ import org.crown.project.system.post.domain.Post;
 /**
  * 岗位信息 服务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IPostService extends BaseService<Post> {
 

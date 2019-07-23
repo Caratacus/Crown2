@@ -12,7 +12,7 @@ import org.crown.common.utils.StringUtils;
 /**
  * 类型转换器
  *
- * @author ruoyi
+ * @author Crown
  */
 public class Convert {
 

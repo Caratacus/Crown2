@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 登录帐号控制过滤器
  *
- * @author ruoyi
+ * @author Crown
  */
 public class KickoutSessionFilter extends AccessControlFilter {
 

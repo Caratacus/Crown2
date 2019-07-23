@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 /**
  * 字典 业务层处理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictType> implements IDictTypeService {

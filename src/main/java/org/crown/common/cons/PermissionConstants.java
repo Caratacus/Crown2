@@ -3,7 +3,7 @@ package org.crown.common.cons;
 /**
  * 权限通用常量
  *
- * @author ruoyi
+ * @author Crown
  */
 public class PermissionConstants {
 

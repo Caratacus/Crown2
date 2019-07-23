@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 /**
  * 操作日志 服务层处理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class OperLogServiceImpl extends BaseServiceImpl<OperLogMapper, OperLog> implements IOperLogService {

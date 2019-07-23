@@ -3,7 +3,7 @@ package org.crown.common.cons;
 /**
  * 用户常量信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class UserConstants {
 

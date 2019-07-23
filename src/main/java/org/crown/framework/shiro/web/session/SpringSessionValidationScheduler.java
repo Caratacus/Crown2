@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  * 自定义任务调度器完成
  *
- * @author ruoyi
+ * @author Crown
  */
 @Component
 public class SpringSessionValidationScheduler implements SessionValidationScheduler {

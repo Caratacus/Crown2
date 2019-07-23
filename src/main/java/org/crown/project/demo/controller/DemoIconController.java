@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 图标相关
  *
- * @author ruoyi
+ * @author Crown
  */
 @Controller
 @RequestMapping("/demo/icon")

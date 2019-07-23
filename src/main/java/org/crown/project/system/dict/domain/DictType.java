@@ -14,7 +14,7 @@ import lombok.Setter;
 /**
  * 字典类型对象 sys_dict_type
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

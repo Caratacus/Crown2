@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * 在线用户 服务层处理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class UserOnlineServiceImpl extends BaseServiceImpl<UserOnlineMapper, UserOnline> implements IUserOnlineService {

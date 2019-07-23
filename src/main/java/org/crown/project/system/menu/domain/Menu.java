@@ -17,7 +17,7 @@ import lombok.Setter;
 /**
  * 菜单权限表 sys_menu
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

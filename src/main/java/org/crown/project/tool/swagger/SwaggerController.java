@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * swagger 接口
  *
- * @author ruoyi
+ * @author Crown
  */
 @Controller
 @RequestMapping("/tool/swagger")

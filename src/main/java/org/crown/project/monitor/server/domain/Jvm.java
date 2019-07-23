@@ -8,7 +8,7 @@ import org.crown.common.utils.DateUtils;
 /**
  * JVM相关信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class Jvm {
 

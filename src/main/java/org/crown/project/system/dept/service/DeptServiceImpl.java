@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 部门管理 服务实现
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implements IDeptService {

@@ -6,7 +6,7 @@ import org.crown.project.system.user.domain.UserPost;
 /**
  * 角色业务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IUserPostService extends BaseService<UserPost> {
 

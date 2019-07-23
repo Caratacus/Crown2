@@ -13,7 +13,7 @@ import lombok.Setter;
 /**
  * 通知公告表 sys_notice
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

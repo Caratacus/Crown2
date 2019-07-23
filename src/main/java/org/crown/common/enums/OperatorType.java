@@ -3,7 +3,7 @@ package org.crown.common.enums;
 /**
  * 操作人类别
  *
- * @author ruoyi
+ * @author Crown
  */
 public enum OperatorType {
     /**

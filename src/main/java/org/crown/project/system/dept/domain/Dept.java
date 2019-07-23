@@ -17,7 +17,7 @@ import lombok.Setter;
 /**
  * 部门表 sys_dept
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

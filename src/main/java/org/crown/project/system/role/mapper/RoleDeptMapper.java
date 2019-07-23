@@ -7,7 +7,7 @@ import org.crown.project.system.role.domain.RoleDept;
 /**
  * 角色与部门关联表 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface RoleDeptMapper extends BaseMapper<RoleDept> {

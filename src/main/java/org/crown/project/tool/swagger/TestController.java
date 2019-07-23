@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 /**
  * swagger 用户测试方法
  *
- * @author ruoyi
+ * @author Crown
  */
 @Api("用户信息管理")
 @RestController

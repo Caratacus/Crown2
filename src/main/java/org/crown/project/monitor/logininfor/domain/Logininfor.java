@@ -13,7 +13,7 @@ import lombok.Setter;
 /**
  * 系统访问记录表 sys_logininfor
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

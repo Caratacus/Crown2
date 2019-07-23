@@ -5,7 +5,7 @@ import org.crown.common.utils.Arith;
 /**
  * 內存相关信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class Mem {
 

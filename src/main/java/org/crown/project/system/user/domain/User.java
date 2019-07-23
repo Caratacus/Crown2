@@ -26,7 +26,7 @@ import lombok.Setter;
 /**
  * 用户对象 sys_user
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

@@ -20,7 +20,7 @@ import oshi.util.Util;
 /**
  * 服务器相关信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class Server {
 

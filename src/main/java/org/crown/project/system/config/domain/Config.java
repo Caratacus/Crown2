@@ -14,7 +14,7 @@ import lombok.Setter;
 /**
  * 参数配置表 sys_config
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

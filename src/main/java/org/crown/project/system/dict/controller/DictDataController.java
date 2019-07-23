@@ -28,7 +28,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 /**
  * 数据字典信息
  *
- * @author ruoyi
+ * @author Crown
  */
 @Controller
 @RequestMapping("/system/dict/data")

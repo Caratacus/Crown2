@@ -6,7 +6,7 @@ import org.crown.project.system.user.domain.UserRole;
 /**
  * 用户 业务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IUserRoleService extends BaseService<UserRole> {
 

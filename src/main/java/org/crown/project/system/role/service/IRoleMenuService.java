@@ -6,7 +6,7 @@ import org.crown.project.system.role.domain.RoleMenu;
 /**
  * 角色业务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IRoleMenuService extends BaseService<RoleMenu> {
 

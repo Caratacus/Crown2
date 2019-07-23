@@ -18,7 +18,7 @@ import eu.bitwalker.useragentutils.UserAgent;
 /**
  * 自定义sessionFactory会话
  *
- * @author ruoyi
+ * @author Crown
  */
 @Component
 public class OnlineSessionFactory implements SessionFactory {

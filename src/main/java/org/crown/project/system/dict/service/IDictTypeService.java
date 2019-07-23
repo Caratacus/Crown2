@@ -8,7 +8,7 @@ import org.crown.project.system.dict.domain.DictType;
 /**
  * 字典 业务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IDictTypeService extends BaseService<DictType> {
 

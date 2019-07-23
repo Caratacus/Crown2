@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * 用户和岗位关联 sys_user_post
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

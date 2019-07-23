@@ -7,7 +7,7 @@ import org.crown.project.system.notice.domain.Notice;
 /**
  * 公告 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface NoticeMapper extends BaseMapper<Notice> {

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 服务器监控
  *
- * @author ruoyi
+ * @author Crown
  */
 @Controller
 @RequestMapping("/monitor/server")

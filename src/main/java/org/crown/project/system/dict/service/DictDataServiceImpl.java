@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * 字典 业务层处理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class DictDataServiceImpl extends BaseServiceImpl<DictDataMapper, DictData> implements IDictDataService {

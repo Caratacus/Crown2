@@ -9,7 +9,7 @@ import org.crown.project.monitor.online.domain.UserOnline;
 /**
  * 在线用户 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface UserOnlineMapper extends BaseMapper<UserOnline> {

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 /**
  * 岗位信息 服务层处理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implements IPostService {

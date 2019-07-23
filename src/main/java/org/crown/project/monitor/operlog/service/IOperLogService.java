@@ -8,7 +8,7 @@ import org.crown.project.monitor.operlog.domain.OperLog;
 /**
  * 操作日志 服务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IOperLogService extends BaseService<OperLog> {
 

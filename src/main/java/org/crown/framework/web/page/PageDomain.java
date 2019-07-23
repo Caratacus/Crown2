@@ -5,7 +5,7 @@ import org.crown.common.utils.StringUtils;
 /**
  * 分页数据
  *
- * @author ruoyi
+ * @author Crown
  */
 public class PageDomain {
 

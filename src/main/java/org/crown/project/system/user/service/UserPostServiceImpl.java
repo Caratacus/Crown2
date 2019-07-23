@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 /**
  * 用户岗位 业务层处理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class UserPostServiceImpl extends BaseServiceImpl<UserPostMapper, UserPost> implements IUserPostService {

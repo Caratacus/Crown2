@@ -8,7 +8,7 @@ import org.crown.project.system.config.domain.Config;
 /**
  * 参数配置 服务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IConfigService extends BaseService<Config> {
 

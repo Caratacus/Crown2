@@ -9,7 +9,7 @@ import org.crown.project.system.user.domain.UserPost;
 /**
  * 用户与岗位 表 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface UserPostMapper extends BaseMapper<UserPost> {

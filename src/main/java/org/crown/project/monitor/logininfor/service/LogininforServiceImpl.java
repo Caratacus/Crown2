@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 /**
  * 系统访问日志情况信息 服务层处理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service
 public class LogininforServiceImpl extends BaseServiceImpl<LogininforMapper, Logininfor> implements ILogininforService {

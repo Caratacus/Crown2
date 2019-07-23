@@ -3,7 +3,7 @@ package org.crown.project.monitor.server.domain;
 /**
  * 系统文件相关信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class SysFile {
 

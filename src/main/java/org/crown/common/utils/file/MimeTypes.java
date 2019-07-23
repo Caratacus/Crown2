@@ -3,7 +3,7 @@ package org.crown.common.utils.file;
 /**
  * 媒体类型工具类
  *
- * @author ruoyi
+ * @author Crown
  */
 public class MimeTypes {
 

@@ -9,7 +9,7 @@ import org.crown.project.system.user.domain.User;
 /**
  * 用户表 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {

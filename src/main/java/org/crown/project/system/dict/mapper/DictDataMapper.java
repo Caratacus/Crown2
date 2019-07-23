@@ -7,7 +7,7 @@ import org.crown.project.system.dict.domain.DictData;
 /**
  * 字典表 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface DictDataMapper extends BaseMapper<DictData> {

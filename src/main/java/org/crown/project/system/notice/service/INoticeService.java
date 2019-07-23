@@ -8,7 +8,7 @@ import org.crown.project.system.notice.domain.Notice;
 /**
  * 公告 服务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface INoticeService extends BaseService<Notice> {
 

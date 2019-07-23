@@ -15,7 +15,7 @@ import org.crown.project.system.user.domain.User;
 /**
  * shiro 工具类
  *
- * @author ruoyi
+ * @author Crown
  */
 public class ShiroUtils {
 

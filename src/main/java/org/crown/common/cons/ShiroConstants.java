@@ -3,7 +3,7 @@ package org.crown.common.cons;
 /**
  * Shiro通用常量
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface ShiroConstants {
 

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * 同步Session数据到Db
  *
- * @author ruoyi
+ * @author Crown
  */
 public class SyncOnlineSessionFilter extends PathMatchingFilter {
 

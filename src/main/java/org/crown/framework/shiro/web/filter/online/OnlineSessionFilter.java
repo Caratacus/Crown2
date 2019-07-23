@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 /**
  * 自定义访问控制
  *
- * @author ruoyi
+ * @author Crown
  */
 public class OnlineSessionFilter extends AccessControlFilter {
 

@@ -6,7 +6,7 @@ import org.crown.common.utils.StringUtils;
 /**
  * ry数据库表列信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class ColumnInfo {
 

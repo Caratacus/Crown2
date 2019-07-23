@@ -6,7 +6,7 @@ import org.crown.project.system.role.domain.RoleDept;
 /**
  * 角色业务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IRoleDeptService extends BaseService<RoleDept> {
 

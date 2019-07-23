@@ -3,7 +3,7 @@ package org.crown.common.enums;
 /**
  * 业务操作类型
  *
- * @author ruoyi
+ * @author Crown
  */
 public enum BusinessType {
     /**

@@ -4,7 +4,7 @@ package org.crown.project.tool.gen.domain;
  * 字段类型配置 由数据库字段的注释解析而来
  * 注释结构示例:{"title": "状态", "type": "dict", "value": "sys_common_status"} {"title": "登录时间", "type": "date"}
  *
- * @author ruoyi
+ * @author Crown
  */
 public class ColumnConfigInfo {
 

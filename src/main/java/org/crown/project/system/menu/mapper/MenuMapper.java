@@ -9,7 +9,7 @@ import org.crown.project.system.menu.domain.Menu;
 /**
  * 菜单表 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {

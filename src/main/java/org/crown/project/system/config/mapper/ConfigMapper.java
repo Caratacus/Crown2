@@ -7,7 +7,7 @@ import org.crown.project.system.config.domain.Config;
 /**
  * 参数配置 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface ConfigMapper extends BaseMapper<Config> {

@@ -9,7 +9,7 @@ import org.crown.project.system.role.domain.Role;
 /**
  * 角色表 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {

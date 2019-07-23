@@ -10,7 +10,7 @@ import org.crown.project.system.dept.domain.Dept;
 /**
  * 部门管理 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface DeptMapper extends BaseMapper<Dept> {

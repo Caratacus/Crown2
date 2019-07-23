@@ -9,7 +9,7 @@ import org.crown.project.tool.gen.domain.TableInfo;
 /**
  * 代码生成 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface GenMapper {

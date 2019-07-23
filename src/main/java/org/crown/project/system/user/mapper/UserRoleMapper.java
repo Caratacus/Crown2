@@ -7,7 +7,7 @@ import org.crown.project.system.user.domain.UserRole;
 /**
  * 用户表 数据层
  *
- * @author ruoyi
+ * @author Crown
  */
 @Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {

@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 退出过滤器
  *
- * @author ruoyi
+ * @author Crown
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
 

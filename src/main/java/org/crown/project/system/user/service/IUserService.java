@@ -8,7 +8,7 @@ import org.crown.project.system.user.domain.User;
 /**
  * 用户 业务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IUserService extends BaseService<User> {
 

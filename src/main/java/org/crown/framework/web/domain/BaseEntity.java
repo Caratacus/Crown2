@@ -12,7 +12,7 @@ import lombok.Setter;
 /**
  * Entity基类
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * 数据字典信息
  *
- * @author ruoyi
+ * @author Crown
  */
 @Controller
 @RequestMapping("/system/dict")

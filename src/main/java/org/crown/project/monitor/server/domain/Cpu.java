@@ -5,7 +5,7 @@ import org.crown.common.utils.Arith;
 /**
  * CPU相关信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class Cpu {
 

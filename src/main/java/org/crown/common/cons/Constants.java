@@ -3,7 +3,7 @@ package org.crown.common.cons;
 /**
  * 通用常量信息
  *
- * @author ruoyi
+ * @author Crown
  */
 public class Constants {
 

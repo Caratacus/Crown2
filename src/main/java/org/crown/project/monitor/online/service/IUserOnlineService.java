@@ -9,7 +9,7 @@ import org.crown.project.monitor.online.domain.UserOnline;
 /**
  * 在线用户 服务层
  *
- * @author ruoyi
+ * @author Crown
  */
 public interface IUserOnlineService extends BaseService<UserOnline> {
 

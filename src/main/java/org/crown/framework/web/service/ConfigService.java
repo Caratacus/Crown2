@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * RuoYi首创 html调用 thymeleaf 实现参数管理
  *
- * @author ruoyi
+ * @author Crown
  */
 @Service("config")
 public class ConfigService {
