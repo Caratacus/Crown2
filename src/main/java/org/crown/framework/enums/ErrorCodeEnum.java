@@ -89,38 +89,16 @@ public enum ErrorCodeEnum {
      */
     MSG_EXCEPTION(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "默认消息异常"),
     //----------------------------------------------------业务异常----------------------------------------------------
-
     /**
-     * 用户被禁用
+     * Dept
      */
-    USER_IS_DISABLED(HttpServletResponse.SC_NOT_ACCEPTABLE, "用户被禁用"),
-    /**
-     * 未找到该用户
-     */
-    USER_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, "未找到该用户"),
-    /**
-     * 原密码不正确
-     */
-    ORIGINAL_PASSWORD_IS_INCORRECT(HttpServletResponse.SC_BAD_REQUEST, "原密码不正确"),
-    /**
-     * 用户名已存在
-     */
-    USERNAME_ALREADY_EXISTS(HttpServletResponse.SC_BAD_REQUEST, "用户名已存在"),
-    /**
-     * 未找到该菜单
-     */
-    MENU_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, "未找到该菜单"),
-
-    //----------------------------------------------------业务异常----------------------------------------------------
-    /**
-     * 未找到该菜单
-     */
-    //DEPT
     DEPT_EXISTING_LOWER_LEVEL_DEPT(HttpServletResponse.SC_BAD_REQUEST, "当前部门存在下属部门，不允许删除"),
     DEPT_EXISTING_USER(HttpServletResponse.SC_BAD_REQUEST, "当前部门还存在用户，不允许删除"),
     DEPT_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "部门名称已经存在"),
     DEPT_PARENT_DEPT_CANNOT_MYSELF(HttpServletResponse.SC_BAD_REQUEST, "上级部门不能是当前部门"),
-    //USER
+    /**
+     * User
+     */
     USER_OLD_PASSWORD_ERROR(HttpServletResponse.SC_BAD_REQUEST, "修改密码失败，旧密码错误"),
     USER_AVATAR_NOT_EMPTY(HttpServletResponse.SC_BAD_REQUEST, "用户头像不能为空"),
     USER_AVATAR_UPLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "用户头像上传失败"),
@@ -133,24 +111,38 @@ public enum ErrorCodeEnum {
     USER_ELSEWHERE_LOGIN(HttpServletResponse.SC_UNAUTHORIZED, "您已在别处登录，请您修改密码或重新登录"),
     USER_USERNAME_OR_PASSWORD_IS_WRONG(HttpServletResponse.SC_BAD_REQUEST, "用户名密码错误"),
 
-    //menu
+    /**
+     * Menu
+     */
     MENU_EXISTING_LOWER_LEVEL_MENU(HttpServletResponse.SC_BAD_REQUEST, "当前菜单存在子菜单，不允许删除"),
     MENU_EXISTING_USING(HttpServletResponse.SC_BAD_REQUEST, "菜单已被使用，不允许删除"),
     MENU_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "菜单名称已存在"),
-    //File
+    /**
+     * File
+     */
     FILE_UPLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "文件上传失败"),
     FILE_DOWNLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "文件下载失败"),
     FILE_ILLEGAL_FILENAME(HttpServletResponse.SC_BAD_REQUEST, "文件名称非法，不允许下载"),
-    //Job
+    /**
+     * Job
+     */
     JOB_NOT_FOUND(HttpServletResponse.SC_BAD_REQUEST, "未找到该定时任务"),
-    //config
+    /**
+     * Config
+     */
     CONFIG_KEY_EXIST(HttpServletResponse.SC_BAD_REQUEST, "参数键名已存在"),
-    //dict
+    /**
+     * Dict
+     */
     DICT_TYPE_EXIST(HttpServletResponse.SC_BAD_REQUEST, "字典类型已存在"),
-    //post
+    /**
+     * Post
+     */
     POST_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "岗位名称已存在"),
     POST_CODE_EXIST(HttpServletResponse.SC_BAD_REQUEST, "岗位编码已存在"),
-    //Role
+    /**
+     * Role
+     */
     ROLE_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "角色名称已存在"),
     ROLE_KEY_EXIST(HttpServletResponse.SC_BAD_REQUEST, "角色权限已存在"),
 
