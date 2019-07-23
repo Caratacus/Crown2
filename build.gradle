@@ -52,7 +52,6 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
     api("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
     api("com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}")
-    api("com.baomidou:mybatis-plus-generator:${mybatisPlusVersion}")
     api("org.apache.shiro:shiro-spring:${shiroVersion}")
     api("org.apache.shiro:shiro-ehcache:${shiroVersion}")
     api("io.springfox:springfox-swagger-ui:${swaggerVersion}")

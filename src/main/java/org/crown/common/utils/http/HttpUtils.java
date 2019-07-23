@@ -663,17 +663,6 @@ public abstract class HttpUtils {
     }
 
     /**
-     * 获取项目请求路径
-     *
-     * @param request
-     * @return
-     * @author Caratacus
-     */
-    public static String domain(HttpServletRequest request) {
-        return new StringBuilder(32).append(request.getScheme()).append("://").append(request.getServerName()).append(request.getServerPort() == 80 ? "" : ":" + request.getServerPort()).append(request.getContextPath()).toString();
-    }
-
-    /**
      * 用于校验http文件状态
      *
      * @param httpUrl

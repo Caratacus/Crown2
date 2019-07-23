@@ -139,7 +139,6 @@ public class UserController extends WebController {
     @ResponseBody
     public ApiResponses<Void> editSave(@Validated User user) {
         ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
-        ApiAssert.isTrue(ErrorCodeEnum.USER_ACCOUNT_EXIST.overrideMsg(String.format("登录账号[%s]已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_PHONE_EXIST.overrideMsg(String.format("手机号[%s]已存在", user.getPhonenumber())), userService.checkPhoneUnique(user));
         ApiAssert.isTrue(ErrorCodeEnum.USER_EMAIL_EXIST.overrideMsg(String.format("邮箱[%s]已存在", user.getEmail())), userService.checkEmailUnique(user));
         userService.updateUser(user);

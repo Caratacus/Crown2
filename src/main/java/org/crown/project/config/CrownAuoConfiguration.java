@@ -1,8 +1,13 @@
 package org.crown.project.config;
 
+import javax.servlet.DispatcherType;
+
+import org.crown.common.filter.GlobalFilter;
 import org.crown.framework.springboot.properties.CrownProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -48,5 +53,16 @@ public class CrownAuoConfiguration implements WebMvcConfigurer {
         /** swagger配置 */
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    @Bean
+    public FilterRegistrationBean globalFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setDispatcherTypes(DispatcherType.REQUEST);
+        registration.setFilter(new GlobalFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("globalFilter");
+        registration.setOrder(Integer.MAX_VALUE);
+        return registration;
     }
 }

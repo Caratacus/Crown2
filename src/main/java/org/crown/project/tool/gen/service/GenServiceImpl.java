@@ -15,9 +15,9 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.crown.common.cons.Constants;
+import org.crown.common.utils.Crowns;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.exception.Crown2Exception;
-import org.crown.project.config.GenConfig;
 import org.crown.project.tool.gen.domain.ColumnInfo;
 import org.crown.project.tool.gen.domain.TableInfo;
 import org.crown.project.tool.gen.mapper.GenMapper;
@@ -82,7 +82,7 @@ public class GenServiceImpl implements IGenService {
 
         VelocityInitializer.initVelocity();
 
-        String packageName = GenConfig.getPackageName();
+        String packageName = Crowns.getGenerator().getPackagePath();
         String moduleName = GenUtils.getModuleName(packageName);
 
         VelocityContext context = GenUtils.getVelocityContext(table);

@@ -23,16 +23,24 @@ package org.crown.framework.servlet.wrapper;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import org.crown.common.utils.Crowns;
+import org.crown.common.utils.StringUtils;
+import org.crown.framework.springboot.properties.Xss;
 import org.crown.framework.utils.RequestUtils;
 import org.springframework.web.util.HtmlUtils;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 
 /**
@@ -44,14 +52,14 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
  *
  * @author Caratacus
  */
-public class RequestWrapper extends HttpServletRequestWrapper {
+public class GlobalRequestWrapper extends HttpServletRequestWrapper {
 
     /**
      * 存储requestBody byte[]
      */
     private byte[] body = null;
 
-    public RequestWrapper(HttpServletRequest request) {
+    public GlobalRequestWrapper(HttpServletRequest request) {
         super(request);
         if (RequestUtils.isContainBody(request)) {
             this.body = RequestUtils.getByteBody(request);
@@ -69,7 +77,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         if (ObjectUtils.isEmpty(body)) {
             return null;
         }
-        final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(htmlEscape(new String(body, StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8));
         return new ServletInputStream() {
 
             @Override
@@ -104,7 +112,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         int count = values.length;
         String[] encodedValues = new String[count];
         for (int i = 0; i < count; i++) {
-            encodedValues[i] = htmlEscape(values[i]);
+            encodedValues[i] = htmlEscape(name, values[i]);
         }
         return encodedValues;
     }
@@ -115,14 +123,14 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         if (value == null) {
             return null;
         }
-        return htmlEscape(value);
+        return htmlEscape(name, value);
     }
 
     @Override
     public Object getAttribute(String name) {
         Object value = super.getAttribute(name);
-        if (value instanceof String) {
-            htmlEscape((String) value);
+        if (StringUtils.isCharSequence(value)) {
+            value = htmlEscape(name, (String) value);
         }
         return value;
     }
@@ -133,7 +141,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         if (value == null) {
             return null;
         }
-        return htmlEscape(value);
+        return htmlEscape(name, value);
     }
 
     @Override
@@ -152,7 +160,33 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      * @see org.springframework.web.util.HtmlUtils#htmlEscape
      */
     protected String htmlEscape(String str) {
+        Xss xss = Crowns.getXss();
+        if (!xss.getEnabled()) {
+            return str;
+        }
+        List<String> excludeUrls = xss.getExcludeUrls();
+        if (CollectionUtils.isNotEmpty(excludeUrls)) {
+            String url = getServletPath();
+            for (String pattern : excludeUrls) {
+                Pattern p = Pattern.compile("^" + pattern);
+                Matcher m = p.matcher(url);
+                if (m.find()) {
+                    return str;
+                }
+            }
+        }
         return HtmlUtils.htmlEscape(str);
+    }
+
+    /**
+     * 使用spring HtmlUtils 转义html标签达到预防xss攻击效果
+     *
+     * @param field
+     * @param str
+     * @see org.springframework.web.util.HtmlUtils#htmlEscape
+     */
+    protected String htmlEscape(String field, String str) {
+        return Crowns.getXss().getExcludeFields().contains(field) ? str : htmlEscape(str);
     }
 
 }

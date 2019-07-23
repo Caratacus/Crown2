@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.crown.common.utils.http.HttpUtils;
 import org.crown.framework.spring.ApplicationUtils;
 import org.crown.framework.springboot.properties.CrownProperties;
+import org.crown.framework.springboot.properties.Generator;
+import org.crown.framework.springboot.properties.Xss;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -66,6 +68,31 @@ public abstract class Crowns {
      */
     public static String getUploadUrl(HttpServletRequest request, String filename) {
         return HttpUtils.getDomain(request) + getUploadResourcePath(filename);
+    }
+
+    /**
+     * 获取用户密码最大输入错误次数
+     *
+     * @return
+     */
+    public static int getMaxRetryCount() {
+        return getProperties().getPassword().getMaxRetryCount();
+    }
+    /**
+     * 获取生成代码相关配置
+     *
+     * @return
+     */
+    public static Generator getGenerator() {
+        return getProperties().getGenerator();
+    }
+    /**
+     * 获取Xss配置
+     *
+     * @return
+     */
+    public static Xss getXss() {
+        return getProperties().getXss();
     }
 
     /**

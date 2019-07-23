@@ -140,8 +140,8 @@
 				error : function(request) {
 					$.modal.alertError("系统错误");
 				},
-				success : function(data) {
-					$.operate.successCallback(data);
+				success : function(result) {
+					$.operate.successCallback(result.msg);
 				}
 			});
 		}

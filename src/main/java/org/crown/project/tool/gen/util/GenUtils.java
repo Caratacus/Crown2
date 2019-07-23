@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.velocity.VelocityContext;
 import org.crown.common.cons.CommonMap;
 import org.crown.common.cons.Constants;
+import org.crown.common.utils.Crowns;
 import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
-import org.crown.project.config.GenConfig;
 import org.crown.project.tool.gen.domain.ColumnInfo;
 import org.crown.project.tool.gen.domain.TableInfo;
 
@@ -64,7 +64,7 @@ public class GenUtils {
     public static VelocityContext getVelocityContext(TableInfo table) {
         // java对象数据传递到模板文件vm
         VelocityContext velocityContext = new VelocityContext();
-        String packageName = GenConfig.getPackageName();
+        String packageName = Crowns.getGenerator().getPackagePath();
         velocityContext.put("tableName", table.getTableName());
         velocityContext.put("tableComment", replaceKeyword(table.getTableComment()));
         velocityContext.put("primaryKey", table.getPrimaryKey());
@@ -73,7 +73,7 @@ public class GenUtils {
         velocityContext.put("moduleName", getModuleName(packageName));
         velocityContext.put("columns", table.getColumns());
         velocityContext.put("package", packageName + "." + table.getClassname());
-        velocityContext.put("author", GenConfig.getAuthor());
+        velocityContext.put("author", Crowns.getGenerator().getAuthor());
         velocityContext.put("datetime", DateUtils.getDate());
         return velocityContext;
     }
@@ -102,8 +102,8 @@ public class GenUtils {
      * 表名转换成Java类名
      */
     public static String tableToJava(String tableName) {
-        String autoRemovePre = GenConfig.getAutoRemovePre();
-        String tablePrefix = GenConfig.getTablePrefix();
+        String autoRemovePre = Crowns.getGenerator().getAutoRemovePre();
+        String tablePrefix = Crowns.getGenerator().getTablePrefix();
         if (Constants.AUTO_REOMVE_PRE.equals(autoRemovePre) && StringUtils.isNotEmpty(tablePrefix)) {
             tableName = tableName.replaceFirst(tablePrefix, "");
         }
@@ -178,7 +178,7 @@ public class GenUtils {
     }
 
     public static String getProjectPath() {
-        String packageName = GenConfig.getPackageName();
+        String packageName = Crowns.getGenerator().getPackagePath();
         StringBuilder projectPath = new StringBuilder();
         projectPath.append("main/java/");
         projectPath.append(packageName.replace(".", "/"));

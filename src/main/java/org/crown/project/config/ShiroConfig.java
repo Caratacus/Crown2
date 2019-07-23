@@ -58,22 +58,6 @@ public class ShiroConfig {
     @Value("${shiro.session.kickoutAfter}")
     private boolean kickoutAfter;
 
-    // 设置Cookie的域名
-    @Value("${shiro.cookie.domain}")
-    private String domain;
-
-    // 设置cookie的有效访问路径
-    @Value("${shiro.cookie.path}")
-    private String path;
-
-    // 设置HttpOnly属性
-    @Value("${shiro.cookie.httpOnly}")
-    private boolean httpOnly;
-
-    // 设置Cookie的过期时间，秒为单位
-    @Value("${shiro.cookie.maxAge}")
-    private int maxAge;
-
     // 登录地址
     @Value("${shiro.user.loginUrl}")
     private String loginUrl;

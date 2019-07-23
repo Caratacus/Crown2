@@ -35,5 +35,20 @@ public class CrownProperties {
      */
     @NestedConfigurationProperty
     private Address address;
+    /**
+     * 用户密码配置
+     */
+    @NestedConfigurationProperty
+    private Password password;
+    /**
+     * 生成代码配置
+     */
+    @NestedConfigurationProperty
+    private Generator generator;
+    /**
+     * Xss配置
+     */
+    @NestedConfigurationProperty
+    private Xss xss;
 
 }

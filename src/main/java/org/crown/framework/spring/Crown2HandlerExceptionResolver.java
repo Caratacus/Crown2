@@ -429,7 +429,7 @@ public class Crown2HandlerExceptionResolver extends AbstractHandlerExceptionReso
      * @param response current HTTP response
      */
     protected void handleBindException(BindException ex, HttpServletRequest request, HttpServletResponse response) {
-        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST.overrideMsg(ex.getAllErrors().stream().findFirst().get().getDefaultMessage()), ex);
     }
 
     /**
