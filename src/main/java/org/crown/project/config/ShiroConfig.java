@@ -21,6 +21,7 @@ import org.crown.framework.shiro.realm.UserRealm;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
 import org.crown.framework.shiro.session.OnlineSessionFactory;
 import org.crown.framework.shiro.web.filter.LogoutFilter;
+import org.crown.framework.shiro.web.filter.UserFilter;
 import org.crown.framework.shiro.web.filter.kickout.KickoutSessionFilter;
 import org.crown.framework.shiro.web.filter.online.OnlineSessionFilter;
 import org.crown.framework.shiro.web.filter.sync.SyncOnlineSessionFilter;

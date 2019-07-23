@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.crown.project.config;
+package org.crown.framework.shiro.web.filter;
 
 import java.io.IOException;
 
