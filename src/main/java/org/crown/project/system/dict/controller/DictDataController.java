@@ -16,6 +16,7 @@ import org.crown.project.system.dict.service.IDictDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,7 +81,7 @@ public class DictDataController extends WebController {
     @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(DictData dict) {
+    public ApiResponses<Void> addSave(@Validated DictData dict) {
         dictDataService.save(dict);
         return success();
 
@@ -102,7 +103,7 @@ public class DictDataController extends WebController {
     @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(DictData dict) {
+    public ApiResponses<Void> editSave(@Validated DictData dict) {
         dictDataService.updateById(dict);
         return success();
 

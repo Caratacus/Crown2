@@ -136,6 +136,7 @@ public enum ErrorCodeEnum {
     //menu
     MENU_EXISTING_LOWER_LEVEL_MENU(HttpServletResponse.SC_BAD_REQUEST, "当前菜单存在子菜单，不允许删除"),
     MENU_EXISTING_USING(HttpServletResponse.SC_BAD_REQUEST, "菜单已被使用，不允许删除"),
+    MENU_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "菜单名称已存在"),
     //File
     FILE_UPLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "文件上传失败"),
     FILE_DOWNLOAD_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "文件下载失败"),
@@ -144,6 +145,15 @@ public enum ErrorCodeEnum {
     JOB_NOT_FOUND(HttpServletResponse.SC_BAD_REQUEST, "未找到该定时任务"),
     //config
     CONFIG_KEY_EXIST(HttpServletResponse.SC_BAD_REQUEST, "参数键名已存在"),
+    //dict
+    DICT_TYPE_EXIST(HttpServletResponse.SC_BAD_REQUEST, "字典类型已存在"),
+    //post
+    POST_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "岗位名称已存在"),
+    POST_CODE_EXIST(HttpServletResponse.SC_BAD_REQUEST, "岗位编码已存在"),
+    //Role
+    ROLE_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "角色名称已存在"),
+    ROLE_KEY_EXIST(HttpServletResponse.SC_BAD_REQUEST, "角色权限已存在"),
+
     ;
 
     private final int httpCode;

@@ -6,8 +6,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.poi.ExcelUtils;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.post.domain.Post;
@@ -15,6 +17,7 @@ import org.crown.project.system.post.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,7 +89,9 @@ public class PostController extends WebController {
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(Post post) {
+    public ApiResponses<Void> addSave(@Validated Post post) {
+        ApiAssert.isTrue(ErrorCodeEnum.POST_NAME_EXIST.overrideMsg("岗位名称[" + post.getPostName() + "]已存在"), postService.checkPostNameUnique(post));
+        ApiAssert.isTrue(ErrorCodeEnum.POST_CODE_EXIST.overrideMsg("岗位编码[" + post.getPostCode() + "]已存在"), postService.checkPostCodeUnique(post));
         postService.save(post);
         return success();
 
@@ -108,7 +113,9 @@ public class PostController extends WebController {
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(Post post) {
+    public ApiResponses<Void> editSave(@Validated Post post) {
+        ApiAssert.isTrue(ErrorCodeEnum.POST_NAME_EXIST.overrideMsg("岗位名称[" + post.getPostName() + "]已存在"), postService.checkPostNameUnique(post));
+        ApiAssert.isTrue(ErrorCodeEnum.POST_CODE_EXIST.overrideMsg("岗位编码[" + post.getPostCode() + "]已存在"), postService.checkPostCodeUnique(post));
         postService.updateById(post);
         return success();
 

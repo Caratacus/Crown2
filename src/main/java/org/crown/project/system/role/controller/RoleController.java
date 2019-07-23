@@ -6,8 +6,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.poi.ExcelUtils;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.role.domain.Role;
@@ -18,6 +20,7 @@ import org.crown.project.system.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,7 +85,9 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(Role role) {
+    public ApiResponses<Void> addSave(@Validated Role role) {
+        ApiAssert.isTrue(ErrorCodeEnum.ROLE_NAME_EXIST.overrideMsg("角色名称[" + role.getRoleName() + "]已存在"), roleService.checkRoleNameUnique(role));
+        ApiAssert.isTrue(ErrorCodeEnum.ROLE_KEY_EXIST.overrideMsg("角色权限[" + role.getRoleKey() + "]已存在"), roleService.checkRoleKeyUnique(role));
         roleService.insertRole(role);
         return success();
 
@@ -104,7 +109,9 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(Role role) {
+    public ApiResponses<Void> editSave(@Validated Role role) {
+        ApiAssert.isTrue(ErrorCodeEnum.ROLE_NAME_EXIST.overrideMsg("角色名称[" + role.getRoleName() + "]已存在"), roleService.checkRoleNameUnique(role));
+        ApiAssert.isTrue(ErrorCodeEnum.ROLE_KEY_EXIST.overrideMsg("角色权限[" + role.getRoleKey() + "]已存在"), roleService.checkRoleKeyUnique(role));
         roleService.updateRole(role);
         return success();
 

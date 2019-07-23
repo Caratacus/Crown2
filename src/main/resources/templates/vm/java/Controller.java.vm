@@ -16,6 +16,7 @@ import org.crown.project.${moduleName}.${classname}.service.I${className}Service
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,7 +84,7 @@ public class ${className}Controller extends WebController {
 	@Log(title = "${tableComment}", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public ApiResponses<Void> addSave(${className} ${classname}) {
+	public ApiResponses<Void> addSave(@Validated ${className} ${classname}) {
 		${classname}Service.save(${classname});
 		return success();
 	}
@@ -105,7 +106,7 @@ public class ${className}Controller extends WebController {
 	@Log(title = "${tableComment}", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public ApiResponses<Void> editSave(${className} ${classname}) {
+	public ApiResponses<Void> editSave(@Validated ${className} ${classname}) {
 		${classname}Service.updateById(${classname});
 		return success();
 	}

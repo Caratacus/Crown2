@@ -2,8 +2,12 @@ package org.crown.project.monitor.quartz.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.crown.common.annotation.Excel;
 import org.crown.common.utils.StringUtils;
+import org.crown.framework.spring.validator.Cron;
 import org.crown.framework.web.domain.BaseEntity;
 import org.crown.project.monitor.quartz.common.CronUtils;
 
@@ -41,12 +45,16 @@ public class Job extends BaseEntity {
      */
     @Excel(name = "任务名称")
     @ApiModelProperty(notes = "任务名称")
+    @NotBlank(message = "任务名称不能为空")
+    @Size(max = 64, message = "任务名称不能超过64个字符")
     private String jobName;
     /**
      * 执行类名
      */
     @Excel(name = "执行类名")
     @ApiModelProperty(notes = "执行类名")
+    @NotBlank(message = "执行类名不能为空")
+    @Size(max = 255, message = "执行类名不能超过255个字符")
     private String className;
     /**
      * 参数
@@ -59,6 +67,8 @@ public class Job extends BaseEntity {
      */
     @Excel(name = "Cron表达式")
     @ApiModelProperty(notes = "Cron表达式")
+    @NotBlank(message = "Cron执行表达式不能为空")
+    @Cron(message = "Cron执行表达式不正确")
     private String cron;
     /**
      * 任务状态

@@ -19,6 +19,7 @@ import org.crown.project.monitor.quartz.service.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -131,7 +132,7 @@ public class JobController extends WebController {
     @RequiresPermissions("monitor:job:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(Job job) {
+    public ApiResponses<Void> addSave(@Validated Job job) {
         jobService.create(job);
         return success();
     }
@@ -152,7 +153,7 @@ public class JobController extends WebController {
     @RequiresPermissions("monitor:job:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(Job job) {
+    public ApiResponses<Void> editSave(@Validated Job job) {
         jobService.update(job);
         return success();
     }

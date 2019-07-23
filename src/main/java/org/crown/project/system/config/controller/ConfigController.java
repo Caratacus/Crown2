@@ -18,6 +18,7 @@ import org.crown.project.system.config.service.IConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,7 +84,7 @@ public class ConfigController extends WebController {
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(Config config) {
+    public ApiResponses<Void> addSave(@Validated Config config) {
         ApiAssert.isTrue(ErrorCodeEnum.CONFIG_KEY_EXIST.overrideMsg("参数键名" + config.getConfigName() + "已存在"), configService.checkConfigKeyUnique(config));
         configService.save(config);
         return success();
@@ -105,7 +106,7 @@ public class ConfigController extends WebController {
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(Config config) {
+    public ApiResponses<Void> editSave(@Validated Config config) {
         ApiAssert.isTrue(ErrorCodeEnum.CONFIG_KEY_EXIST.overrideMsg("参数键名" + config.getConfigName() + "已存在"), configService.checkConfigKeyUnique(config));
         configService.updateById(config);
         return success();

@@ -20,6 +20,7 @@ import org.crown.project.system.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,7 +109,7 @@ public class UserController extends WebController {
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(User user) {
+    public ApiResponses<Void> addSave(@Validated User user) {
         ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_ACCOUNT_EXIST.overrideMsg(String.format("登录账号[%s]已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_PHONE_EXIST.overrideMsg(String.format("手机号[%s]已存在", user.getPhonenumber())), userService.checkPhoneUnique(user));
@@ -136,7 +137,7 @@ public class UserController extends WebController {
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(User user) {
+    public ApiResponses<Void> editSave(@Validated User user) {
         ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_ACCOUNT_EXIST.overrideMsg(String.format("登录账号[%s]已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_PHONE_EXIST.overrideMsg(String.format("手机号[%s]已存在", user.getPhonenumber())), userService.checkPhoneUnique(user));

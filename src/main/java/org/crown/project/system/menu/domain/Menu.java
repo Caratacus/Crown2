@@ -3,6 +3,9 @@ package org.crown.project.system.menu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.crown.framework.web.domain.BaseEntity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -31,6 +34,8 @@ public class Menu extends BaseEntity {
     /**
      * 菜单名称
      */
+    @NotBlank(message = "菜单名称不能为空")
+    @Size(max = 50, message = "菜单名称长度不能超过50个字符")
     private String menuName;
 
     /**
@@ -47,11 +52,13 @@ public class Menu extends BaseEntity {
     /**
      * 显示顺序
      */
+    @NotBlank(message = "显示顺序不能为空")
     private String orderNum;
 
     /**
      * 菜单URL
      */
+    @Size(max = 200, message = "请求地址不能超过200个字符")
     private String url;
 
     /**
@@ -62,6 +69,7 @@ public class Menu extends BaseEntity {
     /**
      * 类型:0目录,1菜单,2按钮
      */
+    @NotBlank(message = "菜单类型不能为空")
     private String menuType;
 
     /**
@@ -72,6 +80,7 @@ public class Menu extends BaseEntity {
     /**
      * 权限字符串
      */
+    @Size(max = 100, message = "权限标识长度不能超过100个字符")
     private String perms;
 
     /**

@@ -17,6 +17,7 @@ import org.crown.project.system.role.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +69,7 @@ public class DeptController extends WebController {
     @RequiresPermissions("system:dept:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(Dept dept) {
+    public ApiResponses<Void> addSave(@Validated Dept dept) {
         ApiAssert.isTrue(ErrorCodeEnum.DEPT_NAME_EXIST.overrideMsg("部门名称[" + dept.getDeptName() + "]已经存在"), deptService.checkDeptNameUnique(dept));
         deptService.insertDept(dept);
         return success();
@@ -95,7 +96,7 @@ public class DeptController extends WebController {
     @RequiresPermissions("system:dept:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(Dept dept) {
+    public ApiResponses<Void> editSave(@Validated Dept dept) {
         ApiAssert.isTrue(ErrorCodeEnum.DEPT_NAME_EXIST.overrideMsg("部门名称[" + dept.getDeptName() + "]已经存在"), deptService.checkDeptNameUnique(dept));
         ApiAssert.isFalse(ErrorCodeEnum.DEPT_PARENT_DEPT_CANNOT_MYSELF, dept.getParentId().equals(dept.getDeptId()));
         deptService.updateDept(dept);

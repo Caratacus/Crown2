@@ -6,8 +6,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.poi.ExcelUtils;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableDataInfo;
 import org.crown.project.system.dict.domain.DictType;
@@ -15,6 +17,7 @@ import org.crown.project.system.dict.service.IDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,7 +80,8 @@ public class DictTypeController extends WebController {
     @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(DictType dict) {
+    public ApiResponses<Void> addSave(@Validated DictType dict) {
+        ApiAssert.isTrue(ErrorCodeEnum.DICT_TYPE_EXIST.overrideMsg("字典类型[" + dict.getDictType() + "]已存在"), dictTypeService.checkDictTypeUnique(dict));
         dictTypeService.save(dict);
         return success();
 
@@ -99,7 +103,8 @@ public class DictTypeController extends WebController {
     @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(DictType dict) {
+    public ApiResponses<Void> editSave(@Validated DictType dict) {
+        ApiAssert.isTrue(ErrorCodeEnum.DICT_TYPE_EXIST.overrideMsg("字典类型[" + dict.getDictType() + "]已存在"), dictTypeService.checkDictTypeUnique(dict));
         dictTypeService.updateDictType(dict);
         return success();
     }
@@ -110,7 +115,6 @@ public class DictTypeController extends WebController {
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
         dictTypeService.deleteDictTypeByIds(ids);
-
         return success();
 
     }

@@ -18,6 +18,7 @@ import org.crown.project.system.role.service.IRoleMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -94,7 +95,8 @@ public class MenuController extends WebController {
     @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(Menu menu) {
+    public ApiResponses<Void> addSave(@Validated Menu menu) {
+        ApiAssert.isTrue(ErrorCodeEnum.MENU_NAME_EXIST.overrideMsg("菜单名称[" + menu.getMenuName() + "]已存在"), menuService.checkMenuNameUnique(menu));
         menuService.insertMenu(menu);
         return success();
 
@@ -116,7 +118,8 @@ public class MenuController extends WebController {
     @RequiresPermissions("system:menu:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(Menu menu) {
+    public ApiResponses<Void> editSave(@Validated Menu menu) {
+        ApiAssert.isTrue(ErrorCodeEnum.MENU_NAME_EXIST.overrideMsg("菜单名称[" + menu.getMenuName() + "]已存在"), menuService.checkMenuNameUnique(menu));
         menuService.updateMenu(menu);
         return success();
 
