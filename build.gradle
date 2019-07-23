@@ -91,7 +91,7 @@ tasks.matching { it instanceof Test }.all {
 }
 
 bootJar {
-    baseName = "crown"
+    baseName = "crown2"
     version = ""
 }
 
