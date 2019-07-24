@@ -19,5 +19,7 @@ public class SystemOutWelcomeTask implements IExecuteQuartzJob {
     @Override
     public void execute(Long jobId, JSONObject params) {
         log.info("欢迎来到Crown.");
+        log.warn("欢迎来到Crown.");
+        log.error("欢迎来到Crown.");
     }
 }

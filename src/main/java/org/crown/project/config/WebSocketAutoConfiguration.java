@@ -5,8 +5,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.PostConstruct;
 
 import org.crown.framework.manager.ThreadExecutors;
-import org.crown.project.LogMessage;
-import org.crown.project.LoggerQueue;
+import org.crown.framework.pushlog.LogMessage;
+import org.crown.framework.pushlog.LoggerQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -31,7 +31,6 @@ public class WebSocketAutoConfiguration implements WebSocketMessageBrokerConfigu
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/websocket")
-                .setAllowedOrigins("*")
                 .withSockJS();
     }
 

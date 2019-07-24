@@ -17,7 +17,8 @@ public class LogMessage {
 
     private String body;
     private String timestamp;
+    private String fileName;
+    private int lineNumber;
     private String threadName;
-    private String className;
     private String level;
 }

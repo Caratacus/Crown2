@@ -26,8 +26,9 @@ public final class RewritePushPolicy implements RewritePolicy {
         LogMessage loggerMessage = new LogMessage(
                 source.getMessage().getFormattedMessage(),
                 DateFormat.getDateTimeInstance().format(new Date(source.getTimeMillis())),
+                source.getSource().getFileName(),
+                source.getSource().getLineNumber(),
                 source.getThreadName(),
-                source.getLoggerName(),
                 source.getLevel().name());
         LoggerQueue.getInstance().push(loggerMessage);
         return source;
