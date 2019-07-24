@@ -29,7 +29,6 @@ public class CrownAuoConfiguration implements WebMvcConfigurer {
         this.properties = properties;
     }
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 文件上传路径 */
