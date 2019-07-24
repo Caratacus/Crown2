@@ -6,7 +6,7 @@ import org.crown.common.utils.StringUtils;
 import org.crown.framework.web.domain.BaseEntity;
 
 /**
- * ry 数据库表
+ * 数据库表
  *
  * @author Crown
  */

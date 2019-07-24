@@ -8,7 +8,7 @@ import org.crown.common.cons.Constants;
 /**
  * VelocityEngine工厂
  *
- * @author RuoYi
+ * @author Crown
  */
 public class VelocityInitializer {
 

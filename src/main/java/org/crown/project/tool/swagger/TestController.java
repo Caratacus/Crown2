@@ -35,7 +35,7 @@ public class TestController extends WebController {
 
     static {
         users.put(1, new UserEntity(1, "admin", "admin123", "15888888888"));
-        users.put(2, new UserEntity(2, "ry", "admin123", "15666666666"));
+        users.put(2, new UserEntity(2, "crown", "admin123", "15666666666"));
     }
 
     @ApiOperation("获取用户列表")

@@ -1,6 +1,6 @@
 /**
  * 通用js方法封装处理
- * Copyright (c) 2019 ruoyi
+ * Copyright (c) 2019 Crown
  */
 (function ($) {
     $.extend({
@@ -1052,7 +1052,7 @@
             successTabCallback: function (msg) {
                 var topWindow = $(window.parent.document);
                 var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
-                var $contentWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
+                var $contentWindow = $('.Crown_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
                 $.modal.close();
                 $contentWindow.$.modal.msgSuccess(msg);
                 $contentWindow.$(".layui-layer-padding").removeAttr("style");

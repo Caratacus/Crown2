@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * RuoYi首创 html调用 thymeleaf 实现参数管理
+ * html调用 thymeleaf 实现参数管理
  *
  * @author Crown
  */
