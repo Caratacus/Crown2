@@ -36,7 +36,7 @@ public class WebController<Entity> extends SuperController<Entity> {
      * 设置请求分页数据
      */
     protected void startPage() {
-        PageDomain pageDomain =  getPageDomain();
+        PageDomain pageDomain = getPageDomain();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {

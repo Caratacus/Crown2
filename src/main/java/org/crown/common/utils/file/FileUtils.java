@@ -228,7 +228,7 @@ public class FileUtils {
                                 File[] listFiles = file.listFiles();
                                 if (ArrayUtils.isNotEmpty(listFiles)) {
                                     delFile(file);
-                                }else{
+                                } else {
                                     file.delete();
                                 }
                             } else {

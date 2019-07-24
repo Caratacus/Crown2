@@ -46,7 +46,7 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<TableInfo>>  list(TableInfo tableInfo) {
+    public ApiResponses<TableData<TableInfo>> list(TableInfo tableInfo) {
         startPage();
         List<TableInfo> list = genService.selectTableList(tableInfo);
         return success(getTableData(list));
