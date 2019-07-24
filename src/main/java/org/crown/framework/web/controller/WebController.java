@@ -18,7 +18,7 @@ import com.github.pagehelper.PageInfo;
  *
  * @author Crown
  */
-public class WebController extends SuperController {
+public class WebController<Entity> extends SuperController<Entity> {
 
     /**
      * 设置请求分页数据

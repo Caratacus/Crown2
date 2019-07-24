@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/monitor/online")
-public class UserOnlineController extends WebController {
+public class UserOnlineController extends WebController<UserOnline> {
 
     private final String prefix = "monitor/online";
 
@@ -84,8 +84,8 @@ public class UserOnlineController extends WebController {
     @PostMapping("/forceLogout")
     @ResponseBody
     public ApiResponses<Void> forceLogout(String sessionId) {
-        UserOnline online = userOnlineService.selectOnlineById(sessionId);
         logoutSessionId(sessionId);
         return success();
     }
+
 }

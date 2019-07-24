@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/system/role")
-public class RoleController extends WebController {
+public class RoleController extends WebController<Role> {
 
     private final String prefix = "system/role";
 

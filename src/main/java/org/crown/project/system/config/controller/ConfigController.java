@@ -34,7 +34,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/system/config")
-public class ConfigController extends WebController {
+public class ConfigController extends WebController<Config> {
 
     private final String prefix = "system/config";
 
@@ -123,7 +123,7 @@ public class ConfigController extends WebController {
     public ApiResponses<Void> remove(String ids) {
 
         configService.remove(
-                Wrappers.<Config>lambdaQuery().inOrThrow(Config::getConfigId, StringUtils.split2List(ids)
+                Wrappers.<Config>lambdaQuery().in(Config::getConfigId, StringUtils.split2List(ids)
                 )
         );
         return success();

@@ -34,7 +34,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/system/menu")
-public class MenuController extends WebController {
+public class MenuController extends WebController<Menu> {
 
     private final String prefix = "system/menu";
 

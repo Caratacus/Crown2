@@ -33,7 +33,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/monitor/jobLog")
-public class JobLogController extends WebController {
+public class JobLogController extends WebController<JobLog> {
 
     private String prefix = "monitor/job";
 
@@ -70,7 +70,7 @@ public class JobLogController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
-        jobLogService.remove(Wrappers.<JobLog>lambdaQuery().inOrThrow(JobLog::getJobLogId, StringUtils.split2List(ids)));
+        jobLogService.remove(Wrappers.<JobLog>lambdaQuery().in(JobLog::getJobLogId, StringUtils.split2List(ids)));
         return success();
     }
 

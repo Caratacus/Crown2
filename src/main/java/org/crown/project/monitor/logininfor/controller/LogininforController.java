@@ -29,7 +29,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/monitor/logininfor")
-public class LogininforController extends WebController {
+public class LogininforController extends WebController<Logininfor> {
 
     private final String prefix = "monitor/logininfor";
 
@@ -67,7 +67,7 @@ public class LogininforController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
-        logininforService.remove(Wrappers.<Logininfor>lambdaQuery().inOrThrow(Logininfor::getInfoId, StringUtils.split2List(ids)));
+        logininforService.remove(Wrappers.<Logininfor>lambdaQuery().in(Logininfor::getInfoId, StringUtils.split2List(ids)));
         return success();
     }
 

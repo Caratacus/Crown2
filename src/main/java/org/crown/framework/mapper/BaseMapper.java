@@ -90,7 +90,7 @@ public interface BaseMapper<T> {
      *
      * @param entity 实体对象
      */
-    int updateAllColumnById(@Param(Constants.ENTITY) T entity);
+    int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
 
     /**
      * <p>

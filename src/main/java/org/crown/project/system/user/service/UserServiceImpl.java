@@ -114,7 +114,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         for (Long userId : userIds) {
             ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(userId));
         }
-        return delete().inOrThrow(User::getUserId, userIds).execute();
+        return delete().in(User::getUserId, userIds).execute();
     }
 
     @Override

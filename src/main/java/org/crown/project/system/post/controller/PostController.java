@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/system/post")
-public class PostController extends WebController {
+public class PostController extends WebController<Post> {
 
     private final String prefix = "system/post";
 

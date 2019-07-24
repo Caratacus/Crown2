@@ -35,7 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 @RequestMapping("/system/user")
-public class UserController extends WebController {
+public class UserController extends WebController<User> {
 
     private final String prefix = "system/user";
 

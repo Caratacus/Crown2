@@ -30,7 +30,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/system/notice")
-public class NoticeController extends WebController {
+public class NoticeController extends WebController<Notice> {
 
     private final String prefix = "system/notice";
 
@@ -106,7 +106,7 @@ public class NoticeController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
-        noticeService.remove(Wrappers.<Notice>lambdaQuery().inOrThrow(Notice::getNoticeId, StringUtils.split2List(ids)));
+        noticeService.remove(Wrappers.<Notice>lambdaQuery().in(Notice::getNoticeId, StringUtils.split2List(ids)));
         return success();
 
     }

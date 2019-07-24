@@ -32,7 +32,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/system/dict/data")
-public class DictDataController extends WebController {
+public class DictDataController extends WebController<DictData> {
 
     private final String prefix = "system/dict/data";
 
@@ -115,7 +115,7 @@ public class DictDataController extends WebController {
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
 
-        dictDataService.remove(Wrappers.<DictData>lambdaQuery().inOrThrow(DictData::getDictCode, StringUtils.split2List(ids)));
+        dictDataService.remove(Wrappers.<DictData>lambdaQuery().in(DictData::getDictCode, StringUtils.split2List(ids)));
         return success();
 
     }

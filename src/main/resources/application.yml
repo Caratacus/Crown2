@@ -95,12 +95,13 @@ mybatis-plus:
   mapper-locations: classpath:mapper/**/*Mapper.xml
   global-config:
     db-config:
-      field-strategy: not_empty
       id-type: auto
-      db-type: mysql
       table-prefix: sys_
       logic-delete-value: 2
       logic-not-delete-value: 0
+      insert-strategy: not_null
+      update-strategy: not_null
+      select-strategy: not_empty
     banner: false
     super-mapper-class: org.crown.framework.mapper.BaseMapper
   type-enums-package: org.crown.common.enums,org.crown.framework.enums

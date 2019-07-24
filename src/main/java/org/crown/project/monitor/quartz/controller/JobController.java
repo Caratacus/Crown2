@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/monitor/job")
-public class JobController extends WebController {
+public class JobController extends WebController<Job> {
 
     private String prefix = "monitor/job";
 

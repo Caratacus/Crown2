@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/system/dict")
-public class DictTypeController extends WebController {
+public class DictTypeController extends WebController<DictType> {
 
     private final String prefix = "system/dict/type";
 

@@ -33,7 +33,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/system/dept")
-public class DeptController extends WebController {
+public class DeptController extends WebController<Dept> {
 
     private final String prefix = "system/dept";
 

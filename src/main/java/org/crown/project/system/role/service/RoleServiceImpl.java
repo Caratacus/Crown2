@@ -95,7 +95,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
                 throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, role.getRoleName() + "已分配，不能删除");
             }
         }
-        return delete().inOrThrow(Role::getRoleId, roleIds).execute();
+        return delete().in(Role::getRoleId, roleIds).execute();
     }
 
     @Override
@@ -198,7 +198,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
      * @return 结果
      */
     public boolean deleteAuthUsers(Long roleId, String userIds) {
-        return userRoleService.delete().eq(UserRole::getRoleId, roleId).inOrThrow(UserRole::getUserId, StringUtils.split2List(userIds)).execute();
+        return userRoleService.delete().eq(UserRole::getRoleId, roleId).in(UserRole::getUserId, StringUtils.split2List(userIds)).execute();
 
     }
 

@@ -46,7 +46,7 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
                 throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, dictType.getDictName() + "已分配，不能删除");
             }
         }
-        return delete().inOrThrow(DictType::getDictId, dictIds).execute();
+        return delete().in(DictType::getDictId, dictIds).execute();
     }
 
     @Override

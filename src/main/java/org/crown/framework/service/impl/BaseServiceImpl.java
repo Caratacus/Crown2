@@ -44,6 +44,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
@@ -51,7 +52,6 @@ import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.core.toolkit.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
@@ -82,7 +82,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     }
 
     protected Class<T> currentModelClass() {
-        return ReflectionKit.getSuperClassGenericType(getClass(), 1);
+        return (Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), 1);
     }
 
     /**
@@ -190,13 +190,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean removeById(Serializable id) {
-        return SqlHelper.delBool(baseMapper.deleteById(id));
+        return SqlHelper.retBool(baseMapper.deleteById(id));
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean remove(Wrapper<T> queryWrapper) {
-        return SqlHelper.delBool(baseMapper.delete(queryWrapper));
+        return SqlHelper.retBool(baseMapper.delete(queryWrapper));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -207,8 +207,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateAllColumnById(T entity) {
-        return retBool(baseMapper.updateAllColumnById(entity));
+    public boolean alwaysUpdateSomeColumnById(T entity) {
+        return retBool(baseMapper.alwaysUpdateSomeColumnById(entity));
     }
 
     @Transactional(rollbackFor = Exception.class)

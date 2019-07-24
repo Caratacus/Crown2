@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.cons.PageCons;
 import org.crown.common.utils.DateUtils;
+import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.sql.AntiSQLFilter;
 import org.crown.framework.responses.ApiResponses;
@@ -36,14 +37,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
+import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * SuperController
  *
  * @author Caratacus
  */
-public class SuperController {
+@Slf4j
+public class SuperController<Entity> {
 
     @Autowired
     protected HttpServletRequest request;
@@ -131,10 +139,49 @@ public class SuperController {
         limit = limit > PageCons.MAX_LIMIT ? PageCons.MAX_LIMIT : limit;
         Page<T> page = new Page<>(cursor, limit, searchCount);
         if (openSort) {
-            page.setAsc(getParameterSafeValues(PageCons.PAGE_ASCS));
-            page.setDesc(getParameterSafeValues(PageCons.PAGE_DESCS));
+            String[] ascParameter = getParameterSafeValues(PageCons.PAGE_ASCS);
+            String[] descParameter = getParameterSafeValues(PageCons.PAGE_DESCS);
+            if (ArrayUtils.isNotEmpty(ascParameter)) {
+                for (String asc : ascParameter) {
+                    addOrder(page, asc, true);
+                }
+            }
+            if (ArrayUtils.isNotEmpty(descParameter)) {
+                for (String desc : descParameter) {
+                    addOrder(page, desc, false);
+                }
+            }
+
         }
         return page;
+    }
+
+    /**
+     * 使用排序
+     *
+     * @param page
+     * @param orderStr
+     * @param asc
+     * @param <T>
+     */
+    private <T> void addOrder(Page<T> page, String orderStr, boolean asc) {
+        if (StringUtils.isNotEmpty(getAlias())) {
+            orderStr = getAlias() + "." + orderStr;
+        }
+        page.addOrder(asc ? OrderItem.asc(orderStr) : OrderItem.desc(orderStr));
+    }
+
+    /**
+     * 获取排序的table
+     */
+    protected String getAlias() {
+        try {
+            Class<Entity> entityClass = (Class<Entity>) ReflectionKit.getSuperClassGenericType(getClass(), 0);
+            return TableInfoHelper.getTableInfo(entityClass).getTableName();
+        } catch (Exception e) {
+            log.warn("获取排序别名出错:{}", e.getMessage());
+            return null;
+        }
     }
 
     /**

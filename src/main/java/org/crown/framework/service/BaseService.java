@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.crown.common.mybatisplus.LambdaDeleteWrapperChain;
 import org.crown.common.mybatisplus.LambdaQueryWrapperChain;
 import org.crown.common.mybatisplus.LambdaUpdateWrapperChain;
@@ -44,6 +46,8 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
  * @author Caratacus
  */
 public interface BaseService<T> {
+
+    Log logger = LogFactory.getLog(SqlHelper.class);
 
     /**
      * 批量大小
@@ -120,7 +124,7 @@ public interface BaseService<T> {
      *
      * @param entity 实体对象
      */
-    boolean updateAllColumnById(T entity);
+    boolean alwaysUpdateSomeColumnById(T entity);
 
     /**
      * <p>
@@ -190,7 +194,7 @@ public interface BaseService<T> {
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
     default T getOne(Wrapper<T> queryWrapper) {
-        return SqlHelper.getObject(list(queryWrapper));
+        return SqlHelper.getObject(logger, list(queryWrapper));
     }
 
     /**
@@ -201,7 +205,7 @@ public interface BaseService<T> {
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
     default <R> R getObj(Wrapper<T> queryWrapper, Function<? super Object, R> mapper) {
-        return SqlHelper.getObject(listObjs(queryWrapper, mapper));
+        return SqlHelper.getObject(logger, listObjs(queryWrapper, mapper));
     }
 
     /**
@@ -337,7 +341,7 @@ public interface BaseService<T> {
      * @return
      */
     default <R> R entity(Wrapper<T> wrapper, Function<? super T, R> mapper) {
-        return SqlHelper.getObject(entitys(wrapper, mapper));
+        return SqlHelper.getObject(logger, entitys(wrapper, mapper));
     }
 
     /**

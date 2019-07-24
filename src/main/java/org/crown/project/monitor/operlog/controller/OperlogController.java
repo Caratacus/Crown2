@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
-import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-
 /**
  * 操作日志记录
  *
@@ -31,7 +28,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/monitor/operlog")
-public class OperlogController extends WebController {
+public class OperlogController extends WebController<OperLog> {
 
     private final String prefix = "monitor/operlog";
 
@@ -68,7 +65,7 @@ public class OperlogController extends WebController {
     @PostMapping("/remove")
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
-        operLogService.remove(Wrappers.<OperLog>lambdaQuery().inOrThrow(OperLog::getOperId, StringUtils.split2List(ids)));
+       // operLogService.remove(Wrappers.<OperLog>lambdaQuery().in(OperLog::getOperId, StringUtils.split2List(ids)));
         return success();
     }
 

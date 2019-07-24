@@ -64,7 +64,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
                 throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, post.getPostName() + "已分配，不能删除");
             }
         }
-        return delete().inOrThrow(Post::getPostId, postIds).execute();
+        return delete().in(Post::getPostId, postIds).execute();
     }
 
     @Override
