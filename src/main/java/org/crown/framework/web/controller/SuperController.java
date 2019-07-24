@@ -37,6 +37,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
@@ -68,6 +71,20 @@ public class SuperController<Entity> implements PageCons {
             @Override
             public void setAsText(String text) {
                 setValue(DateUtils.parseDate(text));
+            }
+        });
+        // JSONObject 类型转换
+        binder.registerCustomEditor(JSONObject.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                setValue(JSON.parseObject(text));
+            }
+        });
+        // JSONArray 类型转换
+        binder.registerCustomEditor(JSONArray.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                setValue(JSON.parseArray(text));
             }
         });
     }

@@ -25,13 +25,22 @@ public abstract class ThreadExecutors {
      * @param task 任务
      */
     public static void execute(TimerTask task) {
-        ApplicationUtils.getBean(ScheduledExecutorService.class).schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
+        getExecutorService().schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 获取ScheduledExecutorService
+     *
+     * @return
+     */
+    public static ScheduledExecutorService getExecutorService() {
+        return ApplicationUtils.getBean(ScheduledExecutorService.class);
     }
 
     /**
      * 停止任务线程池
      */
     public static void shutdown() {
-        Threads.shutdownAndAwaitTermination(ApplicationUtils.getBean(ScheduledExecutorService.class));
+        Threads.shutdownAndAwaitTermination(getExecutorService());
     }
 }
