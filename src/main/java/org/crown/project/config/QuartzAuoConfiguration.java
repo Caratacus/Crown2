@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @author Caratacus
  */
 @Configuration
-public class QuartzConfig {
+public class QuartzAuoConfiguration {
 
     /**
      * 解决Job中注入Spring Bean为null的问题

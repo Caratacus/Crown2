@@ -11,7 +11,6 @@ import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.monitor.online.domain.UserOnline;
 import org.crown.project.monitor.online.service.IUserOnlineService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 针对自定义的ShiroSession的db操作
@@ -23,7 +22,6 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
     /**
      * 同步session到数据库的周期 单位为毫秒（默认1分钟）
      */
-    @Value("${shiro.session.dbSyncPeriod}")
     private int dbSyncPeriod;
 
     /**
@@ -41,8 +39,9 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
         super();
     }
 
-    public OnlineSessionDAO(long expireTime) {
+    public OnlineSessionDAO(int dbSyncPeriod) {
         super();
+        this.dbSyncPeriod = dbSyncPeriod;
     }
 
     /**

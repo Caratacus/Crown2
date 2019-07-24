@@ -12,10 +12,11 @@ import org.apache.shiro.web.util.WebUtils;
 import org.crown.common.cons.ShiroConstants;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
+import org.crown.framework.spring.ApplicationUtils;
+import org.crown.framework.springboot.properties.ShiroProperties;
 import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 自定义访问控制
@@ -23,12 +24,6 @@ import org.springframework.beans.factory.annotation.Value;
  * @author Crown
  */
 public class OnlineSessionFilter extends AccessControlFilter {
-
-    /**
-     * 强制退出后重定向的地址
-     */
-    @Value("${shiro.user.loginUrl}")
-    private String loginUrl;
 
     @Autowired
     private OnlineSessionDAO onlineSessionDAO;
@@ -80,6 +75,6 @@ public class OnlineSessionFilter extends AccessControlFilter {
     // 跳转到登录页
     @Override
     protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-        WebUtils.issueRedirect(request, response, loginUrl);
+        WebUtils.issueRedirect(request, response, ApplicationUtils.getBean(ShiroProperties.class).getLoginUrl());
     }
 }

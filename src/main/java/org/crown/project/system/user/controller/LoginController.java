@@ -29,7 +29,7 @@ public class LoginController extends WebController {
     @PostMapping("/login")
     @ResponseBody
     public ApiResponses<Void> ajaxLogin(String username, String password) {
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, true);
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         return success();

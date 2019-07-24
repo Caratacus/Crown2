@@ -4,13 +4,11 @@ import javax.servlet.DispatcherType;
 
 import org.crown.common.filter.GlobalFilter;
 import org.crown.framework.springboot.properties.CrownProperties;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -31,19 +29,6 @@ public class CrownAuoConfiguration implements WebMvcConfigurer {
         this.properties = properties;
     }
 
-    /**
-     * 首页地址
-     */
-    @Value("${shiro.user.indexUrl}")
-    private String indexUrl;
-
-    /**
-     * 默认首页的设置，当输入域名是可以自动跳转到默认指定的网页
-     */
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:" + indexUrl);
-    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
