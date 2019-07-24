@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 
+import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -220,15 +222,18 @@ public class FileUtils {
             if (dir != null) {
                 if (dir.isDirectory()) {
                     File[] files = dir.listFiles();
-                    for (File file : files) {
-                        if (file.isDirectory()) {
-                            if (file.listFiles().length > 0) {
-                                delFile(file);
+                    if (ArrayUtils.isNotEmpty(files)) {
+                        for (File file : files) {
+                            if (file.isDirectory()) {
+                                File[] listFiles = file.listFiles();
+                                if (ArrayUtils.isNotEmpty(listFiles)) {
+                                    delFile(file);
+                                }else{
+                                    file.delete();
+                                }
                             } else {
                                 file.delete();
                             }
-                        } else {
-                            file.delete();
                         }
                     }
                 }

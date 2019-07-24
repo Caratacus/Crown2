@@ -29,7 +29,7 @@ public class Md5Utils {
         return null;
     }
 
-    private static String toHex(byte hash[]) {
+    private static String toHex(byte[] hash) {
         if (hash == null) {
             return null;
         }
@@ -49,7 +49,7 @@ public class Md5Utils {
         try {
             return new String(Objects.requireNonNull(toHex(md5(s))).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            log.error("not supported charset...{}", e);
+            log.error("not supported charset... {}", e.getMessage());
             return s;
         }
     }

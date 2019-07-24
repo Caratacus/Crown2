@@ -78,6 +78,7 @@ public abstract class Crowns {
     public static int getMaxRetryCount() {
         return getProperties().getPassword().getMaxRetryCount();
     }
+
     /**
      * 获取生成代码相关配置
      *
@@ -86,6 +87,7 @@ public abstract class Crowns {
     public static Generator getGenerator() {
         return getProperties().getGenerator();
     }
+
     /**
      * 获取Xss配置
      *

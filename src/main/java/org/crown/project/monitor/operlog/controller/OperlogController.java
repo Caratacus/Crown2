@@ -65,7 +65,7 @@ public class OperlogController extends WebController<OperLog> {
     @PostMapping("/remove")
     @ResponseBody
     public ApiResponses<Void> remove(String ids) {
-       // operLogService.remove(Wrappers.<OperLog>lambdaQuery().in(OperLog::getOperId, StringUtils.split2List(ids)));
+        operLogService.remove(Wrappers.<OperLog>lambdaQuery().in(OperLog::getOperId, StringUtils.split2List(ids)));
         return success();
     }
 
