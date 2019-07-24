@@ -50,8 +50,7 @@
 
     <select id="selectOnlineByExpired" parameterType="String" resultMap="UserOnlineResult">
         <include refid="selectOnlineVo"/>
-        o
-        WHERE o.last_access_time <![CDATA[ <= ]]> #{lastAccessTime} ORDER BY o.last_access_time ASC
+        WHERE last_access_time <![CDATA[ <= ]]> #{lastAccessTime} ORDER BY last_access_time ASC
     </select>
 
 </mapper> 

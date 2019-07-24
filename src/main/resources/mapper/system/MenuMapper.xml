@@ -24,70 +24,70 @@
     </resultMap>
 
     <select id="selectMenusByUserId" parameterType="Long" resultMap="MenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.visible, ifnull(m.perms,'') as perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 LEFT JOIN sys_role ro on ur.role_id = ro.role_id
-		where ur.user_id = #{userId} and m.menu_type in ('M', 'C') and m.visible = 0  AND ro.status = 0
-		order by m.parent_id, m.order_num
+		select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target, sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+		from sys_menu
+			 left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+			 left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+			 LEFT JOIN sys_role on sys_user_role.role_id = sys_role.role_id
+		where sys_user_role.user_id = #{userId} and sys_menu.menu_type in ('M', 'C') and sys_menu.visible = 0  AND sys_role.status = 0
+		order by sys_menu.parent_id, sys_menu.order_num
 	</select>
 
     <select id="selectMenuAllByUserId" parameterType="Long" resultMap="MenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.visible, ifnull(m.perms,'') as perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 LEFT JOIN sys_role ro on ur.role_id = ro.role_id
-		where ur.user_id = #{userId}
-		order by m.parent_id, m.order_num
+		select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target, sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+		from sys_menu
+			 left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+			 left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+			 LEFT JOIN sys_role on sys_user_role.role_id = sys_role.role_id
+		where sys_user_role.user_id = #{userId}
+		order by sys_menu.parent_id, sys_menu.order_num
 	</select>
 
     <select id="selectMenuListByUserId" parameterType="Menu" resultMap="MenuResult">
-        select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.visible, ifnull(m.perms,'') as perms, m.target,
-        m.menu_type, m.icon, m.order_num, m.create_time
-        from sys_menu m
-        left join sys_role_menu rm on m.menu_id = rm.menu_id
-        left join sys_user_role ur on rm.role_id = ur.role_id
-        LEFT JOIN sys_role ro on ur.role_id = ro.role_id
-        where ur.user_id = #{params.userId}
+        select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target,
+        sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+        from sys_menu
+        left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+        left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+        LEFT JOIN sys_role on sys_user_role.role_id = sys_role.role_id
+        where sys_user_role.user_id = #{params.userId}
         <if test="menuName != null and menuName != ''">
-            AND m.menu_name like concat('%', #{menuName}, '%')
+            AND sys_menu.menu_name like concat('%', #{menuName}, '%')
         </if>
         <if test="visible != null and visible != ''">
-            AND m.visible = #{visible}
+            AND sys_menu.visible = #{visible}
         </if>
-        order by m.parent_id, m.order_num
+        order by sys_menu.parent_id, sys_menu.order_num
     </select>
 
     <select id="selectMenuNormalAll" resultMap="MenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.visible, ifnull(m.perms,'') as perms, m.target, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-		where m.menu_type in ('M', 'C') and m.visible = 0
-		order by m.parent_id, m.order_num
+		select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target, sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+		from sys_menu
+		where sys_menu.menu_type in ('M', 'C') and sys_menu.visible = 0
+		order by sys_menu.parent_id, sys_menu.order_num
 	</select>
 
     <select id="selectPermsByUserId" parameterType="Long" resultType="String">
-		select distinct m.perms
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
-		where ur.user_id = #{userId}
+		select distinct sys_menu.perms
+		from sys_menu
+			 left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+			 left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+		where sys_user_role.user_id = #{userId}
 	</select>
 
     <select id="selectMenuTree" parameterType="Long" resultType="String">
-		select concat(m.menu_id, ifnull(m.perms,'')) as perms
-		from sys_menu m
-			left join sys_role_menu rm on m.menu_id = rm.menu_id
-		where rm.role_id = #{roleId}
-		order by m.parent_id, m.order_num
+		select concat(sys_menu.menu_id, ifnull(sys_menu.perms,'')) as perms
+		from sys_menu
+			left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+		where sys_role_menu.role_id = #{roleId}
+		order by sys_menu.parent_id, sys_menu.order_num
 	</select>
 
     <select id="selectMenuById" parameterType="Long" resultMap="MenuResult">
-		SELECT t.menu_id, t.parent_id, t.menu_name, t.order_num, t.url, t.target, t.menu_type, t.visible, t.perms, t.icon, t.remark,
-			(SELECT menu_name FROM sys_menu WHERE menu_id = t.parent_id) parent_name
-		FROM sys_menu t
-		where t.menu_id = #{menuId}
+		SELECT sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.order_num, sys_menu.url, sys_menu.target, sys_menu.menu_type, sys_menu.visible, sys_menu.perms, sys_menu.icon, sys_menu.remark,
+			(SELECT menu_name FROM sys_menu WHERE menu_id = sys_menu.parent_id) parent_name
+		FROM sys_menu
+		where sys_menu.menu_id = #{menuId}
 	</select>
 
 </mapper>

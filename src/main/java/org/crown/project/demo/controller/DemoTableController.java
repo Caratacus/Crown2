@@ -10,8 +10,7 @@ import org.crown.common.utils.DateUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.PageDomain;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.framework.web.page.TableSupport;
+import org.crown.framework.web.page.TableData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -195,8 +194,8 @@ public class DemoTableController extends WebController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(UserTableModel userModel) {
-        TableDataInfo rspData = new TableDataInfo();
+    public TableData list(UserTableModel userModel) {
+        TableData rspData = new TableData();
         List<UserTableModel> userList = new ArrayList<>(Arrays.asList(new UserTableModel[users.size()]));
         Collections.copy(userList, users);
         // 查询条件过滤
@@ -208,7 +207,7 @@ public class DemoTableController extends WebController {
                 }
             }
         }
-        PageDomain pageDomain = TableSupport.getPageDomain(request);
+        PageDomain pageDomain = getPageDomain();
         if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());

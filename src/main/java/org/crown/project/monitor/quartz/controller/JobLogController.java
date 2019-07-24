@@ -10,7 +10,7 @@ import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.quartz.domain.JobLog;
 import org.crown.project.monitor.quartz.service.IJobLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +49,10 @@ public class JobLogController extends WebController<JobLog> {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(JobLog jobLog) {
+    public ApiResponses<TableData<JobLog>> list(JobLog jobLog) {
         startPage();
         List<JobLog> list = jobLogService.selectJobLogList(jobLog);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "调度日志", businessType = BusinessType.EXPORT)

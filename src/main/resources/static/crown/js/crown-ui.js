@@ -103,8 +103,8 @@
                         pageSize:       params.limit,
                         pageNum:        params.offset / params.limit + 1,
                         searchValue:    params.search,
-                        orderByColumn:  params.sort,
-                        isAsc:          params.order
+						sort:  			params.sort,
+						order:          params.order
             		};
             	var currentId = $.common.isEmpty($.table._option.formId) ? $('form').attr('id') : $.table._option.formId;
             	return $.extend(curParams, $.common.formToJSON(currentId));
@@ -114,17 +114,17 @@
             	if (typeof $.table._option.responseHandler == "function") {
             		$.table._option.responseHandler(res);
                 }
-                if (res.code == 0) {
+                if (res.status == 200) {
                     if ($.common.isNotEmpty($.table._option.sidePagination) && $.table._option.sidePagination == 'client') {
-                    	return res.rows;
+                    	return res.result.rows;
                     } else {
                     	if ($.common.isNotEmpty($.table._option.rememberSelected) && $.table._option.rememberSelected) {
                     		var column = $.common.isEmpty($.table._option.uniqueId) ? $.table._option.columns[1].field : $.table._option.uniqueId;
-                    		$.each(res.rows, function(i, row) {
+                    		$.each(res.result.rows, function(i, row) {
                                 row.state = $.inArray(row[column], selectionIds) !== -1;
                             })
                     	}
-                        return { rows: res.rows, total: res.total };
+                        return { rows: res.result.rows, total: res.result.total };
                     }
                 } else {
                     $.modal.alertWarning(res.msg);
@@ -255,8 +255,8 @@
                     search.pageSize = params.limit;
                     search.pageNum = params.offset / params.limit + 1;
                     search.searchValue = params.search;
-                    search.orderByColumn = params.sort;
-                    search.isAsc = params.order;
+                    search.order = params.order;
+					search.sort = params.sort;
     		        return search;
     		    }
     		    $.btTable.bootstrapTable('refresh', params);

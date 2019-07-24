@@ -55,7 +55,7 @@
 		<th:block th:include="include :: jsonview-js" />
 		<script th:inline="javascript">
 			$(function() {
-				var json = [[${jobLog.jobParams}]];
+				var json = JSON.stringify([[${jobLog.jobParams}]]);
 				if ($.common.isNotEmpty(json) && json.length < 2000) {
 					$("#jobParams").JSONView(json);
 				} else {
@@ -109,7 +109,7 @@
 		<th:block th:include="include :: jsonview-js" />
 		<script th:inline="javascript">
 			$(function() {
-				var json = [[${job.jobParams}]];
+				var json = JSON.stringify([[${job.jobParams}]]);
 				if ($.common.isNotEmpty(json) && json.length < 2000) {
 					$("#jobParams").JSONView(json);
 				} else {

@@ -1,12 +1,18 @@
 package org.crown.framework.web.page;
 
 import org.crown.common.utils.StringUtils;
+import org.crown.common.utils.sql.AntiSQLFilter;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 分页数据
  *
  * @author Crown
  */
+@Setter
+@Getter
 public class PageDomain {
 
     /**
@@ -20,48 +26,29 @@ public class PageDomain {
     /**
      * 排序列
      */
-    private String orderByColumn;
+    private String sort;
     /**
      * 排序的方向 "desc" 或者 "asc".
      */
-    private String isAsc;
+    private String order;
+    /**
+     * 排序表别名
+     */
+    private String tableAlias;
 
     public String getOrderBy() {
-        if (StringUtils.isEmpty(orderByColumn)) {
+        if (StringUtils.isEmpty(sort)) {
             return "";
         }
-        return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
+        if (StringUtils.isNotEmpty(tableAlias)) {
+            return tableAlias + "." + StringUtils.toUnderScoreCase(sort) + " " + order;
+        }
+
+        return StringUtils.toUnderScoreCase(sort) + " " + order;
     }
 
-    public Integer getPageNum() {
-        return pageNum;
+    public String getSort() {
+        return AntiSQLFilter.getSafeValue(sort);
     }
 
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public String getOrderByColumn() {
-        return orderByColumn;
-    }
-
-    public void setOrderByColumn(String orderByColumn) {
-        this.orderByColumn = orderByColumn;
-    }
-
-    public String getIsAsc() {
-        return isAsc;
-    }
-
-    public void setIsAsc(String isAsc) {
-        this.isAsc = isAsc;
-    }
 }

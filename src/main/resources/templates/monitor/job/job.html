@@ -96,7 +96,10 @@
 				},
 		        {
 		            field: 'jobParams',
-		            title: '参数'
+		            title: '参数',
+					formatter: function (value, row, index) {
+						return JSON.stringify(value);
+					}
 		        },
 		        {
 		            field: 'cron',

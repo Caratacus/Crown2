@@ -18,11 +18,11 @@
 	</resultMap>
 
 	<select id="selectPostsByUserId" parameterType="Long" resultMap="PostResult">
-		SELECT p.post_id, p.post_name, p.post_code
-		FROM sys_user u
-			 LEFT JOIN sys_user_post up ON u.user_id = up.user_id
-			 LEFT JOIN sys_post p ON up.post_id = p.post_id
-		WHERE up.user_id = #{userId}
+		SELECT sys_post.post_id, sys_post.post_name, sys_post.post_code
+		FROM sys_user
+			 LEFT JOIN sys_user_post ON sys_user.user_id = sys_user_post.user_id
+			 LEFT JOIN sys_post ON sys_user_post.post_id = sys_post.post_id
+		WHERE sys_user_post.user_id = #{userId}
 	</select>
 
 

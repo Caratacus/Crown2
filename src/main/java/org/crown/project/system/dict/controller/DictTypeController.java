@@ -11,7 +11,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.system.dict.domain.DictType;
 import org.crown.project.system.dict.service.IDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +47,10 @@ public class DictTypeController extends WebController<DictType> {
     @PostMapping("/list")
     @RequiresPermissions("system:dict:list")
     @ResponseBody
-    public TableDataInfo list(DictType dictType) {
+    public ApiResponses<TableData<DictType>> list(DictType dictType) {
         startPage();
         List<DictType> list = dictTypeService.selectDictTypeList(dictType);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)

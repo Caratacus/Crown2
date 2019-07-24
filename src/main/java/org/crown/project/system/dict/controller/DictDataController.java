@@ -10,7 +10,7 @@ import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.system.dict.domain.DictData;
 import org.crown.project.system.dict.service.IDictDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +48,10 @@ public class DictDataController extends WebController<DictData> {
     @PostMapping("/list")
     @RequiresPermissions("system:dict:list")
     @ResponseBody
-    public TableDataInfo list(DictData dictData) {
+    public ApiResponses<TableData<DictData>> list(DictData dictData) {
         startPage();
         List<DictData> list = dictDataService.selectDictDataList(dictData);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)

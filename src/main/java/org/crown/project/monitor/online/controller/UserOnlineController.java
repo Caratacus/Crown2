@@ -11,7 +11,7 @@ import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.online.domain.OnlineSession;
 import org.crown.project.monitor.online.domain.OnlineSession.OnlineStatus;
 import org.crown.project.monitor.online.domain.UserOnline;
@@ -50,10 +50,10 @@ public class UserOnlineController extends WebController<UserOnline> {
     @RequiresPermissions("monitor:online:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(UserOnline userOnline) {
+    public ApiResponses<TableData<UserOnline>> list(UserOnline userOnline) {
         startPage();
         List<UserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @RequiresPermissions("monitor:online:batchForceLogout")

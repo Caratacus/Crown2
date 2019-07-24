@@ -15,8 +15,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.PageDomain;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.framework.web.page.TableSupport;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.demo.domain.UserOperateModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -90,8 +89,8 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(UserOperateModel userModel) {
-        TableDataInfo rspData = new TableDataInfo();
+    public TableData list(UserOperateModel userModel) {
+        TableData rspData = new TableData();
         List<UserOperateModel> userList = new ArrayList<>(users.values());
         // 查询条件过滤
         if (StringUtils.isNotEmpty(userModel.getSearchValue())) {
@@ -102,7 +101,7 @@ public class DemoOperateController extends WebController {
                 }
             }
         }
-        PageDomain pageDomain = TableSupport.getPageDomain(request);
+        PageDomain pageDomain = getPageDomain();
         if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());

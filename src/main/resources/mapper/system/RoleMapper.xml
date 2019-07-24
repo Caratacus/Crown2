@@ -20,34 +20,34 @@
 	</resultMap>
 
 	<sql id="selectRoleContactVo">
-        select distinct r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope,
-            r.status, r.del_flag, r.create_time, r.remark 
-        from sys_role r
-	        left join sys_user_role ur on ur.role_id = r.role_id
-	        left join sys_user u on u.user_id = ur.user_id
-	        left join sys_dept d on u.dept_id = d.dept_id
+        select distinct sys_role.role_id, sys_role.role_name, sys_role.role_key, sys_role.role_sort, sys_role.data_scope,
+            sys_role.status, sys_role.del_flag, sys_role.create_time, sys_role.remark
+        from sys_role
+	        left join sys_user_role on sys_user_role.role_id = sys_role.role_id
+	        left join sys_user on sys_user.user_id = sys_user_role.user_id
+	        left join sys_dept on sys_user.dept_id = sys_dept.dept_id
     </sql>
 
     <select id="selectRoleList" parameterType="Role" resultMap="RoleResult">
         <include refid="selectRoleContactVo"/>
-        where r.del_flag = '0'
+        where sys_role.del_flag = '0'
         <if test="roleName != null and roleName != ''">
-            AND r.role_name like concat('%', #{roleName}, '%')
+            AND sys_role.role_name like concat('%', #{roleName}, '%')
         </if>
         <if test="status != null and status != ''">
-            AND r.status = #{status}
+            AND sys_role.status = #{status}
         </if>
         <if test="roleKey != null and roleKey != ''">
-            AND r.role_key like concat('%', #{roleKey}, '%')
+            AND sys_role.role_key like concat('%', #{roleKey}, '%')
         </if>
         <if test="dataScope != null and dataScope != ''">
-            AND r.data_scope = #{dataScope}
+            AND sys_role.data_scope = #{dataScope}
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-            and date_format(r.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            and date_format(sys_role.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
         <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-            and date_format(r.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            and date_format(sys_role.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
@@ -55,7 +55,7 @@
 
     <select id="selectRolesByUserId" parameterType="Long" resultMap="RoleResult">
         <include refid="selectRoleContactVo"/>
-        WHERE r.del_flag = '0' and ur.user_id = #{userId}
+        WHERE sys_role.del_flag = '0' and sys_user_role.user_id = #{userId}
     </select>
 
 </mapper>

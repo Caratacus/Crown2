@@ -3,11 +3,10 @@ package org.crown.framework.web.controller;
 import java.util.List;
 
 import org.crown.common.utils.StringUtils;
+import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.security.ShiroUtils;
-import org.crown.common.utils.sql.AntiSQLFilter;
 import org.crown.framework.web.page.PageDomain;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.framework.web.page.TableSupport;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.system.user.domain.User;
 
 import com.github.pagehelper.PageHelper;
@@ -21,15 +20,27 @@ import com.github.pagehelper.PageInfo;
 public class WebController<Entity> extends SuperController<Entity> {
 
     /**
+     * 封装分页对象
+     */
+    protected PageDomain getPageDomain() {
+        PageDomain pageDomain = new PageDomain();
+        pageDomain.setPageNum(TypeUtils.castToInt(request.getParameter(PAGE_NUM)));
+        pageDomain.setPageSize(TypeUtils.castToInt(request.getParameter(PAGE_SIZE)));
+        pageDomain.setSort(request.getParameter(PAGE_SORT));
+        pageDomain.setOrder(request.getParameter(PAGE_ORDER));
+        pageDomain.setTableAlias(getAlias());
+        return pageDomain;
+    }
+
+    /**
      * 设置请求分页数据
      */
     protected void startPage() {
-        PageDomain pageDomain = TableSupport.getPageDomain(request);
+        PageDomain pageDomain =  getPageDomain();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
-            String orderBy = AntiSQLFilter.escapeOrderBySql(pageDomain.getOrderBy());
-            PageHelper.startPage(pageNum, pageSize, orderBy);
+            PageHelper.startPage(pageNum, pageSize, pageDomain.getOrderBy());
         }
     }
 
@@ -37,9 +48,8 @@ public class WebController<Entity> extends SuperController<Entity> {
      * 响应请求分页数据
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected TableDataInfo getDataTable(List<?> list) {
-        TableDataInfo rspData = new TableDataInfo();
-        rspData.setCode(0);
+    protected <T> TableData<T> getTableData(List<T> list) {
+        TableData rspData = new TableData();
         rspData.setRows(list);
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;

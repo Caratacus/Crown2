@@ -10,11 +10,10 @@ import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
-import org.crown.project.${moduleName}.${classname}.domain.${className};
+import org.crown.framework.web.page.TableData;
+.${moduleName}.${classname}.domain.${className};
 import org.crown.project.${moduleName}.${classname}.service.I${className}Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +31,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/${moduleName}/${classname}")
-public class ${className}Controller extends WebController {
+public class ${className}Controller extends WebController<${className}> {
 
 	private final String prefix = "${moduleName}/${classname}";
 
@@ -51,10 +50,10 @@ public class ${className}Controller extends WebController {
 	@RequiresPermissions("${moduleName}:${classname}:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(${className} ${classname}) {
+	public ApiResponses<TableData<${className}>> list(${className} ${classname}) {
 		startPage();
 		List<${className}> list = ${classname}Service.list(Wrappers.<${className}>lambdaQuery(${classname}));
-		return getDataTable(list);
+		return success(getTableData(list));
 	}
 
 	/**

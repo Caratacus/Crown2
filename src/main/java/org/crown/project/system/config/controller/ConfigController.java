@@ -12,7 +12,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.system.config.domain.Config;
 import org.crown.project.system.config.service.IConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +53,10 @@ public class ConfigController extends WebController<Config> {
     @RequiresPermissions("system:config:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Config config) {
+    public ApiResponses<TableData<Config>> list(Config config) {
         startPage();
         List<Config> list = configService.selectConfigList(config);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)

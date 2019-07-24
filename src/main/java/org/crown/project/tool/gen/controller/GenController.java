@@ -10,8 +10,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.converter.Convert;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.tool.gen.domain.TableInfo;
 import org.crown.project.tool.gen.service.IGenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,10 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(TableInfo tableInfo) {
+    public ApiResponses<TableData<TableInfo>>  list(TableInfo tableInfo) {
         startPage();
         List<TableInfo> list = genService.selectTableList(tableInfo);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     /**

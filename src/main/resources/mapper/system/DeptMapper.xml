@@ -23,40 +23,40 @@
 	</resultMap>
 
 	<sql id="selectDeptVo">
-        select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status, d.del_flag, d.create_by, d.create_time 
-        from sys_dept d
+        select sys_dept.dept_id, sys_dept.parent_id, sys_dept.ancestors, sys_dept.dept_name, sys_dept.order_num, sys_dept.leader, sys_dept.phone, sys_dept.email, sys_dept.status, sys_dept.del_flag, sys_dept.create_by, sys_dept.create_time
+        from sys_dept
     </sql>
 
     <select id="selectRoleDeptTree" parameterType="Long" resultType="String">
-		select concat(d.dept_id, d.dept_name) as dept_name
-		from sys_dept d
-			left join sys_role_dept rd on d.dept_id = rd.dept_id
-		where d.del_flag = '0' and rd.role_id = #{roleId}
-		order by d.parent_id, d.order_num
+		select concat(sys_dept.dept_id, sys_dept.dept_name) as dept_name
+		from sys_dept
+			left join sys_role_dept on sys_dept.dept_id = sys_role_dept.dept_id
+		where sys_dept.del_flag = '0' and sys_role_dept.role_id = #{roleId}
+		order by sys_dept.parent_id, sys_dept.order_num
 	</select>
 
     <select id="selectDeptList" parameterType="Dept" resultMap="DeptResult">
         <include refid="selectDeptVo"/>
-        where d.del_flag = '0'
+        where sys_dept.del_flag = '0'
         <if test="parentId != null and parentId != 0">
-            AND parent_id = #{parentId}
+            AND sys_dept.parent_id = #{parentId}
         </if>
         <if test="deptName != null and deptName != ''">
-            AND dept_name like concat('%', #{deptName}, '%')
+            AND sys_dept.dept_name like concat('%', #{deptName}, '%')
         </if>
         <if test="status != null and status != ''">
-            AND status = #{status}
+            AND sys_dept.status = #{status}
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
-        order by d.parent_id, d.order_num
+        order by sys_dept.parent_id, sys_dept.order_num
     </select>
 
     <select id="selectDeptById" parameterType="Long" resultMap="DeptResult">
-		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status,
-			(select dept_name from sys_dept where dept_id = d.parent_id) parent_name
-		from sys_dept d
-		where d.dept_id = #{deptId}
+		select sys_dept.dept_id, sys_dept.parent_id, sys_dept.ancestors, sys_dept.dept_name, sys_dept.order_num, sys_dept.leader, sys_dept.phone, sys_dept.email, sys_dept.status,
+			(select dept_name from sys_dept where dept_id = sys_dept.parent_id) parent_name
+		from sys_dept
+		where sys_dept.dept_id = #{deptId}
 	</select>
 
     <select id="selectChildrenDeptById" parameterType="Long" resultMap="DeptResult">

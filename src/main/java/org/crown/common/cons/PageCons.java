@@ -28,29 +28,36 @@ package org.crown.common.cons;
 public interface PageCons {
 
     /**
-     * 页数
+     * 当前记录起始索引
      */
-    String PAGE_PAGE = "cursor";
+    String PAGE_NUM = "pageNum";
+
     /**
-     * 分页大小
+     * 每页显示记录数
      */
-    String PAGE_ROWS = "limit";
-    /**
-     * 排序字段 ASC
-     */
-    String PAGE_ASCS = "ascs";
-    /**
-     * 排序字段 DESC
-     */
-    String PAGE_DESCS = "descs";
+    String PAGE_SIZE = "pageSize";
     /**
      * 查询总数
      */
     String SEARCH_COUNT = "searchCount";
     /**
-     * 默认每页条目20,最大条目数100
+     * 排序列
      */
-    int DEFAULT_LIMIT = 20;
-    int MAX_LIMIT = 100;
+    String PAGE_SORT = "sort";
+
+    /**
+     * 排序的方向 "desc" 或者 "asc".
+     */
+    String PAGE_ORDER = "order";
+
+    /**
+     * 默认每页条目20
+     */
+    int DEFAULT_PAGE_SIZE = 20;
+    /**
+     * 最大条目数100
+     */
+    int MAX_PAGE_SIZE = 100;
+
 
 }

@@ -12,7 +12,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.system.post.service.IPostService;
 import org.crown.project.system.role.service.IRoleService;
 import org.crown.project.system.user.domain.User;
@@ -57,10 +57,10 @@ public class UserController extends WebController<User> {
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(User user) {
+    public ApiResponses<TableData<User>> list(User user) {
         startPage();
         List<User> list = userService.selectUserList(user);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)

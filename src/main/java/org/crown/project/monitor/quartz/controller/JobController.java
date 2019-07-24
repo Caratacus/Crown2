@@ -12,7 +12,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.quartz.common.CronUtils;
 import org.crown.project.monitor.quartz.domain.Job;
 import org.crown.project.monitor.quartz.service.IJobService;
@@ -51,10 +51,10 @@ public class JobController extends WebController<Job> {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Job job) {
+    public ApiResponses<TableData<Job>> list(Job job) {
         startPage();
         List<Job> list = jobService.selectJobList(job);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "定时任务", businessType = BusinessType.EXPORT)

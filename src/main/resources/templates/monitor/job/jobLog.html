@@ -97,8 +97,11 @@
 		        },
 		        {
 		            field: 'jobParams',
-		            title: '参数'
-		        },
+		            title: '参数',
+					formatter: function(value, row, index) {
+						return JSON.stringify(value);
+					}
+				},
 		        {
 		            field: 'runTime',
 		            title: '运行时长'

@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -51,7 +50,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Caratacus
  */
 @Slf4j
-public class SuperController<Entity> {
+public class SuperController<Entity> implements PageCons {
 
     @Autowired
     protected HttpServletRequest request;
@@ -131,27 +130,20 @@ public class SuperController<Entity> {
     protected <T> Page<T> getPage(boolean openSort) {
         int index = 1;
         // 页数
-        Integer cursor = TypeUtils.castToInt(request.getParameter(PageCons.PAGE_PAGE), index);
+        Integer cursor = TypeUtils.castToInt(request.getParameter(PAGE_NUM), index);
         // 分页大小
-        Integer limit = TypeUtils.castToInt(request.getParameter(PageCons.PAGE_ROWS), PageCons.DEFAULT_LIMIT);
+        Integer limit = TypeUtils.castToInt(request.getParameter(PAGE_SIZE), DEFAULT_PAGE_SIZE);
         // 是否查询分页
-        Boolean searchCount = TypeUtils.castToBoolean(request.getParameter(PageCons.SEARCH_COUNT), true);
-        limit = limit > PageCons.MAX_LIMIT ? PageCons.MAX_LIMIT : limit;
+        Boolean searchCount = TypeUtils.castToBoolean(request.getParameter(SEARCH_COUNT), true);
+        limit = limit > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : limit;
         Page<T> page = new Page<>(cursor, limit, searchCount);
         if (openSort) {
-            String[] ascParameter = getParameterSafeValues(PageCons.PAGE_ASCS);
-            String[] descParameter = getParameterSafeValues(PageCons.PAGE_DESCS);
-            if (ArrayUtils.isNotEmpty(ascParameter)) {
-                for (String asc : ascParameter) {
-                    addOrder(page, asc, true);
-                }
+            String pageSort = getParameterSafeValue(PAGE_SORT);
+            String pageOrder = getParameterSafeValue(PAGE_ORDER);
+            if (StringUtils.isNotEmpty(pageSort)) {
+                boolean isAsc = "asc".equalsIgnoreCase(pageOrder);
+                addOrder(page, pageSort, isAsc);
             }
-            if (ArrayUtils.isNotEmpty(descParameter)) {
-                for (String desc : descParameter) {
-                    addOrder(page, desc, false);
-                }
-            }
-
         }
         return page;
     }
@@ -190,7 +182,7 @@ public class SuperController<Entity> {
      * @param parameter
      * @return
      */
-    protected String[] getParameterSafeValues(String parameter) {
-        return AntiSQLFilter.getSafeValues(request.getParameterValues(parameter));
+    protected String getParameterSafeValue(String parameter) {
+        return AntiSQLFilter.getSafeValue(request.getParameter(parameter));
     }
 }

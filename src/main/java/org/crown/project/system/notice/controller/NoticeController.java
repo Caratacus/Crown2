@@ -8,7 +8,7 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.system.notice.domain.Notice;
 import org.crown.project.system.notice.service.INoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +49,10 @@ public class NoticeController extends WebController<Notice> {
     @RequiresPermissions("system:notice:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Notice notice) {
+    public ApiResponses<TableData<Notice>> list(Notice notice) {
         startPage();
         List<Notice> list = noticeService.selectNoticeList(notice);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     /**

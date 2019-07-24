@@ -47,36 +47,36 @@
 	</resultMap>
 
 	<sql id="selectUserVo">
-       select  u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.avatar, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
-       		    d.dept_id, d.parent_id, d.dept_name, d.order_num, d.leader, d.status as dept_status,
-       		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
-		from sys_user u
-			 left join sys_dept d on u.dept_id = d.dept_id
-			 left join sys_user_role ur on u.user_id = ur.user_id
-			 left join sys_role r on r.role_id = ur.role_id
+       select  sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.sex, sys_user.avatar, sys_user.password, sys_user.salt, sys_user.status, sys_user.del_flag, sys_user.login_ip, sys_user.login_date, sys_user.create_time, sys_user.remark,
+       		     sys_dept.dept_id,  sys_dept.parent_id,  sys_dept.dept_name,  sys_dept.order_num,  sys_dept.leader,  sys_dept.status as dept_status,
+       		    sys_role.role_id, sys_role.role_name, sys_role.role_key, sys_role.role_sort, sys_role.data_scope, sys_role.status as role_status
+		from sys_user
+			 left join sys_dept on sys_user.dept_id =  sys_dept.dept_id
+			 left join sys_user_role on sys_user.user_id = sys_user_role.user_id
+			 left join sys_role on sys_role.role_id = sys_user_role.role_id
     </sql>
 
     <select id="selectUserList" parameterType="User" resultMap="UserResult">
-        select u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.avatar, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user u
-        left join sys_dept d on u.dept_id = d.dept_id
-        where u.del_flag = '0'
+        select sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.password, sys_user.sex, sys_user.avatar, sys_user.salt, sys_user.status, sys_user.del_flag, sys_user.login_ip, sys_user.login_date, sys_user.create_by, sys_user.create_time, sys_user.remark, sys_dept.dept_name, sys_dept.leader from sys_user
+        left join sys_dept on sys_user.dept_id = sys_dept.dept_id
+        where sys_user.del_flag = '0'
         <if test="loginName != null and loginName != ''">
-            AND u.login_name like concat('%', #{loginName}, '%')
+            AND sys_user.login_name like concat('%', #{loginName}, '%')
         </if>
         <if test="status != null and status != ''">
-            AND u.status = #{status}
+            AND sys_user.status = #{status}
         </if>
         <if test="phonenumber != null and phonenumber != ''">
-            AND u.phonenumber like concat('%', #{phonenumber}, '%')
+            AND sys_user.phonenumber like concat('%', #{phonenumber}, '%')
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-            AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            AND date_format(sys_user.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
         <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-            AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            AND date_format(sys_user.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
         <if test="deptId != null and deptId != 0">
-            AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET
+            AND (sys_user.dept_id = #{deptId} OR sys_user.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET
             (#{deptId},ancestors) ))
         </if>
         <!-- 数据范围过滤 -->
@@ -84,36 +84,36 @@
     </select>
 
     <select id="selectAllocatedList" parameterType="User" resultMap="UserResult">
-        select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.avatar, u.phonenumber, u.status, u.create_time
-                from sys_user u
-        left join sys_dept d on u.dept_id = d.dept_id
-        left join sys_user_role ur on u.user_id = ur.user_id
-        left join sys_role r on r.role_id = ur.role_id
-        where u.del_flag = '0' and r.role_id = #{roleId}
+        select distinct sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.status, sys_user.create_time
+                from sys_user
+        left join sys_dept on sys_user.dept_id = sys_dept.dept_id
+        left join sys_user_role on sys_user.user_id = sys_user_role.user_id
+        left join sys_role on sys_role.role_id = sys_user_role.role_id
+        where sys_user.del_flag = '0' and sys_role.role_id = #{roleId}
         <if test="loginName != null and loginName != ''">
-            AND u.login_name like concat('%', #{loginName}, '%')
+            AND sys_user.login_name like concat('%', #{loginName}, '%')
         </if>
         <if test="phonenumber != null and phonenumber != ''">
-            AND u.phonenumber like concat('%', #{phonenumber}, '%')
+            AND sys_user.phonenumber like concat('%', #{phonenumber}, '%')
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
     </select>
 
     <select id="selectUnallocatedList" parameterType="User" resultMap="UserResult">
-        select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.avatar, u.phonenumber, u.status, u.create_time
-                from sys_user u
-        left join sys_dept d on u.dept_id = d.dept_id
-        left join sys_user_role ur on u.user_id = ur.user_id
-        left join sys_role r on r.role_id = ur.role_id
-        where u.del_flag = '0' and (r.role_id != #{roleId} or r.role_id IS NULL)
-        and u.user_id not in (select u.user_id from sys_user u inner join sys_user_role ur on u.user_id = ur.user_id and
-        ur.role_id = #{roleId})
+        select distinct sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.status, sys_user.create_time
+                from sys_user
+        left join sys_dept on sys_user.dept_id = sys_dept.dept_id
+        left join sys_user_role on sys_user.user_id = sys_user_role.user_id
+        left join sys_role on sys_role.role_id = sys_user_role.role_id
+        where sys_user.del_flag = '0' and (sys_role.role_id != #{roleId} or sys_role.role_id IS NULL)
+        and sys_user.user_id not in (select sys_user.user_id from sys_user inner join sys_user_role on sys_user.user_id = sys_user_role.user_id and
+        sys_user_role.role_id = #{roleId})
         <if test="loginName != null and loginName != ''">
-            AND u.login_name like concat('%', #{loginName}, '%')
+            AND sys_user.login_name like concat('%', #{loginName}, '%')
         </if>
         <if test="phonenumber != null and phonenumber != ''">
-            AND u.phonenumber like concat('%', #{phonenumber}, '%')
+            AND sys_user.phonenumber like concat('%', #{phonenumber}, '%')
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
@@ -121,22 +121,22 @@
 
     <select id="selectUserByLoginName" parameterType="String" resultMap="UserResult">
         <include refid="selectUserVo"/>
-        where u.login_name = #{userName}
+        where sys_user.login_name = #{userName}
     </select>
 
     <select id="selectUserByPhoneNumber" parameterType="String" resultMap="UserResult">
         <include refid="selectUserVo"/>
-        where u.phonenumber = #{phonenumber}
+        where sys_user.phonenumber = #{phonenumber}
     </select>
 
     <select id="selectUserByEmail" parameterType="String" resultMap="UserResult">
         <include refid="selectUserVo"/>
-        where u.email = #{email}
+        where sys_user.email = #{email}
     </select>
 
     <select id="selectUserById" parameterType="Long" resultMap="UserResult">
         <include refid="selectUserVo"/>
-        where u.user_id = #{userId}
+        where sys_user.user_id = #{userId}
     </select>
 
 </mapper>

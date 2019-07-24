@@ -10,7 +10,7 @@ import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
 import org.crown.project.monitor.logininfor.service.ILogininforService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +45,10 @@ public class LogininforController extends WebController<Logininfor> {
     @RequiresPermissions("monitor:logininfor:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Logininfor logininfor) {
+    public ApiResponses<TableData<Logininfor>> list(Logininfor logininfor) {
         startPage();
         List<Logininfor> list = logininforService.selectLogininforList(logininfor);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "登陆日志", businessType = BusinessType.EXPORT)

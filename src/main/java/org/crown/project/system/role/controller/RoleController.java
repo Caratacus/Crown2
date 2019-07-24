@@ -11,7 +11,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
-import org.crown.framework.web.page.TableDataInfo;
+import org.crown.framework.web.page.TableData;
 import org.crown.project.system.role.domain.Role;
 import org.crown.project.system.role.service.IRoleService;
 import org.crown.project.system.user.domain.User;
@@ -53,10 +53,10 @@ public class RoleController extends WebController<Role> {
     @RequiresPermissions("system:role:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Role role) {
+    public ApiResponses<TableData<Role>> list(Role role) {
         startPage();
         List<Role> list = roleService.selectRoleList(role);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
@@ -204,10 +204,10 @@ public class RoleController extends WebController<Role> {
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/allocatedList")
     @ResponseBody
-    public TableDataInfo allocatedList(User user) {
+    public ApiResponses<TableData<User>> allocatedList(User user) {
         startPage();
         List<User> list = userService.selectAllocatedList(user);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     /**
@@ -249,10 +249,10 @@ public class RoleController extends WebController<Role> {
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/unallocatedList")
     @ResponseBody
-    public TableDataInfo unallocatedList(User user) {
+    public ApiResponses<TableData<User>> unallocatedList(User user) {
         startPage();
         List<User> list = userService.selectUnallocatedList(user);
-        return getDataTable(list);
+        return success(getTableData(list));
     }
 
     /**
