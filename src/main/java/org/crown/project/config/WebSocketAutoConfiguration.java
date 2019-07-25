@@ -39,7 +39,7 @@ public class WebSocketAutoConfiguration implements WebSocketMessageBrokerConfigu
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/websocket")
-                .addInterceptors(new HandshakeInterceptor(){
+                .addInterceptors(new HandshakeInterceptor() {
                     @Override
                     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
                         return ShiroUtils.getSubject().isPermitted(ConsoleLog.VIEW_PERM);
