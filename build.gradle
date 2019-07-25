@@ -5,6 +5,7 @@ configurations {
     compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
     compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
     compile.exclude group: "org.apache.tomcat", module: "tomcat-jdbc"
+    compile.exclude group: "com.zaxxer", module: "HikariCP-java7"
 }
 
 buildscript {
