@@ -18,7 +18,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.project.config;
+package org.crown.autoconfigure;
 
 import org.crown.common.mybatisplus.CommonMetaObjectHandler;
 import org.crown.framework.mybatisplus.MybatisPlusSqlInjector;

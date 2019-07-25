@@ -94,15 +94,10 @@ public class Server {
     public void copyTo() {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
-
         setCpuInfo(hal.getProcessor());
-
         setMemInfo(hal.getMemory());
-
         setSysInfo();
-
         setJvmInfo();
-
         setSysFiles(si.getOperatingSystem());
     }
 

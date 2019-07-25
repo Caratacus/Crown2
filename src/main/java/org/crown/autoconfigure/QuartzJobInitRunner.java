@@ -1,4 +1,4 @@
-package org.crown.project.config;
+package org.crown.autoconfigure;
 
 import org.crown.project.monitor.quartz.common.QuartzManage;
 import org.crown.project.monitor.quartz.domain.Job;

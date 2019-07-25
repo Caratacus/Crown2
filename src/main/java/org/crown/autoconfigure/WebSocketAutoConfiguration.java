@@ -1,4 +1,4 @@
-package org.crown.project.config;
+package org.crown.autoconfigure;
 
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;

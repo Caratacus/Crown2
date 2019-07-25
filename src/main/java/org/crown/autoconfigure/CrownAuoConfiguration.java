@@ -1,4 +1,4 @@
-package org.crown.project.config;
+package org.crown.autoconfigure;
 
 import javax.servlet.DispatcherType;
 
