@@ -56,7 +56,7 @@
         </RollingRandomAccessFile>
         <Rewrite name="REWRITE">
             <AppenderRef ref="INFO_LOG"/>
-            <RewritePushPolicy/>
+            <ConsoleLogPolicy/>
         </Rewrite>
     </Appenders>
     <Loggers>

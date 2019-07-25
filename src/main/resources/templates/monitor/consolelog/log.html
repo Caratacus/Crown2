@@ -17,9 +17,9 @@
     </a>
 </div>
 <th:block th:include="include :: footer" />
-<script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
-<script>
+<th:block th:include="include :: sockjs-js" />
+<th:block th:include="include :: stomp-js" />
+<script th:inline="javascript">
     var stompClient = null;
     $(document).ready(function () {
         openSocket();
@@ -30,8 +30,9 @@
         if(stompClient==null){
             var socket = new SockJS('/websocket');
             stompClient = Stomp.over(socket);
-            stompClient.connect({token:''}, function() {
-                stompClient.subscribe('/topic/pullLogger', function(event) {
+            stompClient.debug=null;
+            stompClient.connect({}, function() {
+                stompClient.subscribe('/topic/consolelog', function(event) {
                     var content = JSON.parse(event.body);
                     var level = content.level;
                     var levelStyle = '<span>' + level + '</span>';
@@ -51,11 +52,10 @@
                         .append(content.timestamp)
                         .append('&nbsp;&nbsp;-&nbsp;&nbsp;')
                         .append('<span style="color: rgb(57,111,140);">' + content.fileName + ':' + content.lineNumber + '</span>')
-                        .append('&nbsp;&nbsp;-&nbsp;&nbsp;' + '<span style="color: rgb(210,213,219);">' + content.body + '</span>')
+                        .append('&nbsp;&nbsp;-&nbsp;&nbsp;')
+                        .append('<span style="color: rgb(210,213,219);">' + content.body + '</span>')
                         .append('<br/>');
                     $("#log-container").scrollTop($("#log-container div").height() - $("#log-container").height());
-                },{
-                    token:"kltoen"
                 });
             });
         }

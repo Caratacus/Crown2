@@ -1,4 +1,4 @@
-package org.crown.framework.pushlog;
+package org.crown.framework.consolelog;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,12 +13,32 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class LogMessage {
+public class ConsoleLog {
 
+    public static final String VIEW_PERM = "monitor:consolelog:view";
+
+    /**
+     * 日志内容
+     */
     private String body;
+    /**
+     * 时间戳
+     */
     private String timestamp;
+    /**
+     * 类名
+     */
     private String fileName;
+    /**
+     * 行号
+     */
     private int lineNumber;
+    /**
+     * 线程名
+     */
     private String threadName;
+    /**
+     * 日志等级
+     */
     private String level;
 }

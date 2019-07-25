@@ -1,4 +1,4 @@
-package org.crown.framework.pushlog;
+package org.crown.framework.consolelog;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -13,24 +13,24 @@ import org.apache.logging.log4j.core.config.plugins.PluginFactory;
  *
  * @author Caratacus
  */
-@Plugin(name = "RewritePushPolicy", category = "Core", elementType = "rewritePolicy", printObject = true)
-public final class RewritePushPolicy implements RewritePolicy {
+@Plugin(name = "ConsoleLogPolicy", category = "Core", elementType = "rewritePolicy", printObject = true)
+public final class ConsoleLogPolicy implements RewritePolicy {
 
     @PluginFactory
-    public static RewritePushPolicy factory() {
-        return new RewritePushPolicy();
+    public static ConsoleLogPolicy factory() {
+        return new ConsoleLogPolicy();
     }
 
     @Override
     public LogEvent rewrite(LogEvent source) {
-        LogMessage loggerMessage = new LogMessage(
+        ConsoleLog loggerMessage = new ConsoleLog(
                 source.getMessage().getFormattedMessage(),
                 DateFormat.getDateTimeInstance().format(new Date(source.getTimeMillis())),
                 source.getSource().getFileName(),
                 source.getSource().getLineNumber(),
                 source.getThreadName(),
                 source.getLevel().name());
-        LoggerQueue.getInstance().push(loggerMessage);
+        ConsoleLogQueue.getInstance().push(loggerMessage);
         return source;
     }
 }

@@ -1,9 +1,9 @@
 package org.crown.project.monitor.log.controller;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.crown.framework.consolelog.ConsoleLog;
 import org.crown.framework.web.controller.WebController;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Crown
  */
 @Controller
-@RequestMapping("/monitor/log")
-public class LogController extends WebController {
+@RequestMapping("/monitor/consolelog")
+public class ConsoleLogController extends WebController {
 
-    private final String prefix = "monitor/log";
+    private final String prefix = "monitor/consolelog";
 
-    @RequiresPermissions("monitor:log:view")
+    @RequiresPermissions(ConsoleLog.VIEW_PERM)
     @GetMapping
-    public String server(ModelMap mmap) {
+    public String server() {
         return prefix + "/log";
     }
 }

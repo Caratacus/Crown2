@@ -1,4 +1,4 @@
-package org.crown.framework.pushlog;
+package org.crown.framework.consolelog;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -12,23 +12,23 @@ import lombok.extern.slf4j.Slf4j;
  * @link https://cloud.tencent.com/developer/article/1096792
  */
 @Slf4j
-public class LoggerQueue {
+public class ConsoleLogQueue {
 
     /**
      * 队列大小
      */
     public static final int QUEUE_MAX_SIZE = 10000;
 
-    private static LoggerQueue alarmMessageQueue = new LoggerQueue();
+    private static ConsoleLogQueue alarmMessageQueue = new ConsoleLogQueue();
     /**
      * 阻塞队列
      */
     private BlockingQueue blockingQueue = new LinkedBlockingQueue<>(QUEUE_MAX_SIZE);
 
-    private LoggerQueue() {
+    private ConsoleLogQueue() {
     }
 
-    public static LoggerQueue getInstance() {
+    public static ConsoleLogQueue getInstance() {
         return alarmMessageQueue;
     }
 
@@ -38,7 +38,7 @@ public class LoggerQueue {
      * @param log
      * @return
      */
-    public boolean push(LogMessage log) {
+    public boolean push(ConsoleLog log) {
         return this.blockingQueue.add(log);
     }
 
@@ -47,10 +47,10 @@ public class LoggerQueue {
      *
      * @return
      */
-    public LogMessage poll() {
-        LogMessage result = null;
+    public ConsoleLog poll() {
+        ConsoleLog result = null;
         try {
-            result = (LogMessage) this.blockingQueue.take();
+            result = (ConsoleLog) this.blockingQueue.take();
         } catch (InterruptedException e) {
             log.warn("消息出列异常:{}", e.getMessage());
         }
