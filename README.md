@@ -104,7 +104,11 @@
 
 ![login.png](https://images.gitee.com/uploads/images/2019/0723/184701_e503cdb9_620321.png)
 <br>
-![index.png](https://images.gitee.com/uploads/images/2019/0723/192727_98f03ef7_620321.png)
+![index.png](https://images.gitee.com/uploads/images/2019/0725/130956_17cb391a_620321.png)
+<br>
+![job.png](https://images.gitee.com/uploads/images/2019/0725/131034_d7b84efd_620321.png)
+<br>
+![console.png](https://images.gitee.com/uploads/images/2019/0725/131105_7bdbb649_620321.png)
 <br>
 
 -----------------------------------------------------------------------------------------------
