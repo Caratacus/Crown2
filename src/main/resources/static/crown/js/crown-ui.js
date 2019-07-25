@@ -106,7 +106,10 @@
 						sort:  			params.sort,
 						order:          params.order
             		};
-            	var currentId = $.common.isEmpty($.table._option.formId) ? $('form').attr('id') : $.table._option.formId;
+				if (!curParams.pageNum){
+					curParams.pageNum = 1;
+				}
+				var currentId = $.common.isEmpty($.table._option.formId) ? $('form').attr('id') : $.table._option.formId;
             	return $.extend(curParams, $.common.formToJSON(currentId));
             },
             // 请求获取数据后处理回调函数
@@ -257,6 +260,9 @@
                     search.searchValue = params.search;
                     search.order = params.order;
 					search.sort = params.sort;
+					if (!search.pageNum){
+						search.pageNum = 1;
+					}
     		        return search;
     		    }
     		    $.btTable.bootstrapTable('refresh', params);

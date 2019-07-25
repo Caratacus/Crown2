@@ -89,7 +89,7 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public TableData list(UserOperateModel userModel) {
+    public ApiResponses<TableData<UserOperateModel>> list(UserOperateModel userModel) {
         TableData rspData = new TableData();
         List<UserOperateModel> userList = new ArrayList<>(users.values());
         // 查询条件过滤
@@ -105,7 +105,7 @@ public class DemoOperateController extends WebController {
         if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());
-            return rspData;
+            return success(rspData);
         }
         int pageNum = (pageDomain.getPageNum() - 1) * 10;
         int pageSize = pageDomain.getPageNum() * 10;
@@ -114,7 +114,7 @@ public class DemoOperateController extends WebController {
         }
         rspData.setRows(userList.subList(pageNum, pageSize));
         rspData.setTotal(userList.size());
-        return rspData;
+        return success(rspData);
     }
 
     /**

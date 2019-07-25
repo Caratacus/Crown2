@@ -105,7 +105,7 @@ mybatis-plus:
     banner: false
     super-mapper-class: org.crown.framework.mapper.BaseMapper
   type-enums-package: org.crown.common.enums,org.crown.framework.enums
-  type-aliases-package: org.crown.project.demo,org.crown.project.monitor,org.crown.project.system,org.crown.project.tool
+  type-aliases-package: org.crown.project.monitor,org.crown.project.system,org.crown.project.tool
   type-handlers-package: org.crown.framework.mybatisplus.typehandler
 # PageHelper分页插件
 pagehelper:

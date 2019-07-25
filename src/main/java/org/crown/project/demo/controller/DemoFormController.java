@@ -7,6 +7,7 @@ import java.util.Map;
 import org.crown.common.utils.Maps;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
+import org.crown.project.demo.domain.UserFormModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -171,71 +172,4 @@ public class DemoFormController extends WebController {
         String[] array = {"Crown 1", "Crown 2", "Crown 3", "Crown 4", "Crown 5"};
         return success(Maps.<String, Object>builder().put("value", array).build());
     }
-}
-
-class UserFormModel {
-
-    /**
-     * 用户ID
-     */
-    private int userId;
-
-    /**
-     * 用户编号
-     */
-    private String userCode;
-
-    /**
-     * 用户姓名
-     */
-    private String userName;
-
-    /**
-     * 用户手机
-     */
-    private String userPhone;
-
-    public UserFormModel() {
-
-    }
-
-    public UserFormModel(int userId, String userCode, String userName, String userPhone) {
-        this.userId = userId;
-        this.userCode = userCode;
-        this.userName = userName;
-        this.userPhone = userPhone;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUserCode() {
-        return userCode;
-    }
-
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPhone() {
-        return userPhone;
-    }
-
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
-    }
-
 }
