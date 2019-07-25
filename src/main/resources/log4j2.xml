@@ -61,9 +61,10 @@
     </Appenders>
     <Loggers>
         <!--AsyncLogger-->
-        <AsyncLogger name="org.crown" level="info" includeLocation="true"/>
-        <AsyncLogger name="org.crown.framework.p6spy" level="debug" includeLocation="true"/>
-        <AsyncLogger name="com.baomidou.mybatisplus.core.metadata.TableInfoHelper" level="error" includeLocation="true"/>
+        <AsyncLogger name="org.crown" level="INFO" includeLocation="true"/>
+        <AsyncLogger name="org.crown.framework.p6spy" level="DEBUG" includeLocation="true"/>
+        <AsyncLogger name="com.baomidou.mybatisplus.core.metadata.TableInfoHelper" level="ERROR" includeLocation="true"/>
+        <AsyncLogger name="com.baomidou.dynamic" level="INFO" includeLocation="true"/>
         <!--AsyncRoot-->
         <AsyncRoot level="warn" includeLocation="true">
             <appender-ref ref="CONSOLE"/>

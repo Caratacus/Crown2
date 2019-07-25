@@ -1,12 +1,5 @@
 description = "Crown2"
 
-configurations.all {
-    //每隔100天检查远程依赖是否存在更新
-    resolutionStrategy.cacheChangingModulesFor 2400, 'hours'
-    // cache dynamic versions for 24*60 minutes
-    resolutionStrategy.cacheDynamicVersionsFor 24 * 60 * 60, 'seconds'
-}
-
 configurations {
     compile.exclude group: "ch.qos.logback"
     compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
@@ -42,49 +35,50 @@ repositories {
 }
 
 dependencies {
-    api("org.springframework:spring-context-support:5.1.8.RELEASE")
-    api("org.springframework.boot:spring-boot-starter:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}")
-    api("com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}")
-    api("org.apache.shiro:shiro-spring:${shiroVersion}")
-    api("org.apache.shiro:shiro-ehcache:${shiroVersion}")
-    api("io.springfox:springfox-swagger-ui:${swaggerVersion}")
-    api("io.springfox:springfox-swagger2:${swaggerVersion}")
-    api("mysql:mysql-connector-java:8.0.17")
-    api("com.github.pagehelper:pagehelper-spring-boot-starter:1.2.12")
-    api("p6spy:p6spy:3.8.3")
-    api("com.lmax:disruptor:3.4.2")
-    api("org.apache.commons:commons-lang3:3.9")
-    api("commons-io:commons-io:2.5")
-    api("commons-fileupload:commons-fileupload:1.4")
-    api("com.github.theborakompanioni:thymeleaf-extras-shiro:2.0.0")
-    api("org.quartz-scheduler:quartz:2.3.1")
-    api("com.alibaba:fastjson:1.2.58")
+    implementation "org.springframework:spring-context-support:5.1.8.RELEASE"
+    implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}"
+    implementation "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}"
+    implementation "com.baomidou:dynamic-datasource-spring-boot-starter:2.5.5"
+    implementation "org.apache.shiro:shiro-spring:${shiroVersion}"
+    implementation "org.apache.shiro:shiro-ehcache:${shiroVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "mysql:mysql-connector-java:8.0.17"
+    implementation "com.github.pagehelper:pagehelper-spring-boot-starter:1.2.12"
+    implementation "p6spy:p6spy:3.8.3"
+    implementation "com.lmax:disruptor:3.4.2"
+    implementation "org.apache.commons:commons-lang3:3.9"
+    implementation "commons-io:commons-io:2.5"
+    implementation "commons-fileupload:commons-fileupload:1.4"
+    implementation "com.github.theborakompanioni:thymeleaf-extras-shiro:2.0.0"
+    implementation "org.quartz-scheduler:quartz:2.3.1"
+    implementation "com.alibaba:fastjson:1.2.58"
     //解析客户端操作系统、浏览器等
-    api("eu.bitwalker:UserAgentUtils:1.21")
-    api("org.apache.velocity:velocity-engine-core:2.1")
-    api("com.github.oshi:oshi-core:3.13.3")
-    api("net.java.dev.jna:jna:5.4.0")
-    api("net.java.dev.jna:jna-platform:5.4.0")
-    api("org.jsoup:jsoup:1.12.1")
-    api("org.apache.poi:poi-ooxml:4.1.0")
-    api("org.apache.httpcomponents:httpcore:4.4.11")
-    api("org.apache.httpcomponents:httpclient:4.5.9")
-    api("org.modelmapper:modelmapper:2.3.5")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
-    compileOnly("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
-    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
-    compileOnly("org.projectlombok:lombok:${lombokVersion}")
-    testCompile("org.projectlombok:lombok:${lombokVersion}")
-    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    implementation "eu.bitwalker:UserAgentUtils:1.21"
+    implementation "org.apache.velocity:velocity-engine-core:2.1"
+    implementation "com.github.oshi:oshi-core:3.13.3"
+    implementation "net.java.dev.jna:jna:5.4.0"
+    implementation "net.java.dev.jna:jna-platform:5.4.0"
+    implementation "org.jsoup:jsoup:1.12.1"
+    implementation "org.apache.poi:poi-ooxml:4.1.0"
+    implementation "org.apache.httpcomponents:httpcore:4.4.11"
+    implementation "org.apache.httpcomponents:httpclient:4.5.9"
+    implementation "org.modelmapper:modelmapper:2.3.5"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testCompile "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
 tasks.matching { it instanceof Test }.all {
