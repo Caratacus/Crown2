@@ -73,6 +73,8 @@ dependencies {
     implementation "org.modelmapper:modelmapper:2.3.5"
     implementation "com.squareup.okhttp3:okhttp:3.14.2"
     implementation "com.squareup.okhttp3:logging-interceptor:3.14.2"
+    implementation "com.sun.mail:javax.mail:1.6.2"
+    implementation "cn.hutool:hutool-extra:4.5.18"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
     compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
