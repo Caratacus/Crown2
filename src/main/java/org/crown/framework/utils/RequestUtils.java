@@ -207,4 +207,16 @@ public abstract class RequestUtils {
         return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
     }
 
+    /**
+     * 获取http请求的Domain
+     *
+     * @param request
+     * @return
+     */
+    public static String getDomain(HttpServletRequest request) {
+        StringBuffer url = request.getRequestURL();
+        String contextPath = request.getServletContext().getContextPath();
+        return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
+    }
+
 }

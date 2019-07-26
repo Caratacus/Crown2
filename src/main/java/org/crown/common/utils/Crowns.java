@@ -2,11 +2,11 @@ package org.crown.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.crown.common.utils.http.HttpUtils;
 import org.crown.framework.spring.ApplicationUtils;
 import org.crown.framework.springboot.properties.CrownProperties;
 import org.crown.framework.springboot.properties.Generator;
 import org.crown.framework.springboot.properties.Xss;
+import org.crown.framework.utils.RequestUtils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -67,7 +67,7 @@ public abstract class Crowns {
      * @return
      */
     public static String getUploadUrl(HttpServletRequest request, String filename) {
-        return HttpUtils.getDomain(request) + getUploadResourcePath(filename);
+        return RequestUtils.getDomain(request) + getUploadResourcePath(filename);
     }
 
     /**
