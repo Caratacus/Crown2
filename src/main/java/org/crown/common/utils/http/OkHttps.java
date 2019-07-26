@@ -92,6 +92,7 @@ public class OkHttps {
      * @return
      */
     public static String request(HTTPMethod method, String url, Map<String, String> headers, Map<String, String> params) {
+        log.info("请求地址:{},请求方法:{},请求头:{},请求参数:{}", url, method.name(), headers.toString(), params.toString());
         Request.Builder requestBuild = new Request.Builder().url(url);
         addHeaders(requestBuild, headers);
         switch (method) {
@@ -240,9 +241,11 @@ public class OkHttps {
      * @return
      */
     public static String requestBody(HTTPMethod method, String url, Map<String, String> headers, Object body) {
+        String content = JSON.toJSONString(body);
+        log.info("请求地址:{},请求方法:{},请求头:{},请求体:{}", url, method.name(), headers.toString(), content);
         Request.Builder requestBuild = new Request.Builder().url(url);
         addHeaders(requestBuild, headers);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), JSON.toJSONString(body));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), content);
         switch (method) {
             case POST:
                 requestBuild.post(requestBody);
