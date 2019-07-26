@@ -239,7 +239,7 @@ public abstract class IpUtils {
                         .put("Accept-Charset", "utf-8")
                         .put("contentType", "utf-8")
                         .build(),
-                Maps.<String, Object>builder()
+                Maps.<String, String>builder()
                         .put("ip", ip)
                         .build());
         if (org.crown.common.utils.StringUtils.isNotEmpty(repoStr)) {

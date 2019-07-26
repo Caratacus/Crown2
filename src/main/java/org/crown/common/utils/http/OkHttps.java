@@ -79,7 +79,7 @@ public class OkHttps {
      * @return
      */
     public static String get(String url, Map<String, String> headers) {
-        return requestBody(HTTPMethod.GET, url, headers, Collections.emptyMap());
+        return request(HTTPMethod.GET, url, headers, Collections.emptyMap());
     }
 
     /**
@@ -91,7 +91,7 @@ public class OkHttps {
      * @param params
      * @return
      */
-    public static String requestBody(HTTPMethod method, String url, Map<String, String> headers, Map<String, Object> params) {
+    public static String request(HTTPMethod method, String url, Map<String, String> headers, Map<String, String> params) {
         Request.Builder requestBuild = new Request.Builder().url(url);
         addHeaders(requestBuild, headers);
         switch (method) {
@@ -148,7 +148,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String post(String url, Map<String, Object> params) {
+    public static String post(String url, Map<String, String> params) {
         return post(url, Collections.EMPTY_MAP, params);
     }
 
@@ -160,8 +160,8 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String post(String url, Map<String, String> headers, Map<String, Object> params) {
-        return requestBody(HTTPMethod.POST, url, headers, params);
+    public static String post(String url, Map<String, String> headers, Map<String, String> params) {
+        return request(HTTPMethod.POST, url, headers, params);
     }
 
     /**
@@ -181,7 +181,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String put(String url, Map<String, Object> params) {
+    public static String put(String url, Map<String, String> params) {
         return put(url, Collections.EMPTY_MAP, params);
     }
 
@@ -192,8 +192,8 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String put(String url, Map<String, String> headers, Map<String, Object> params) {
-        return requestBody(HTTPMethod.PUT, url, headers, params);
+    public static String put(String url, Map<String, String> headers, Map<String, String> params) {
+        return request(HTTPMethod.PUT, url, headers, params);
 
     }
 
@@ -214,7 +214,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String patch(String url, Map<String, Object> params) {
+    public static String patch(String url, Map<String, String> params) {
         return patch(url, Collections.EMPTY_MAP, params);
     }
 
@@ -225,8 +225,8 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String patch(String url, Map<String, String> headers, Map<String, Object> params) {
-        return requestBody(HTTPMethod.PATCH, url, headers, params);
+    public static String patch(String url, Map<String, String> headers, Map<String, String> params) {
+        return request(HTTPMethod.PATCH, url, headers, params);
 
     }
 
@@ -254,7 +254,7 @@ public class OkHttps {
                 requestBuild.patch(requestBody);
                 break;
             default:
-                throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "内部请求方式不正确");
+                throw new RuntimeException("内部请求方式不正确");
 
         }
         Call call = getClient().newCall(requestBuild.build());
@@ -344,7 +344,7 @@ public class OkHttps {
      * @return
      */
     public static String delete(String url, Map<String, String> headers) {
-        return requestBody(HTTPMethod.DELETE, url, headers, Collections.EMPTY_MAP);
+        return request(HTTPMethod.DELETE, url, headers, Collections.EMPTY_MAP);
     }
 
     /**
