@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.enums.HTTPMethod;
 import org.crown.common.utils.StringUtils;
+import org.crown.common.utils.TypeUtils;
 import org.crown.framework.exception.Crown2Exception;
 
 import com.alibaba.fastjson.JSON;
@@ -90,7 +91,7 @@ public class OkHttps {
      * @param params
      * @return
      */
-    public static String requestBody(HTTPMethod method, String url, Map<String, String> headers, Map<String, String> params) {
+    public static String requestBody(HTTPMethod method, String url, Map<String, String> headers, Map<String, Object> params) {
         Request.Builder requestBuild = new Request.Builder().url(url);
         addHeaders(requestBuild, headers);
         switch (method) {
@@ -105,7 +106,7 @@ public class OkHttps {
                 FormBody.Builder formBodybuilder = new FormBody.Builder();
                 Set<String> paramKeys = params.keySet();
                 for (String key : paramKeys) {
-                    formBodybuilder.add(key, params.get(key));
+                    formBodybuilder.add(key, TypeUtils.castToString(params.get(key), ""));
                 }
                 FormBody formBody = formBodybuilder.build();
                 requestBuild.method(method.name(), formBody);
@@ -147,7 +148,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String post(String url, Map<String, String> params) {
+    public static String post(String url, Map<String, Object> params) {
         return post(url, Collections.EMPTY_MAP, params);
     }
 
@@ -159,7 +160,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String post(String url, Map<String, String> headers, Map<String, String> params) {
+    public static String post(String url, Map<String, String> headers, Map<String, Object> params) {
         return requestBody(HTTPMethod.POST, url, headers, params);
     }
 
@@ -180,7 +181,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String put(String url, Map<String, String> params) {
+    public static String put(String url, Map<String, Object> params) {
         return put(url, Collections.EMPTY_MAP, params);
     }
 
@@ -191,7 +192,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String put(String url, Map<String, String> headers, Map<String, String> params) {
+    public static String put(String url, Map<String, String> headers, Map<String, Object> params) {
         return requestBody(HTTPMethod.PUT, url, headers, params);
 
     }
@@ -213,7 +214,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String patch(String url, Map<String, String> params) {
+    public static String patch(String url, Map<String, Object> params) {
         return patch(url, Collections.EMPTY_MAP, params);
     }
 
@@ -224,7 +225,7 @@ public class OkHttps {
      * @param params
      * @return String
      */
-    public static String patch(String url, Map<String, String> headers, Map<String, String> params) {
+    public static String patch(String url, Map<String, String> headers, Map<String, Object> params) {
         return requestBody(HTTPMethod.PATCH, url, headers, params);
 
     }
