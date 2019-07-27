@@ -50,5 +50,10 @@ public class CrownProperties {
      */
     @NestedConfigurationProperty
     private Xss xss;
+    /**
+     * 告警通知Email配置
+     */
+    @NestedConfigurationProperty
+    private Email email;
 
 }

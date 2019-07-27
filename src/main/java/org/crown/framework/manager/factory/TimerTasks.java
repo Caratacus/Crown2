@@ -1,12 +1,17 @@
 package org.crown.framework.manager.factory;
 
+import java.io.File;
 import java.util.Date;
 import java.util.TimerTask;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.crown.common.cons.Constants;
+import org.crown.common.utils.Crowns;
 import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.spring.ApplicationUtils;
+import org.crown.framework.springboot.properties.Email;
 import org.crown.project.monitor.exceLog.domain.ExceLog;
 import org.crown.project.monitor.exceLog.service.IExceLogService;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
@@ -17,6 +22,7 @@ import org.crown.project.monitor.online.service.IUserOnlineService;
 import org.crown.project.monitor.operlog.domain.OperLog;
 import org.crown.project.monitor.operlog.service.IOperLogService;
 
+import cn.hutool.extra.mail.MailUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,10 +70,14 @@ public class TimerTasks {
      * @param exceLog 异常日志
      * @return 任务task
      */
-    public static TimerTask saveExceLog(final String ip, final ExceLog exceLog) {
+    public static TimerTask saveExceLog(final String ip, final int status, final ExceLog exceLog) {
         return new TimerTask() {
             @Override
             public void run() {
+                Email email = Crowns.getEmail();
+                if (status >= HttpServletResponse.SC_INTERNAL_SERVER_ERROR && email.isEnabled()) {
+                    MailUtil.send(email.getSend(), "Crown2系统的异常告警", exceLog.getContent(), true, (File[]) null);
+                }
                 exceLog.setIpAddr(IpUtils.getRealAddress(ip));
                 ApplicationUtils.getBean(IExceLogService.class).save(exceLog);
             }

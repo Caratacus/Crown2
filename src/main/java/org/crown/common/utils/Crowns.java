@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.crown.framework.spring.ApplicationUtils;
 import org.crown.framework.springboot.properties.CrownProperties;
+import org.crown.framework.springboot.properties.Email;
 import org.crown.framework.springboot.properties.Generator;
 import org.crown.framework.springboot.properties.Xss;
 import org.crown.framework.utils.RequestUtils;
@@ -95,6 +96,15 @@ public abstract class Crowns {
      */
     public static Xss getXss() {
         return getProperties().getXss();
+    }
+
+    /**
+     * 获取告警Email配置
+     *
+     * @return
+     */
+    public static Email getEmail() {
+        return getProperties().getEmail();
     }
 
     /**

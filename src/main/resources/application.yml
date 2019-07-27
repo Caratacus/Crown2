@@ -125,6 +125,9 @@ pagehelper:
   params: count=countSql
 # 项目相关配置
 crown:
+  email:
+    enabled: false
+    send: caratcaus@gmail.com
   # 代码生成
   generator:
     author: Caratacus

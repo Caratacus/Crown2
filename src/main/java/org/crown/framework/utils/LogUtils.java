@@ -23,6 +23,8 @@ package org.crown.framework.utils;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.crown.common.utils.JacksonUtils;
 import org.crown.framework.manager.ThreadExecutors;
 import org.crown.framework.manager.factory.TimerTasks;
@@ -54,7 +56,7 @@ public abstract class LogUtils {
      * @param object
      * @return
      */
-    public static void printLog(boolean excelog, Long beiginTime, String uid, String loginName, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
+    public static void printLog(Integer status, Long beiginTime, String uid, String loginName, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
         Object requestBodyObj = Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody);
         String runTime = (beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms";
         Log logInfo = Log.builder()
@@ -75,14 +77,14 @@ public abstract class LogUtils {
                 .ip(ip)
                 .build();
         String logJson = JacksonUtils.toJson(logInfo);
-        if (excelog) {
+        if (status>= HttpServletResponse.SC_BAD_REQUEST) {
             ExceLog exceLog = new ExceLog();
             exceLog.setOperName(loginName);
             exceLog.setUrl(url);
             exceLog.setActionMethod(actionMethod);
             exceLog.setRunTime(runTime);
             exceLog.setContent(logJson);
-            ThreadExecutors.execute(TimerTasks.saveExceLog(ip, exceLog));
+            ThreadExecutors.execute(TimerTasks.saveExceLog(ip,status, exceLog));
         }
         log.info(logJson);
     }

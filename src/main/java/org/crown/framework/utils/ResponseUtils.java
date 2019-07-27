@@ -81,7 +81,7 @@ public abstract class ResponseUtils {
             ErrorCode errorCode = response.getErrorCode();
             status = errorCode.getStatus();
         }
-        LogUtils.printLog(status >= HttpServletResponse.SC_BAD_REQUEST, (Long) request.getAttribute(APICons.API_BEGIN_TIME),
+        LogUtils.printLog(status, (Long) request.getAttribute(APICons.API_BEGIN_TIME),
                 userId,
                 loginName,
                 request.getParameterMap(),
