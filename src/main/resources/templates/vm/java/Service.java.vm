@@ -1,7 +1,7 @@
 package ${package}.service;
 
 import org.crown.framework.service.BaseService;
-import org.crown.project.system.resource.domain.${className};
+import ${package}.domain.${className};
 
 /**
  * ${tableComment} 服务层

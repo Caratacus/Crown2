@@ -11,7 +11,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
-.${moduleName}.${classname}.domain.${className};
+import ${package}.domain.${className};
 import org.crown.project.${moduleName}.${classname}.service.I${className}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -118,7 +118,7 @@ public class ${className}Controller extends WebController<${className}> {
 	@PostMapping("/remove")
 	@ResponseBody
 	public ApiResponses<Void> remove(String ids) {
-		${classname}Service.remove(Wrappers.<${className}>lambdaQuery().inOrThrow(${className}::get${primaryKey.columnName}, StringUtils.split2List(ids)));
+		${classname}Service.remove(Wrappers.<${className}>lambdaQuery().in(${className}::get${primaryKey.attrName}, StringUtils.split2List(ids)));
 		return success();
 	}
 
