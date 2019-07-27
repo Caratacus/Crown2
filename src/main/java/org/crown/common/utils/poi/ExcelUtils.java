@@ -624,7 +624,7 @@ public class ExcelUtils<T> {
         try {
             Cell cell = row.getCell(column);
             if (cell != null) {
-                if (cell.getCellType() == CellType.NUMERIC) {
+                if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA) {
                     val = cell.getNumericCellValue();
                     if (HSSFDateUtil.isCellDateFormatted(cell)) {
                         val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换

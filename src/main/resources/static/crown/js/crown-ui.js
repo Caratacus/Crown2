@@ -449,8 +449,9 @@
         			showColumns: options.showColumns,                   // 是否显示隐藏某列下拉框
         			expandAll: options.expandAll,                       // 是否全部展开
         			expandFirst: options.expandFirst,                   // 是否默认第一级展开--expandAll为false时生效
-        	        columns: options.columns
-        	    });
+					columns: options.columns,                           // 显示列信息（*）
+					responseHandler: $.treeTable.responseHandler        // 当所有数据被加载时触发处理函数
+				});
             },
             // 条件查询
             search: function(formId) {
@@ -469,6 +470,19 @@
         	    });
             	return $.common.uniqueFn(rows);
             },
+			// 请求获取数据后处理回调函数，校验异常状态提醒
+			responseHandler: function(result) {
+				var status = result.status;
+				var msg = result.msg;
+				if (status >= 200 && status <= 299) {
+					return result.result;
+				} else if (status >= 300 && status < 500) {
+					$.modal.alertWarning(msg);
+				} else {
+					$.modal.alertError(msg);
+				}
+				return [];
+			}
         },
         // 表单封装处理
     	form: {
