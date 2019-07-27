@@ -54,7 +54,7 @@
 
     <select id="selectDeptById" parameterType="Long" resultMap="DeptResult">
 		select sys_dept.dept_id, sys_dept.parent_id, sys_dept.ancestors, sys_dept.dept_name, sys_dept.order_num, sys_dept.leader, sys_dept.phone, sys_dept.email, sys_dept.status,
-			(select dept_name from sys_dept where dept_id = sys_dept.parent_id) parent_name
+			(select sd.dept_name from sys_dept sd where sd.dept_id = sys_dept.parent_id) parent_name
 		from sys_dept
 		where sys_dept.dept_id = #{deptId}
 	</select>

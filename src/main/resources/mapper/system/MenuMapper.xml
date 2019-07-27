@@ -85,7 +85,7 @@
 
     <select id="selectMenuById" parameterType="Long" resultMap="MenuResult">
 		SELECT sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.order_num, sys_menu.url, sys_menu.target, sys_menu.menu_type, sys_menu.visible, sys_menu.perms, sys_menu.icon, sys_menu.remark,
-			(SELECT menu_name FROM sys_menu WHERE menu_id = sys_menu.parent_id) parent_name
+			(SELECT sm.menu_name FROM sys_menu sm WHERE sm.menu_id = sys_menu.parent_id) parent_name
 		FROM sys_menu
 		where sys_menu.menu_id = #{menuId}
 	</select>
