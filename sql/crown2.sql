@@ -153,6 +153,22 @@ INSERT INTO `sys_dict_type` VALUES (9, '系统状态', 'sys_common_status', '0',
 COMMIT;
 
 -- ----------------------------
+-- Table structure for sys_exce_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_exce_log`;
+CREATE TABLE `sys_exce_log` (
+  `id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '请求路径',
+  `oper_name` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '当前操作人',
+  `action_method` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '控制器方法',
+  `run_time` varchar(20) COLLATE utf8mb4_bin NOT NULL COMMENT '接口运行时间 单位:ms',
+  `ip_addr` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT 'IP地址',
+  `content` longtext COLLATE utf8mb4_bin NOT NULL COMMENT '日志详情',
+  `create_time` datetime NOT NULL COMMENT '异常时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='异常日志表';
+
+-- ----------------------------
 -- Table structure for sys_job
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_job`;
@@ -234,7 +250,7 @@ CREATE TABLE `sys_menu` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) COLLATE utf8mb4_bin DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1059 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='菜单权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=1063 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of sys_menu
@@ -319,6 +335,10 @@ INSERT INTO `sys_menu` VALUES (1055, '任务导出', 110, 7, '#', '', 'F', '0', 
 INSERT INTO `sys_menu` VALUES (1056, '生成查询', 114, 1, '#', '', 'F', '0', 'tool:gen:list', '#', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu` VALUES (1057, '生成代码', 114, 2, '#', '', 'F', '0', 'tool:gen:code', '#', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu` VALUES (1058, '即时日志', 2, 4, '/monitor/consolelog', 'menuItem', 'C', '0', 'monitor:consolelog:view', '', 'crown', '2019-07-25 01:59:15', NULL, '2019-07-25 09:52:52', '');
+INSERT INTO `sys_menu` VALUES (1059, '异常日志', 2, 1, '/monitor/exceLog', 'menuItem', 'C', '0', 'monitor:exceLog:view', '#', 'crown', '2018-06-28 00:00:00', NULL, '2019-07-27 14:48:54', '异常日志菜单');
+INSERT INTO `sys_menu` VALUES (1060, '异常日志查询', 1059, 1, '#', 'menuItem', 'F', '0', 'monitor:exceLog:list', '#', 'crown', '2018-06-28 00:00:00', NULL, '2019-07-27 14:49:10', '');
+INSERT INTO `sys_menu` VALUES (1061, '异常日志删除', 1059, 4, '#', 'menuItem', 'F', '0', 'monitor:exceLog:remove', '#', 'crown', '2018-06-28 00:00:00', NULL, '2019-07-27 14:49:22', '');
+INSERT INTO `sys_menu` VALUES (1062, '异常日志详情', 1059, 3, '', 'menuItem', 'F', '0', 'monitor:exceLog:detail', '', 'crown', '2019-07-27 16:48:20', NULL, '2019-07-27 16:48:48', '');
 COMMIT;
 
 -- ----------------------------
@@ -569,7 +589,7 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES (1, 105, 'crown', 'Crown', '00', 'crown@qq.com', '15666666666', '1', '', '6bb801aa715c8d25d51b781577f2129e', '9a45e9', '0', '0', '0:0:0:0:0:0:0:1', '2019-07-25 02:08:26', 'crown', '2018-03-16 11:33:00', NULL, '2019-07-25 02:08:26', '管理员');
+INSERT INTO `sys_user` VALUES (1, 105, 'crown', 'Crown', '00', 'crown@qq.com', '15666666666', '1', '', '6bb801aa715c8d25d51b781577f2129e', '9a45e9', '0', '0', '0:0:0:0:0:0:0:1', '2019-07-27 14:32:51', 'crown', '2018-03-16 11:33:00', NULL, '2019-07-27 14:32:51', '管理员');
 INSERT INTO `sys_user` VALUES (2, 103, 'admin', 'Admin', '00', 'crown@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '0', '0:0:0:0:0:0:0:1', '2019-07-12 17:24:10', 'crown', '2018-03-16 11:33:00', 'crown', '2019-07-23 16:51:18', '测试账号');
 COMMIT;
 
@@ -621,10 +641,11 @@ CREATE TABLE `sys_user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='用户和角色关联表';
 
 -- ----------------------------
---  Records of `sys_user_role`
+-- Records of sys_user_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_role` VALUES ('1', '1'), ('2', '2');
+INSERT INTO `sys_user_role` VALUES (1, 1);
+INSERT INTO `sys_user_role` VALUES (2, 2);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
