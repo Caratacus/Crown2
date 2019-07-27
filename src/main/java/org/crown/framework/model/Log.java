@@ -74,5 +74,9 @@ public class Log {
      * UID
      */
     private String uid;
+    /**
+     * 登录用户名
+     */
+    private String loginName;
 
 }

@@ -24,8 +24,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.crown.common.utils.JacksonUtils;
+import org.crown.framework.manager.ThreadExecutors;
+import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.framework.model.Log;
 import org.crown.framework.spring.ApplicationUtils;
+import org.crown.project.monitor.exceLog.domain.ExceLog;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,13 +54,14 @@ public abstract class LogUtils {
      * @param object
      * @return
      */
-    public static void printLog(boolean excelog, Long beiginTime, String uid, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
+    public static void printLog(boolean excelog, Long beiginTime, String uid, String loginName, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
         Object requestBodyObj = Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody);
         String runTime = (beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms";
         Log logInfo = Log.builder()
                 //查询参数
                 .parameterMap(parameterMap)
                 .uid(uid)
+                .loginName(loginName)
                 //请求体r
                 .requestBody(requestBodyObj)
                 //请求路径
@@ -70,7 +74,17 @@ public abstract class LogUtils {
                 .result(object)
                 .ip(ip)
                 .build();
-        log.info(JacksonUtils.toJson(logInfo));
+        String logJson = JacksonUtils.toJson(logInfo);
+        if (excelog) {
+            ExceLog exceLog = new ExceLog();
+            exceLog.setOperName(loginName);
+            exceLog.setUrl(url);
+            exceLog.setActionMethod(actionMethod);
+            exceLog.setRunTime(runTime);
+            exceLog.setContent(logJson);
+            ThreadExecutors.execute(TimerTasks.saveExceLog(ip, exceLog));
+        }
+        log.info(logJson);
     }
 
     public static void doAfterReturning(Object ret) {

@@ -21,6 +21,7 @@
 package org.crown.framework.utils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,13 +67,23 @@ public abstract class ResponseUtils {
      */
     public static void writeValAsJson(HttpServletRequest request, ResponseWrapper response, Object obj) {
         String userId = null;
+        String loginName = null;
         try {
             userId = TypeUtils.castToString(ShiroUtils.getUserId());
         } catch (Exception ignored) {
         }
-
-        LogUtils.printLog(response.getStatus() != HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, (Long) request.getAttribute(APICons.API_BEGIN_TIME),
+        try {
+            loginName = TypeUtils.castToString(ShiroUtils.getLoginName());
+        } catch (Exception ignored) {
+        }
+        int status = HttpServletResponse.SC_OK;
+        if (Objects.nonNull(response)) {
+            ErrorCode errorCode = response.getErrorCode();
+            status = errorCode.getStatus();
+        }
+        LogUtils.printLog(status != HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, (Long) request.getAttribute(APICons.API_BEGIN_TIME),
                 userId,
+                loginName,
                 request.getParameterMap(),
                 RequestUtils.getRequestBody(request),
                 (String) request.getAttribute(APICons.API_REQURL),

@@ -7,6 +7,8 @@ import org.crown.common.cons.Constants;
 import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.spring.ApplicationUtils;
+import org.crown.project.monitor.exceLog.domain.ExceLog;
+import org.crown.project.monitor.exceLog.service.IExceLogService;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
 import org.crown.project.monitor.logininfor.service.ILogininforService;
 import org.crown.project.monitor.online.domain.OnlineSession;
@@ -51,6 +53,23 @@ public class TimerTasks {
                 online.setSession(session);
                 ApplicationUtils.getBean(IUserOnlineService.class).saveOrUpdate(online);
 
+            }
+        };
+    }
+
+    /**
+     * 同步session到数据库
+     *
+     * @param ip      IP地址
+     * @param exceLog 异常日志
+     * @return 任务task
+     */
+    public static TimerTask saveExceLog(final String ip, final ExceLog exceLog) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                exceLog.setIpAddr(IpUtils.getRealAddress(ip));
+                ApplicationUtils.getBean(IExceLogService.class).save(exceLog);
             }
         };
     }

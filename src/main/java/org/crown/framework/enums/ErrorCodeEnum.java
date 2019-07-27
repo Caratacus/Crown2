@@ -148,11 +148,11 @@ public enum ErrorCodeEnum {
 
     ;
 
-    private final int httpCode;
+    private final int status;
     private final String msg;
 
-    ErrorCodeEnum(int httpCode, String msg) {
-        this.httpCode = httpCode;
+    ErrorCodeEnum(int status, String msg) {
+        this.status = status;
         this.msg = msg;
     }
 
@@ -163,7 +163,7 @@ public enum ErrorCodeEnum {
      * @return
      */
     public ErrorCode overrideMsg(String msg) {
-        return ErrorCode.builder().httpCode(httpCode()).error(name()).msg(msg).build();
+        return ErrorCode.builder().status(status()).error(name()).msg(msg).build();
     }
 
     /**
@@ -172,7 +172,7 @@ public enum ErrorCodeEnum {
      * @return
      */
     public ErrorCode convert() {
-        return ErrorCode.builder().httpCode(httpCode()).error(name()).msg(msg()).build();
+        return ErrorCode.builder().status(status()).error(name()).msg(msg()).build();
     }
 
     public static ErrorCodeEnum getErrorCode(String errorCode) {
@@ -185,8 +185,8 @@ public enum ErrorCodeEnum {
         throw new UnknownEnumException("Error: Unknown errorCode, or do not support changing errorCode!\n");
     }
 
-    public int httpCode() {
-        return this.httpCode;
+    public int status() {
+        return this.status;
     }
 
     public String msg() {

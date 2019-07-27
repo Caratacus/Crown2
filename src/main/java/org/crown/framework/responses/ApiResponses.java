@@ -105,7 +105,7 @@ public class ApiResponses<T> implements Serializable {
     public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception) {
         FailedResponse failedResponse = new FailedResponse();
         failedResponse.setError(errorCode.getError())
-                .setStatus(errorCode.getHttpCode())
+                .setStatus(errorCode.getStatus())
                 .setMsg(errorCode.getMsg());
         ResponseUtils.exceptionMsg(failedResponse, exception);
         return failedResponse;
@@ -119,7 +119,7 @@ public class ApiResponses<T> implements Serializable {
     public static <T> ApiResponses<T> failure(ErrorCode errorCode) {
         FailedResponse failedResponse = new FailedResponse();
         return failedResponse.setError(errorCode.getError())
-                .setStatus(errorCode.getHttpCode())
+                .setStatus(errorCode.getStatus())
                 .setMsg(errorCode.getMsg());
     }
 

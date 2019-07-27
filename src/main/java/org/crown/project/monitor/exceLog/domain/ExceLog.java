@@ -1,6 +1,12 @@
 package org.crown.project.monitor.exceLog.domain;
 
-import org.crown.framework.web.domain.BaseEntity;
+import java.util.Date;
+
+import org.crown.framework.web.domain.BaseQueryParams;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +18,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class ExceLog extends BaseEntity {
+public class ExceLog extends BaseQueryParams {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,5 +50,11 @@ public class ExceLog extends BaseEntity {
 	 * 日志详情
 	 */
 	private String content;
+	/**
+	 * 创建时间
+	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@TableField(fill = FieldFill.INSERT)
+	private Date createTime;
 
 }

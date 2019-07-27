@@ -52,7 +52,7 @@ public class Crown2Exception extends ApiException {
     }
 
     public Crown2Exception(int httpCode, String msg) {
-        super(ErrorCode.builder().error(ErrorCodeEnum.MSG_EXCEPTION.name()).httpCode(httpCode).msg(msg).build());
+        super(ErrorCode.builder().error(ErrorCodeEnum.MSG_EXCEPTION.name()).status(httpCode).msg(msg).build());
     }
 
 }
