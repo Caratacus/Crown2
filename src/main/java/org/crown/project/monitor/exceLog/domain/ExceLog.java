@@ -21,9 +21,9 @@ public class ExceLog extends BaseEntity {
 	 */
 	private Long id;
 	/**
-	 * 用户ID
+	 * 当前操作人
 	 */
-	private String uid;
+	private String operName;
 	/**
 	 * 请求路径
 	 */
