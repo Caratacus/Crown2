@@ -40,6 +40,7 @@ public abstract class LogUtils {
     /**
      * 获取日志对象
      *
+     * @param excelog
      * @param beiginTime
      * @param parameterMap
      * @param requestBody
@@ -50,20 +51,22 @@ public abstract class LogUtils {
      * @param object
      * @return
      */
-    public static void printLog(Long beiginTime, String uid, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
+    public static void printLog(boolean excelog, Long beiginTime, String uid, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
+        Object requestBodyObj = Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody);
+        String runTime = (beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms";
         Log logInfo = Log.builder()
                 //查询参数
                 .parameterMap(parameterMap)
                 .uid(uid)
-                //请求体
-                .requestBody(Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody))
+                //请求体r
+                .requestBody(requestBodyObj)
                 //请求路径
                 .url(url)
                 //控制器方法
                 .actionMethod(actionMethod)
                 //请求方法
                 .method(method)
-                .runTime((beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms")
+                .runTime(runTime)
                 .result(object)
                 .ip(ip)
                 .build();

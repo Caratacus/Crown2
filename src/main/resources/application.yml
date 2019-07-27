@@ -128,7 +128,7 @@ crown:
   # 代码生成
   generator:
     author: Caratacus
-    package-path: org.crown.project.system
+    package-path: org.crown.project.monitor
     auto-remove-pre: true
     table-prefix: sys_
   # 实例演示开关

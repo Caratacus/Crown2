@@ -70,7 +70,8 @@ public abstract class ResponseUtils {
             userId = TypeUtils.castToString(ShiroUtils.getUserId());
         } catch (Exception ignored) {
         }
-        LogUtils.printLog((Long) request.getAttribute(APICons.API_BEGIN_TIME),
+
+        LogUtils.printLog(response.getStatus() != HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, (Long) request.getAttribute(APICons.API_BEGIN_TIME),
                 userId,
                 request.getParameterMap(),
                 RequestUtils.getRequestBody(request),

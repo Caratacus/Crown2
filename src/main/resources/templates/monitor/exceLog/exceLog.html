@@ -15,14 +15,6 @@
 							</li>
 
 							<li>
-								Query参数：<input type="text" name="parameterMap"/>
-							</li>
-
-							<li>
-								请求体：<input type="text" name="requestbody"/>
-							</li>
-
-							<li>
 								请求路径：<input type="text" name="url"/>
 							</li>
 
@@ -31,15 +23,7 @@
 							</li>
 
 							<li>
-								请求方法：<input type="text" name="method"/>
-							</li>
-
-							<li>
 								接口运行时间 单位:ms：<input type="text" name="runTime"/>
-							</li>
-
-							<li>
-								IP：<input type="text" name="ip"/>
 							</li>
 
 							<li>
@@ -47,7 +31,7 @@
 							</li>
 
 							<li>
-								日志需要打印的json字符串：<input type="text" name="result"/>
+								日志详情：<input type="text" name="content"/>
 							</li>
 
 							<li>
@@ -107,16 +91,6 @@
 					sortable: true
 				},
 				{
-					field : 'parameterMap', 
-					title : 'Query参数',
-					sortable: true
-				},
-				{
-					field : 'requestbody', 
-					title : '请求体',
-					sortable: true
-				},
-				{
 					field : 'url', 
 					title : '请求路径',
 					sortable: true
@@ -127,18 +101,8 @@
 					sortable: true
 				},
 				{
-					field : 'method', 
-					title : '请求方法',
-					sortable: true
-				},
-				{
 					field : 'runTime', 
 					title : '接口运行时间 单位:ms',
-					sortable: true
-				},
-				{
-					field : 'ip', 
-					title : 'IP',
 					sortable: true
 				},
 				{
@@ -147,8 +111,8 @@
 					sortable: true
 				},
 				{
-					field : 'result', 
-					title : '日志需要打印的json字符串',
+					field : 'content', 
+					title : '日志详情',
 					sortable: true
 				},
 		        {

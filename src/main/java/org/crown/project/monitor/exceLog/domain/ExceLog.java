@@ -23,15 +23,7 @@ public class ExceLog extends BaseEntity {
 	/**
 	 * 用户ID
 	 */
-	private Integer uid;
-	/**
-	 * Query参数
-	 */
-	private String parameterMap;
-	/**
-	 * 请求体
-	 */
-	private String requestbody;
+	private String uid;
 	/**
 	 * 请求路径
 	 */
@@ -41,24 +33,16 @@ public class ExceLog extends BaseEntity {
 	 */
 	private String actionMethod;
 	/**
-	 * 请求方法
-	 */
-	private String method;
-	/**
 	 * 接口运行时间 单位:ms
 	 */
 	private String runTime;
-	/**
-	 * IP
-	 */
-	private String ip;
 	/**
 	 * IP地址
 	 */
 	private String ipAddr;
 	/**
-	 * 日志需要打印的json字符串
+	 * 日志详情
 	 */
-	private String result;
+	private String content;
 
 }
