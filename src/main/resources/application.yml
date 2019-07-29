@@ -126,8 +126,8 @@ pagehelper:
 # 项目相关配置
 crown:
   email:
-    enabled: false
-    send: caratcaus@gmail.com
+    enabled: true
+    send: caratacus@qq.com
   # 代码生成
   generator:
     author: Caratacus
