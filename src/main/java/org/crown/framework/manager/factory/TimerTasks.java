@@ -1,6 +1,5 @@
 package org.crown.framework.manager.factory;
 
-import java.io.File;
 import java.util.Date;
 import java.util.TimerTask;
 
@@ -76,7 +75,7 @@ public class TimerTasks {
             public void run() {
                 Email email = Crowns.getEmail();
                 if (status >= HttpServletResponse.SC_INTERNAL_SERVER_ERROR && email.isEnabled()) {
-                    MailUtil.send(email.getSend(), "Crown2系统的异常告警", exceLog.getContent(), false, (File[]) null);
+                    MailUtil.send(email.getSend(), "Crown2系统的异常告警", exceLog.getContent(), false);
                 }
                 exceLog.setIpAddr(IpUtils.getRealAddress(ip));
                 ApplicationUtils.getBean(IExceLogService.class).save(exceLog);
