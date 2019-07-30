@@ -25,6 +25,7 @@ import org.crown.framework.mybatisplus.MybatisPlusSqlInjector;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.baomidou.dynamic.datasource.plugin.MasterSlaveAutoRoutingPlugin;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 
@@ -44,6 +45,16 @@ public class MybatisPlusAutoConfiguration {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
+    }
+
+    /**
+     * 基于baomidou dynamic datasource读写分离
+     *
+     * @return
+     */
+    @Bean
+    public MasterSlaveAutoRoutingPlugin masterSlaveAutoRoutingPlugin() {
+        return new MasterSlaveAutoRoutingPlugin();
     }
 
     /**
