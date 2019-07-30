@@ -49,8 +49,8 @@ public class DeptController extends WebController<Dept> {
     @RequiresPermissions("system:dept:list")
     @PostMapping("/list")
     @ResponseBody
-    public List<Dept> list(Dept dept) {
-        return deptService.selectDeptList(dept);
+    public ApiResponses<List<Dept>> list(Dept dept) {
+        return success(deptService.selectDeptList(dept));
     }
 
     /**

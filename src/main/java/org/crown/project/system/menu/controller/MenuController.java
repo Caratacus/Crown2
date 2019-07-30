@@ -52,8 +52,8 @@ public class MenuController extends WebController<Menu> {
     @RequiresPermissions("system:menu:list")
     @PostMapping("/list")
     @ResponseBody
-    public List<Menu> list(Menu menu) {
-        return menuService.selectMenuList(menu);
+    public ApiResponses<List<Menu>> list(Menu menu) {
+        return success(menuService.selectMenuList(menu));
     }
 
     /**
