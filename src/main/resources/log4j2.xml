@@ -27,7 +27,7 @@
         </Console>
         <RollingRandomAccessFile name="ERROR_LOG"
                                  fileName="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log"
-                                 filePattern="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+                                 filePattern="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.%i.gz">
             <PatternLayout
                     pattern="${LOG_PATTERN}"/>
             <Filters>
@@ -42,7 +42,7 @@
         </RollingRandomAccessFile>
         <RollingRandomAccessFile name="INFO_LOG"
                                  fileName="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log"
-                                 filePattern="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+                                 filePattern="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.%i.gz">
             <PatternLayout
                     pattern="${LOG_PATTERN}"/>
             <Filters>
