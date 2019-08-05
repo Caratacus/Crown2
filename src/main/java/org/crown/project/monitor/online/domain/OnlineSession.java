@@ -1,6 +1,7 @@
 package org.crown.project.monitor.online.domain;
 
 import org.apache.shiro.session.mgt.SimpleSession;
+import org.crown.common.enums.OnlineStatus;
 
 /**
  * 在线用户会话属性
@@ -133,19 +134,4 @@ public class OnlineSession extends SimpleSession {
         return attributeChanged;
     }
 
-    public enum OnlineStatus {
-        /**
-         * 用户状态
-         */
-        on_line("在线"), off_line("离线");
-        private final String info;
-
-        OnlineStatus(String info) {
-            this.info = info;
-        }
-
-        public String getInfo() {
-            return info;
-        }
-    }
 }

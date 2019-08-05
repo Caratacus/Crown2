@@ -32,8 +32,8 @@ public class QuartzJobInitRunner implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments applicationArguments) {
-        log.info("--------------------注入定时任务---------------------");
+        log.info("Quartz定时任务 - 数据加载中");
         jobService.query().eq(Job::getPaused, false).list().forEach(quartzJob -> quartzManage.addJob(quartzJob));
-        log.info("--------------------定时任务注入完成---------------------");
+        log.info("Quartz定时任务 - 数据加载完成");
     }
 }

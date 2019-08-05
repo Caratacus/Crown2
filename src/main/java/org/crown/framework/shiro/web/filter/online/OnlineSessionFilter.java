@@ -10,6 +10,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.crown.common.cons.ShiroConstants;
+import org.crown.common.enums.OnlineStatus;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
 import org.crown.framework.spring.ApplicationUtils;
@@ -54,7 +55,7 @@ public class OnlineSessionFilter extends AccessControlFilter {
                 }
             }
 
-            return onlineSession.getStatus() != OnlineSession.OnlineStatus.off_line;
+            return onlineSession.getStatus() != OnlineStatus.off_line;
         }
         return true;
     }

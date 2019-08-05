@@ -89,7 +89,7 @@ mybatis-plus:
     lazy-loading-enabled: true
     local-cache-scope: session
     map-underscore-to-camel-case: true
-    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
   mapper-locations: classpath:mapper/**/*Mapper.xml
   global-config:
     db-config:

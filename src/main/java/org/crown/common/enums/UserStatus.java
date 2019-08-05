@@ -1,4 +1,4 @@
-package org.crown.project.system.user.domain;
+package org.crown.common.enums;
 
 /**
  * 用户状态

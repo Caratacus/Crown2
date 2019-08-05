@@ -2,8 +2,8 @@ package org.crown.project.monitor.online.domain;
 
 import java.util.Date;
 
+import org.crown.common.enums.OnlineStatus;
 import org.crown.framework.web.domain.BaseQueryParams;
-import org.crown.project.monitor.online.domain.OnlineSession.OnlineStatus;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

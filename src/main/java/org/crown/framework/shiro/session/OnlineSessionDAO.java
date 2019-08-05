@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.crown.common.enums.OnlineStatus;
 import org.crown.framework.manager.ThreadExecutors;
 import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.project.monitor.online.domain.OnlineSession;
@@ -101,7 +102,7 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
         if (null == onlineSession) {
             return;
         }
-        onlineSession.setStatus(OnlineSession.OnlineStatus.off_line);
+        onlineSession.setStatus(OnlineStatus.off_line);
         onlineService.removeById(onlineSession.getId());
     }
 }
