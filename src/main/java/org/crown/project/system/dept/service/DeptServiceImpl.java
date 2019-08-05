@@ -27,13 +27,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implements IDeptService {
 
     @Override
-    @DataScope(deptAlias = "d")
+    @DataScope
     public List<Dept> selectDeptList(Dept dept) {
         return baseMapper.selectDeptList(dept);
     }
 
     @Override
-    @DataScope(deptAlias = "d")
+    @DataScope
     public List<Ztree> selectDeptTree(Dept dept) {
         List<Dept> deptList = baseMapper.selectDeptList(dept);
         return initZtree(deptList);

@@ -60,7 +60,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     private PasswordService passwordService;
 
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
+    @DataScope
     public List<User> selectUserList(User user) {
         // 生成数据权限过滤条件
         return baseMapper.selectUserList(user);
@@ -72,7 +72,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    @DataScope(deptAlias = "d", userAlias = "u")
+    @DataScope
     public List<User> selectAllocatedList(User user) {
         return baseMapper.selectAllocatedList(user);
     }
@@ -83,7 +83,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    @DataScope(deptAlias = "d", userAlias = "u")
+    @DataScope
     public List<User> selectUnallocatedList(User user) {
         return baseMapper.selectUnallocatedList(user);
     }

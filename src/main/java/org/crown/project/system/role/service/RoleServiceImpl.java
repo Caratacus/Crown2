@@ -44,7 +44,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     private IUserRoleService userRoleService;
 
     @Override
-    @DataScope(deptAlias = "d")
+    @DataScope
     public List<Role> selectRoleList(Role role) {
         return baseMapper.selectRoleList(role);
     }
