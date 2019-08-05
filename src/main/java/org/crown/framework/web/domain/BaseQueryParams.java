@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-import org.crown.common.utils.JacksonUtils;
+import org.crown.common.utils.JsonUtils;
 import org.crown.common.utils.TypeUtils;
 
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -53,7 +53,7 @@ public class BaseQueryParams implements Serializable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + ": " + JacksonUtils.toJson(this);
+        return this.getClass().getSimpleName() + ": " + JsonUtils.toJson(this);
     }
 
 }

@@ -6,7 +6,6 @@ import org.crown.framework.web.domain.BaseQueryParams;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,41 +19,40 @@ import lombok.Setter;
 @Getter
 public class ExceLog extends BaseQueryParams {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	private Long id;
-	/**
-	 * 当前操作人
-	 */
-	private String operName;
-	/**
-	 * 请求路径
-	 */
-	private String url;
-	/**
-	 * 控制器方法
-	 */
-	private String actionMethod;
-	/**
-	 * 接口运行时间 单位:ms
-	 */
-	private String runTime;
-	/**
-	 * IP地址
-	 */
-	private String ipAddr;
-	/**
-	 * 日志详情
-	 */
-	private String content;
-	/**
-	 * 创建时间
-	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@TableField(fill = FieldFill.INSERT)
-	private Date createTime;
+    /**
+     *
+     */
+    private Long id;
+    /**
+     * 当前操作人
+     */
+    private String operName;
+    /**
+     * 请求路径
+     */
+    private String url;
+    /**
+     * 控制器方法
+     */
+    private String actionMethod;
+    /**
+     * 接口运行时间 单位:ms
+     */
+    private String runTime;
+    /**
+     * IP地址
+     */
+    private String ipAddr;
+    /**
+     * 日志详情
+     */
+    private String content;
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
 }

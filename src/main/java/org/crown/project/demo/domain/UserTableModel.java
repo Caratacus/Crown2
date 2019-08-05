@@ -5,8 +5,6 @@ import java.util.Date;
 import org.crown.common.utils.DateUtils;
 import org.crown.framework.web.domain.BaseEntity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class UserTableModel extends BaseEntity {
 
     /**
@@ -52,7 +50,6 @@ public class UserTableModel extends BaseEntity {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     public UserTableModel() {

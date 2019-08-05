@@ -20,10 +20,11 @@
  */
 package org.crown.autoconfigure;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 import org.crown.common.undertow.UndertowServerFactoryCustomizer;
-import org.crown.common.utils.JacksonUtils;
 import org.crown.framework.spring.Crown2HandlerExceptionResolver;
 import org.crown.framework.spring.enums.IEnumConverterFactory;
 import org.crown.framework.spring.validator.ValidatorCollectionImpl;
@@ -32,12 +33,19 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
 import io.undertow.Undertow;
 
@@ -74,8 +82,36 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     }
 
     @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.forEach(JacksonUtils.wrapperObjectMapper());
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.removeIf(e -> e instanceof MappingJackson2HttpMessageConverter);
+        converters.removeIf(e -> e instanceof StringHttpMessageConverter);
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig jsonConfig = new FastJsonConfig();
+        List<MediaType> supportedMediaTypes = Arrays.asList(
+                MediaType.APPLICATION_JSON,
+                MediaType.APPLICATION_JSON_UTF8,
+                MediaType.APPLICATION_ATOM_XML,
+                MediaType.APPLICATION_FORM_URLENCODED,
+                MediaType.APPLICATION_OCTET_STREAM,
+                MediaType.APPLICATION_PDF,
+                MediaType.APPLICATION_RSS_XML,
+                MediaType.APPLICATION_XHTML_XML,
+                MediaType.APPLICATION_XML,
+                MediaType.IMAGE_GIF,
+                MediaType.IMAGE_JPEG,
+                MediaType.IMAGE_PNG,
+                MediaType.TEXT_EVENT_STREAM,
+                MediaType.TEXT_HTML,
+                MediaType.TEXT_MARKDOWN,
+                MediaType.TEXT_PLAIN,
+                MediaType.TEXT_XML);
+        fastJsonHttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
+        jsonConfig.setSerializerFeatures(SerializerFeature.SortField, SerializerFeature.WriteEnumUsingToString, SerializerFeature.QuoteFieldNames, SerializerFeature.SkipTransientField, SerializerFeature.BrowserCompatible, SerializerFeature.DisableCircularReferenceDetect);
+        jsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+        fastJsonHttpMessageConverter.setFastJsonConfig(jsonConfig);
+        converters.add(stringHttpMessageConverter);
+        converters.add(fastJsonHttpMessageConverter);
     }
 
     @Override

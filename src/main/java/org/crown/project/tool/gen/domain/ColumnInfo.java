@@ -1,7 +1,8 @@
 package org.crown.project.tool.gen.domain;
 
-import org.crown.common.utils.JacksonUtils;
 import org.crown.common.utils.StringUtils;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * ry数据库表列信息
@@ -73,7 +74,7 @@ public class ColumnInfo {
     public void setColumnComment(String columnComment) {
         // 根据列描述解析列的配置信息
         if (StringUtils.isNoneEmpty(columnComment) && columnComment.startsWith("{")) {
-            this.configInfo = JacksonUtils.readValue(columnComment, ColumnConfigInfo.class);
+            this.configInfo = JSON.parseObject(columnComment, ColumnConfigInfo.class);
             this.columnComment = configInfo.getTitle();
         } else {
             this.columnComment = columnComment;

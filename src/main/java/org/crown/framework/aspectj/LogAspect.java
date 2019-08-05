@@ -13,7 +13,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.crown.common.annotation.Log;
 import org.crown.common.cons.APICons;
 import org.crown.common.cons.Constants;
-import org.crown.common.utils.JacksonUtils;
+import org.crown.common.utils.JsonUtils;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.manager.ThreadExecutors;
@@ -142,7 +142,7 @@ public class LogAspect {
      */
     private void setRequestValue(OperLog operLog) {
         Map<String, String[]> map = ApplicationUtils.getRequest().getParameterMap();
-        String params = JacksonUtils.toJson(map);
+        String params = JsonUtils.toJson(map);
         operLog.setOperParam(StringUtils.substring(params, 0, 2000));
     }
 

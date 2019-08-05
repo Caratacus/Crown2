@@ -28,7 +28,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-import org.crown.common.utils.JacksonUtils;
+import org.crown.common.utils.JsonUtils;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.responses.ApiResponses;
 import org.springframework.util.MimeTypeUtils;
@@ -120,7 +120,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
         super.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         super.setCharacterEncoding(StandardCharsets.UTF_8.name());
         try (PrintWriter writer = super.getWriter()) {
-            writer.print(JacksonUtils.toJson(obj));
+            writer.print(JsonUtils.toJson(obj));
             writer.flush();
         } catch (IOException e) {
             log.warn("Error: Response printJson faild, stackTrace: {}", Throwables.getStackTraceAsString(e));
