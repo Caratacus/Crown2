@@ -30,7 +30,6 @@ import org.crown.framework.service.BaseService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
@@ -100,16 +99,8 @@ public class LambdaQueryWrapperChain<T> extends AbstractChainWrapper<T, SFunctio
         return baseService.nonExist(getWrapper());
     }
 
-    public IPage<T> page(IPage<T> page) {
-        return baseService.page(page, getWrapper());
-    }
-
     public <R> R getObj(Function<? super Object, R> mapper) {
         return baseService.getObj((Wrapper<T>) getWrapper(), mapper);
-    }
-
-    public <R> IPage<R> pageEntities(IPage page, Function<? super T, R> mapper) {
-        return baseService.pageEntities(page, getWrapper(), mapper);
     }
 
     public <R> R entity(Function<? super T, R> mapper) {

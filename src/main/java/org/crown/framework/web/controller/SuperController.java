@@ -28,8 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.cons.PageCons;
 import org.crown.common.utils.DateUtils;
-import org.crown.common.utils.StringUtils;
-import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.sql.AntiSQLFilter;
 import org.crown.framework.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +38,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -127,57 +123,6 @@ public class SuperController<Entity> implements PageCons {
      */
     public ApiResponses<Void> success(HttpStatus status) {
         return ApiResponses.<Void>success(response, status);
-    }
-
-    /**
-     * 获取分页对象
-     *
-     * @return
-     */
-    protected <T> Page<T> getPage() {
-        return getPage(false);
-    }
-
-    /**
-     * 获取分页对象
-     *
-     * @param openSort
-     * @return
-     */
-    protected <T> Page<T> getPage(boolean openSort) {
-        int index = 1;
-        // 页数
-        Integer cursor = TypeUtils.castToInt(request.getParameter(PAGE_NUM), index);
-        // 分页大小
-        Integer limit = TypeUtils.castToInt(request.getParameter(PAGE_SIZE), DEFAULT_PAGE_SIZE);
-        // 是否查询分页
-        Boolean searchCount = TypeUtils.castToBoolean(request.getParameter(SEARCH_COUNT), true);
-        limit = limit > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : limit;
-        Page<T> page = new Page<>(cursor, limit, searchCount);
-        if (openSort) {
-            String pageSort = getParameterSafeValue(PAGE_SORT);
-            String pageOrder = getParameterSafeValue(PAGE_ORDER);
-            if (StringUtils.isNotEmpty(pageSort)) {
-                boolean isAsc = "asc".equalsIgnoreCase(pageOrder);
-                addOrder(page, pageSort, isAsc);
-            }
-        }
-        return page;
-    }
-
-    /**
-     * 使用排序
-     *
-     * @param page
-     * @param orderStr
-     * @param asc
-     * @param <T>
-     */
-    private <T> void addOrder(Page<T> page, String orderStr, boolean asc) {
-        if (StringUtils.isNotEmpty(getAlias())) {
-            orderStr = getAlias() + "." + orderStr;
-        }
-        page.addOrder(asc ? OrderItem.asc(orderStr) : OrderItem.desc(orderStr));
     }
 
     /**

@@ -9,7 +9,6 @@ import org.crown.framework.web.page.PageDomain;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.system.user.domain.User;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -24,12 +23,20 @@ public class WebController<Entity> extends SuperController<Entity> {
      * 封装分页对象
      */
     protected PageDomain getPageDomain() {
+        // 页数
+        Integer pageNum = TypeUtils.castToInt(request.getParameter(PAGE_NUM), 1);
+        // 分页大小
+        Integer pageSize = TypeUtils.castToInt(request.getParameter(PAGE_SIZE), DEFAULT_PAGE_SIZE);
+        // 是否查询分页
+        Boolean searchCount = TypeUtils.castToBoolean(request.getParameter(SEARCH_COUNT), true);
+        pageSize = pageSize > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : pageSize;
         PageDomain pageDomain = new PageDomain();
-        pageDomain.setPageNum(TypeUtils.castToInt(request.getParameter(PAGE_NUM)));
-        pageDomain.setPageSize(TypeUtils.castToInt(request.getParameter(PAGE_SIZE)));
+        pageDomain.setPageNum(pageNum);
+        pageDomain.setPageSize(pageSize);
         pageDomain.setSort(request.getParameter(PAGE_SORT));
         pageDomain.setOrder(request.getParameter(PAGE_ORDER));
         pageDomain.setTableAlias(getAlias());
+        pageDomain.setSearchCount(searchCount);
         return pageDomain;
     }
 
@@ -40,8 +47,9 @@ public class WebController<Entity> extends SuperController<Entity> {
         PageDomain pageDomain = getPageDomain();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
+        boolean searchCount = pageDomain.isSearchCount();
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
-            PageHelper.startPage(pageNum, pageSize, pageDomain.getOrderBy());
+            PageHelper.startPage(pageNum, pageSize, searchCount).setOrderBy(pageDomain.getOrderBy());
         }
     }
 
@@ -52,16 +60,6 @@ public class WebController<Entity> extends SuperController<Entity> {
         TableData rspData = new TableData();
         rspData.setRows(list);
         rspData.setTotal(new PageInfo(list).getTotal());
-        return rspData;
-    }
-
-    /**
-     * 响应请求分页数据
-     */
-    protected <T> TableData<T> getTableData(IPage<T> page) {
-        TableData rspData = new TableData();
-        rspData.setRows(page.getRecords());
-        rspData.setTotal(page.getTotal());
         return rspData;
     }
 

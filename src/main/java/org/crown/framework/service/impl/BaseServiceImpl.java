@@ -42,7 +42,6 @@ import org.springframework.util.ReflectionUtils;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -257,18 +256,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     }
 
     @Override
-    public IPage<T> page(IPage<T> page, Wrapper<T> queryWrapper) {
-        return baseMapper.selectPage(page, queryWrapper);
-    }
-
-    @Override
     public <R> List<R> listObjs(Wrapper<T> queryWrapper, Function<? super Object, R> mapper) {
         return baseMapper.selectObjs(queryWrapper).stream().filter(Objects::nonNull).map(mapper).collect(Collectors.toList());
-    }
-
-    @Override
-    public <R> IPage<R> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, R> mapper) {
-        return page(page, wrapper).convert(mapper);
     }
 
     @Override

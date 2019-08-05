@@ -33,7 +33,6 @@ import com.baomidou.mybatisplus.core.injector.methods.SelectById;
 import com.baomidou.mybatisplus.core.injector.methods.SelectCount;
 import com.baomidou.mybatisplus.core.injector.methods.SelectList;
 import com.baomidou.mybatisplus.core.injector.methods.SelectObjs;
-import com.baomidou.mybatisplus.core.injector.methods.SelectPage;
 import com.baomidou.mybatisplus.core.injector.methods.Update;
 import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
 import com.baomidou.mybatisplus.extension.injector.methods.additional.AlwaysUpdateSomeColumnById;
@@ -61,8 +60,7 @@ public class MybatisPlusSqlInjector extends AbstractSqlInjector {
                 new SelectById(),
                 new SelectCount(),
                 new SelectObjs(),
-                new SelectList(),
-                new SelectPage()
+                new SelectList()
         ).collect(Collectors.toList());
     }
 }

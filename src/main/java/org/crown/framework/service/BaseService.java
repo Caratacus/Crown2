@@ -33,7 +33,6 @@ import org.crown.common.mybatisplus.LambdaQueryWrapperChain;
 import org.crown.common.mybatisplus.LambdaUpdateWrapperChain;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
@@ -268,33 +267,12 @@ public interface BaseService<T> {
 
     /**
      * <p>
-     * 翻页查询
-     * </p>
-     *
-     * @param page 翻页对象
-     */
-    default IPage<T> page(IPage<T> page) {
-        return page(page, Wrappers.emptyWrapper());
-    }
-
-    /**
-     * <p>
      * 根据 Wrapper 条件，查询全部记录
      * </p>
      */
     default <R> List<R> listObjs(Function<? super Object, R> mapper) {
         return listObjs(Wrappers.emptyWrapper(), mapper);
     }
-
-    /**
-     * <p>
-     * 翻页查询
-     * </p>
-     *
-     * @param page         翻页对象
-     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
-     */
-    IPage<T> page(IPage<T> page, Wrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -305,31 +283,6 @@ public interface BaseService<T> {
      */
 
     <R> List<R> listObjs(Wrapper<T> queryWrapper, Function<? super Object, R> mapper);
-
-    /**
-     * <p>
-     * 翻页查询自定义对象
-     * </p>
-     *
-     * @param page   翻页对象
-     * @param mapper
-     * @return
-     */
-    default <R> IPage<R> pageEntities(IPage page, Function<? super T, R> mapper) {
-        return pageEntities(page, Wrappers.emptyWrapper(), mapper);
-    }
-
-    /**
-     * <p>
-     * 翻页查询自定义对象
-     * </p>
-     *
-     * @param page    翻页对象
-     * @param wrapper {@link Wrapper}
-     * @param mapper
-     * @return
-     */
-    <R> IPage<R> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, R> mapper);
 
     /**
      * <p>

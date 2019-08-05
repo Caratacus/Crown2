@@ -35,6 +35,10 @@ public class PageDomain {
      * 排序表别名
      */
     private String tableAlias;
+    /**
+     * 查询Count
+     */
+    private boolean searchCount;
 
     public String getOrderBy() {
         if (StringUtils.isEmpty(sort)) {
