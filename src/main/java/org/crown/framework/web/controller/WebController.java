@@ -9,6 +9,7 @@ import org.crown.framework.web.page.PageDomain;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.system.user.domain.User;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -47,11 +48,20 @@ public class WebController<Entity> extends SuperController<Entity> {
     /**
      * 响应请求分页数据
      */
-    @SuppressWarnings({"rawtypes", "unchecked"})
     protected <T> TableData<T> getTableData(List<T> list) {
         TableData rspData = new TableData();
         rspData.setRows(list);
         rspData.setTotal(new PageInfo(list).getTotal());
+        return rspData;
+    }
+
+    /**
+     * 响应请求分页数据
+     */
+    protected <T> TableData<T> getTableData(IPage<T> page) {
+        TableData rspData = new TableData();
+        rspData.setRows(page.getRecords());
+        rspData.setTotal(page.getTotal());
         return rspData;
     }
 
