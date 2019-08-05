@@ -39,8 +39,8 @@ function login() {
             } else {
                 $.modal.closeLoading();
                 $('.imgcode').click();
-                $(".code").val("");
                 $.modal.msg(result.msg);
+                $('#captchaSp').sliderCaptcha('reset');
             }
         }
     });
