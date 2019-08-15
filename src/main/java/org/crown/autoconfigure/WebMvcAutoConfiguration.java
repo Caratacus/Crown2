@@ -85,8 +85,8 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.removeIf(e -> e instanceof MappingJackson2HttpMessageConverter);
         converters.removeIf(e -> e instanceof StringHttpMessageConverter);
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
-        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+        StringHttpMessageConverter stringMessageConverter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        FastJsonHttpMessageConverter jsonMessageConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig jsonConfig = new FastJsonConfig();
         List<MediaType> supportedMediaTypes = Arrays.asList(
                 MediaType.APPLICATION_JSON,
@@ -106,12 +106,13 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
                 MediaType.TEXT_MARKDOWN,
                 MediaType.TEXT_PLAIN,
                 MediaType.TEXT_XML);
-        fastJsonHttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
+        jsonMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
         jsonConfig.setSerializerFeatures(SerializerFeature.SortField, SerializerFeature.WriteEnumUsingToString, SerializerFeature.QuoteFieldNames, SerializerFeature.SkipTransientField, SerializerFeature.BrowserCompatible, SerializerFeature.DisableCircularReferenceDetect);
         jsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
-        fastJsonHttpMessageConverter.setFastJsonConfig(jsonConfig);
-        converters.add(stringHttpMessageConverter);
-        converters.add(fastJsonHttpMessageConverter);
+        jsonMessageConverter.setFastJsonConfig(jsonConfig);
+        jsonMessageConverter.setDefaultCharset(StandardCharsets.UTF_8);
+        converters.add(jsonMessageConverter);
+        converters.add(stringMessageConverter);
     }
 
     @Override
