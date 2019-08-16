@@ -3,9 +3,9 @@ package org.crown.project.tool.gen.service;
 import java.util.List;
 
 import org.crown.common.utils.StringUtils;
+import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.project.tool.gen.domain.GenTableColumn;
 import org.crown.project.tool.gen.mapper.GenTableColumnMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,53 +14,20 @@ import org.springframework.stereotype.Service;
  * @author Crown
  */
 @Service
-public class GenTableColumnServiceImpl implements IGenTableColumnService {
+public class GenTableColumnServiceImpl extends BaseServiceImpl<GenTableColumnMapper, GenTableColumn> implements IGenTableColumnService {
 
-    @Autowired
-    private GenTableColumnMapper genTableColumnMapper;
-
-    /**
-     * 查询业务字段列表
-     *
-     * @param genTableColumn 业务字段信息
-     * @return 业务字段集合
-     */
     @Override
-    public List<GenTableColumn> selectGenTableColumnListByTableId(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.selectGenTableColumnListByTableId(genTableColumn);
+    public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId) {
+        return query().eq(GenTableColumn::getTableId, tableId).orderByAsc(GenTableColumn::getSort).list();
     }
 
-    /**
-     * 新增业务字段
-     *
-     * @param genTableColumn 业务字段信息
-     * @return 结果
-     */
     @Override
-    public int insertGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.insertGenTableColumn(genTableColumn);
+    public boolean deleteGenTableColumnByIds(String ids) {
+        return delete().in(GenTableColumn::getTableId, StringUtils.split2List(ids)).execute();
     }
 
-    /**
-     * 修改业务字段
-     *
-     * @param genTableColumn 业务字段信息
-     * @return 结果
-     */
     @Override
-    public int updateGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.updateGenTableColumn(genTableColumn);
-    }
-
-    /**
-     * 删除业务字段对象
-     *
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    @Override
-    public int deleteGenTableColumnByIds(String ids) {
-
-        return genTableColumnMapper.deleteGenTableColumnByIds(StringUtils.split(ids));
+    public List<GenTableColumn> selectDbTableColumnsByName(String tableName) {
+        return baseMapper.selectDbTableColumnsByName(tableName);
     }
 }

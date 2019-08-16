@@ -147,8 +147,8 @@ public class MenuController extends WebController<Menu> {
      */
     @GetMapping("/roleMenuTreeData")
     @ResponseBody
-    public List<Ztree> roleMenuTreeData(Role role) {
-        return menuService.roleMenuTreeData(role);
+    public ApiResponses<List<Ztree>> roleMenuTreeData(Role role) {
+        return success(menuService.roleMenuTreeData(role));
     }
 
     /**
@@ -156,8 +156,8 @@ public class MenuController extends WebController<Menu> {
      */
     @GetMapping("/menuTreeData")
     @ResponseBody
-    public List<Ztree> menuTreeData() {
-        return menuService.menuTreeData();
+    public ApiResponses<List<Ztree>> menuTreeData() {
+        return success(menuService.menuTreeData());
     }
 
     /**

@@ -35,7 +35,7 @@ public enum ErrorCodeEnum {
     /**
      * 400
      */
-    BAD_REQUEST(HttpServletResponse.SC_BAD_REQUEST, "请求参数错误或不完整"),
+    BAD_REQUEST(HttpServletResponse.SC_BAD_REQUEST, "请求参数有误"),
     /**
      * JSON格式错误
      */
@@ -51,7 +51,7 @@ public enum ErrorCodeEnum {
     /**
      * 404
      */
-    NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, "未找到该路径"),
+    NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, "未找到"),
     /**
      * 405
      */
@@ -63,27 +63,23 @@ public enum ErrorCodeEnum {
     /**
      * 411
      */
-    LENGTH_REQUIRED(HttpServletResponse.SC_LENGTH_REQUIRED, "长度受限制"),
+    LENGTH_REQUIRED(HttpServletResponse.SC_LENGTH_REQUIRED, "请求长度受限制"),
     /**
      * 415
      */
-    UNSUPPORTED_MEDIA_TYPE(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "不支持的媒体类型"),
+    UNSUPPORTED_MEDIA_TYPE(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "该请求不支持的媒体类型"),
     /**
      * 416
      */
-    REQUESTED_RANGE_NOT_SATISFIABLE(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, "不能满足请求的范围"),
+    REQUESTED_RANGE_NOT_SATISFIABLE(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, "该请求不在请求满足的范围"),
     /**
      * 500
      */
-    INTERNAL_SERVER_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "服务器正在升级，请耐心等待"),
+    INTERNAL_SERVER_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "服务器出了点问题，抱歉"),
     /**
      * 503
      */
     SERVICE_UNAVAILABLE(HttpServletResponse.SC_SERVICE_UNAVAILABLE, "请求超时"),
-    /**
-     * 演示系统，无法该操作
-     */
-    DEMO_SYSTEM_CANNOT_DO(HttpServletResponse.SC_SERVICE_UNAVAILABLE, "演示系统，无法该操作"),
     /**
      * 消息异常
      */

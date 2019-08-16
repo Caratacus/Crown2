@@ -140,8 +140,8 @@ public class DeptController extends WebController<Dept> {
      */
     @GetMapping("/treeData")
     @ResponseBody
-    public List<Ztree> treeData() {
-        return deptService.selectDeptTree(new Dept());
+    public ApiResponses<List<Ztree>> treeData() {
+        return success(deptService.selectDeptTree(new Dept()));
     }
 
     /**
@@ -149,7 +149,7 @@ public class DeptController extends WebController<Dept> {
      */
     @GetMapping("/roleDeptTreeData")
     @ResponseBody
-    public List<Ztree> deptTreeData(Role role) {
-        return deptService.roleDeptTreeData(role);
+    public ApiResponses<List<Ztree>> deptTreeData(Role role) {
+        return success(deptService.roleDeptTreeData(role));
     }
 }

@@ -3,6 +3,7 @@ package org.crown.project.system.dict.service;
 import java.util.List;
 
 import org.crown.framework.service.BaseService;
+import org.crown.framework.web.domain.Ztree;
 import org.crown.project.system.dict.domain.DictType;
 
 /**
@@ -44,4 +45,13 @@ public interface IDictTypeService extends BaseService<DictType> {
      * @return 结果
      */
     boolean checkDictTypeUnique(DictType dictType);
+
+    /**
+     * 查询字典类型树
+     *
+     * @param dictType 字典类型
+     * @return 所有字典类型
+     */
+    List<Ztree> selectDictTree(DictType dictType);
+
 }

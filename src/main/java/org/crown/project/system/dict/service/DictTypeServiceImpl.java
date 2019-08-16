@@ -1,15 +1,18 @@
 package org.crown.project.system.dict.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.crown.common.cons.UserConstants;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.framework.exception.Crown2Exception;
 import org.crown.framework.service.impl.BaseServiceImpl;
+import org.crown.framework.web.domain.Ztree;
 import org.crown.project.system.dict.domain.DictType;
 import org.crown.project.system.dict.mapper.DictTypeMapper;
 import org.springframework.stereotype.Service;
@@ -64,6 +67,29 @@ public class DictTypeServiceImpl extends BaseServiceImpl<DictTypeMapper, DictTyp
         Long dictId = dict.getDictId();
         DictType info = query().eq(DictType::getDictType, dict.getDictType()).getOne();
         return Objects.isNull(info) || info.getDictId().equals(dictId);
+    }
+
+    @Override
+    public List<Ztree> selectDictTree(DictType dictType) {
+        List<Ztree> ztrees = new ArrayList<>();
+        List<DictType> dictList = selectDictTypeList(dictType);
+        for (DictType dict : dictList) {
+            if (UserConstants.DICT_NORMAL.equals(dict.getStatus())) {
+                Ztree ztree = new Ztree();
+                ztree.setId(dict.getDictId());
+                ztree.setName(transDictName(dict));
+                ztree.setTitle(dict.getDictType());
+                ztrees.add(ztree);
+            }
+        }
+        return ztrees;
+    }
+
+    public String transDictName(DictType dictType) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("(").append(dictType.getDictName()).append(")");
+        builder.append("&nbsp;&nbsp;&nbsp;").append(dictType.getDictType());
+        return builder.toString();
     }
 
 }

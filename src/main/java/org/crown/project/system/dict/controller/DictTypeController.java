@@ -11,6 +11,7 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
+import org.crown.framework.web.domain.Ztree;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.system.dict.domain.DictType;
 import org.crown.project.system.dict.service.IDictTypeService;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * 数据字典信息
@@ -137,5 +140,26 @@ public class DictTypeController extends WebController<DictType> {
     @ResponseBody
     public ApiResponses<Boolean> checkDictTypeUnique(DictType dictType) {
         return success(dictTypeService.checkDictTypeUnique(dictType));
+    }
+
+    /**
+     * 选择字典树
+     */
+    @GetMapping("/selectDictTree/{columnId}/{dictType}")
+    public String selectDeptTree(@PathVariable("columnId") Long columnId, @PathVariable("dictType") String dictType,
+                                 ModelMap mmap) {
+        mmap.put("columnId", columnId);
+        mmap.put("dict", dictTypeService.getOne(Wrappers.<DictType>lambdaQuery().eq(DictType::getDictType, dictType)));
+        return prefix + "/tree";
+    }
+
+    /**
+     * 加载字典列表树
+     */
+    @GetMapping("/treeData")
+    @ResponseBody
+    public ApiResponses<List<Ztree>> treeData() {
+        List<Ztree> ztrees = dictTypeService.selectDictTree(new DictType());
+        return success(ztrees);
     }
 }

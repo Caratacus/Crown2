@@ -83,7 +83,7 @@ public class GenController extends WebController {
     @ResponseBody
     public ApiResponses<TableData<GenTableColumn>> columnList(GenTableColumn genTableColumn) {
         TableData dataInfo = new TableData();
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(genTableColumn);
+        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(genTableColumn.getTableId());
         dataInfo.setRows(list);
         dataInfo.setTotal(list.size());
         return success(getTableData(list));

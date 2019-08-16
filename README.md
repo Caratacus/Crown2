@@ -16,7 +16,7 @@
         <br>
         <br>
         <a href="https://spring.io/projects/spring-boot">
-        <img src="https://img.shields.io/badge/spring--boot-2.1.6.RELEASE-blue.svg" alt="spring-boot" title="spring-boot"></a>
+        <img src="https://img.shields.io/badge/spring--boot-2.1.7.RELEASE-blue.svg" alt="spring-boot" title="spring-boot"></a>
 		<a href="https://github.com/Caratacus/Crown2">
         <img src="https://tokei.rs/b1/github/Caratacus/Crown2?category=lines" alt="lines" title="lines"></a>
 		<a href="https://github.com/Caratacus/Crown2">

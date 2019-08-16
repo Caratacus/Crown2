@@ -1,5 +1,291 @@
+/*
+ Navicat MySQL Data Transfer
+
+ Source Server         : 本地MySQL
+ Source Server Type    : MySQL
+ Source Server Version : 50718
+ Source Host           : localhost:3306
+ Source Schema         : crown2
+
+ Target Server Type    : MySQL
+ Target Server Version : 50718
+ File Encoding         : 65001
+
+ Date: 16/08/2019 18:11:29
+*/
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for gen_table
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_table`;
+CREATE TABLE `gen_table` (
+  `table_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_name` varchar(200) DEFAULT '' COMMENT '表名称',
+  `table_comment` varchar(500) DEFAULT '' COMMENT '表描述',
+  `class_name` varchar(100) DEFAULT '' COMMENT '实体类名称',
+  `tpl_category` varchar(200) DEFAULT 'crud' COMMENT '使用的模板（crud单表操作 tree树表操作）',
+  `package_name` varchar(100) DEFAULT NULL COMMENT '生成包路径',
+  `module_name` varchar(30) DEFAULT NULL COMMENT '生成模块名',
+  `business_name` varchar(30) DEFAULT NULL COMMENT '生成业务名',
+  `function_name` varchar(50) DEFAULT NULL COMMENT '生成功能名',
+  `function_author` varchar(50) DEFAULT NULL COMMENT '生成功能作者',
+  `options` varchar(1000) DEFAULT NULL COMMENT '其它生成选项',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`table_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COMMENT='代码生成业务表';
+
+-- ----------------------------
+-- Records of gen_table
+-- ----------------------------
+BEGIN;
+INSERT INTO `gen_table` VALUES (2, 'sys_role', '角色信息表', 'SysRole', 'crud', 'org.crown.project.monitor', 'monitor', 'role', '角色信息', 'Caratacus', NULL, 'crown', '2019-08-15 17:54:20', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (3, 'sys_config', '参数配置表', 'SysConfig', 'crud', 'org.crown.project.monitor', 'monitor', 'config', '参数配置', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (4, 'sys_dept', '部门表', 'SysDept', 'crud', 'org.crown.project.monitor', 'monitor', 'dept', '部门', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (5, 'sys_dict_data', '字典数据表', 'SysDictData', 'crud', 'org.crown.project.monitor', 'monitor', 'data', '字典数据', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (6, 'sys_dict_type', '字典类型表', 'SysDictType', 'crud', 'org.crown.project.monitor', 'monitor', 'type', '字典类型', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (7, 'sys_exce_log', '异常日志表', 'SysExceLog', 'crud', 'org.crown.project.monitor', 'monitor', 'log', '异常日志', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (8, 'sys_job', '定时任务', 'SysJob', 'crud', 'org.crown.project.monitor', 'monitor', 'job', '定时任务', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (9, 'sys_job_log', '定时任务日志', 'SysJobLog', 'crud', 'org.crown.project.monitor', 'monitor', 'log', '定时任务日志', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (10, 'sys_logininfor', '系统访问记录', 'SysLogininfor', 'crud', 'org.crown.project.monitor', 'monitor', 'logininfor', '系统访问记录', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (11, 'sys_menu', '菜单权限表', 'SysMenu', 'crud', 'org.crown.project.monitor', 'monitor', 'menu', '菜单权限', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (12, 'sys_notice', '通知公告表', 'SysNotice', 'crud', 'org.crown.project.monitor', 'monitor', 'notice', '通知公告', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:19', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (13, 'sys_oper_log', '操作日志记录', 'SysOperLog', 'crud', 'org.crown.project.monitor', 'monitor', 'log', '操作日志记录', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (14, 'sys_post', '岗位信息表', 'SysPost', 'crud', 'org.crown.project.monitor', 'monitor', 'post', '岗位信息', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (15, 'sys_role_dept', '角色和部门关联表', 'SysRoleDept', 'crud', 'org.crown.project.monitor', 'monitor', 'dept', '角色和部门关联', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (16, 'sys_role_menu', '角色和菜单关联表', 'SysRoleMenu', 'crud', 'org.crown.project.monitor', 'monitor', 'menu', '角色和菜单关联', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (17, 'sys_user', '用户信息表', 'SysUser', 'crud', 'org.crown.project.monitor', 'monitor', 'user', '用户信息', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (18, 'sys_user_online', '在线用户记录', 'SysUserOnline', 'crud', 'org.crown.project.monitor', 'monitor', 'online', '在线用户记录', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (19, 'sys_user_post', '用户与岗位关联表', 'SysUserPost', 'crud', 'org.crown.project.monitor', 'monitor', 'post', '用户与岗位关联', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (20, 'sys_user_role', '用户和角色关联表', 'SysUserRole', 'crud', 'org.crown.project.monitor', 'monitor', 'role', '用户和角色关联', 'Caratacus', NULL, 'crown', '2019-08-16 17:24:24', '', NULL, NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for gen_table_column
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_table_column`;
+CREATE TABLE `gen_table_column` (
+  `column_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_id` varchar(64) DEFAULT NULL COMMENT '归属表编号',
+  `column_name` varchar(200) DEFAULT NULL COMMENT '列名称',
+  `column_comment` varchar(500) DEFAULT NULL COMMENT '列描述',
+  `column_type` varchar(100) DEFAULT NULL COMMENT '列类型',
+  `java_type` varchar(500) DEFAULT NULL COMMENT 'JAVA类型',
+  `java_field` varchar(200) DEFAULT NULL COMMENT 'JAVA字段名',
+  `is_pk` char(1) DEFAULT NULL COMMENT '是否主键（1是）',
+  `is_increment` char(1) DEFAULT NULL COMMENT '是否自增（1是）',
+  `is_required` char(1) DEFAULT NULL COMMENT '是否必填（1是）',
+  `is_insert` char(1) DEFAULT NULL COMMENT '是否为插入字段（1是）',
+  `is_edit` char(1) DEFAULT NULL COMMENT '是否编辑字段（1是）',
+  `is_list` char(1) DEFAULT NULL COMMENT '是否列表字段（1是）',
+  `is_query` char(1) DEFAULT NULL COMMENT '是否查询字段（1是）',
+  `query_type` varchar(200) DEFAULT '=' COMMENT '查询方式（等于、不等于、大于、小于、范围）',
+  `html_type` varchar(200) DEFAULT NULL COMMENT '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
+  `dict_type` varchar(200) DEFAULT '' COMMENT '字典类型',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`column_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb4 COMMENT='代码生成业务表字段';
+
+-- ----------------------------
+-- Records of gen_table_column
+-- ----------------------------
+BEGIN;
+INSERT INTO `gen_table_column` VALUES (16, '2', 'role_id', '角色ID', 'bigint(20)', 'Long', 'roleId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (17, '2', 'role_name', '角色名称', 'varchar(30)', 'String', 'roleName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (18, '2', 'role_key', '角色权限字符串', 'varchar(100)', 'String', 'roleKey', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 3, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (19, '2', 'role_sort', '显示顺序', 'int(4)', 'Integer', 'roleSort', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (20, '2', 'data_scope', '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）', 'char(1)', 'String', 'dataScope', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (21, '2', 'status', '角色状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', '=', 'radio', '', 6, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (22, '2', 'del_flag', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'delFlag', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 7, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (23, '2', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 8, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (24, '2', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 9, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (25, '2', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (26, '2', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 11, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (27, '2', 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'textarea', '', 12, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (28, '3', 'config_id', '参数主键', 'int(5)', 'Integer', 'configId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (29, '3', 'config_name', '参数名称', 'varchar(100)', 'String', 'configName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (30, '3', 'config_key', '参数键名', 'varchar(100)', 'String', 'configKey', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (31, '3', 'config_value', '参数键值', 'varchar(100)', 'String', 'configValue', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (32, '3', 'config_type', '系统内置（Y是 N否）', 'char(1)', 'String', 'configType', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (33, '3', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (34, '3', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (35, '3', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (36, '3', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (37, '3', 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'textarea', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (38, '4', 'dept_id', '部门id', 'bigint(20)', 'Long', 'deptId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (39, '4', 'parent_id', '父部门id', 'bigint(20)', 'Long', 'parentId', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (40, '4', 'ancestors', '祖级列表', 'varchar(50)', 'String', 'ancestors', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (41, '4', 'dept_name', '部门名称', 'varchar(30)', 'String', 'deptName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (42, '4', 'order_num', '显示顺序', 'int(4)', 'Integer', 'orderNum', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (43, '4', 'leader', '负责人', 'varchar(20)', 'String', 'leader', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (44, '4', 'phone', '联系电话', 'varchar(11)', 'String', 'phone', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (45, '4', 'email', '邮箱', 'varchar(50)', 'String', 'email', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (46, '4', 'status', '部门状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (47, '4', 'del_flag', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'delFlag', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (48, '4', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 11, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (49, '4', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 12, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (50, '4', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 13, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (51, '4', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 14, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (52, '5', 'dict_code', '字典编码', 'bigint(20)', 'Long', 'dictCode', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (53, '5', 'dict_sort', '字典排序', 'int(4)', 'Integer', 'dictSort', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (54, '5', 'dict_label', '字典标签', 'varchar(100)', 'String', 'dictLabel', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (55, '5', 'dict_value', '字典键值', 'varchar(100)', 'String', 'dictValue', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (56, '5', 'dict_type', '字典类型', 'varchar(100)', 'String', 'dictType', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (57, '5', 'css_class', '样式属性（其他样式扩展）', 'varchar(100)', 'String', 'cssClass', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (58, '5', 'list_class', '表格回显样式', 'varchar(100)', 'String', 'listClass', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (59, '5', 'is_default', '是否默认（Y是 N否）', 'char(1)', 'String', 'isDefault', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (60, '5', 'status', '状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (61, '5', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (62, '5', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 11, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (63, '5', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 12, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (64, '5', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 13, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (65, '5', 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'textarea', '', 14, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (66, '6', 'dict_id', '字典主键', 'bigint(20)', 'Long', 'dictId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (67, '6', 'dict_name', '字典名称', 'varchar(100)', 'String', 'dictName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (68, '6', 'dict_type', '字典类型', 'varchar(100)', 'String', 'dictType', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (69, '6', 'status', '状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (70, '6', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (71, '6', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (72, '6', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (73, '6', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (74, '6', 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'textarea', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (75, '7', 'id', NULL, 'bigint(19)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (76, '7', 'url', '请求路径', 'varchar(255)', 'String', 'url', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (77, '7', 'oper_name', '当前操作人', 'varchar(64)', 'String', 'operName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (78, '7', 'action_method', '控制器方法', 'varchar(255)', 'String', 'actionMethod', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (79, '7', 'run_time', '接口运行时间 单位:ms', 'varchar(20)', 'String', 'runTime', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (80, '7', 'ip_addr', 'IP地址', 'varchar(64)', 'String', 'ipAddr', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (81, '7', 'content', '日志详情', 'longtext', 'String', 'content', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (82, '7', 'create_time', '异常时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', NULL, NULL, NULL, '=', 'datetime', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (83, '8', 'job_id', NULL, 'bigint(20)', 'Long', 'jobId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (84, '8', 'job_name', '任务名称', 'varchar(64)', 'String', 'jobName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (85, '8', 'class_name', 'Class名称', 'varchar(64)', 'String', 'className', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (86, '8', 'job_params', '参数', 'varchar(500)', 'String', 'jobParams', '0', '0', NULL, '1', '1', '1', '1', '=', 'textarea', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (87, '8', 'cron', 'cron表达式', 'varchar(64)', 'String', 'cron', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (88, '8', 'paused', '是否启动', 'bit(1)', NULL, 'paused', '0', '0', '1', '1', '1', '1', '1', '=', NULL, '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (89, '8', 'remark', '备注', 'varchar(128)', 'String', 'remark', '0', '0', '1', '1', '1', '1', NULL, '=', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (90, '8', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', '1', '1', '1', NULL, NULL, '=', 'datetime', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (91, '8', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', NULL, NULL, NULL, '=', 'datetime', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (92, '8', 'del_flag', '逻辑删除字段', 'tinyint(1)', 'Integer', 'delFlag', '0', '0', '1', '1', NULL, NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (93, '8', 'create_by', NULL, 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 11, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (94, '8', 'update_by', NULL, 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 12, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (95, '9', 'job_log_id', NULL, 'bigint(20)', 'Long', 'jobLogId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (96, '9', 'class_name', 'Class名称', 'varchar(128)', 'String', 'className', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (97, '9', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', NULL, NULL, NULL, '=', 'datetime', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (98, '9', 'cron', 'cron表达式', 'varchar(128)', 'String', 'cron', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (99, '9', 'exception', '异常信息', 'text', 'String', 'exception', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (100, '9', 'status', '执行状态（1成功 0失败）', 'smallint(1)', 'Integer', 'status', '0', '0', '1', '1', '1', '1', '1', '=', 'radio', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (101, '9', 'job_name', '任务名称', 'varchar(255)', 'String', 'jobName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (102, '9', 'job_params', '参数', 'varchar(500)', 'String', 'jobParams', '0', '0', NULL, '1', '1', '1', '1', '=', 'textarea', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (103, '9', 'run_time', '运行时间', 'varchar(32)', 'String', 'runTime', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (104, '10', 'info_id', '访问ID', 'bigint(20)', 'Long', 'infoId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (105, '10', 'login_name', '登录账号', 'varchar(50)', 'String', 'loginName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (106, '10', 'ipaddr', '登录IP地址', 'varchar(50)', 'String', 'ipaddr', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (107, '10', 'login_location', '登录地点', 'varchar(255)', 'String', 'loginLocation', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (108, '10', 'browser', '浏览器类型', 'varchar(50)', 'String', 'browser', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (109, '10', 'os', '操作系统', 'varchar(50)', 'String', 'os', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (110, '10', 'status', '登录状态（1成功 0失败）', 'smallint(1)', 'Integer', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (111, '10', 'msg', '提示消息', 'varchar(255)', 'String', 'msg', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (112, '10', 'login_time', '访问时间', 'datetime', 'Date', 'loginTime', '0', '0', NULL, '1', '1', '1', '1', '=', 'datetime', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (113, '11', 'menu_id', '菜单ID', 'bigint(20)', 'Long', 'menuId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (114, '11', 'menu_name', '菜单名称', 'varchar(50)', 'String', 'menuName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (115, '11', 'parent_id', '父菜单ID', 'bigint(20)', 'Long', 'parentId', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (116, '11', 'order_num', '显示顺序', 'int(4)', 'Integer', 'orderNum', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (117, '11', 'url', '请求地址', 'varchar(200)', 'String', 'url', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (118, '11', 'target', '打开方式（menuItem页签 menuBlank新窗口）', 'varchar(20)', 'String', 'target', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (119, '11', 'menu_type', '菜单类型（M目录 C菜单 F按钮）', 'char(1)', 'String', 'menuType', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (120, '11', 'visible', '菜单状态（0显示 1隐藏）', 'char(1)', 'String', 'visible', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (121, '11', 'perms', '权限标识', 'varchar(100)', 'String', 'perms', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (122, '11', 'icon', '菜单图标', 'varchar(100)', 'String', 'icon', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (123, '11', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 11, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (124, '11', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 12, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (125, '11', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 13, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (126, '11', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 14, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (127, '11', 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'textarea', '', 15, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (128, '12', 'notice_id', '公告ID', 'int(4)', 'Integer', 'noticeId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (129, '12', 'notice_title', '公告标题', 'varchar(50)', 'String', 'noticeTitle', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 2, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (130, '12', 'notice_type', '公告类型（1通知 2公告）', 'char(1)', 'String', 'noticeType', '0', '0', '1', '1', '1', '1', '1', '=', 'select', '', 3, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (131, '12', 'notice_content', '公告内容', 'varchar(2000)', 'String', 'noticeContent', '0', '0', NULL, '1', '1', '1', '1', '=', 'textarea', '', 4, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (132, '12', 'status', '公告状态（0正常 1关闭）', 'char(1)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 5, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (133, '12', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 6, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (134, '12', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (135, '12', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (136, '12', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (137, '12', 'remark', '备注', 'varchar(255)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (138, '13', 'oper_id', '日志主键', 'bigint(20)', 'Long', 'operId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (139, '13', 'title', '模块标题', 'varchar(50)', 'String', 'title', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (140, '13', 'business_type', '业务类型（0其它 1新增 2修改 3删除）', 'int(2)', 'Integer', 'businessType', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 3, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (141, '13', 'method', '方法名称', 'varchar(100)', 'String', 'method', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (142, '13', 'operator_type', '操作类别（0其它 1后台用户 2手机端用户）', 'int(1)', 'Integer', 'operatorType', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 5, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (143, '13', 'oper_name', '操作人员', 'varchar(50)', 'String', 'operName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 6, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (144, '13', 'dept_name', '部门名称', 'varchar(50)', 'String', 'deptName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 7, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (145, '13', 'oper_url', '请求URL', 'varchar(255)', 'String', 'operUrl', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 8, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (146, '13', 'oper_ip', '主机地址', 'varchar(50)', 'String', 'operIp', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 9, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (147, '13', 'oper_location', '操作地点', 'varchar(255)', 'String', 'operLocation', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 10, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (148, '13', 'oper_param', '请求参数', 'varchar(2000)', 'String', 'operParam', '0', '0', NULL, '1', '1', '1', '1', '=', 'textarea', '', 11, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (149, '13', 'status', '操作状态（1正常 0异常）', 'smallint(1)', 'Integer', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 12, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (150, '13', 'error_msg', '错误消息', 'varchar(2000)', 'String', 'errorMsg', '0', '0', NULL, '1', '1', '1', '1', '=', 'textarea', '', 13, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (151, '13', 'oper_time', '操作时间', 'datetime', 'Date', 'operTime', '0', '0', NULL, '1', '1', '1', '1', '=', 'datetime', '', 14, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (152, '14', 'post_id', '岗位ID', 'bigint(20)', 'Long', 'postId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (153, '14', 'post_code', '岗位编码', 'varchar(64)', 'String', 'postCode', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (154, '14', 'post_name', '岗位名称', 'varchar(50)', 'String', 'postName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (155, '14', 'post_sort', '显示顺序', 'int(4)', 'Integer', 'postSort', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (156, '14', 'status', '状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', '=', 'radio', '', 5, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (157, '14', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 6, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (158, '14', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 7, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (159, '14', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 8, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (160, '14', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 9, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (161, '14', 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'textarea', '', 10, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (162, '15', 'role_id', '角色ID', 'bigint(20)', 'Long', 'roleId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (163, '15', 'dept_id', '部门ID', 'bigint(20)', 'Long', 'deptId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (164, '16', 'role_id', '角色ID', 'bigint(20)', 'Long', 'roleId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (165, '16', 'menu_id', '菜单ID', 'bigint(20)', 'Long', 'menuId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (166, '17', 'user_id', '用户ID', 'bigint(20)', 'Long', 'userId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (167, '17', 'dept_id', '部门ID', 'bigint(20)', 'Long', 'deptId', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (168, '17', 'login_name', '登录账号', 'varchar(30)', 'String', 'loginName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (169, '17', 'user_name', '用户昵称', 'varchar(30)', 'String', 'userName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 4, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (170, '17', 'user_type', '用户类型（00系统用户）', 'varchar(2)', 'String', 'userType', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 5, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (171, '17', 'email', '用户邮箱', 'varchar(50)', 'String', 'email', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 6, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (172, '17', 'phonenumber', '手机号码', 'varchar(11)', 'String', 'phonenumber', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 7, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (173, '17', 'sex', '用户性别（0男 1女 2未知）', 'char(1)', 'String', 'sex', '0', '0', NULL, '1', '1', '1', '1', '=', 'select', '', 8, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (174, '17', 'avatar', '头像路径', 'varchar(100)', 'String', 'avatar', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 9, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (175, '17', 'password', '密码', 'varchar(50)', 'String', 'password', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 10, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (176, '17', 'salt', '盐加密', 'varchar(20)', 'String', 'salt', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 11, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (177, '17', 'status', '帐号状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 12, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (178, '17', 'del_flag', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'delFlag', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 13, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (179, '17', 'login_ip', '最后登陆IP', 'varchar(50)', 'String', 'loginIp', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 14, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (180, '17', 'login_date', '最后登陆时间', 'datetime', 'Date', 'loginDate', '0', '0', NULL, '1', '1', '1', '1', '=', 'datetime', '', 15, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (181, '17', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 16, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (182, '17', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 17, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (183, '17', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 18, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (184, '17', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'datetime', '', 19, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (185, '17', 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', NULL, '1', '1', '1', NULL, '=', 'textarea', '', 20, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (186, '18', 'sessionId', '用户会话id', 'varchar(50)', 'String', 'sessionid', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (187, '18', 'login_name', '登录账号', 'varchar(50)', 'String', 'loginName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (188, '18', 'dept_name', '部门名称', 'varchar(50)', 'String', 'deptName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (189, '18', 'ipaddr', '登录IP地址', 'varchar(50)', 'String', 'ipaddr', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (190, '18', 'login_location', '登录地点', 'varchar(255)', 'String', 'loginLocation', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (191, '18', 'browser', '浏览器类型', 'varchar(50)', 'String', 'browser', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 6, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (192, '18', 'os', '操作系统', 'varchar(50)', 'String', 'os', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 7, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (193, '18', 'status', '在线状态on_line在线off_line离线', 'varchar(10)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 8, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (194, '18', 'start_timestamp', 'session创建时间', 'datetime', 'Date', 'startTimestamp', '0', '0', NULL, '1', '1', '1', '1', '=', 'datetime', '', 9, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (195, '18', 'last_access_time', 'session最后访问时间', 'datetime', 'Date', 'lastAccessTime', '0', '0', NULL, '1', '1', '1', '1', '=', 'datetime', '', 10, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (196, '18', 'expire_time', '超时时间，单位为分钟', 'int(5)', 'Integer', 'expireTime', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 11, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (197, '19', 'user_id', '用户ID', 'bigint(20)', 'Long', 'userId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (198, '19', 'post_id', '岗位ID', 'bigint(20)', 'Long', 'postId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (199, '20', 'user_id', '用户ID', 'bigint(20)', 'Long', 'userId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (200, '20', 'role_id', '角色ID', 'bigint(20)', 'Long', 'roleId', '1', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 2, 'crown', '2019-08-16 17:24:24', '', NULL);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -160,7 +446,7 @@ CREATE TABLE `sys_exce_log` (
   `id` bigint(19) NOT NULL AUTO_INCREMENT,
   `url` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '请求路径',
   `oper_name` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '当前操作人',
-  `action_method` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '控制器方法',
+  `action_method` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '-' COMMENT '控制器方法',
   `run_time` varchar(20) COLLATE utf8mb4_bin NOT NULL COMMENT '接口运行时间 单位:ms',
   `ip_addr` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT 'IP地址',
   `content` longtext COLLATE utf8mb4_bin NOT NULL COMMENT '日志详情',
@@ -589,8 +875,8 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES (1, 105, 'crown', 'Crown', '00', 'crown@qq.com', '15666666666', '1', '', '6bb801aa715c8d25d51b781577f2129e', '9a45e9', '0', '0', '0:0:0:0:0:0:0:1', '2019-07-27 14:32:51', 'crown', '2018-03-16 11:33:00', NULL, '2019-07-27 14:32:51', '管理员');
-INSERT INTO `sys_user` VALUES (2, 103, 'admin', 'Admin', '00', 'crown@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '0', '0:0:0:0:0:0:0:1', '2019-07-12 17:24:10', 'crown', '2018-03-16 11:33:00', 'crown', '2019-07-23 16:51:18', '测试账号');
+INSERT INTO `sys_user` VALUES (1, 105, 'crown', 'Crown', '00', 'crown@qq.com', '15666666666', '1', '', '6bb801aa715c8d25d51b781577f2129e', '9a45e9', '0', '0', '0:0:0:0:0:0:0:1', '2019-08-16 17:24:08', 'crown', '2018-03-16 11:33:00', 'crown', '2019-08-16 17:24:08', '管理员');
+INSERT INTO `sys_user` VALUES (2, 103, 'admin', 'Admin', '00', 'crown@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '0', '0:0:0:0:0:0:0:1', '2019-08-05 17:34:11', 'crown', '2018-03-16 11:33:00', 'crown', '2019-08-05 17:34:11', '测试账号');
 COMMIT;
 
 -- ----------------------------

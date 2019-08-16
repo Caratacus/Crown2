@@ -120,8 +120,6 @@ crown:
   generator:
     author: Caratacus
     package-path: org.crown.project.monitor
-    auto-remove-pre: true
-    table-prefix: sys_
   # 实例演示开关
   demo:
     enabled: false
