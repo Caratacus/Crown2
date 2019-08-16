@@ -30,12 +30,12 @@ public interface PageCons {
     /**
      * 当前记录起始索引
      */
-    String PAGE_NUM = "pageNum";
+    String PAGE_NUM = "_page_num";
 
     /**
      * 每页显示记录数
      */
-    String PAGE_SIZE = "pageSize";
+    String PAGE_SIZE = "_page_size";
     /**
      * 查询总数
      */
@@ -43,12 +43,12 @@ public interface PageCons {
     /**
      * 排序列
      */
-    String PAGE_SORT = "sort";
+    String PAGE_SORT = "_page_sort ";
 
     /**
      * 排序的方向 "desc" 或者 "asc".
      */
-    String PAGE_ORDER = "order";
+    String PAGE_ORDER = "_page_order";
 
     /**
      * 默认每页条目20

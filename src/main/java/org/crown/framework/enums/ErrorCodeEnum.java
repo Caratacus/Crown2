@@ -145,6 +145,10 @@ public enum ErrorCodeEnum {
      */
     ROLE_NAME_EXIST(HttpServletResponse.SC_BAD_REQUEST, "角色名称已存在"),
     ROLE_KEY_EXIST(HttpServletResponse.SC_BAD_REQUEST, "角色权限已存在"),
+    /**
+     * Gen
+     */
+    GEN_IMPORT_TABLE_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "生成代码表导入错误"),
 
     ;
 

@@ -64,7 +64,7 @@ dependencies {
     implementation "com.alibaba:fastjson:1.2.58"
     //解析客户端操作系统、浏览器等
     implementation "eu.bitwalker:UserAgentUtils:1.21"
-    implementation "org.apache.velocity:velocity-engine-core:2.1"
+    implementation "org.apache.velocity:velocity:1.7"
     implementation "com.github.oshi:oshi-core:3.13.3"
     implementation "net.java.dev.jna:jna:5.4.0"
     implementation "net.java.dev.jna:jna-platform:5.4.0"

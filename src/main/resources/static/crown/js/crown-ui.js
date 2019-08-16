@@ -100,11 +100,11 @@
             queryParams: function(params) {
             	var curParams = {
             			// 传递参数查询参数
-                        pageSize:       params.limit,
-                        pageNum:        params.offset / params.limit + 1,
-                        searchValue:    params.search,
-						sort:  			params.sort,
-						order:          params.order
+					_page_size: params.limit,
+					_page_num: params.offset / params.limit + 1,
+					searchValue: params.search,
+					_page_sort: params.sort,
+					_page_order: params.order
             		};
 				if (!curParams.pageNum){
 					curParams.pageNum = 1;
@@ -255,11 +255,11 @@
 	                        search[key] = data[key];
 	                    });
                     }
-                    search.pageSize = params.limit;
-                    search.pageNum = params.offset / params.limit + 1;
+                    search._page_size = params.limit;
+                    search._page_num = params.offset / params.limit + 1;
                     search.searchValue = params.search;
-                    search.order = params.order;
-					search.sort = params.sort;
+                    search._page_order = params.order;
+					search._page_sort = params.sort;
 					if (!search.pageNum){
 						search.pageNum = 1;
 					}

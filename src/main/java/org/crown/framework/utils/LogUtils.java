@@ -45,7 +45,7 @@ public abstract class LogUtils {
     /**
      * 获取日志对象
      *
-     * @param excelog
+     * @param status
      * @param beiginTime
      * @param parameterMap
      * @param requestBody
