@@ -15,7 +15,7 @@ import lombok.Setter;
 /**
  * 业务表 gen_table
  *
- * @author ruoyi
+ * @author Crown
  */
 @Setter
 @Getter
@@ -80,7 +80,6 @@ public class GenTable extends BaseEntity {
      */
     @NotBlank(message = "作者不能为空")
     private String functionAuthor;
-
 
     /**
      * 主键信息
