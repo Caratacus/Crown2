@@ -87,7 +87,7 @@ public class GenTableServiceImpl extends BaseServiceImpl<GenTableMapper, GenTabl
     @Override
     @Transactional
     public void deleteGenTableByIds(String ids) {
-        delete().eq(GenTable::getTableId, StringUtils.split2List(ids)).execute();
+        delete().in(GenTable::getTableId, StringUtils.split2List(ids)).execute();
         genTableColumnService.deleteGenTableColumnByIds(ids);
     }
 

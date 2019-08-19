@@ -9,6 +9,10 @@ import org.crown.common.utils.StringUtils;
 import org.crown.framework.web.domain.BaseEntity;
 import org.crown.project.tool.gen.GenConstants;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +23,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@TableName("gen_table")
 public class GenTable extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +31,7 @@ public class GenTable extends BaseEntity {
     /**
      * 编号
      */
+    @TableId
     private Long tableId;
 
     /**
@@ -84,12 +90,14 @@ public class GenTable extends BaseEntity {
     /**
      * 主键信息
      */
+    @TableField(exist = false)
     private GenTableColumn pkColumn;
 
     /**
      * 表列信息
      */
     @Valid
+    @TableField(exist = false)
     private List<GenTableColumn> columns;
 
     /**
@@ -100,16 +108,19 @@ public class GenTable extends BaseEntity {
     /**
      * 树编码字段
      */
+    @TableField(exist = false)
     private String treeCode;
 
     /**
      * 树父编码字段
      */
+    @TableField(exist = false)
     private String treeParentCode;
 
     /**
      * 树名称字段
      */
+    @TableField(exist = false)
     private String treeName;
 
     /**

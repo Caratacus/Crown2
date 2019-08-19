@@ -5,6 +5,9 @@ import javax.validation.constraints.NotBlank;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.web.domain.BaseEntity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +18,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@TableName("gen_table_column")
 public class GenTableColumn extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +26,7 @@ public class GenTableColumn extends BaseEntity {
     /**
      * 编号
      */
+    @TableId
     private Long columnId;
 
     /**
@@ -109,10 +114,6 @@ public class GenTableColumn extends BaseEntity {
      * 排序
      */
     private Integer sort;
-    /**
-     * 备注
-     */
-    private String remark;
 
     public boolean isPk() {
         return isPk(this.isPk);
@@ -155,7 +156,7 @@ public class GenTableColumn extends BaseEntity {
     }
 
     public static boolean isSuperColumn(String javaField) {
-        return StringUtils.equalsAnyIgnoreCase(javaField, "createBy", "createTime", "updateBy", "updateTime", "remark");
+        return StringUtils.equalsAnyIgnoreCase(javaField, "createBy", "createTime", "updateBy", "updateTime");
     }
 
     public String readConverterExp() {
