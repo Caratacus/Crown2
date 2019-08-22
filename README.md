@@ -58,6 +58,7 @@
 <sup>9</sup> 日志: SLF4J、Async Log4j2 <br/>
 <sup>10</sup> SQL打印: P6spy <br/>
 <sup>11</sup> 权限认证: Shiro <br/>
+<sup>12</sup> 数据库主从: baomidou dynamic-datasource <br/>
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
 
