@@ -25,16 +25,12 @@ import org.crown.framework.utils.RequestUtils;
 import org.crown.framework.utils.ResponseUtils;
 import org.crown.project.system.user.domain.User;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * 登录帐号控制过滤器
  *
  * @author Crown
  */
 public class KickoutSessionFilter extends AccessControlFilter {
-
-    private final static ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * 同一个用户最大会话数
