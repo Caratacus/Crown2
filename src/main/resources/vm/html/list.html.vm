@@ -63,10 +63,10 @@
                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="${permissionPrefix}:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="${permissionPrefix}:edit">
+                <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="${permissionPrefix}:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="${permissionPrefix}:remove">
+                <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="${permissionPrefix}:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="${permissionPrefix}:export">
