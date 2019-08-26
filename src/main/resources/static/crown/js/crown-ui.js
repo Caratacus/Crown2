@@ -437,7 +437,8 @@
         		    parentCode: options.parentCode,                     // 用于设置父子关系
         	    	type: 'post',                                        // 请求方式（*）
         	        url: options.url,                                   // 请求后台的URL（*）
-        	        ajaxParams: options.ajaxParams,                     // 请求数据的ajax的data属性
+					data: options.data,                                 // 无url时用于渲染的数据
+					ajaxParams: options.ajaxParams,                     // 请求数据的ajax的data属性
         	        rootIdValue: options.rootIdValue,                   // 设置指定根节点id值
         	        height: options.height,                             // 表格树的高度
         			expandColumn: options.expandColumn,                 // 在哪一列上面显示展开按钮
@@ -1250,6 +1251,10 @@
         	// 不允许根父节点选择
         	notAllowParents: function(_tree) {
     		    var nodes = _tree.getSelectedNodes();
+				if(nodes.length == 0){
+					$.modal.msgError("请选择节点后提交");
+					return false;
+				}
     		    for (var i = 0; i < nodes.length; i++) {
     		        if (nodes[i].level == 0) {
     		            $.modal.msgError("不能选择根节点（" + nodes[i].name + "）");

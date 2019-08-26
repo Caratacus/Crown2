@@ -8,7 +8,7 @@ import lombok.Setter;
 public class Session {
 
     /**
-     * Session超时时间（分钟）
+     # Session超时时间，-1代表永不过期（默认30分钟）
      */
     private int expireTime;
     /**
