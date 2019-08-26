@@ -20,6 +20,8 @@
  */
 package org.crown.autoconfigure;
 
+import java.util.Properties;
+
 import org.crown.common.mybatisplus.CommonMetaObjectHandler;
 import org.crown.framework.mybatisplus.MybatisPlusSqlInjector;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.baomidou.dynamic.datasource.plugin.MasterSlaveAutoRoutingPlugin;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
+import com.github.pagehelper.PageInterceptor;
 
 /**
  * MybatisPlus 配置
@@ -75,4 +78,22 @@ public class MybatisPlusAutoConfiguration {
     public MybatisPlusSqlInjector mybatisPlusSqlInjector() {
         return new MybatisPlusSqlInjector();
     }
+
+    /**
+     * 分页插件
+     *
+     * @return
+     */
+    @Bean
+    public PageInterceptor pageInterceptor() {
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        Properties properties = new Properties();
+        properties.setProperty("helperDialect", "mysql");
+        properties.setProperty("reasonable", "true");
+        properties.setProperty("supportMethodsArguments", "true");
+        properties.setProperty("params", "count=countSql");
+        pageInterceptor.setProperties(properties);
+        return pageInterceptor;
+    }
+
 }

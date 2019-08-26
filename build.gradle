@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.springframework:spring-context-support:5.1.8.RELEASE"
+    implementation "org.springframework:spring-context-support:5.1.9.RELEASE"
     implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
@@ -50,10 +50,15 @@ dependencies {
     implementation "com.baomidou:dynamic-datasource-spring-boot-starter:2.5.5"
     implementation "org.apache.shiro:shiro-spring:${shiroVersion}"
     implementation "org.apache.shiro:shiro-ehcache:${shiroVersion}"
-    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
-    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger-ui:2.7.0"
+    implementation("io.springfox:springfox-swagger2:${swaggerVersion}"){
+        exclude group: "io.swagger", module: "swagger-annotations"
+        exclude group: "io.swagger", module: "swagger-models"
+    }
+    implementation "io.swagger:swagger-annotations:1.5.21"
+    implementation "io.swagger:swagger-models:1.5.21"
     implementation "mysql:mysql-connector-java:8.0.17"
-    implementation "com.github.pagehelper:pagehelper-spring-boot-starter:1.2.12"
+    implementation "com.github.pagehelper:pagehelper:5.1.10"
     implementation "p6spy:p6spy:3.8.3"
     implementation "com.lmax:disruptor:3.4.2"
     implementation "org.apache.commons:commons-lang3:3.9"

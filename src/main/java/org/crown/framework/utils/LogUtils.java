@@ -86,6 +86,7 @@ public abstract class LogUtils {
             exceLog.setContent(logJson);
             ThreadExecutors.execute(TimerTasks.saveExceLog(ip, status, exceLog));
         }
+
         log.info(logJson);
     }
 

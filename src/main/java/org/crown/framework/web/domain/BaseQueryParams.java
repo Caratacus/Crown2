@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.Map;
 
 import org.crown.common.utils.JsonUtils;
+import org.crown.common.utils.Maps;
 import org.crown.common.utils.TypeUtils;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.google.common.collect.Maps;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +38,7 @@ public class BaseQueryParams implements Serializable {
 
     public Map<String, Object> getParams() {
         if (params == null) {
-            params = Maps.newHashMap();
+            params = Maps.<String, Object>builder().build();
         }
         return params;
     }
