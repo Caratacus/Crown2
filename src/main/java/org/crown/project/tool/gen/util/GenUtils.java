@@ -67,7 +67,7 @@ public class GenUtils {
             else {
                 column.setJavaType(GenConstants.TYPE_LONG);
             }
-        }else {
+        } else {
             column.setJavaType(CommonMap.javaTypeMap.get(dataType));
         }
 
