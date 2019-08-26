@@ -11,8 +11,8 @@ import org.crown.framework.model.ExcelDTO;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
-import ${packageName}.domain.${businessName};
-import org.crown.project.${moduleName}.${businessName}.service.I${businessName}Service;
+import ${packageName}.domain.${ClassName};
+import org.crown.project.${moduleName}.${businessName}.service.I${ClassName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,12 +32,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  */
 @Controller
 @RequestMapping("/${moduleName}/${businessName}")
-public class ${businessName}Controller extends WebController<${businessName}> {
+public class ${ClassName}Controller extends WebController<${ClassName}> {
 
 	private final String prefix = "${moduleName}/${businessName}";
 
 	@Autowired
-	private I${businessName}Service ${businessName}Service;
+	private I${ClassName}Service ${businessName}Service;
 
 	@RequiresPermissions("${moduleName}:${businessName}:view")
 	@GetMapping
@@ -51,9 +51,9 @@ public class ${businessName}Controller extends WebController<${businessName}> {
 	@RequiresPermissions("${moduleName}:${businessName}:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public ApiResponses<TableData<${businessName}>> list(${businessName} ${businessName}) {
+	public ApiResponses<TableData<${ClassName}>> list(${ClassName} ${businessName}) {
 		startPage();
-		List<${businessName}> list = ${businessName}Service.list(Wrappers.<${businessName}>lambdaQuery(${businessName}));
+		List<${ClassName}> list = ${businessName}Service.list(Wrappers.<${ClassName}>lambdaQuery(${businessName}));
 		return success(getTableData(list));
 	}
 
@@ -63,9 +63,9 @@ public class ${businessName}Controller extends WebController<${businessName}> {
 	@RequiresPermissions("${moduleName}:${businessName}:export")
 	@PostMapping("/export")
 	@ResponseBody
-	public ApiResponses<ExcelDTO> export(${businessName} ${businessName}) {
-		List<${businessName}> list = ${businessName}Service.list(Wrappers.<${businessName}>lambdaQuery(${businessName}));
-		ExcelUtils<${businessName}> util = new ExcelUtils<>(${businessName}.class);
+	public ApiResponses<ExcelDTO> export(${ClassName} ${businessName}) {
+		List<${ClassName}> list = ${businessName}Service.list(Wrappers.<${ClassName}>lambdaQuery(${businessName}));
+		ExcelUtils<${ClassName}> util = new ExcelUtils<>(${ClassName}.class);
 		return success(new ExcelDTO(util.exportExcel(list, "${businessName}")));
 	}
 
@@ -84,7 +84,7 @@ public class ${businessName}Controller extends WebController<${businessName}> {
 	@Log(title = "${functionName}", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public ApiResponses<Void> addSave(@Validated ${businessName} ${businessName}) {
+	public ApiResponses<Void> addSave(@Validated ${ClassName} ${businessName}) {
 		${businessName}Service.save(${businessName});
 		return success();
 	}
@@ -94,7 +94,7 @@ public class ${businessName}Controller extends WebController<${businessName}> {
      */
 	@GetMapping("/edit/{${pkColumn.javaField}}")
 	public String edit(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}, ModelMap mmap) {
-		${businessName} ${businessName} = ${businessName}Service.getById(${pkColumn.javaField});
+		${ClassName} ${businessName} = ${businessName}Service.getById(${pkColumn.javaField});
 		mmap.put("${businessName}", ${businessName});
 		return prefix + "/edit";
 	}
@@ -106,7 +106,7 @@ public class ${businessName}Controller extends WebController<${businessName}> {
 	@Log(title = "${functionName}", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public ApiResponses<Void> editSave(@Validated ${businessName} ${businessName}) {
+	public ApiResponses<Void> editSave(@Validated ${ClassName} ${businessName}) {
 		${businessName}Service.updateById(${businessName});
 		return success();
 	}
@@ -120,7 +120,7 @@ public class ${businessName}Controller extends WebController<${businessName}> {
 	@PostMapping("/remove")
 	@ResponseBody
 	public ApiResponses<Void> remove(String ids) {
-		${businessName}Service.remove(Wrappers.<${businessName}>lambdaQuery().in(${businessName}::get${pkColumnAttrName}, StringUtils.split2List(ids)));
+		${businessName}Service.remove(Wrappers.<${ClassName}>lambdaQuery().in(${ClassName}::get${pkColumnAttrName}, StringUtils.split2List(ids)));
 		return success();
 	}
 

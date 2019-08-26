@@ -2,6 +2,7 @@ package org.crown.project.tool.gen.util;
 
 import java.util.Arrays;
 
+import org.crown.common.cons.CommonMap;
 import org.crown.common.utils.Crowns;
 import org.crown.common.utils.StringUtils;
 import org.crown.project.tool.gen.GenConstants;
@@ -19,10 +20,12 @@ public class GenUtils {
      * 初始化表信息
      */
     public static void initTable(GenTable genTable, String operName) {
+        String packagePath = Crowns.getGenerator().getPackagePath();
+        String businessName = getBusinessName(genTable.getTableName());
         genTable.setClassName(StringUtils.convertToCamelCase(genTable.getTableName()));
-        genTable.setPackageName(Crowns.getGenerator().getPackagePath());
-        genTable.setModuleName(getModuleName(Crowns.getGenerator().getPackagePath()));
-        genTable.setBusinessName(getBusinessName(genTable.getTableName()));
+        genTable.setPackageName(packagePath + "." + businessName);
+        genTable.setModuleName(getModuleName(packagePath));
+        genTable.setBusinessName(businessName);
         genTable.setFunctionName(replaceText(genTable.getTableComment()));
         genTable.setFunctionAuthor(Crowns.getGenerator().getAuthor());
         genTable.setCreateBy(operName);
@@ -64,6 +67,8 @@ public class GenUtils {
             else {
                 column.setJavaType(GenConstants.TYPE_LONG);
             }
+        }else {
+            column.setJavaType(CommonMap.javaTypeMap.get(dataType));
         }
 
         // 插入字段（默认所有字段都需要插入）
@@ -141,7 +146,7 @@ public class GenUtils {
      * @return 替换后的名字
      */
     public static String replaceText(String text) {
-        return text.replaceAll("(?:表|若依)", "");
+        return text.replaceAll("(?:表)", "");
     }
 
     /**
