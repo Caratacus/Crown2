@@ -12,7 +12,7 @@
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>
         <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
         <Property name="CONSOLE_LOG_PATTERN">%clr{${LOG_LEVEL_PATTERN}} %clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${sys:PID}}{magenta} %clr{-}{faint} [%style{%t}{bright,blue}] %clr{%-c{1.}}{cyan} %clr{(%F:%L)}{faint} %clr{-}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
-       <Property name="LOG_PATTERN">${LOG_LEVEL_PATTERN} %d{${LOG_DATEFORMAT_PATTERN}} ${sys:PID} -&#45;&#45; [%t] %-c{1.} %F:%L - %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+        <Property name="LOG_PATTERN">${LOG_LEVEL_PATTERN} %d{${LOG_DATEFORMAT_PATTERN}} ${sys:PID} -&#45;&#45; [%t] %-c{1.} %F:%L - %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
     </properties>
     <Appenders>
         <!--console-->
