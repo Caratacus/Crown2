@@ -199,6 +199,8 @@ public class ShiroAuoConfiguration implements WebMvcConfigurer {
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon");
+        //验证码
+        filterChainDefinitionMap.put("/captcha", "anon");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(ApplicationUtils.getBean(IMenuService.class).selectPermsAll());
 

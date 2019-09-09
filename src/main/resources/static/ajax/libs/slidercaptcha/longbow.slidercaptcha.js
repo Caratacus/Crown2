@@ -24,7 +24,27 @@
         maxLoadCount: 3,
         localImages: function () {
             return 'images/Pic' + Math.round(Math.random() * 4) + '.jpg';
-        }
+        },
+        verify: function (arr, url) {
+            var ret = false;
+            $.ajax({
+                url: url,
+                data: JSON.stringify(arr),
+                async: false,
+                cache: false,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (result) {
+                    var status = result.status;
+                    if (status >= 200 && status <= 299) {
+                        ret = result.result;
+                    }
+                }
+            });
+            return ret;
+        },
+        remoteUrl: null
     };
 
     function Plugin(option) {
@@ -102,8 +122,7 @@
 
         if ($.isFunction(Object.assign)) {
             Object.assign(this, _canvas);
-        }
-        else {
+        } else {
             $.extend(this, _canvas);
         }
     };
@@ -267,22 +286,40 @@
         document.addEventListener('mouseup', handleDragEnd);
         document.addEventListener('touchend', handleDragEnd);
 
-        document.addEventListener('mousedown', function () { return false; });
-        document.addEventListener('touchstart', function () { return false; });
-        document.addEventListener('swipe', function () { return false; });
+        document.addEventListener('mousedown', function () {
+            return false;
+        });
+        document.addEventListener('touchstart', function () {
+            return false;
+        });
+        document.addEventListener('swipe', function () {
+            return false;
+        });
     };
 
     _proto.verify = function () {
-        var sum = function (x, y) { return x + y; };
-        var square = function (x) { return x * x; };
         var arr = this.trail; // 拖动时y轴的移动距离
-        var average = arr.reduce(sum) / arr.length;
-        var deviations = arr.map(function (x) { return x - average; });
-        var stddev = Math.sqrt(deviations.map(square).reduce(sum) / arr.length);
         var left = parseInt(this.block.style.left);
+        var verified = false;
+        if (this.options.remoteUrl !== null) {
+            verified = this.options.verify(arr, this.options.remoteUrl);
+        } else {
+            var sum = function (x, y) {
+                return x + y;
+            };
+            var square = function (x) {
+                return x * x;
+            };
+            var average = arr.reduce(sum) / arr.length;
+            var deviations = arr.map(function (x) {
+                return x - average;
+            });
+            var stddev = Math.sqrt(deviations.map(square).reduce(sum) / arr.length);
+            verified = stddev !== 0;
+        }
         return {
             spliced: Math.abs(left - this.x) < this.options.offset,
-            verified: stddev !== 0 // 简单验证下拖动轨迹，为零时表示Y轴上下没有波动，可能非人为操作
+            verified: verified
         };
     };
 

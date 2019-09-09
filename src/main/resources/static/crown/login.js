@@ -7,7 +7,8 @@ $(function () {
         },
         onSuccess: function () {
             login();
-        }
+        },
+        remoteUrl: ctx + "captcha"
     });
 });
 

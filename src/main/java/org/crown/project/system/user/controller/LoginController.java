@@ -1,13 +1,17 @@
 package org.crown.project.system.user.controller;
 
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.crown.common.utils.TypeUtils;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +37,19 @@ public class LoginController extends WebController {
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         return success();
+    }
+
+    @PostMapping("/captcha")
+    @ResponseBody
+    public ApiResponses<Boolean> captcha(@RequestBody List<Integer> datas) {
+        double sum = datas.stream().mapToDouble(TypeUtils::castToDouble).sum();
+        int size = datas.size();
+        double avg = sum / size;
+        double stddev = datas.stream().mapToDouble(e -> Math.pow(e - avg, 2)).sum();
+        double val = stddev / size;
+        // 验证下拖动轨迹，为零时表示Y轴上下没有波动，非人为操作
+        Boolean flag = val != 0;
+        return success(flag);
     }
 
     @GetMapping("/unauth")
