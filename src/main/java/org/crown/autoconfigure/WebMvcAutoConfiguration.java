@@ -141,7 +141,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         @Override
         public boolean supports(MethodParameter returnType, Class converterType) {
             ResponseBody responseBody = returnType.getMethodAnnotation(ResponseBody.class);
-            boolean wrapper = false;
+            boolean wrapper = true;
             UnifiedReturn unifiedReturn = returnType.getMethodAnnotation(UnifiedReturn.class);
             if (Objects.nonNull(unifiedReturn)) {
                 wrapper = unifiedReturn.wrapper();
