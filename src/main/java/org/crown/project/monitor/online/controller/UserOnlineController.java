@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.enums.OnlineStatus;
 import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.shiro.session.OnlineSessionDAO;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
@@ -50,21 +49,20 @@ public class UserOnlineController extends WebController<UserOnline> {
     @RequiresPermissions("monitor:online:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<UserOnline>> list(UserOnline userOnline) {
+    public TableData<UserOnline> list(UserOnline userOnline) {
         startPage();
         List<UserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @RequiresPermissions("monitor:online:batchForceLogout")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @PostMapping("/batchForceLogout")
     @ResponseBody
-    public ApiResponses<Void> batchForceLogout(@RequestParam("ids[]") String[] ids) {
+    public void batchForceLogout(@RequestParam("ids[]") String[] ids) {
         for (String sessionId : ids) {
             logoutSessionId(sessionId);
         }
-        return success();
     }
 
     private void logoutSessionId(String sessionId) {
@@ -83,9 +81,8 @@ public class UserOnlineController extends WebController<UserOnline> {
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @PostMapping("/forceLogout")
     @ResponseBody
-    public ApiResponses<Void> forceLogout(String sessionId) {
+    public void forceLogout(String sessionId) {
         logoutSessionId(sessionId);
-        return success();
     }
 
 }

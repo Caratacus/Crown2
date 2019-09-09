@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import ${packageName}.domain.${ClassName};
@@ -51,10 +50,10 @@ public class ${ClassName}Controller extends WebController<${ClassName}> {
 	@RequiresPermissions("${moduleName}:${businessName}:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public ApiResponses<TableData<${ClassName}>> list(${ClassName} ${businessName}) {
+	public TableData<${ClassName}> list(${ClassName} ${businessName}) {
 		startPage();
 		List<${ClassName}> list = ${businessName}Service.list(Wrappers.<${ClassName}>lambdaQuery(${businessName}));
-		return success(getTableData(list));
+		return getTableData(list);
 	}
 
 	/**
@@ -63,10 +62,10 @@ public class ${ClassName}Controller extends WebController<${ClassName}> {
 	@RequiresPermissions("${moduleName}:${businessName}:export")
 	@PostMapping("/export")
 	@ResponseBody
-	public ApiResponses<ExcelDTO> export(${ClassName} ${businessName}) {
+	public ExcelDTO export(${ClassName} ${businessName}) {
 		List<${ClassName}> list = ${businessName}Service.list(Wrappers.<${ClassName}>lambdaQuery(${businessName}));
 		ExcelUtils<${ClassName}> util = new ExcelUtils<>(${ClassName}.class);
-		return success(new ExcelDTO(util.exportExcel(list, "${businessName}")));
+		return new ExcelDTO(util.exportExcel(list, "${businessName}"));
 	}
 
 	/**
@@ -84,9 +83,8 @@ public class ${ClassName}Controller extends WebController<${ClassName}> {
 	@Log(title = "${functionName}", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public ApiResponses<Void> addSave(@Validated ${ClassName} ${businessName}) {
+	public void addSave(@Validated ${ClassName} ${businessName}) {
 		${businessName}Service.save(${businessName});
-		return success();
 	}
 
 	/**
@@ -106,9 +104,8 @@ public class ${ClassName}Controller extends WebController<${ClassName}> {
 	@Log(title = "${functionName}", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public ApiResponses<Void> editSave(@Validated ${ClassName} ${businessName}) {
+	public void editSave(@Validated ${ClassName} ${businessName}) {
 		${businessName}Service.updateById(${businessName});
-		return success();
 	}
 	#set($pkColumnAttrName=$pkColumn.javaField.substring(0,1).toUpperCase() + ${pkColumn.javaField.substring(1)})
 
@@ -119,9 +116,8 @@ public class ${ClassName}Controller extends WebController<${ClassName}> {
 	@Log(title = "${functionName}", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
 	@ResponseBody
-	public ApiResponses<Void> remove(String ids) {
+	public void remove(String ids) {
 		${businessName}Service.remove(Wrappers.<${ClassName}>lambdaQuery().in(${ClassName}::get${pkColumnAttrName}, StringUtils.split2List(ids)));
-		return success();
 	}
 
 }

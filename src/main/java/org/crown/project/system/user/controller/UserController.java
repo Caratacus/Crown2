@@ -57,20 +57,20 @@ public class UserController extends WebController<User> {
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<User>> list(User user) {
+    public TableData<User> list(User user) {
         startPage();
         List<User> list = userService.selectUserList(user);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(User user) {
+    public ExcelDTO export(User user) {
         List<User> list = userService.selectUserList(user);
         ExcelUtils<User> util = new ExcelUtils<>(User.class);
-        return success(new ExcelDTO(util.exportExcel(list, "用户数据")));
+        return new ExcelDTO(util.exportExcel(list, "用户数据"));
     }
 
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
@@ -87,9 +87,9 @@ public class UserController extends WebController<User> {
     @RequiresPermissions("system:user:view")
     @GetMapping("/importTemplate")
     @ResponseBody
-    public ApiResponses<ExcelDTO> importTemplate() {
+    public ExcelDTO importTemplate() {
         ExcelUtils<User> util = new ExcelUtils<>(User.class);
-        return success(new ExcelDTO(util.importTemplateExcel("用户数据")));
+        return new ExcelDTO(util.importTemplateExcel("用户数据"));
     }
 
     /**
@@ -109,14 +109,12 @@ public class UserController extends WebController<User> {
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated User user) {
+    public void addSave(@Validated User user) {
         ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_ACCOUNT_EXIST.overrideMsg(String.format("登录账号[%s]已存在", user.getLoginName())), userService.checkLoginNameUnique(user.getLoginName()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_PHONE_EXIST.overrideMsg(String.format("手机号[%s]已存在", user.getPhonenumber())), userService.checkPhoneUnique(user));
         ApiAssert.isTrue(ErrorCodeEnum.USER_EMAIL_EXIST.overrideMsg(String.format("邮箱[%s]已存在", user.getEmail())), userService.checkEmailUnique(user));
         userService.insertUser(user);
-        return success();
-
     }
 
     /**
@@ -137,13 +135,11 @@ public class UserController extends WebController<User> {
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated User user) {
+    public void editSave(@Validated User user) {
         ApiAssert.isFalse(ErrorCodeEnum.USER_CANNOT_UPDATE_SUPER_ADMIN, User.isAdmin(user.getUserId()));
         ApiAssert.isTrue(ErrorCodeEnum.USER_PHONE_EXIST.overrideMsg(String.format("手机号[%s]已存在", user.getPhonenumber())), userService.checkPhoneUnique(user));
         ApiAssert.isTrue(ErrorCodeEnum.USER_EMAIL_EXIST.overrideMsg(String.format("邮箱[%s]已存在", user.getEmail())), userService.checkEmailUnique(user));
         userService.updateUser(user);
-        return success();
-
     }
 
     @RequiresPermissions("system:user:resetPwd")
@@ -158,23 +154,20 @@ public class UserController extends WebController<User> {
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
     @ResponseBody
-    public ApiResponses<Void> resetPwd(User user) {
+    public void resetPwd(User user) {
         if (userService.resetUserPwd(user)) {
             if (ShiroUtils.getUserId().equals(user.getUserId())) {
                 ShiroUtils.setSysUser(userService.selectUserById(user.getUserId()));
             }
         }
-        return success();
     }
 
     @RequiresPermissions("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         userService.deleteUserByIds(ids);
-        return success();
-
     }
 
     /**
@@ -182,8 +175,8 @@ public class UserController extends WebController<User> {
      */
     @PostMapping("/checkLoginNameUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkLoginNameUnique(User user) {
-        return success(userService.checkLoginNameUnique(user.getLoginName()));
+    public boolean checkLoginNameUnique(User user) {
+        return userService.checkLoginNameUnique(user.getLoginName());
     }
 
     /**
@@ -191,8 +184,8 @@ public class UserController extends WebController<User> {
      */
     @PostMapping("/checkPhoneUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkPhoneUnique(User user) {
-        return success(userService.checkPhoneUnique(user));
+    public boolean checkPhoneUnique(User user) {
+        return userService.checkPhoneUnique(user);
     }
 
     /**
@@ -200,8 +193,8 @@ public class UserController extends WebController<User> {
      */
     @PostMapping("/checkEmailUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkEmailUnique(User user) {
-        return success(userService.checkEmailUnique(user));
+    public boolean checkEmailUnique(User user) {
+        return userService.checkEmailUnique(user);
     }
 
     /**
@@ -211,9 +204,7 @@ public class UserController extends WebController<User> {
     @RequiresPermissions("system:user:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public ApiResponses<Void> changeStatus(User user) {
+    public void changeStatus(User user) {
         userService.changeStatus(user);
-        return success();
-
     }
 }

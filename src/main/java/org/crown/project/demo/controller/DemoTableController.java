@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.crown.common.utils.StringUtils;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.PageDomain;
 import org.crown.framework.web.page.TableData;
@@ -192,7 +191,7 @@ public class DemoTableController extends WebController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<UserTableModel>> list(UserTableModel userModel) {
+    public TableData<UserTableModel> list(UserTableModel userModel) {
         TableData rspData = new TableData();
         List<UserTableModel> userList = new ArrayList<>(Arrays.asList(new UserTableModel[users.size()]));
         Collections.copy(userList, users);
@@ -209,7 +208,7 @@ public class DemoTableController extends WebController {
         if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());
-            return success(rspData);
+            return rspData;
         }
         int pageNum = (pageDomain.getPageNum() - 1) * 10;
         int pageSize = pageDomain.getPageNum() * 10;
@@ -218,7 +217,7 @@ public class DemoTableController extends WebController {
         }
         rspData.setRows(userList.subList(pageNum, pageSize));
         rspData.setTotal(userList.size());
-        return success(rspData);
+        return rspData;
     }
 }
 

@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.system.dict.domain.DictData;
@@ -48,20 +47,20 @@ public class DictDataController extends WebController<DictData> {
     @PostMapping("/list")
     @RequiresPermissions("system:dict:list")
     @ResponseBody
-    public ApiResponses<TableData<DictData>> list(DictData dictData) {
+    public TableData<DictData> list(DictData dictData) {
         startPage();
         List<DictData> list = dictDataService.selectDictDataList(dictData);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(DictData dictData) {
+    public ExcelDTO export(DictData dictData) {
         List<DictData> list = dictDataService.selectDictDataList(dictData);
         ExcelUtils<DictData> util = new ExcelUtils<>(DictData.class);
-        return success(new ExcelDTO(util.exportExcel(list, "字典数据")));
+        return new ExcelDTO(util.exportExcel(list, "字典数据"));
 
     }
 
@@ -81,10 +80,8 @@ public class DictDataController extends WebController<DictData> {
     @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated DictData dict) {
+    public void addSave(@Validated DictData dict) {
         dictDataService.save(dict);
-        return success();
-
     }
 
     /**
@@ -103,20 +100,15 @@ public class DictDataController extends WebController<DictData> {
     @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated DictData dict) {
+    public void editSave(@Validated DictData dict) {
         dictDataService.updateById(dict);
-        return success();
-
     }
 
     @Log(title = "字典数据", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:dict:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
-
+    public void remove(String ids) {
         dictDataService.remove(Wrappers.<DictData>lambdaQuery().in(DictData::getDictCode, StringUtils.split2List(ids)));
-        return success();
-
     }
 }

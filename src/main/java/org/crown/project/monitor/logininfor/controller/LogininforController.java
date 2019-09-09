@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.logininfor.domain.Logininfor;
@@ -45,20 +44,20 @@ public class LogininforController extends WebController<Logininfor> {
     @RequiresPermissions("monitor:logininfor:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<Logininfor>> list(Logininfor logininfor) {
+    public TableData<Logininfor> list(Logininfor logininfor) {
         startPage();
         List<Logininfor> list = logininforService.selectLogininforList(logininfor);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "登陆日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("monitor:logininfor:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(Logininfor logininfor) {
+    public ExcelDTO export(Logininfor logininfor) {
         List<Logininfor> list = logininforService.selectLogininforList(logininfor);
         ExcelUtils<Logininfor> util = new ExcelUtils<>(Logininfor.class);
-        return success(new ExcelDTO(util.exportExcel(list, "登陆日志")));
+        return new ExcelDTO(util.exportExcel(list, "登陆日志"));
 
     }
 
@@ -66,17 +65,15 @@ public class LogininforController extends WebController<Logininfor> {
     @Log(title = "登陆日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         logininforService.remove(Wrappers.<Logininfor>lambdaQuery().in(Logininfor::getInfoId, StringUtils.split2List(ids)));
-        return success();
     }
 
     @RequiresPermissions("monitor:logininfor:remove")
     @Log(title = "登陆日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")
     @ResponseBody
-    public ApiResponses<Void> clean() {
+    public void clean() {
         logininforService.remove();
-        return success();
     }
 }

@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
@@ -47,20 +46,20 @@ public class PostController extends WebController<Post> {
     @RequiresPermissions("system:post:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<Post>> list(Post post) {
+    public TableData<Post> list(Post post) {
         startPage();
         List<Post> list = postService.selectPostList(post);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:post:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(Post post) {
+    public ExcelDTO export(Post post) {
         List<Post> list = postService.selectPostList(post);
         ExcelUtils<Post> util = new ExcelUtils<>(Post.class);
-        return success(new ExcelDTO(util.exportExcel(list, "岗位数据")));
+        return new ExcelDTO(util.exportExcel(list, "岗位数据"));
 
     }
 
@@ -68,10 +67,8 @@ public class PostController extends WebController<Post> {
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         postService.deletePostByIds(ids);
-        return success();
-
     }
 
     /**
@@ -89,12 +86,10 @@ public class PostController extends WebController<Post> {
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated Post post) {
+    public void addSave(@Validated Post post) {
         ApiAssert.isTrue(ErrorCodeEnum.POST_NAME_EXIST.overrideMsg("岗位名称[" + post.getPostName() + "]已存在"), postService.checkPostNameUnique(post));
         ApiAssert.isTrue(ErrorCodeEnum.POST_CODE_EXIST.overrideMsg("岗位编码[" + post.getPostCode() + "]已存在"), postService.checkPostCodeUnique(post));
         postService.save(post);
-        return success();
-
     }
 
     /**
@@ -113,12 +108,10 @@ public class PostController extends WebController<Post> {
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated Post post) {
+    public void editSave(@Validated Post post) {
         ApiAssert.isTrue(ErrorCodeEnum.POST_NAME_EXIST.overrideMsg("岗位名称[" + post.getPostName() + "]已存在"), postService.checkPostNameUnique(post));
         ApiAssert.isTrue(ErrorCodeEnum.POST_CODE_EXIST.overrideMsg("岗位编码[" + post.getPostCode() + "]已存在"), postService.checkPostCodeUnique(post));
         postService.updateById(post);
-        return success();
-
     }
 
     /**
@@ -126,8 +119,8 @@ public class PostController extends WebController<Post> {
      */
     @PostMapping("/checkPostNameUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkPostNameUnique(Post post) {
-        return success(postService.checkPostNameUnique(post));
+    public boolean checkPostNameUnique(Post post) {
+        return postService.checkPostNameUnique(post);
     }
 
     /**
@@ -135,7 +128,7 @@ public class PostController extends WebController<Post> {
      */
     @PostMapping("/checkPostCodeUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkPostCodeUnique(Post post) {
-        return success(postService.checkPostCodeUnique(post));
+    public boolean checkPostCodeUnique(Post post) {
+        return postService.checkPostCodeUnique(post);
     }
 }

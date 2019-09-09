@@ -34,4 +34,5 @@ public interface APICons {
     String API_METHOD = "API_METHOD";
     String API_BEGIN_TIME = "API_BEGIN_TIME";
     String API_UID = "API_UID";
+    String API_REQUEST_BODY = "API_REQUEST_BODY";
 }

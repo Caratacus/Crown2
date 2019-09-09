@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.Ztree;
@@ -50,21 +49,20 @@ public class DictTypeController extends WebController<DictType> {
     @PostMapping("/list")
     @RequiresPermissions("system:dict:list")
     @ResponseBody
-    public ApiResponses<TableData<DictType>> list(DictType dictType) {
+    public TableData<DictType> list(DictType dictType) {
         startPage();
         List<DictType> list = dictTypeService.selectDictTypeList(dictType);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(DictType dictType) {
-
+    public ExcelDTO export(DictType dictType) {
         List<DictType> list = dictTypeService.selectDictTypeList(dictType);
         ExcelUtils<DictType> util = new ExcelUtils<>(DictType.class);
-        return success(new ExcelDTO(util.exportExcel(list, "字典类型")));
+        return new ExcelDTO(util.exportExcel(list, "字典类型"));
 
     }
 
@@ -83,11 +81,9 @@ public class DictTypeController extends WebController<DictType> {
     @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated DictType dict) {
+    public void addSave(@Validated DictType dict) {
         ApiAssert.isTrue(ErrorCodeEnum.DICT_TYPE_EXIST.overrideMsg("字典类型[" + dict.getDictType() + "]已存在"), dictTypeService.checkDictTypeUnique(dict));
         dictTypeService.save(dict);
-        return success();
-
     }
 
     /**
@@ -106,20 +102,17 @@ public class DictTypeController extends WebController<DictType> {
     @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated DictType dict) {
+    public void editSave(@Validated DictType dict) {
         ApiAssert.isTrue(ErrorCodeEnum.DICT_TYPE_EXIST.overrideMsg("字典类型[" + dict.getDictType() + "]已存在"), dictTypeService.checkDictTypeUnique(dict));
         dictTypeService.updateDictType(dict);
-        return success();
     }
 
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:dict:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         dictTypeService.deleteDictTypeByIds(ids);
-        return success();
-
     }
 
     /**
@@ -138,8 +131,8 @@ public class DictTypeController extends WebController<DictType> {
      */
     @PostMapping("/checkDictTypeUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkDictTypeUnique(DictType dictType) {
-        return success(dictTypeService.checkDictTypeUnique(dictType));
+    public boolean checkDictTypeUnique(DictType dictType) {
+        return dictTypeService.checkDictTypeUnique(dictType);
     }
 
     /**
@@ -158,8 +151,7 @@ public class DictTypeController extends WebController<DictType> {
      */
     @GetMapping("/treeData")
     @ResponseBody
-    public ApiResponses<List<Ztree>> treeData() {
-        List<Ztree> ztrees = dictTypeService.selectDictTree(new DictType());
-        return success(ztrees);
+    public List<Ztree> treeData() {
+        return dictTypeService.selectDictTree(new DictType());
     }
 }

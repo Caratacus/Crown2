@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.utils.ResponseUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.ServerHttpResponse;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -93,7 +94,20 @@ public class ApiResponses<T> implements Serializable {
         responses.setStatus(status.value());
         responses.setResult(object);
         return responses;
+    }
 
+    /**
+     * 成功返回
+     *
+     * @param status
+     * @param object
+     */
+    public static <T> ApiResponses<T> success(ServerHttpResponse response, HttpStatus status, T object) {
+        response.setStatusCode(status);
+        SuccessResponses<T> responses = new SuccessResponses<>();
+        responses.setStatus(status.value());
+        responses.setResult(object);
+        return responses;
     }
 
     /**

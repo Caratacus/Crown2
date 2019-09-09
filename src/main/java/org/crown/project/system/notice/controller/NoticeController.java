@@ -6,7 +6,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.system.notice.domain.Notice;
@@ -49,10 +48,10 @@ public class NoticeController extends WebController<Notice> {
     @RequiresPermissions("system:notice:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<Notice>> list(Notice notice) {
+    public TableData<Notice> list(Notice notice) {
         startPage();
         List<Notice> list = noticeService.selectNoticeList(notice);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     /**
@@ -70,10 +69,8 @@ public class NoticeController extends WebController<Notice> {
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated Notice notice) {
+    public void addSave(@Validated Notice notice) {
         noticeService.save(notice);
-        return success();
-
     }
 
     /**
@@ -92,10 +89,8 @@ public class NoticeController extends WebController<Notice> {
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated Notice notice) {
+    public void editSave(@Validated Notice notice) {
         noticeService.updateById(notice);
-        return success();
-
     }
 
     /**
@@ -105,9 +100,7 @@ public class NoticeController extends WebController<Notice> {
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         noticeService.remove(Wrappers.<Notice>lambdaQuery().in(Notice::getNoticeId, StringUtils.split2List(ids)));
-        return success();
-
     }
 }

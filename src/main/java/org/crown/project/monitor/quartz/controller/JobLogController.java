@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.quartz.domain.JobLog;
@@ -49,29 +48,28 @@ public class JobLogController extends WebController<JobLog> {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<JobLog>> list(JobLog jobLog) {
+    public TableData<JobLog> list(JobLog jobLog) {
         startPage();
         List<JobLog> list = jobLogService.selectJobLogList(jobLog);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "调度日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("monitor:job:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(JobLog jobLog) {
+    public ExcelDTO export(JobLog jobLog) {
         List<JobLog> list = jobLogService.selectJobLogList(jobLog);
         ExcelUtils<JobLog> util = new ExcelUtils<>(JobLog.class);
-        return success(new ExcelDTO(util.exportExcel(list, "调度日志")));
+        return new ExcelDTO(util.exportExcel(list, "调度日志"));
     }
 
     @Log(title = "调度日志", businessType = BusinessType.DELETE)
     @RequiresPermissions("monitor:job:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         jobLogService.remove(Wrappers.<JobLog>lambdaQuery().in(JobLog::getJobLogId, StringUtils.split2List(ids)));
-        return success();
     }
 
     @RequiresPermissions("monitor:job:detail")
@@ -86,8 +84,7 @@ public class JobLogController extends WebController<JobLog> {
     @RequiresPermissions("monitor:job:remove")
     @PostMapping("/clean")
     @ResponseBody
-    public ApiResponses<Void> clean() {
+    public void clean() {
         jobLogService.remove();
-        return success();
     }
 }

@@ -6,7 +6,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.exceLog.domain.ExceLog;
@@ -48,10 +47,10 @@ public class ExceLogController extends WebController<ExceLog> {
     @RequiresPermissions("monitor:exceLog:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<ExceLog>> list(ExceLog exceLog) {
+    public TableData<ExceLog> list(ExceLog exceLog) {
         startPage();
         List<ExceLog> list = exceLogService.list(Wrappers.<ExceLog>lambdaQuery().like(StringUtils.isNotEmpty(exceLog.getContent()), ExceLog::getContent, exceLog.getContent()));
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @RequiresPermissions("monitor:exceLog:detail")
@@ -68,9 +67,8 @@ public class ExceLogController extends WebController<ExceLog> {
     @Log(title = "异常日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         exceLogService.remove(Wrappers.<ExceLog>lambdaQuery().in(ExceLog::getId, StringUtils.split2List(ids)));
-        return success();
     }
 
 }

@@ -6,7 +6,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.framework.enums.ErrorCodeEnum;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.Ztree;
@@ -52,8 +51,8 @@ public class MenuController extends WebController<Menu> {
     @RequiresPermissions("system:menu:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<List<Menu>> list(Menu menu) {
-        return success(menuService.selectMenuList(menu));
+    public List<Menu> list(Menu menu) {
+        return menuService.selectMenuList(menu);
     }
 
     /**
@@ -63,12 +62,10 @@ public class MenuController extends WebController<Menu> {
     @RequiresPermissions("system:menu:remove")
     @GetMapping("/remove/{menuId}")
     @ResponseBody
-    public ApiResponses<Void> remove(@PathVariable("menuId") Long menuId) {
+    public void remove(@PathVariable("menuId") Long menuId) {
         ApiAssert.isFalse(ErrorCodeEnum.MENU_EXISTING_LOWER_LEVEL_MENU, menuService.exist(Wrappers.<Menu>lambdaQuery().eq(Menu::getMenuId, menuId)));
         ApiAssert.isFalse(ErrorCodeEnum.MENU_EXISTING_USING, roleMenuService.exist(Wrappers.<RoleMenu>lambdaQuery().eq(RoleMenu::getMenuId, menuId)));
         menuService.deleteMenuById(menuId);
-        return success();
-
     }
 
     /**
@@ -95,11 +92,9 @@ public class MenuController extends WebController<Menu> {
     @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated Menu menu) {
+    public void addSave(@Validated Menu menu) {
         ApiAssert.isTrue(ErrorCodeEnum.MENU_NAME_EXIST.overrideMsg("菜单名称[" + menu.getMenuName() + "]已存在"), menuService.checkMenuNameUnique(menu));
         menuService.insertMenu(menu);
-        return success();
-
     }
 
     /**
@@ -118,11 +113,9 @@ public class MenuController extends WebController<Menu> {
     @RequiresPermissions("system:menu:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated Menu menu) {
+    public void editSave(@Validated Menu menu) {
         ApiAssert.isTrue(ErrorCodeEnum.MENU_NAME_EXIST.overrideMsg("菜单名称[" + menu.getMenuName() + "]已存在"), menuService.checkMenuNameUnique(menu));
         menuService.updateMenu(menu);
-        return success();
-
     }
 
     /**
@@ -138,8 +131,8 @@ public class MenuController extends WebController<Menu> {
      */
     @PostMapping("/checkMenuNameUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkMenuNameUnique(Menu menu) {
-        return success(menuService.checkMenuNameUnique(menu));
+    public boolean checkMenuNameUnique(Menu menu) {
+        return menuService.checkMenuNameUnique(menu);
     }
 
     /**
@@ -147,8 +140,8 @@ public class MenuController extends WebController<Menu> {
      */
     @GetMapping("/roleMenuTreeData")
     @ResponseBody
-    public ApiResponses<List<Ztree>> roleMenuTreeData(Role role) {
-        return success(menuService.roleMenuTreeData(role));
+    public List<Ztree> roleMenuTreeData(Role role) {
+        return menuService.roleMenuTreeData(role);
     }
 
     /**
@@ -156,8 +149,8 @@ public class MenuController extends WebController<Menu> {
      */
     @GetMapping("/menuTreeData")
     @ResponseBody
-    public ApiResponses<List<Ztree>> menuTreeData() {
-        return success(menuService.menuTreeData());
+    public List<Ztree> menuTreeData() {
+        return menuService.menuTreeData();
     }
 
     /**

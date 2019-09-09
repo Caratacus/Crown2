@@ -21,7 +21,6 @@
 package org.crown.framework.utils;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,8 +55,7 @@ public abstract class LogUtils {
      * @param object
      * @return
      */
-    public static void printLog(Integer status, Long beiginTime, String uid, String loginName, Map<String, String[]> parameterMap, String requestBody, String url, String actionMethod, String method, String ip, Object object) {
-        Object requestBodyObj = Optional.ofNullable(JsonUtils.parse(requestBody)).orElse(requestBody);
+    public static void printLog(Integer status, Long beiginTime, String uid, String loginName, Map<String, String[]> parameterMap, Object requestBody, String url, String actionMethod, String method, String ip, Object object) {
         String runTime = (beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms";
         Log logInfo = Log.builder()
                 //查询参数
@@ -65,7 +63,7 @@ public abstract class LogUtils {
                 .uid(uid)
                 .loginName(loginName)
                 //请求体r
-                .requestBody(requestBodyObj)
+                .requestBody(requestBody)
                 //请求路径
                 .url(url)
                 //控制器方法

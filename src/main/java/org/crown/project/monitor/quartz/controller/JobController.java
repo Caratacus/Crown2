@@ -9,7 +9,6 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
@@ -51,34 +50,33 @@ public class JobController extends WebController<Job> {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<Job>> list(Job job) {
+    public TableData<Job> list(Job job) {
         startPage();
         List<Job> list = jobService.selectJobList(job);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "定时任务", businessType = BusinessType.EXPORT)
     @RequiresPermissions("monitor:job:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(Job job) {
+    public ExcelDTO export(Job job) {
         List<Job> list = jobService.selectJobList(job);
         ExcelUtils<Job> util = new ExcelUtils<>(Job.class);
-        return success(new ExcelDTO(util.exportExcel(list, "定时任务")));
+        return new ExcelDTO(util.exportExcel(list, "定时任务"));
     }
 
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     @RequiresPermissions("monitor:job:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         List<String> idVals = StringUtils.split2List(ids);
         idVals.forEach(id -> {
             Job job = jobService.getById(id);
             ApiAssert.notNull(ErrorCodeEnum.JOB_NOT_FOUND.overrideMsg("未找到ID为[" + id + "]的定时任务"), job);
             jobService.delete(job);
         });
-        return success();
     }
 
     @RequiresPermissions("monitor:job:detail")
@@ -96,11 +94,10 @@ public class JobController extends WebController<Job> {
     @RequiresPermissions("monitor:job:changeStatus")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public ApiResponses<Void> changeStatus(Job job) {
+    public void changeStatus(Job job) {
         Job newJob = jobService.getById(job.getJobId());
         ApiAssert.notNull(ErrorCodeEnum.JOB_NOT_FOUND.overrideMsg("未找到ID为[" + job.getJobId() + "]的定时任务"), job);
         jobService.updatePaused(newJob);
-        return success();
     }
 
     /**
@@ -110,11 +107,10 @@ public class JobController extends WebController<Job> {
     @RequiresPermissions("monitor:job:changeStatus")
     @PostMapping("/run")
     @ResponseBody
-    public ApiResponses<Void> run(Job job) {
+    public void run(Job job) {
         Job newJob = jobService.getById(job.getJobId());
         ApiAssert.notNull(ErrorCodeEnum.JOB_NOT_FOUND.overrideMsg("未找到ID为[" + job.getJobId() + "]的定时任务"), job);
         jobService.execute(newJob);
-        return success();
     }
 
     /**
@@ -132,9 +128,8 @@ public class JobController extends WebController<Job> {
     @RequiresPermissions("monitor:job:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated Job job) {
+    public void addSave(@Validated Job job) {
         jobService.create(job);
-        return success();
     }
 
     /**
@@ -153,9 +148,8 @@ public class JobController extends WebController<Job> {
     @RequiresPermissions("monitor:job:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated Job job) {
+    public void editSave(@Validated Job job) {
         jobService.update(job);
-        return success();
     }
 
     /**

@@ -8,7 +8,6 @@ import org.crown.common.utils.Crowns;
 import org.crown.common.utils.file.FileUploadUtils;
 import org.crown.common.utils.file.MimeTypes;
 import org.crown.framework.enums.ErrorCodeEnum;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.shiro.service.PasswordService;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
@@ -70,14 +69,12 @@ public class ProfileController extends WebController {
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
     @ResponseBody
-    public ApiResponses<Void> resetPwd(String oldPassword, @RequestParam("newPassword") String newPassword) {
+    public void resetPwd(String oldPassword, @RequestParam("newPassword") String newPassword) {
         User user = getSysUser();
         ApiAssert.isTrue(ErrorCodeEnum.USER_OLD_PASSWORD_ERROR, passwordService.matches(user, oldPassword));
         user.setPassword(newPassword);
         userService.resetUserPwd(user);
         setSysUser(userService.selectUserById(user.getUserId()));
-        return success();
-
     }
 
     /**
@@ -106,7 +103,7 @@ public class ProfileController extends WebController {
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
     @ResponseBody
-    public ApiResponses<Void> update(User user) {
+    public void update(User user) {
         User currentUser = getSysUser();
         currentUser.setUserName(user.getUserName());
         currentUser.setEmail(user.getEmail());
@@ -114,7 +111,6 @@ public class ProfileController extends WebController {
         currentUser.setSex(user.getSex());
         userService.updateById(currentUser);
         setSysUser(userService.selectUserById(currentUser.getUserId()));
-        return success();
     }
 
     /**
@@ -123,7 +119,7 @@ public class ProfileController extends WebController {
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updateAvatar")
     @ResponseBody
-    public ApiResponses<Void> updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
+    public void updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
         User currentUser = getSysUser();
         ApiAssert.isFalse(ErrorCodeEnum.USER_AVATAR_NOT_EMPTY, file.isEmpty());
         String avatar = null;
@@ -135,6 +131,5 @@ public class ProfileController extends WebController {
         currentUser.setAvatar(avatar);
         userService.updateById(currentUser);
         setSysUser(userService.selectUserById(currentUser.getUserId()));
-        return success();
     }
 }

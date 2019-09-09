@@ -6,7 +6,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.crown.common.utils.TypeUtils;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,24 +31,22 @@ public class LoginController extends WebController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ApiResponses<Void> ajaxLogin(String username, String password) {
+    public void ajaxLogin(String username, String password) {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, true);
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
-        return success();
     }
 
     @PostMapping("/captcha")
     @ResponseBody
-    public ApiResponses<Boolean> captcha(@RequestBody List<Integer> datas) {
+    public boolean captcha(@RequestBody List<Integer> datas) {
         double sum = datas.stream().mapToDouble(TypeUtils::castToDouble).sum();
         int size = datas.size();
         double avg = sum / size;
         double stddev = datas.stream().mapToDouble(e -> Math.pow(e - avg, 2)).sum();
         double val = stddev / size;
         // 验证下拖动轨迹，为零时表示Y轴上下没有波动，非人为操作
-        Boolean flag = val != 0;
-        return success(flag);
+        return val != 0;
     }
 
     @GetMapping("/unauth")

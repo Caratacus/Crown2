@@ -85,7 +85,7 @@ public abstract class ResponseUtils {
                 userId,
                 loginName,
                 request.getParameterMap(),
-                RequestUtils.getRequestBody(request),
+                request.getAttribute(APICons.API_REQUEST_BODY),
                 (String) request.getAttribute(APICons.API_REQURL),
                 (String) request.getAttribute(APICons.API_ACTION_METHOD),
                 request.getMethod(),

@@ -9,7 +9,6 @@ import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
@@ -53,20 +52,20 @@ public class ConfigController extends WebController<Config> {
     @RequiresPermissions("system:config:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<Config>> list(Config config) {
+    public TableData<Config> list(Config config) {
         startPage();
         List<Config> list = configService.selectConfigList(config);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:config:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(Config config) {
+    public ExcelDTO export(Config config) {
         List<Config> list = configService.selectConfigList(config);
         ExcelUtils<Config> util = new ExcelUtils<>(Config.class);
-        return success(new ExcelDTO(util.exportExcel(list, "参数数据")));
+        return new ExcelDTO(util.exportExcel(list, "参数数据"));
     }
 
     /**
@@ -84,10 +83,9 @@ public class ConfigController extends WebController<Config> {
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated Config config) {
+    public void addSave(@Validated Config config) {
         ApiAssert.isTrue(ErrorCodeEnum.CONFIG_KEY_EXIST.overrideMsg("参数键名" + config.getConfigName() + "已存在"), configService.checkConfigKeyUnique(config));
         configService.save(config);
-        return success();
     }
 
     /**
@@ -106,11 +104,9 @@ public class ConfigController extends WebController<Config> {
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated Config config) {
+    public void editSave(@Validated Config config) {
         ApiAssert.isTrue(ErrorCodeEnum.CONFIG_KEY_EXIST.overrideMsg("参数键名" + config.getConfigName() + "已存在"), configService.checkConfigKeyUnique(config));
         configService.updateById(config);
-        return success();
-
     }
 
     /**
@@ -120,14 +116,12 @@ public class ConfigController extends WebController<Config> {
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
 
         configService.remove(
                 Wrappers.<Config>lambdaQuery().in(Config::getConfigId, StringUtils.split2List(ids)
                 )
         );
-        return success();
-
     }
 
     /**
@@ -135,7 +129,7 @@ public class ConfigController extends WebController<Config> {
      */
     @PostMapping("/checkConfigKeyUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkConfigKeyUnique(Config config) {
-        return success(configService.checkConfigKeyUnique(config));
+    public Boolean checkConfigKeyUnique(Config config) {
+        return configService.checkConfigKeyUnique(config);
     }
 }

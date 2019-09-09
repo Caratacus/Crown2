@@ -89,7 +89,7 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<UserOperateModel>> list(UserOperateModel userModel) {
+    public TableData<UserOperateModel> list(UserOperateModel userModel) {
         TableData rspData = new TableData();
         List<UserOperateModel> userList = new ArrayList<>(users.values());
         // 查询条件过滤
@@ -105,7 +105,7 @@ public class DemoOperateController extends WebController {
         if (null == pageDomain.getPageNum() || null == pageDomain.getPageSize()) {
             rspData.setRows(userList);
             rspData.setTotal(userList.size());
-            return success(rspData);
+            return rspData;
         }
         int pageNum = (pageDomain.getPageNum() - 1) * 10;
         int pageSize = pageDomain.getPageNum() * 10;
@@ -114,7 +114,7 @@ public class DemoOperateController extends WebController {
         }
         rspData.setRows(userList.subList(pageNum, pageSize));
         rspData.setTotal(userList.size());
-        return success(rspData);
+        return rspData;
     }
 
     /**
@@ -130,11 +130,10 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(UserOperateModel user) {
+    public void addSave(UserOperateModel user) {
         int userId = users.size() + 1;
         user.setUserId(userId);
         users.put(userId, user);
-        return success();
     }
 
     /**
@@ -151,9 +150,8 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(UserOperateModel user) {
+    public void editSave(UserOperateModel user) {
         users.put(user.getUserId(), user);
-        return success();
     }
 
     /**
@@ -161,10 +159,10 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(UserOperateModel user) {
+    public ExcelDTO export(UserOperateModel user) {
         List<UserOperateModel> list = new ArrayList<>(users.values());
         ExcelUtils<UserOperateModel> util = new ExcelUtils<>(UserOperateModel.class);
-        return success(new ExcelDTO(util.exportExcel(list, "用户数据")));
+        return new ExcelDTO(util.exportExcel(list, "用户数据"));
     }
 
     /**
@@ -172,9 +170,9 @@ public class DemoOperateController extends WebController {
      */
     @GetMapping("/importTemplate")
     @ResponseBody
-    public ApiResponses<ExcelDTO> importTemplate() {
+    public ExcelDTO importTemplate() {
         ExcelUtils<UserOperateModel> util = new ExcelUtils<>(UserOperateModel.class);
-        return success(new ExcelDTO(util.importTemplateExcel("用户数据")));
+        return new ExcelDTO(util.importTemplateExcel("用户数据"));
     }
 
     /**
@@ -194,12 +192,11 @@ public class DemoOperateController extends WebController {
      */
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         Integer[] userIds = Convert.toIntArray(ids);
         for (Integer userId : userIds) {
             users.remove(userId);
         }
-        return success();
     }
 
     /**
@@ -213,9 +210,8 @@ public class DemoOperateController extends WebController {
 
     @PostMapping("/clean")
     @ResponseBody
-    public ApiResponses<Void> clean() {
+    public void clean() {
         users.clear();
-        return success();
     }
 
     /**

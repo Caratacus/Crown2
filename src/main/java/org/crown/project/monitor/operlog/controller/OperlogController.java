@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.monitor.operlog.domain.OperLog;
@@ -47,29 +46,28 @@ public class OperlogController extends WebController<OperLog> {
     @RequiresPermissions("monitor:operlog:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<OperLog>> list(OperLog operLog) {
+    public TableData<OperLog> list(OperLog operLog) {
         startPage();
         List<OperLog> list = operLogService.selectOperLogList(operLog);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("monitor:operlog:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(OperLog operLog) {
+    public ExcelDTO export(OperLog operLog) {
         List<OperLog> list = operLogService.selectOperLogList(operLog);
         ExcelUtils<OperLog> util = new ExcelUtils<>(OperLog.class);
-        return success(new ExcelDTO(util.exportExcel(list, "操作日志")));
+        return new ExcelDTO(util.exportExcel(list, "操作日志"));
 
     }
 
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         operLogService.remove(Wrappers.<OperLog>lambdaQuery().in(OperLog::getOperId, StringUtils.split2List(ids)));
-        return success();
     }
 
     @RequiresPermissions("monitor:operlog:detail")
@@ -83,8 +81,7 @@ public class OperlogController extends WebController<OperLog> {
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/clean")
     @ResponseBody
-    public ApiResponses<Void> clean() {
+    public void clean() {
         operLogService.remove();
-        return success();
     }
 }

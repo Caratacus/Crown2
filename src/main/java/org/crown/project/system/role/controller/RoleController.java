@@ -8,7 +8,6 @@ import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.poi.ExcelUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ExcelDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
@@ -53,20 +52,20 @@ public class RoleController extends WebController {
     @RequiresPermissions("system:role:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<Role>> list(Role role) {
+    public TableData<Role> list(Role role) {
         startPage();
         List<Role> list = roleService.selectRoleList(role);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:role:export")
     @PostMapping("/export")
     @ResponseBody
-    public ApiResponses<ExcelDTO> export(Role role) {
+    public ExcelDTO export(Role role) {
         List<Role> list = roleService.selectRoleList(role);
         ExcelUtils<Role> util = new ExcelUtils<>(Role.class);
-        return success(new ExcelDTO(util.exportExcel(list, "角色数据")));
+        return new ExcelDTO(util.exportExcel(list, "角色数据"));
 
     }
 
@@ -85,12 +84,10 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated Role role) {
+    public void addSave(@Validated Role role) {
         ApiAssert.isTrue(ErrorCodeEnum.ROLE_NAME_EXIST.overrideMsg("角色名称[" + role.getRoleName() + "]已存在"), roleService.checkRoleNameUnique(role));
         ApiAssert.isTrue(ErrorCodeEnum.ROLE_KEY_EXIST.overrideMsg("角色权限[" + role.getRoleKey() + "]已存在"), roleService.checkRoleKeyUnique(role));
         roleService.insertRole(role);
-        return success();
-
     }
 
     /**
@@ -109,12 +106,10 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated Role role) {
+    public void editSave(@Validated Role role) {
         ApiAssert.isTrue(ErrorCodeEnum.ROLE_NAME_EXIST.overrideMsg("角色名称[" + role.getRoleName() + "]已存在"), roleService.checkRoleNameUnique(role));
         ApiAssert.isTrue(ErrorCodeEnum.ROLE_KEY_EXIST.overrideMsg("角色权限[" + role.getRoleKey() + "]已存在"), roleService.checkRoleKeyUnique(role));
         roleService.updateRole(role);
-        return success();
-
     }
 
     /**
@@ -133,20 +128,17 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/authDataScope")
     @ResponseBody
-    public ApiResponses<Void> authDataScopeSave(Role role) {
+    public void authDataScopeSave(Role role) {
         roleService.authDataScope(role);
         setSysUser(userService.selectUserById(getSysUser().getUserId()));
-        return success();
     }
 
     @RequiresPermissions("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         roleService.deleteRoleByIds(ids);
-        return success();
-
     }
 
     /**
@@ -154,8 +146,8 @@ public class RoleController extends WebController {
      */
     @PostMapping("/checkRoleNameUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkRoleNameUnique(Role role) {
-        return success(roleService.checkRoleNameUnique(role));
+    public boolean checkRoleNameUnique(Role role) {
+        return roleService.checkRoleNameUnique(role);
     }
 
     /**
@@ -163,8 +155,8 @@ public class RoleController extends WebController {
      */
     @PostMapping("/checkRoleKeyUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkRoleKeyUnique(Role role) {
-        return success(roleService.checkRoleKeyUnique(role));
+    public boolean checkRoleKeyUnique(Role role) {
+        return roleService.checkRoleKeyUnique(role);
     }
 
     /**
@@ -182,10 +174,8 @@ public class RoleController extends WebController {
     @RequiresPermissions("system:role:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public ApiResponses<Void> changeStatus(Role role) {
+    public void changeStatus(Role role) {
         roleService.changeStatus(role);
-        return success();
-
     }
 
     /**
@@ -204,10 +194,10 @@ public class RoleController extends WebController {
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/allocatedList")
     @ResponseBody
-    public ApiResponses<TableData<User>> allocatedList(User user) {
+    public TableData<User> allocatedList(User user) {
         startPage();
         List<User> list = userService.selectAllocatedList(user);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     /**
@@ -216,10 +206,8 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancel")
     @ResponseBody
-    public ApiResponses<Void> cancelAuthUser(UserRole userRole) {
+    public void cancelAuthUser(UserRole userRole) {
         roleService.deleteAuthUser(userRole);
-        return success();
-
     }
 
     /**
@@ -228,10 +216,8 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancelAll")
     @ResponseBody
-    public ApiResponses<Void> cancelAuthUserAll(Long roleId, String userIds) {
+    public void cancelAuthUserAll(Long roleId, String userIds) {
         roleService.deleteAuthUsers(roleId, userIds);
-        return success();
-
     }
 
     /**
@@ -249,10 +235,10 @@ public class RoleController extends WebController {
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/unallocatedList")
     @ResponseBody
-    public ApiResponses<TableData<User>> unallocatedList(User user) {
+    public TableData<User> unallocatedList(User user) {
         startPage();
         List<User> list = userService.selectUnallocatedList(user);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     /**
@@ -261,9 +247,7 @@ public class RoleController extends WebController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/selectAll")
     @ResponseBody
-    public ApiResponses<Void> selectAuthUserAll(Long roleId, String userIds) {
+    public void selectAuthUserAll(Long roleId, String userIds) {
         roleService.insertAuthUsers(roleId, userIds);
-        return success();
-
     }
 }

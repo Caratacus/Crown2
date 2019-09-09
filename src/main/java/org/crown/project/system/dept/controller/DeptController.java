@@ -7,7 +7,6 @@ import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.domain.Ztree;
@@ -49,8 +48,8 @@ public class DeptController extends WebController<Dept> {
     @RequiresPermissions("system:dept:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<List<Dept>> list(Dept dept) {
-        return success(deptService.selectDeptList(dept));
+    public List<Dept> list(Dept dept) {
+        return deptService.selectDeptList(dept);
     }
 
     /**
@@ -69,11 +68,9 @@ public class DeptController extends WebController<Dept> {
     @RequiresPermissions("system:dept:add")
     @PostMapping("/add")
     @ResponseBody
-    public ApiResponses<Void> addSave(@Validated Dept dept) {
+    public void addSave(@Validated Dept dept) {
         ApiAssert.isTrue(ErrorCodeEnum.DEPT_NAME_EXIST.overrideMsg("部门名称[" + dept.getDeptName() + "]已经存在"), deptService.checkDeptNameUnique(dept));
         deptService.insertDept(dept);
-        return success();
-
     }
 
     /**
@@ -96,12 +93,10 @@ public class DeptController extends WebController<Dept> {
     @RequiresPermissions("system:dept:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated Dept dept) {
+    public void editSave(@Validated Dept dept) {
         ApiAssert.isTrue(ErrorCodeEnum.DEPT_NAME_EXIST.overrideMsg("部门名称[" + dept.getDeptName() + "]已经存在"), deptService.checkDeptNameUnique(dept));
         ApiAssert.isFalse(ErrorCodeEnum.DEPT_PARENT_DEPT_CANNOT_MYSELF, dept.getParentId().equals(dept.getDeptId()));
         deptService.updateDept(dept);
-        return success();
-
     }
 
     /**
@@ -111,10 +106,9 @@ public class DeptController extends WebController<Dept> {
     @RequiresPermissions("system:dept:remove")
     @GetMapping("/remove/{deptId}")
     @ResponseBody
-    public ApiResponses<Void> remove(@PathVariable("deptId") Long deptId) {
+    public void remove(@PathVariable("deptId") Long deptId) {
         ApiAssert.isFalse(ErrorCodeEnum.DEPT_EXISTING_LOWER_LEVEL_DEPT, deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)));
         ApiAssert.isFalse(ErrorCodeEnum.DEPT_EXISTING_USER, deptService.exist(Wrappers.<Dept>lambdaQuery().eq(Dept::getParentId, deptId)));
-        return success();
     }
 
     /**
@@ -122,8 +116,8 @@ public class DeptController extends WebController<Dept> {
      */
     @PostMapping("/checkDeptNameUnique")
     @ResponseBody
-    public ApiResponses<Boolean> checkDeptNameUnique(Dept dept) {
-        return success(deptService.checkDeptNameUnique(dept));
+    public boolean checkDeptNameUnique(Dept dept) {
+        return deptService.checkDeptNameUnique(dept);
     }
 
     /**
@@ -140,8 +134,8 @@ public class DeptController extends WebController<Dept> {
      */
     @GetMapping("/treeData")
     @ResponseBody
-    public ApiResponses<List<Ztree>> treeData() {
-        return success(deptService.selectDeptTree(new Dept()));
+    public List<Ztree> treeData() {
+        return deptService.selectDeptTree(new Dept());
     }
 
     /**
@@ -149,7 +143,7 @@ public class DeptController extends WebController<Dept> {
      */
     @GetMapping("/roleDeptTreeData")
     @ResponseBody
-    public ApiResponses<List<Ztree>> deptTreeData(Role role) {
-        return success(deptService.roleDeptTreeData(role));
+    public List<Ztree> deptTreeData(Role role) {
+        return deptService.roleDeptTreeData(role);
     }
 }

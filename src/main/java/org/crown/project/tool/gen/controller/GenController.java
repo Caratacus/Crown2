@@ -11,7 +11,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.crown.common.annotation.Log;
 import org.crown.common.enums.BusinessType;
 import org.crown.common.utils.StringUtils;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.framework.web.page.TableData;
 import org.crown.project.tool.gen.domain.GenTable;
@@ -57,10 +56,10 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/list")
     @ResponseBody
-    public ApiResponses<TableData<GenTable>> list(GenTable genTable) {
+    public TableData<GenTable> list(GenTable genTable) {
         startPage();
         List<GenTable> list = genTableService.selectGenTableList(genTable);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     /**
@@ -69,10 +68,10 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/db/list")
     @ResponseBody
-    public ApiResponses<TableData<GenTable>> dataList(GenTable genTable) {
+    public TableData<GenTable> dataList(GenTable genTable) {
         startPage();
         List<GenTable> list = genTableService.selectDbTableList(genTable);
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     /**
@@ -81,12 +80,12 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/column/list")
     @ResponseBody
-    public ApiResponses<TableData<GenTableColumn>> columnList(GenTableColumn genTableColumn) {
+    public TableData<GenTableColumn> columnList(GenTableColumn genTableColumn) {
         TableData dataInfo = new TableData();
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(genTableColumn.getTableId());
         dataInfo.setRows(list);
         dataInfo.setTotal(list.size());
-        return success(getTableData(list));
+        return getTableData(list);
     }
 
     /**
@@ -105,12 +104,11 @@ public class GenController extends WebController {
     @Log(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
     @ResponseBody
-    public ApiResponses<Void> importTableSave(String tables) {
+    public void importTableSave(String tables) {
         String[] tableNames = StringUtils.split2Array(tables);
         // 查询表信息
         List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
         genTableService.importGenTable(tableList);
-        return success();
     }
 
     /**
@@ -130,19 +128,17 @@ public class GenController extends WebController {
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public ApiResponses<Void> editSave(@Validated GenTable genTable) {
+    public void editSave(@Validated GenTable genTable) {
         genTableService.validateEdit(genTable);
         genTableService.updateGenTable(genTable);
-        return success();
     }
 
     @RequiresPermissions("tool:gen:remove")
     @Log(title = "代码生成", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public ApiResponses<Void> remove(String ids) {
+    public void remove(String ids) {
         genTableService.deleteGenTableByIds(ids);
-        return success();
     }
 
     /**
@@ -151,9 +147,8 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:preview")
     @GetMapping("/preview/{tableId}")
     @ResponseBody
-    public ApiResponses<Map<String, String>> preview(@PathVariable("tableId") Long tableId) throws IOException {
-        Map<String, String> dataMap = genTableService.previewCode(tableId);
-        return success(dataMap);
+    public Map<String, String> preview(@PathVariable("tableId") Long tableId)  {
+        return genTableService.previewCode(tableId);
     }
 
     /**
@@ -173,7 +168,6 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:code")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/batchGenCode")
-    @ResponseBody
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
         String[] tableNames = StringUtils.split2Array(tables);
         byte[] data = genTableService.generatorCode(tableNames);

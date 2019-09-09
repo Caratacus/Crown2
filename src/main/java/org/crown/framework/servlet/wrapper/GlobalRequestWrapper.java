@@ -20,28 +20,19 @@
  */
 package org.crown.framework.servlet.wrapper;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.crown.common.utils.Crowns;
 import org.crown.common.utils.StringUtils;
 import org.crown.framework.springboot.properties.Xss;
-import org.crown.framework.utils.RequestUtils;
 import org.springframework.web.util.HtmlUtils;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 
 /**
  * Request包装类
@@ -54,53 +45,8 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
  */
 public class GlobalRequestWrapper extends HttpServletRequestWrapper {
 
-    /**
-     * 存储requestBody byte[]
-     */
-    private byte[] body = null;
-
     public GlobalRequestWrapper(HttpServletRequest request) {
         super(request);
-        if (RequestUtils.isContainBody(request)) {
-            this.body = RequestUtils.getByteBody(request);
-        }
-    }
-
-    @Override
-    public BufferedReader getReader() {
-        ServletInputStream inputStream = getInputStream();
-        return Objects.isNull(inputStream) ? null : new BufferedReader(new InputStreamReader(inputStream));
-    }
-
-    @Override
-    public ServletInputStream getInputStream() {
-        if (ObjectUtils.isEmpty(body)) {
-            return null;
-        }
-        final ByteArrayInputStream bais = new ByteArrayInputStream(htmlEscape(new String(body, StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8));
-        return new ServletInputStream() {
-
-            @Override
-            public boolean isFinished() {
-                return false;
-            }
-
-            @Override
-            public boolean isReady() {
-                return false;
-            }
-
-            @Override
-            @SuppressWarnings("EmptyMethod")
-            public void setReadListener(ReadListener readListener) {
-
-            }
-
-            @Override
-            public int read() {
-                return bais.read();
-            }
-        };
     }
 
     @Override

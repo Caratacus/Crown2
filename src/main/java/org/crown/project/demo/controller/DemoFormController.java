@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.crown.common.utils.Maps;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.crown.project.demo.domain.UserFormModel;
 import org.springframework.stereotype.Controller;
@@ -159,8 +158,8 @@ public class DemoFormController extends WebController {
      */
     @GetMapping("/userModel")
     @ResponseBody
-    public ApiResponses<Map<String, Object>> userModel() {
-        return success(Maps.<String, Object>builder().put("value", users).build());
+    public Map<String, Object> userModel() {
+        return Maps.<String, Object>builder().put("value", users).build();
     }
 
     /**
@@ -168,8 +167,8 @@ public class DemoFormController extends WebController {
      */
     @GetMapping("/collection")
     @ResponseBody
-    public ApiResponses<Map<String, Object>> collection() {
+    public Map<String, Object> collection() {
         String[] array = {"Crown 1", "Crown 2", "Crown 3", "Crown 4", "Crown 5"};
-        return success(Maps.<String, Object>builder().put("value", array).build());
+        return Maps.<String, Object>builder().put("value", array).build();
     }
 }

@@ -8,7 +8,6 @@ import org.crown.common.utils.file.FileUtils;
 import org.crown.common.utils.file.MimeTypes;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.UploadDTO;
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.web.controller.WebController;
 import org.springframework.stereotype.Controller;
@@ -38,7 +37,7 @@ public class CommonController extends WebController {
      */
     @GetMapping("common/download")
     @ResponseBody
-    public Void fileDownload(String fileName, Boolean delete) {
+    public void fileDownload(String fileName, Boolean delete) {
         try {
             ApiAssert.isTrue(ErrorCodeEnum.FILE_ILLEGAL_FILENAME.overrideMsg(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName)), FileUtils.isValidFilename(fileName));
             String filePrefix = FileUtils.getFilePrefix(fileName);
@@ -57,7 +56,6 @@ public class CommonController extends WebController {
             log.error("下载文件异常 {}", ThrowableUtils.extractStackTrace(e));
             ApiAssert.failure(ErrorCodeEnum.FILE_DOWNLOAD_FAIL);
         }
-        return null;
     }
 
     /**
@@ -65,12 +63,12 @@ public class CommonController extends WebController {
      */
     @PostMapping("/common/upload")
     @ResponseBody
-    public ApiResponses<UploadDTO> uploadFile(MultipartFile file) {
+    public UploadDTO uploadFile(MultipartFile file) {
         try {
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(Crowns.getUploadPath(), file, MimeTypes.DEFAULT_ALLOWED_EXTENSION);
             String url = Crowns.getUploadUrl(request, fileName);
-            return success(new UploadDTO(url, fileName));
+            return new UploadDTO(url, fileName);
         } catch (Exception e) {
             log.error("上传文件异常 {}", ThrowableUtils.extractStackTrace(e));
             ApiAssert.failure(ErrorCodeEnum.FILE_UPLOAD_FAIL);

@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.web.controller.WebController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,40 +39,37 @@ public class TestController extends WebController {
 
     @ApiOperation("获取用户列表")
     @GetMapping("/list")
-    public ApiResponses<List<UserEntity>> userList() {
+    public List<UserEntity> userList() {
         List<UserEntity> userList = new ArrayList<>(users.values());
-        return success(userList);
+        return userList;
     }
 
     @ApiOperation("获取用户详细")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{userId}")
-    public ApiResponses<UserEntity> getUser(@PathVariable Integer userId) {
-        return success(users.get(userId));
+    public UserEntity getUser(@PathVariable Integer userId) {
+        return users.get(userId);
     }
 
     @ApiOperation("新增用户")
     @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PostMapping("/save")
-    public ApiResponses<Void> save(UserEntity user) {
+    public void save(UserEntity user) {
         users.put(user.getUserId(), user);
-        return success();
     }
 
     @ApiOperation("更新用户")
     @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PutMapping("/update")
-    public ApiResponses<Void> update(UserEntity user) {
+    public void update(UserEntity user) {
         users.remove(user.getUserId());
-        return success();
     }
 
     @ApiOperation("删除用户信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @DeleteMapping("/{userId}")
-    public ApiResponses<Void> delete(@PathVariable Integer userId) {
+    public void delete(@PathVariable Integer userId) {
         users.remove(userId);
-        return success();
     }
 }
 
