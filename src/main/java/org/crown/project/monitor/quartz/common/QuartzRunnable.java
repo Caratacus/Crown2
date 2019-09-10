@@ -21,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class QuartzRunnable implements Runnable {
 
-    private Object target;
+    private final Object target;
     private Method method;
-    private Long jobId;
-    private JSONObject params;
+    private final Long jobId;
+    private final JSONObject params;
 
     QuartzRunnable(String className, Long jobId, JSONObject params)
             throws NoSuchMethodException, SecurityException {

@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+
 /**
  * 操作控制
  *
@@ -222,7 +224,7 @@ public class DemoOperateController extends WebController {
      * @return 结果
      */
     public String importUser(List<UserOperateModel> userList, Boolean isUpdateSupport) {
-        if (StringUtils.isNull(userList) || userList.size() == 0) {
+        if (CollectionUtils.isNotEmpty(userList)) {
             throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
         }
         int successNum = 0;

@@ -12,25 +12,24 @@ import org.crown.project.monitor.quartz.domain.JobLog;
 import org.crown.project.monitor.quartz.service.IJobLogService;
 import org.crown.project.monitor.quartz.service.IJobService;
 import org.quartz.JobExecutionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Throwables;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * 参考人人开源，https://gitee.com/renrenio/renren-security
+ * Quartz执行定时任务
  *
  * @author Caratacus
  */
 @Async
+@Slf4j
 public class QuartzExecutionJob extends QuartzJobBean {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void executeInternal(JobExecutionContext context) {
@@ -41,36 +40,36 @@ public class QuartzExecutionJob extends QuartzJobBean {
         QuartzManage quartzManage = ApplicationUtils.getBean(QuartzManage.class);
 
         JSONObject jobParams = quartzJob.getJobParams();
-        JobLog log = new JobLog();
-        log.setJobName(quartzJob.getJobName());
-        log.setClassName(quartzJob.getClassName());
-        log.setJobParams(jobParams);
+        JobLog jobLog = new JobLog();
+        jobLog.setJobName(quartzJob.getJobName());
+        jobLog.setClassName(quartzJob.getClassName());
+        jobLog.setJobParams(jobParams);
         long startTime = System.currentTimeMillis();
-        log.setCron(quartzJob.getCron());
+        jobLog.setCron(quartzJob.getCron());
         try {
             // 执行任务
-            logger.info("任务准备执行，任务名称：{}", quartzJob.getJobName());
+            log.info("任务准备执行，任务名称：{}", quartzJob.getJobName());
             QuartzRunnable task = new QuartzRunnable(quartzJob.getClassName(), quartzJob.getJobId(),
                     jobParams);
             Future<?> future = executorService.submit(task);
             future.get();
             String runTime = System.currentTimeMillis() - startTime + "ms";
-            log.setRunTime(runTime);
+            jobLog.setRunTime(runTime);
             // 任务状态
-            log.setStatus(Constants.SUCCESS);
-            logger.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", quartzJob.getJobName(), runTime);
+            jobLog.setStatus(Constants.SUCCESS);
+            log.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", quartzJob.getJobName(), runTime);
         } catch (Exception e) {
-            logger.error("任务执行失败，任务名称：{}" + quartzJob.getJobName(), e);
-            log.setRunTime(System.currentTimeMillis() - startTime + "ms");
+            log.error("任务执行失败，任务名称：{}" + quartzJob.getJobName(), e);
+            jobLog.setRunTime(System.currentTimeMillis() - startTime + "ms");
             // 任务状态 0：成功 1：失败
-            log.setStatus(Constants.FAIL);
-            log.setException(Throwables.getStackTraceAsString(e));
+            jobLog.setStatus(Constants.FAIL);
+            jobLog.setException(Throwables.getStackTraceAsString(e));
             //出错就暂停任务
             quartzManage.pauseJob(quartzJob);
             //更新状态
             jobService.updatePaused(quartzJob);
         } finally {
-            jobLogService.save(log);
+            jobLogService.save(jobLog);
         }
     }
 }

@@ -34,7 +34,7 @@ import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrappe
  */
 public class LambdaUpdateWrapperChain<T> extends AbstractChainWrapper<T, SFunction<T, ?>, LambdaUpdateWrapperChain<T>, LambdaUpdateWrapper2<T>> implements Update<LambdaUpdateWrapperChain<T>, SFunction<T, ?>> {
 
-    private BaseService<T> baseService;
+    private final BaseService<T> baseService;
 
     public LambdaUpdateWrapperChain(BaseService<T> baseService) {
         super();

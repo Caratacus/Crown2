@@ -34,7 +34,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 @RequestMapping("/monitor/jobLog")
 public class JobLogController extends WebController<JobLog> {
 
-    private String prefix = "monitor/job";
+    private final String prefix = "monitor/job";
 
     @Autowired
     private IJobLogService jobLogService;

@@ -19,11 +19,11 @@ public class ConsoleLogQueue {
      */
     public static final int QUEUE_MAX_SIZE = 10000;
 
-    private static ConsoleLogQueue alarmMessageQueue = new ConsoleLogQueue();
+    private static final ConsoleLogQueue alarmMessageQueue = new ConsoleLogQueue();
     /**
      * 阻塞队列
      */
-    private BlockingQueue blockingQueue = new LinkedBlockingQueue<>(QUEUE_MAX_SIZE);
+    private final BlockingQueue blockingQueue = new LinkedBlockingQueue<>(QUEUE_MAX_SIZE);
 
     private ConsoleLogQueue() {
     }

@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+
 /**
  * 用户 业务层处理
  *
@@ -233,7 +235,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public String importUser(List<User> userList, Boolean isUpdateSupport) {
-        if (StringUtils.isNull(userList) || userList.size() == 0) {
+        if (CollectionUtils.isNotEmpty(userList)) {
             throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
         }
         int successNum = 0;

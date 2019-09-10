@@ -24,7 +24,7 @@ public class QuartzAuoConfiguration {
      * 解决Job中注入Spring Bean为null的问题
      */
     @Component("quartzJobFactory")
-    public class QuartzJobFactory extends AdaptableJobFactory {
+    public static class QuartzJobFactory extends AdaptableJobFactory {
 
         @Autowired
         private AutowireCapableBeanFactory capableBeanFactory;

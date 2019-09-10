@@ -59,7 +59,7 @@ public class IEnumConverterFactory implements ConverterFactory<String, IEnum> {
         return result;
     }
 
-    class IntegerStrToEnum<T extends IEnum> implements Converter<String, T> {
+    static class IntegerStrToEnum<T extends IEnum> implements Converter<String, T> {
 
         private final Map<String, T> enumMap = new HashMap<>();
 

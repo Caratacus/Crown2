@@ -40,8 +40,7 @@ public class TestController extends WebController {
     @ApiOperation("获取用户列表")
     @GetMapping("/list")
     public List<UserEntity> userList() {
-        List<UserEntity> userList = new ArrayList<>(users.values());
-        return userList;
+        return new ArrayList<>(users.values());
     }
 
     @ApiOperation("获取用户详细")

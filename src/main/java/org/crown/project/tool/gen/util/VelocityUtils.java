@@ -90,7 +90,7 @@ public class VelocityUtils {
      * @return 模板列表
      */
     public static List<String> getTemplateList(String tplCategory) {
-        List<String> templates = new ArrayList<String>();
+        List<String> templates = new ArrayList<>();
         templates.add("vm/java/domain.java.vm");
         templates.add("vm/java/mapper.java.vm");
         templates.add("vm/java/service.java.vm");
@@ -164,18 +164,17 @@ public class VelocityUtils {
      */
     public static String getPackagePrefix(String packageName) {
         int lastIndex = packageName.lastIndexOf(".");
-        String basePackage = StringUtils.substring(packageName, 0, lastIndex);
-        return basePackage;
+        return StringUtils.substring(packageName, 0, lastIndex);
     }
 
     /**
      * 根据列类型获取导入包
      *
-     * @param paramsObj 列集合
+     * @param columns 列集合
      * @return 返回需要导入的包列表
      */
     public static HashSet<String> getImportList(List<GenTableColumn> columns) {
-        HashSet<String> importList = new HashSet<String>();
+        HashSet<String> importList = new HashSet<>();
         for (GenTableColumn column : columns) {
             if (!column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType())) {
                 importList.add("java.util.Date");

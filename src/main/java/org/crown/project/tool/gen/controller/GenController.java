@@ -147,7 +147,7 @@ public class GenController extends WebController {
     @RequiresPermissions("tool:gen:preview")
     @GetMapping("/preview/{tableId}")
     @ResponseBody
-    public Map<String, String> preview(@PathVariable("tableId") Long tableId)  {
+    public Map<String, String> preview(@PathVariable("tableId") Long tableId) {
         return genTableService.previewCode(tableId);
     }
 

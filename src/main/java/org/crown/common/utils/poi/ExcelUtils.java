@@ -99,7 +99,7 @@ public class ExcelUtils<T> {
     /**
      * 实体对象
      */
-    public Class<T> clazz;
+    public final Class<T> clazz;
 
     public ExcelUtils(Class<T> clazz) {
         this.clazz = clazz;

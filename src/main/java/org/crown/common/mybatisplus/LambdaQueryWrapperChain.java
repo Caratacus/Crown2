@@ -43,7 +43,7 @@ import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrappe
 public class LambdaQueryWrapperChain<T> extends AbstractChainWrapper<T, SFunction<T, ?>, LambdaQueryWrapperChain<T>, LambdaQueryWrapper<T>>
         implements Query<LambdaQueryWrapperChain<T>, T, SFunction<T, ?>> {
 
-    private BaseService<T> baseService;
+    private final BaseService<T> baseService;
 
     public LambdaQueryWrapperChain(BaseService<T> baseService) {
         super();
