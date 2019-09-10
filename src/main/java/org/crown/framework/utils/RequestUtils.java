@@ -30,8 +30,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
+import org.crown.common.cons.APICons;
 import org.crown.common.enums.HTTPMethod;
 import org.crown.common.utils.StringUtils;
+import org.crown.common.utils.TypeUtils;
+import org.crown.framework.spring.ApplicationUtils;
 import org.springframework.util.StreamUtils;
 
 import lombok.AccessLevel;
@@ -188,6 +191,10 @@ public abstract class RequestUtils {
      * @param request
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
+        Boolean isRestResult = TypeUtils.castToBoolean(ApplicationUtils.getRequest().getAttribute(APICons.API_REST_RESULT));
+        if (Objects.nonNull(isRestResult)) {
+            return isRestResult;
+        }
         String accept = request.getHeader("accept");
         if (accept != null && accept.contains("application/json")) {
             return true;

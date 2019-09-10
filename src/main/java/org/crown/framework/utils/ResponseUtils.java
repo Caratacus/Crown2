@@ -45,6 +45,7 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.google.common.base.Throwables;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -164,6 +165,13 @@ public abstract class ResponseUtils {
      */
     public static void sendFail(HttpServletRequest request, HttpServletResponse response, ErrorCode code,
                                 Exception exception) {
+        if (Objects.nonNull(exception)) {
+            if (code.getStatus() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
+                log.info("Info: doResolveInfo {}", exception.getMessage());
+            } else {
+                log.warn("Warn: doResolveException {}", Throwables.getStackTraceAsString(exception));
+            }
+        }
         ResponseUtils.writeValAsJson(request, getWrapper(response, code), ApiResponses.failure(code, exception));
     }
 

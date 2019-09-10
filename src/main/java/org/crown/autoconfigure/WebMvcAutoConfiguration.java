@@ -28,6 +28,7 @@ import java.util.Objects;
 
 import org.crown.common.annotation.UnifiedReturn;
 import org.crown.common.cons.APICons;
+import org.crown.common.interceptors.ApiInterceptor;
 import org.crown.common.undertow.UndertowServerFactoryCustomizer;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.spring.ApplicationUtils;
@@ -52,8 +53,10 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
@@ -131,6 +134,11 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     }
 
     @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new ApiInterceptor()).addPathPatterns("/**");
+    }
+
+    @Override
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
         exceptionResolvers.add(new Crown2HandlerExceptionResolver());
     }
@@ -140,13 +148,14 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
         @Override
         public boolean supports(MethodParameter returnType, Class converterType) {
+            RestController restController = returnType.getDeclaringClass().getAnnotation(RestController.class);
             ResponseBody responseBody = returnType.getMethodAnnotation(ResponseBody.class);
             boolean wrapper = true;
             UnifiedReturn unifiedReturn = returnType.getMethodAnnotation(UnifiedReturn.class);
             if (Objects.nonNull(unifiedReturn)) {
                 wrapper = unifiedReturn.wrapper();
             }
-            return Objects.nonNull(responseBody) && wrapper;
+            return (Objects.nonNull(restController) || Objects.nonNull(responseBody)) && wrapper;
         }
 
         @Override

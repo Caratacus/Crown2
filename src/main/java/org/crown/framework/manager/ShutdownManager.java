@@ -32,9 +32,9 @@ public class ShutdownManager {
     private void shutdownSpringSessionValidationScheduler() {
         if (springSessionValidationScheduler != null && springSessionValidationScheduler.isEnabled()) {
             try {
-
-                log.info("=============关闭会话验证任务=============");
+                log.info("Seesion会话检查 - 停止中");
                 springSessionValidationScheduler.disableSessionValidation();
+                log.info("Seesion会话检查 - 已停止");
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }

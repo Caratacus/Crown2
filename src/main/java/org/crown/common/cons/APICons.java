@@ -33,4 +33,6 @@ public interface APICons {
     String API_ACTION_METHOD = "API_ACTION_METHOD";
     String API_BEGIN_TIME = "API_BEGIN_TIME";
     String API_REQUEST_BODY = "API_REQUEST_BODY";
+    String API_REST = "API_REST";
+    String API_REST_RESULT = "API_REST_RESULT";
 }

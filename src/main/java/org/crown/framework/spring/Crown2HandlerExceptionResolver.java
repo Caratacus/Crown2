@@ -57,7 +57,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.google.common.base.Throwables;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -154,11 +153,6 @@ public class Crown2HandlerExceptionResolver extends AbstractHandlerExceptionReso
             if (log.isWarnEnabled()) {
                 log.warn("Handling of [" + ex.getClass().getName() + "] resulted in Exception", handlerException);
             }
-        }
-        if (response.getStatus() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
-            log.info("Info: doResolveInfo {}", ex.getMessage());
-        } else {
-            log.warn("Warn: doResolveException {}", Throwables.getStackTraceAsString(ex));
         }
         return MODEL_VIEW_INSTANCE;
     }

@@ -51,14 +51,12 @@ public class TestController extends WebController {
     }
 
     @ApiOperation("新增用户")
-    @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PostMapping("/save")
     public void save(UserEntity user) {
         users.put(user.getUserId(), user);
     }
 
     @ApiOperation("更新用户")
-    @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PutMapping("/update")
     public void update(UserEntity user) {
         users.remove(user.getUserId());

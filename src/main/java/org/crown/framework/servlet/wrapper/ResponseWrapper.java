@@ -28,9 +28,12 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import org.crown.common.cons.APICons;
 import org.crown.common.utils.JsonUtils;
+import org.crown.common.utils.TypeUtils;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.spring.ApplicationUtils;
 import org.springframework.util.MimeTypeUtils;
 
 import com.google.common.base.Throwables;
@@ -73,7 +76,10 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     public void setErrorCode(ErrorCode errorCode) {
         if (Objects.nonNull(errorCode)) {
             this.errorcode = errorCode;
-            // super.setStatus(this.errorcode.getStatus());
+            boolean isRest = TypeUtils.castToBoolean(ApplicationUtils.getRequest().getAttribute(APICons.API_REST), false);
+            if (isRest) {
+                super.setStatus(this.errorcode.getStatus());
+            }
         }
     }
 
