@@ -95,7 +95,7 @@ mybatis-plus:
     db-config:
       id-type: auto
       table-prefix: sys_
-      logic-delete-value: 2
+      logic-delete-value: 1
       logic-not-delete-value: 0
       insert-strategy: not_null
       update-strategy: not_null

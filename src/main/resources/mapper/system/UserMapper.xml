@@ -16,7 +16,7 @@
 		<result property="password"     column="password"     />
 		<result property="salt"         column="salt"         />
 		<result property="status"       column="status"       />
-		<result property="delFlag"      column="del_flag"     />
+		<result property="deleted"      column="deleted"     />
 		<result property="loginIp"      column="login_ip"     />
 		<result property="loginDate"    column="login_date"   />
 		<result property="createBy"     column="create_by"    />
@@ -47,7 +47,7 @@
 	</resultMap>
 
 	<sql id="selectUserVo">
-       select  sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.sex, sys_user.password, sys_user.salt, sys_user.status, sys_user.del_flag, sys_user.login_ip, sys_user.login_date, sys_user.create_time, sys_user.remark,
+       select  sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.sex, sys_user.password, sys_user.salt, sys_user.status, sys_user.deleted, sys_user.login_ip, sys_user.login_date, sys_user.create_time, sys_user.remark,
        		     sys_dept.dept_id,  sys_dept.parent_id,  sys_dept.dept_name,  sys_dept.order_num,  sys_dept.leader,  sys_dept.status as dept_status,
        		    sys_role.role_id, sys_role.role_name, sys_role.role_key, sys_role.role_sort, sys_role.data_scope, sys_role.status as role_status
 		from sys_user
@@ -57,9 +57,9 @@
     </sql>
 
     <select id="selectUserList" parameterType="User" resultMap="UserResult">
-        select sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.password, sys_user.sex, sys_user.salt, sys_user.status, sys_user.del_flag, sys_user.login_ip, sys_user.login_date, sys_user.create_by, sys_user.create_time, sys_user.remark, sys_dept.dept_name, sys_dept.leader from sys_user
+        select sys_user.user_id, sys_user.dept_id, sys_user.login_name, sys_user.user_name, sys_user.email, sys_user.avatar, sys_user.phonenumber, sys_user.password, sys_user.sex, sys_user.salt, sys_user.status, sys_user.deleted, sys_user.login_ip, sys_user.login_date, sys_user.create_by, sys_user.create_time, sys_user.remark, sys_dept.dept_name, sys_dept.leader from sys_user
         left join sys_dept on sys_user.dept_id = sys_dept.dept_id
-        where sys_user.del_flag = '0'
+        where sys_user.deleted = false
         <if test="loginName != null and loginName != ''">
             AND sys_user.login_name like concat('%', #{loginName}, '%')
         </if>
@@ -89,7 +89,7 @@
         left join sys_dept on sys_user.dept_id = sys_dept.dept_id
         left join sys_user_role on sys_user.user_id = sys_user_role.user_id
         left join sys_role on sys_role.role_id = sys_user_role.role_id
-        where sys_user.del_flag = '0' and sys_role.role_id = #{roleId}
+        where sys_user.deleted = false and sys_role.role_id = #{roleId}
         <if test="loginName != null and loginName != ''">
             AND sys_user.login_name like concat('%', #{loginName}, '%')
         </if>
@@ -106,7 +106,7 @@
         left join sys_dept on sys_user.dept_id = sys_dept.dept_id
         left join sys_user_role on sys_user.user_id = sys_user_role.user_id
         left join sys_role on sys_role.role_id = sys_user_role.role_id
-        where sys_user.del_flag = '0' and (sys_role.role_id != #{roleId} or sys_role.role_id IS NULL)
+        where sys_user.deleted = false and (sys_role.role_id != #{roleId} or sys_role.role_id IS NULL)
         and sys_user.user_id not in (select sys_user.user_id from sys_user inner join sys_user_role on sys_user.user_id = sys_user_role.user_id and
         sys_user_role.role_id = #{roleId})
         <if test="loginName != null and loginName != ''">

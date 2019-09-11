@@ -106,7 +106,7 @@ INSERT INTO `gen_table_column` VALUES (18, '2', 'role_key', '角色权限字符�
 INSERT INTO `gen_table_column` VALUES (19, '2', 'role_sort', '显示顺序', 'int(4)', 'Integer', 'roleSort', '0', '0', '1', '1', '1', '1', '1', '=', 'input', '', 4, 'crown', '2019-08-15 17:54:20', '', NULL);
 INSERT INTO `gen_table_column` VALUES (20, '2', 'data_scope', '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）', 'char(1)', 'String', 'dataScope', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 5, 'crown', '2019-08-15 17:54:20', '', NULL);
 INSERT INTO `gen_table_column` VALUES (21, '2', 'status', '角色状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', '=', 'radio', '', 6, 'crown', '2019-08-15 17:54:20', '', NULL);
-INSERT INTO `gen_table_column` VALUES (22, '2', 'del_flag', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'delFlag', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 7, 'crown', '2019-08-15 17:54:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (22, '2', 'deleted', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'deleted', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 7, 'crown', '2019-08-15 17:54:20', '', NULL);
 INSERT INTO `gen_table_column` VALUES (23, '2', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 8, 'crown', '2019-08-15 17:54:20', '', NULL);
 INSERT INTO `gen_table_column` VALUES (24, '2', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 9, 'crown', '2019-08-15 17:54:20', '', NULL);
 INSERT INTO `gen_table_column` VALUES (25, '2', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-15 17:54:20', '', NULL);
@@ -131,7 +131,7 @@ INSERT INTO `gen_table_column` VALUES (43, '4', 'leader', '负责人', 'varchar(
 INSERT INTO `gen_table_column` VALUES (44, '4', 'phone', '联系电话', 'varchar(11)', 'String', 'phone', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (45, '4', 'email', '邮箱', 'varchar(50)', 'String', 'email', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (46, '4', 'status', '部门状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
-INSERT INTO `gen_table_column` VALUES (47, '4', 'del_flag', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'delFlag', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (47, '4', 'deleted', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'deleted', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (48, '4', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 11, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (49, '4', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'datetime', '', 12, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (50, '4', 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 13, 'crown', '2019-08-16 17:24:19', '', NULL);
@@ -176,7 +176,7 @@ INSERT INTO `gen_table_column` VALUES (88, '8', 'paused', '是否启动', 'bit(1
 INSERT INTO `gen_table_column` VALUES (89, '8', 'remark', '备注', 'varchar(128)', 'String', 'remark', '0', '0', '1', '1', '1', '1', NULL, '=', 'input', '', 7, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (90, '8', 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', '1', '1', '1', NULL, NULL, '=', 'datetime', '', 8, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (91, '8', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', NULL, NULL, NULL, '=', 'datetime', '', 9, 'crown', '2019-08-16 17:24:19', '', NULL);
-INSERT INTO `gen_table_column` VALUES (92, '8', 'del_flag', '逻辑删除字段', 'tinyint(1)', 'Integer', 'delFlag', '0', '0', '1', '1', NULL, NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
+INSERT INTO `gen_table_column` VALUES (92, '8', 'deleted', '逻辑删除字段', 'tinyint(1)', 'Integer', 'deleted', '0', '0', '1', '1', NULL, NULL, NULL, '=', 'input', '', 10, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (93, '8', 'create_by', NULL, 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 11, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (94, '8', 'update_by', NULL, 'varchar(64)', 'String', 'updateBy', '0', '0', NULL, '1', '1', NULL, NULL, '=', 'input', '', 12, 'crown', '2019-08-16 17:24:19', '', NULL);
 INSERT INTO `gen_table_column` VALUES (95, '9', 'job_log_id', NULL, 'bigint(20)', 'Long', 'jobLogId', '1', '1', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 1, 'crown', '2019-08-16 17:24:19', '', NULL);
@@ -262,7 +262,7 @@ INSERT INTO `gen_table_column` VALUES (174, '17', 'avatar', '头像路径', 'var
 INSERT INTO `gen_table_column` VALUES (175, '17', 'password', '密码', 'varchar(50)', 'String', 'password', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 10, 'crown', '2019-08-16 17:24:24', '', NULL);
 INSERT INTO `gen_table_column` VALUES (176, '17', 'salt', '盐加密', 'varchar(20)', 'String', 'salt', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 11, 'crown', '2019-08-16 17:24:24', '', NULL);
 INSERT INTO `gen_table_column` VALUES (177, '17', 'status', '帐号状态（0正常 1停用）', 'char(1)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', '=', 'radio', '', 12, 'crown', '2019-08-16 17:24:24', '', NULL);
-INSERT INTO `gen_table_column` VALUES (178, '17', 'del_flag', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'delFlag', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 13, 'crown', '2019-08-16 17:24:24', '', NULL);
+INSERT INTO `gen_table_column` VALUES (178, '17', 'deleted', '删除标志（0代表存在 2代表删除）', 'char(1)', 'String', 'deleted', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 13, 'crown', '2019-08-16 17:24:24', '', NULL);
 INSERT INTO `gen_table_column` VALUES (179, '17', 'login_ip', '最后登陆IP', 'varchar(50)', 'String', 'loginIp', '0', '0', NULL, '1', '1', '1', '1', '=', 'input', '', 14, 'crown', '2019-08-16 17:24:24', '', NULL);
 INSERT INTO `gen_table_column` VALUES (180, '17', 'login_date', '最后登陆时间', 'datetime', 'Date', 'loginDate', '0', '0', NULL, '1', '1', '1', '1', '=', 'datetime', '', 15, 'crown', '2019-08-16 17:24:24', '', NULL);
 INSERT INTO `gen_table_column` VALUES (181, '17', 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', NULL, '1', NULL, NULL, NULL, '=', 'input', '', 16, 'crown', '2019-08-16 17:24:24', '', NULL);
@@ -327,7 +327,7 @@ CREATE TABLE `sys_dept` (
   `phone` varchar(11) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系电话',
   `email` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
   `status` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
-  `del_flag` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '更新者',
@@ -468,7 +468,7 @@ CREATE TABLE `sys_job` (
   `remark` varchar(128) COLLATE utf8mb4_bin NOT NULL COMMENT '备注',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `del_flag` tinyint(1) NOT NULL COMMENT '逻辑删除字段',
+  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
   `update_by` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`job_id`)
@@ -713,7 +713,7 @@ CREATE TABLE `sys_role` (
   `role_sort` int(4) NOT NULL COMMENT '显示顺序',
   `data_scope` char(1) COLLATE utf8mb4_bin DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
   `status` char(1) COLLATE utf8mb4_bin NOT NULL COMMENT '角色状态（0正常 1停用）',
-  `del_flag` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '更新者',
@@ -860,7 +860,7 @@ CREATE TABLE `sys_user` (
   `password` varchar(50) COLLATE utf8mb4_bin DEFAULT '' COMMENT '密码',
   `salt` varchar(20) COLLATE utf8mb4_bin DEFAULT '' COMMENT '盐加密',
   `status` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
-  `del_flag` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
   `login_ip` varchar(50) COLLATE utf8mb4_bin DEFAULT '' COMMENT '最后登陆IP',
   `login_date` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '创建者',

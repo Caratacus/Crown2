@@ -11,7 +11,7 @@
 		<result property="roleSort"     column="role_sort"      />
 		<result property="dataScope"    column="data_scope"     />
 		<result property="status"       column="status"         />
-		<result property="delFlag"      column="del_flag"       />
+		<result property="deleted"      column="deleted"       />
 		<result property="createBy"     column="create_by"      />
 		<result property="createTime"   column="create_time"    />
 		<result property="updateBy"     column="update_by"      />
@@ -21,7 +21,7 @@
 
 	<sql id="selectRoleContactVo">
         select distinct sys_role.role_id, sys_role.role_name, sys_role.role_key, sys_role.role_sort, sys_role.data_scope,
-            sys_role.status, sys_role.del_flag, sys_role.create_time, sys_role.remark
+            sys_role.status, sys_role.deleted, sys_role.create_time, sys_role.remark
         from sys_role
 	        left join sys_user_role on sys_user_role.role_id = sys_role.role_id
 	        left join sys_user on sys_user.user_id = sys_user_role.user_id
@@ -30,7 +30,7 @@
 
     <select id="selectRoleList" parameterType="Role" resultMap="RoleResult">
         <include refid="selectRoleContactVo"/>
-        where sys_role.del_flag = '0'
+        where sys_role.deleted = false
         <if test="roleName != null and roleName != ''">
             AND sys_role.role_name like concat('%', #{roleName}, '%')
         </if>
@@ -55,7 +55,7 @@
 
     <select id="selectRolesByUserId" parameterType="Long" resultMap="RoleResult">
         <include refid="selectRoleContactVo"/>
-        WHERE sys_role.del_flag = '0' and sys_user_role.user_id = #{userId}
+        WHERE sys_role.deleted = false and sys_user_role.user_id = #{userId}
     </select>
 
 </mapper>
