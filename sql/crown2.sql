@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : 65001
 
- Date: 11/09/2019 15:01:22
+ Date: 11/09/2019 15:13:50
 */
 
 SET NAMES utf8mb4;
@@ -39,7 +39,7 @@ CREATE TABLE `gen_table` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='代码生成业务表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='代码生成业务表';
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -69,7 +69,7 @@ CREATE TABLE `gen_table_column` (
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='代码生成业务表字段';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='代码生成业务表字段';
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -111,7 +111,7 @@ CREATE TABLE `sys_dept` (
   `phone` varchar(11) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系电话',
   `email` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
   `status` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
-  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
+  `deleted` bit(1) DEFAULT NULL COMMENT '删除标志（0代表存在 1代表删除）',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '更新者',
@@ -123,16 +123,16 @@ CREATE TABLE `sys_dept` (
 -- Records of sys_dept
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_dept` VALUES (100, 0, '0', 'crown科技', 0, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
-INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, 'crown', '15888888888', 'crown@qq.com', '0', '0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (100, 0, '0', 'crown科技', 0, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
+INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, 'crown', '15888888888', 'crown@qq.com', '0', b'0', 'crown', '2018-03-16 11:33:00', 'crown', '2018-03-16 11:33:00');
 COMMIT;
 
 -- ----------------------------
@@ -236,7 +236,7 @@ CREATE TABLE `sys_exce_log` (
   `content` longtext COLLATE utf8mb4_bin NOT NULL COMMENT '日志详情',
   `create_time` datetime NOT NULL COMMENT '异常时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='异常日志表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='异常日志表';
 
 -- ----------------------------
 -- Table structure for sys_job
@@ -252,7 +252,7 @@ CREATE TABLE `sys_job` (
   `remark` varchar(128) COLLATE utf8mb4_bin NOT NULL COMMENT '备注',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
+  `deleted` bit(1) DEFAULT NULL COMMENT '删除标志（0代表存在 1代表删除）',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
   `update_by` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`job_id`)
@@ -262,7 +262,7 @@ CREATE TABLE `sys_job` (
 -- Records of sys_job
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_job` VALUES (1, '欢迎来到crown', 'org.crown.project.monitor.quartz.task.SystemOutWelcomeTask', '{}', '0 0/5 * * * ?', b'0', '欢迎来到crown', '2019-09-10 18:10:00', '2019-05-29 15:40:41', 0, 'crown', NULL);
+INSERT INTO `sys_job` VALUES (1, '欢迎来到crown', 'org.crown.project.monitor.quartz.task.SystemOutWelcomeTask', '{}', '0 0/5 * * * ?', b'0', '欢迎来到crown', '2019-09-10 18:10:00', '2019-05-29 15:40:41', b'0', 'crown', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -280,7 +280,7 @@ CREATE TABLE `sys_job_log` (
   `job_params` varchar(500) DEFAULT NULL COMMENT '参数',
   `run_time` varchar(32) NOT NULL COMMENT '运行时间',
   PRIMARY KEY (`job_log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
 
 -- ----------------------------
 -- Table structure for sys_logininfor
@@ -297,7 +297,7 @@ CREATE TABLE `sys_logininfor` (
   `msg` varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统访问记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统访问记录';
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -456,7 +456,7 @@ CREATE TABLE `sys_oper_log` (
   `error_msg` varchar(2000) COLLATE utf8mb4_bin DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='操作日志记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='操作日志记录';
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -497,7 +497,7 @@ CREATE TABLE `sys_role` (
   `role_sort` int(4) NOT NULL COMMENT '显示顺序',
   `data_scope` char(1) COLLATE utf8mb4_bin DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
   `status` char(1) COLLATE utf8mb4_bin NOT NULL COMMENT '角色状态（0正常 1停用）',
-  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
+  `deleted` bit(1) DEFAULT NULL COMMENT '删除标志（0代表存在 1代表删除）',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '更新者',
@@ -510,8 +510,8 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role` VALUES (1, '管理员', 'admin', 1, '1', '0', '0', 'crown', '2018-03-16 11:33:00', NULL, '2019-07-23 17:15:23', '管理员');
-INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', '0', '0', 'crown', '2018-03-16 11:33:00', NULL, '2019-08-28 19:17:04', '普通角色');
+INSERT INTO `sys_role` VALUES (1, '管理员', 'admin', 1, '1', '0', b'0', 'crown', '2018-03-16 11:33:00', NULL, '2019-07-23 17:15:23', '管理员');
+INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', '0', b'0', 'crown', '2018-03-16 11:33:00', NULL, '2019-08-28 19:17:04', '普通角色');
 COMMIT;
 
 -- ----------------------------
@@ -644,7 +644,7 @@ CREATE TABLE `sys_user` (
   `password` varchar(50) COLLATE utf8mb4_bin DEFAULT '' COMMENT '密码',
   `salt` varchar(20) COLLATE utf8mb4_bin DEFAULT '' COMMENT '盐加密',
   `status` char(1) COLLATE utf8mb4_bin DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
-  `deleted` bit(1) COMMENT '删除标志（0代表存在 1代表删除）',
+  `deleted` bit(1) DEFAULT NULL COMMENT '删除标志（0代表存在 1代表删除）',
   `login_ip` varchar(50) COLLATE utf8mb4_bin DEFAULT '' COMMENT '最后登陆IP',
   `login_date` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `create_by` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '创建者',
@@ -659,8 +659,8 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES (1, 105, 'crown', 'Crown', '00', 'crown@qq.com', '15666666666', '1', '', '6bb801aa715c8d25d51b781577f2129e', '9a45e9', '0', '0', '0:0:0:0:0:0:0:1', '2019-09-10 18:11:22', 'crown', '2018-03-16 11:33:00', 'crown', '2019-09-10 18:11:22', '管理员');
-INSERT INTO `sys_user` VALUES (2, 103, 'admin', 'Admin', '00', 'crown@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '0', '0:0:0:0:0:0:0:1', '2019-08-05 17:34:11', 'crown', '2018-03-16 11:33:00', 'crown', '2019-08-05 17:34:11', '测试账号');
+INSERT INTO `sys_user` VALUES (1, 105, 'crown', 'Crown', '00', 'crown@qq.com', '15666666666', '1', '', '6bb801aa715c8d25d51b781577f2129e', '9a45e9', '0', b'0', '0:0:0:0:0:0:0:1', '2019-09-10 18:11:22', 'crown', '2018-03-16 11:33:00', 'crown', '2019-09-10 18:11:22', '管理员');
+INSERT INTO `sys_user` VALUES (2, 103, 'admin', 'Admin', '00', 'crown@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', b'0', '0:0:0:0:0:0:0:1', '2019-08-05 17:34:11', 'crown', '2018-03-16 11:33:00', 'crown', '2019-08-05 17:34:11', '测试账号');
 COMMIT;
 
 -- ----------------------------
