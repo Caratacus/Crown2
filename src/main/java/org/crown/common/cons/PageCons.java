@@ -43,7 +43,7 @@ public interface PageCons {
     /**
      * 排序列
      */
-    String PAGE_SORT = "_page_sort ";
+    String PAGE_SORT = "_page_sort";
 
     /**
      * 排序的方向 "desc" 或者 "asc".

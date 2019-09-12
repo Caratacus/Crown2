@@ -76,7 +76,7 @@ public class LoginService {
             throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "用户名或密码错误");
         }
 
-        if (!user.getDeleted()) {
+        if (user.getDeleted()) {
             ThreadExecutors.execute(TimerTasks.recordLogininfor(username, Constants.LOGIN_FAIL, "对不起，您的账号已被删除"));
             throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "对不起，您的账号已被删除");
         }
