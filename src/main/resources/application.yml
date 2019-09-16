@@ -126,7 +126,7 @@ crown:
   path:
     file-path: /develop/crown/filepath/
     resource-handler: /profile/**
-    resource-path: /profile
+    resource-path: /profile/
     prefix:
       avatar: avatar/
       download: download/
