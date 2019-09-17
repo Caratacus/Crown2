@@ -125,7 +125,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
         if (CollectionUtils.isEmpty(entityList)) {
             return;
         }
-        baseMapper.insertBatchSomeColumn(entityList);
+        entityList.forEach(this::save);
     }
 
     @Transactional(rollbackFor = Exception.class)

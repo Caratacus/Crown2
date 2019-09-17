@@ -49,7 +49,10 @@
 	                        password: function() {
 	                            return $("input[name='oldPassword']").val();
 	                        }
-	                    }
+	                    },
+						dataFilter: function(data, type) {
+							return data.result;
+						}
 	                }
 				},
 				newPassword: {

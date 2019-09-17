@@ -36,7 +36,6 @@ import com.baomidou.mybatisplus.core.injector.methods.SelectObjs;
 import com.baomidou.mybatisplus.core.injector.methods.Update;
 import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
 import com.baomidou.mybatisplus.extension.injector.methods.additional.AlwaysUpdateSomeColumnById;
-import com.baomidou.mybatisplus.extension.injector.methods.additional.InsertBatchSomeColumn;
 
 /**
  * <p>
@@ -51,7 +50,6 @@ public class MybatisPlusSqlInjector extends AbstractSqlInjector {
     public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
         return Stream.of(
                 new Insert(),
-                new InsertBatchSomeColumn(t -> true),
                 new Delete(),
                 new DeleteById(),
                 new Update(),
